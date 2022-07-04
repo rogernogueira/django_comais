@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% block content %}
+    <h1>Contatos</h1>
+    {% for contato in contatos %}
+    <div class="card">
+   
+        <div class="card-header">
+            <a class="nav-link active" aria-current="page" href="{% url 'show-contatos' contato.id %}">{{contato.nome}}</a>
+            
+        </div>
+        <div class="card-body">
+                <ul>              
+                        <li>E-mail : {{contato.email}}</li>
+                        <li>Telefone: {{contato.telefone}} </li>
+                        <li>Mensagem: {{contato.mensagem}} </li>
+                    </ul>
+            </div>  
+        </div>
+    </br>
+    {% endfor %}
+{% endblock  %}

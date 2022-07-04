@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{% block content %}
+    <h1>Contatos - {{contato.nome}} </h1>
+    <div class="card">  
+        <div class="card-header">
+            {{contato.nome}}
+        </div>
+        <div class="card-body">
+                <ul>              
+                        <li>E-mail : {{contato.email}}</li>
+                        <li>Telefone: {{contato.telefone}} </li>
+                        <li>Mensagem: {{contato.mensagem}} </li>
+                    </ul>
+            </div>  
+        </div>
+    </br>
+{% endblock  %}

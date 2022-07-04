@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% block content %}
+    <h1>Login</h1>
+    <div class=" shadow p-4 mb-5 bg-body rounded">
+    <form method=POST action="">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Usuário</label>
+          <input type="text" class="form-control" name="username" >
+          
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Senha</label>
+          <input type="password" class="form-control" name="password">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+      não tem conta? <a href="{% url 'register-user' %}">Cadastre-se</a>
+    </div>
+{% endblock  %}

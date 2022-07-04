@@ -1,0 +1,67 @@
+{% extends 'base.html'%}
+{% block content %}
+    <h1>Gerênciar Contatos</h1>
+    {% for contato in contatos %}
+    <div class="card">
+   
+        <div class="card-header">
+            <a class="nav-link active" aria-current="page" href="{% url 'show-contatos' contato.id %}">{{contato.nome}}</a>
+            
+        </div>
+        <div class='row'>
+            <div class="col ">
+                    <div class='card-body'>
+                     <ul>            
+                        <li>E-mail : {{contato.email}}</li>
+                        <li>Telefone: {{contato.telefone}} </li>
+                        <li>Mensagem: {{contato.mensagem}} </li>
+                     </ul>
+                    </div>
+                </div> 
+                <div class="col-md-auto" >
+                    <div class='card-body align-middle'>
+                        <a class="btn btn-outline-primary" href="{% url 'update-contato' contato.id %}">Editar</a>
+                        <a class="btn btn-outline-danger" href="{% url 'delete-contato' contato.id %}">Excluir</a>
+                    </div>                 
+                </div>
+            </div>        
+    </div>
+    </br>
+    {% endfor %}
+    Página {{ contatos.number }} de {{ contatos.last_page }}
+
+
+    <nav aria-label="...">
+        <ul class="pagination">
+          {% if contatos.number == 1  %}  
+                <li class="page-item disabled">
+                <a class="page-link"  href=""">Anterior</a>
+            {% else %}
+                <li class="page-item">
+                <a class="page-link"  href="?page={{contatos.previous_page_number}}"> Anterior</a>
+            {% endif %}
+            
+          </li>
+          
+          {% for page in contatos.paginator.page_range %}
+             {% if contatos.number == page %}        
+                    <li class="page-item active">
+                        <a class="page-link" href="?page={{page}}">{{page}}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{page}}">{{page}}</a>
+                    </li>
+               {% endif %}  
+            {% endfor %}           
+            {% if contatos.number == contatos.paginator.num_pages %}  
+                <li class="page-item disabled">
+                <a class="page-link"  href=""">Próxima</a>
+            {% else %}
+                <li class="page-item">
+                <a class="page-link"  href="?page={{contatos.next_page_number}}">Próxima</a>
+            {% endif %}
+         
+        </ul>
+      </nav>
+{% endblock  %}

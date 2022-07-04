@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+    
+    {% block content %}
+        <h1>
+            Solicitação de Serviço
+        </h1>
+        <br/>
+        {% if submitted %}
+            <div class="alert alert-success">
+                <strong>Sucesso!</strong> Sua solicitação foi registrada.
+            </div>
+
+        {% else %}
+
+            <form method=POST action="" >
+                {% csrf_token %} 
+                {{form.as_p}}
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        {% endif %}
+    {% endblock %}

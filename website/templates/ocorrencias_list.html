@@ -1,0 +1,38 @@
+
+{% extends 'base.html'%}
+{% block content %}
+
+<h1>
+    Ocorrências 
+</h1>
+
+</br>
+{% for ocorrencia in ocorrencias  %} 
+<div class="card">
+   
+    <div class="card-header">
+        {{ocorrencia.solicitacao}}
+    </div>
+    <div class="card-body">
+            <ul>              
+                    <li>Tipo : {{ocorrencia.tipo}} </li>
+                    <li>Data Abertura: {{ocorrencia.data_abertura}} </li>
+                    <li>Data Atendimento: {{ocorrencia.data_atendimento}}</li>
+                    <li>Data Encerramento: {{ocorrencia.data_encerramento}}</li>
+                    <li>Solicitante: {{ocorrencia.solicitante}}</li>
+                    <li>Atendente: {{ocorrencia.atendente}}</li>
+                    <li>Descricao: {{ocorrencia.descricao}}</li>
+                    <li>
+                        Serviço: 
+                        <ul>
+                        {% for servico in ocorrencia.servico.all %}
+                            <li>{{servico.nome}}   </br></li>
+                        {% endfor%}
+                        </ul>   
+                    </li>      
+                </ul>
+        </div>  
+    </div>
+</br>
+    {% endfor %}
+{% endblock %}

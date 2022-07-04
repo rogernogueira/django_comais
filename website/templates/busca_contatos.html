@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% block content %}
+{%if nome %}
+    <h1>Buscando {{nome}}</h1>
+    {%if contatos %}    
+        {% for contato in contatos %}
+        <div class="card">
+            <div class="card-header">
+                <a class="nav-link active" aria-current="page" href="{% url 'show-contatos' contato.id %}">{{contato.nome}}</a>
+            </div>
+            <div class="card-body">
+                    <ul>              
+                            <li>E-mail : {{contato.email}}</li>
+                            <li>Telefone: {{contato.telefone}} </li>
+                            <li>Mensagem: {{contato.mensagem}} </li>
+                        </ul>
+                </div>  
+            </div>
+        </br>
+        {% endfor %}
+    {%else %}
+        <div class="alert alert-warning">
+            Não encontramos contatos para busca <strong>{{nome}}</strong>
+        </div>  
+    {%endif %}
+{% else %}
+<div class="alert alert-warning">
+    <strong>Falha!</strong> Você não colocou informações para busca.
+</div>
+{% endif %}
+
+{% endblock  %}
