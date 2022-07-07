@@ -1,3 +1,4 @@
+from pydoc import describe
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -39,6 +40,28 @@ class Ocorrencia(models.Model):
     atendente = models.ForeignKey(User,blank=True, null=True, on_delete=models.SET_NULL, related_name='atendente')
     def __str__(self):
         return self.solicitacao  
+    
+
+class TipoProjeto(models.Model):
+    type = models.CharField(max_length=100)
+    def __str__(self) :
+        return self.type
+        
+class Projeto(models.Model):
+    name = models.CharField('Nome',max_length=100)
+    title = models.CharField('Título',max_length=100)
+    type = models.ManyToManyField(TipoProjeto)
+    date = models.DateField('Data')
+    url = models.URLField('URL',max_length=100)
+    description = models.TextField('Descrição')
+    image1 = models.ImageField('Imagem 1', upload_to='images/', blank=True, null=True)
+    image2 = models.ImageField('Imagem 2', upload_to='images/', blank=True, null=True)
+    image3 = models.ImageField('Imagem 3', upload_to='images/', blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
+            
+    
     
       
 class Historico(models.Model):
