@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Ocorrencia, Contato
+from .models import Ocorrencia, Contato, Projeto, TipoProjeto
 from .forms import ContatoForm, OcorrenciaForm
 from django.core.paginator import Paginator
+
+
 def  contato(request):
     submitted = False
     if request.method == 'POST':
@@ -34,6 +36,10 @@ def ocorrencias(request):
 def show_contatos(request,id_contato):
     contato = Contato.objects.get(id=id_contato)
     return render(request,'show_contato.html', {'contato':contato})
+
+def show_projeto(request,id_projeto):
+    projeto = Projeto.objects.get(id=id_projeto)
+    return render(request,'show_projeto.html', {'projeto':projeto})
 
 def busca_contatos(request):
     if request.method == 'POST':
@@ -78,4 +84,17 @@ def registro_ocorrencias(request):
     
     
 def home(request):
-    return render(request,'home.html', {})
+    tipos = TipoProjeto.objects.all()
+    projetos = Projeto.objects.all()
+    submitted = False
+    if request.method == 'POST':
+        form = ContatoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/home?submitted=True#contact')
+    else:
+        form = ContatoForm
+        if 'submitted' in request.GET:
+            submitted = True
+    
+    return render(request,'home.html', {'form':form, 'submitted':submitted, 'tipos':tipos, 'projetos':projetos})

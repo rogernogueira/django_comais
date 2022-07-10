@@ -44,11 +44,13 @@ class Ocorrencia(models.Model):
 
 class TipoProjeto(models.Model):
     type = models.CharField(max_length=100)
+    filter = models.CharField(max_length=30, blank=True, null=True, default='.filter-outros')
     def __str__(self) :
         return self.type
         
 class Projeto(models.Model):
     name = models.CharField('Nome',max_length=100)
+    client = models.CharField('Cliente',max_length=100, null=True, blank=True)
     title = models.CharField('Título',max_length=100)
     type = models.ManyToManyField(TipoProjeto)
     date = models.DateField('Data')

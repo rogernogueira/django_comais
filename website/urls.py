@@ -17,5 +17,6 @@ urlpatterns = [
     path('update_contato/<id_contato>', views.update_contato, name='update-contato'),
     path('delete_contato/<id_contato>', views.delete_contato, name='delete-contato'),
     path('registro_ocorrencias', views.registro_ocorrencias, name='registro-ocorrencias'),
+    path('projetos/<id_projeto>', views.show_projeto, name='show-projeto'),
     path('home', views.home, name='home'),
 ]
