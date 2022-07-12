@@ -12,3 +12,4 @@ admin.site.register(Projeto)
 admin.site.register(Colaborador)
 
 admin.site.register(Publicacao)
+#test colaborador
