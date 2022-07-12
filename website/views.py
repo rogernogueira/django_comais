@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Ocorrencia, Contato, Projeto, TipoProjeto
+from .models import Ocorrencia, Contato, Projeto, TipoProjeto, Colaborador,Publicacao
 from .forms import ContatoForm, OcorrenciaForm
 from django.core.paginator import Paginator
-
+from django.contrib.auth.decorators import login_required
 
 def  contato(request):
     submitted = False
@@ -63,6 +63,7 @@ def update_contato(request, id_contato):
         return HttpResponseRedirect('/update_contatos_list')
     return render(request,'update_contato.html', {'form':form})
 
+@login_required
 def delete_contato(request, id_contato):
     contato = Contato.objects.get(id=id_contato)
     contato.delete()
@@ -86,6 +87,7 @@ def registro_ocorrencias(request):
 def home(request):
     tipos = TipoProjeto.objects.all()
     projetos = Projeto.objects.all()
+    colaboradores = Colaborador.objects.all()
     submitted = False
     if request.method == 'POST':
         form = ContatoForm(request.POST)
@@ -97,4 +99,4 @@ def home(request):
         if 'submitted' in request.GET:
             submitted = True
     
-    return render(request,'home.html', {'form':form, 'submitted':submitted, 'tipos':tipos, 'projetos':projetos})
+    return render(request,'home.html', {'form':form, 'submitted':submitted, 'tipos':tipos, 'projetos':projetos, 'colaboradores':colaboradores})

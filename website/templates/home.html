@@ -247,75 +247,29 @@
     
             <div class="row">
     
-              <div class="col-lg-6">
-                <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic"><img src={% static "website/img/team/david.png"%} class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>Dr. David Nadler</h4>
-                    <span>Coordenador do Laboratório</span>
-                    <p><a href="http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4733551U9&tokenCaptchar=03ANYolqsXhdXIKoXj0tex1NblmOjSoRFtyQUOeL65JAfXPtl_X80gpCjo-JZftmeDHsOzBpJbBlafOD5BXg1Z_fyDY-KcnJTiuTcU-5a4KQmF5_zUMesDuvculK3XqCPvRs9Gl0BLN_WBkePmrFZQIcE61yDH9GYduX41x-rPaezk2O6mKjlMykjoZ1LFfqXdRp51zDvs-EFC2kFYDir5cZ9sBNinPwLgmBtifHsSSg-rODF3gq1DTSV3t2z3alLlEk3eMQshIm6cHSiurYRVLDIkFlD7_jqXaDoQrmFYyEnhliHYPGOQxH4BIRKQOPs57VDcwyxrLyUM6ZuGeIiFLecCNq_AVaC0nFbkMGPu9XDmWl--AlvBOtmYZgAiYwqkssUCf1JlQYdtIPcZHSnmhzEzwvkI0-7cORTRxyo2x4Xz48O9ZccRH9DbclzxIc2NEbJFS0jsYLYm15Ia2dblvXa7JMUUutaXfw" >
+              
+             
 
-                    Currículo Lattes </p></a>
-                    <div class="social">
-                      <a href=""><i class="ri-twitter-fill"></i></a>
-                      <a href=""><i class="ri-facebook-fill"></i></a>
-                      <a href=""><i class="ri-instagram-fill"></i></a>
-                      <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-lg-6 mt-4 mt-lg-0">
-                <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="200">
-                  <div class="pic"><img src={% static "website/img/team/gentil.jpg"%} class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>Dr. Gentil Veloso Barbosa</h4>
-                    <span>Professor e pesquisador</span>
-                    <a href ='http://lattes.cnpq.br/41951028979735' ><p>Currículo Lattes</p></a>
-                    <div class="social">
-                      <a href=""><i class="ri-twitter-fill"></i></a>
-                      <a href=""><i class="ri-facebook-fill"></i></a>
-                      <a href=""><i class="ri-instagram-fill"></i></a>
-                      <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-lg-6 mt-4">
-                <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="300">
-                  <div class="pic"><img src={% static "website/img/team/marcelo.jpg"%} class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>Dr. Marcelo Lisboa Rocha</h4>
-                    <span>Professor e Pesquisador</span>
-                    <a href =' http://lattes.cnpq.br/8909823430980265' ><p>Currículo Lattes</p></a>
-                    <div class="social">
-                      <a href=""><i class="ri-twitter-fill"></i></a>
-                      <a href=""><i class="ri-facebook-fill"></i></a>
-                      <a href=""><i class="ri-instagram-fill"></i></a>
-                      <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
+    {% for colaborador in colaboradores %}
               <div class="col-lg-6 mt-4">
                 <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="400">
-                  <div class="pic"><img src={% static "website/img/team/roger.jpeg" %} class="img-fluid" alt=""></div>
+                  <div class="pic"><img src={{colaborador.foto.url}} class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>Rogério Nogueira</h4>
-                    <span>Analista e Pesquisador</span>
-                    <p><a href ='http://lattes.cnpq.br/1141051053490143' >Currículo Lattes</a></p>
+                    <h4>{{colaborador.name}}</h4>
+                    <span>{{colaborador.funcao}}</span>
+                    <p><a href ={{colaborador.url}} >Currículo Lattes</a></p>
                     <div class="social">
-                      <a href="https://twitter.com/roger_nogueira"><i class="ri-twitter-fill"></i></a>
-                      <a href="https://www.facebook.com/rogerio.nogueira.140"><i class="ri-facebook-fill"></i></a>
-                      <a href="https://www.instagram.com/roger_nogueira/"><i class="ri-instagram-fill"></i></a>
-                      <a href="https://www.linkedin.com/in/rog%C3%A9rio-nogueira-9b304a47/"> <i class="ri-linkedin-box-fill"></i> </a>
+                      <a href={{colaborador.url_twitter}}><i class="ri-twitter-fill"></i></a>
+                      <a href={{colaborador.url_facebook}}><i class="ri-facebook-fill"></i></a>
+                      <a href={{colaborador.url_instagram}}><i class="ri-instagram-fill"></i></a>
+                      <a href={{colaborador.url_linkedin}}> <i class="ri-linkedin-box-fill"></i> </a>
                     </div>
                   </div>
                 </div>
               </div>
+
+    {%endfor%}
+              
     
             </div>
     
