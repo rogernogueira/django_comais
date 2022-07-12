@@ -62,7 +62,29 @@ class Projeto(models.Model):
     
     def __str__(self):
         return self.name
-            
+
+class Colaborador(models.Model):
+    name = models.CharField('Nome',max_length=100)
+    url_latters = models.URLField('URL',max_length=100)
+    funcao = models.CharField('Função',max_length=100)
+    url_twitter = models.URLField('URL twitter',max_length=100, null=True, blank=True)
+    url_facebook = models.URLField('URL facebook',max_length=100, null=True, blank=True)
+    url_instagram  = models.URLField('URL Instagram',max_length=100, null=True, blank=True)
+    url_linkedin = models.URLField('URL linkedin',max_length=100, null=True, blank=True)
+    foto = models.ImageField('foto', upload_to='images/', blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
+        
+class Publicacao(models.Model):
+    titulo = models.CharField('Título',max_length=100)
+    resumo = models.TextField('Resumo')
+    ano = models.IntegerField('Ano')
+    categoria = models.CharField('Categoria',max_length=100)
+    autores = models.CharField('Autores',max_length=100)
+    
+    def __str__(self):
+        return self.titulo
     
     
       
