@@ -10,4 +10,5 @@ admin.site.register(Contato)
 admin.site.register(TipoProjeto)
 admin.site.register(Projeto)
 admin.site.register(Colaborador)
+
 admin.site.register(Publicacao)
