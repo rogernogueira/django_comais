@@ -78,7 +78,7 @@ class Colaborador(models.Model):
 class Categoria_publicacao(models.Model):
     name = models.CharField(max_length=100)
     def __str__(self):
-        return self.categoria        
+        return self.name        
 
 class Publicacao(models.Model):
     titulo = models.CharField('Título',max_length=100)
