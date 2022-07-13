@@ -82,6 +82,7 @@ class Publicacao(models.Model):
     ano = models.IntegerField('Ano')
     categoria = models.CharField('Categoria',max_length=100)
     autores = models.CharField('Autores',max_length=100)
+    artigo_upload = models.FileField(upload_to='artigos/', blank=True, null=True)
     
     def __str__(self):
         return self.titulo
