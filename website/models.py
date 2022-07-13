@@ -87,7 +87,7 @@ class Publicacao(models.Model):
     categoria = models.CharField('Categoria',max_length=100)
     autores = models.CharField('Autores',max_length=100)
     artigo_upload = models.FileField(upload_to='artigos/', blank=True, null=True)
-    categoria = models.ForeignKey(Categoria_publicacao, on_delete=models.CASCADE, related_name='categoria', null=True, blank=True)
+    categoria = models.ForeignKey(Categoria_publicacao,  related_name='categoria', null=True, blank=True)
     
     def __str__(self):
         return self.titulo
