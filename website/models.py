@@ -75,7 +75,11 @@ class Colaborador(models.Model):
     
     def __str__(self):
         return self.name
-        
+class Categoria_publicacao(models.Model):
+    categoria = models.CharField(max_length=100)
+    def __str__(self):
+        return self.categoria        
+
 class Publicacao(models.Model):
     titulo = models.CharField('Título',max_length=100)
     resumo = models.TextField('Resumo')
@@ -83,6 +87,7 @@ class Publicacao(models.Model):
     categoria = models.CharField('Categoria',max_length=100)
     autores = models.CharField('Autores',max_length=100)
     artigo_upload = models.FileField(upload_to='artigos/', blank=True, null=True)
+    categoria = models.ForeignKey(Categoria_publicacao, on_delete=models.CASCADE, related_name='categoria', null=True, blank=True)
     
     def __str__(self):
         return self.titulo
