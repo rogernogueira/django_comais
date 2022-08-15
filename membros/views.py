@@ -1,6 +1,6 @@
 from django import forms
-from django.shortcuts import render, redirect
-# from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -26,8 +26,9 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.add_message(request, messages.SUCCESS, 'Logout realizado com sucesso!')
-    return render(request,'index.html', {})
+    return HttpResponseRedirect('/')   
 
+@login_required
 def register_user(request):
     if request.method == 'POST':  
         

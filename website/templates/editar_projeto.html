@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% block content %}
+    <h1>Editar - {{projeto.name}} </h1>
+    <br/>
+    <form method=POST enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+            {% if projeto.image1 %}
+            <div class="card h-100 p-4">
+                Arquivo:<a href={{projeto.image1.url }}> {{projeto.image1.url }}<a/>
+            </div>
+            {% endif %}
+            {% if projeto.image2 %}
+            <div class="card h-100 p-4">
+                Arquivo:<a href={{projeto.image2.url }}> {{projeto.image2.url }}<a/>
+            </div>
+            {% endif %}
+            {% if projeto.image3 %}
+            <div class="card h-100 p-4">
+                Arquivo:<a href={{projeto.image3.url }}> {{projeto.image3.url }}<a/>
+            </div>
+            {% endif %}
+        </div>
+        <input type="submit" value="Salvar" class="btn btn-secondary">
+    </form>
+
+{% endblock  %}

@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.db import close_old_connections
+from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect
-from .models import Ocorrencia, Contato, Projeto, TipoProjeto, Colaborador,Publicacao
-from .forms import ContatoForm, OcorrenciaForm
+from .models import Ocorrencia, Contato, Projeto, TipoProjeto, Colaborador,Publicacao 
+from .forms import ContatoForm, OcorrenciaForm, ColaboradorForm, PublicacaoForm, ProjetoForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
+
+
 
 def  contato(request):
     submitted = False
@@ -100,3 +104,118 @@ def home(request):
             submitted = True
     
     return render(request,'home.html', {'form':form, 'submitted':submitted, 'tipos':tipos, 'projetos':projetos, 'colaboradores':colaboradores})
+
+@login_required
+def update_perfil(request):
+    try:
+        colaborador = Colaborador.objects.get(user=request.user.id)
+    except Colaborador.DoesNotExist:
+        colaborador = Colaborador.objects.create(user=request.user)
+    if request.method == 'POST':
+        form = ColaboradorForm(request.POST or None, request.FILES or None, instance=colaborador)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/perfil')
+    
+    form = ColaboradorForm(request.POST or None, instance=colaborador )    
+    return render(request,'update_perfil.html', {'form':form, 'colaborador':colaborador})
+     
+    
+
+@login_required
+def gerencia_publicacoes(request):
+    publicacoes = Publicacao.objects.filter(user=request.user)
+    p = Paginator(publicacoes, 3)
+    page = request.GET.get('page')
+    publicacoes = p.get_page(page)
+    return render(request,'gerencia_publicacoes.html', {'publicacoes':publicacoes})
+
+@login_required
+def gerencia_projetos(request):
+    projetos = Projeto.objects.filter(user=request.user)
+    p = Paginator(projetos, 3)
+    page = request.GET.get('page')
+    projetos = p.get_page(page)
+    return render(request,'gerencia_projetos.html', {'projetos':projetos})
+
+@login_required
+def editar_publicacao(request, id_publicacao):
+    if request.user.id == Publicacao.objects.get(id=id_publicacao).user.id:
+        publicacao = Publicacao.objects.get(id=id_publicacao)
+        if request.method == 'POST':
+            form = PublicacaoForm(request.POST or None, request.FILES or None, instance=publicacao)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/gerencia_publicacoes')
+        form = PublicacaoForm(request.POST or None, instance=publicacao)
+        return render(request,'editar_publicacao.html', {'form':form, 'publicacao':publicacao})
+    else:
+        return HttpResponseRedirect('/gerencia_publicacoes')
+
+@login_required
+def delete_publicacao(request,id_publicacao):
+    if request.user.id == Publicacao.objects.get(id=id_publicacao).user.id:
+        publicacao = Publicacao.objects.get(id=id_publicacao)
+        publicacao.delete()
+        return HttpResponseRedirect('/gerencia_publicacoes')
+    else:
+        return HttpResponseRedirect('/gerencia_publicacoes')
+
+@login_required
+def editar_projeto(request, id_projeto):
+    if request.user.id == Projeto.objects.get(id=id_projeto).user.id:
+        projeto = Projeto.objects.get(id=id_projeto)
+        if request.method == 'POST':
+            form = ProjetoForm(request.POST or None, request.FILES or None, instance=projeto)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/gerencia_projetos')
+        form = ProjetoForm(request.POST or None, instance=projeto)
+        return render(request,'editar_projeto.html', {'form':form, 'projeto':projeto})
+    else:
+        return HttpResponseRedirect('/gerencia_projetos')
+
+@login_required
+def delete_projeto(request,id_projeto):
+    if request.user.id == Projeto.objects.get(id=id_projeto).user.id:
+        projeto = Projeto.objects.get(id=id_projeto)
+        projeto.delete()
+        return HttpResponseRedirect('/gerencia_projetos')
+    else:
+        return HttpResponseRedirect('/gerencia_projetos')
+
+@login_required
+def cadastrar_publicacao(request):
+    submitted = False
+    if request.method == 'POST':
+      form = PublicacaoForm(request.POST ,request.FILES )  
+      form.instance.user = request.user
+      if form.is_valid():
+            form.save(commit=False)
+            form.user = request.user         
+            form.save()
+            return HttpResponseRedirect('/cadastrar_publicacao?submitted=True')
+    else:
+        form = PublicacaoForm()
+        if 'submitted' in request.GET:
+            submitted = True
+        
+    return render(request,'cadastrar_publicacao.html', {'form':form, 'submitted':submitted})
+
+@login_required
+def cadastrar_projeto(request):
+    submitted = False
+    if request.method == 'POST':
+      form = ProjetoForm(request.POST,request.FILES)  
+      form.instance.user = request.user
+      if form.is_valid():
+            form.save(commit=False)
+            form.user = request.user         
+            form.save()
+            return HttpResponseRedirect('/cadastrar_projeto?submitted=True')
+    else:
+        form = ProjetoForm()
+        if 'submitted' in request.GET:
+            submitted = True
+        
+    return render(request,'cadastrar_projeto.html', {'form':form, 'submitted':submitted})

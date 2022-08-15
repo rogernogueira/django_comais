@@ -220,14 +220,16 @@
                           {{tipo.filter}}
                           {% endfor %}             
                 ">
-                
+                {% if projeto.image1 %}
                 <div class="portfolio-img"><img src={{projeto.image1.url}} class="img-fluid" alt=""></div>
+                
                 <div class="portfolio-info">
                   <h4>{{projeto.name}}</h4>
                   <p>{{projeto.title}}</p>
                   <a href={{projeto.image1.url}} data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
                   <a href="/projetos/{{projeto.id}}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
                 </div>
+                {% endif %}
               </div>
               {%endfor%}
 
@@ -270,7 +272,7 @@
 
     {%endfor%}
               
-    
+     
             </div>
     
           </div>

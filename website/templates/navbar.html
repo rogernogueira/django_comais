@@ -1,3 +1,4 @@
+{% load static %}
 <!--<nav class="navbar navbar-expand-lg navbar-light bg-light"> !-->
   <nav class="navbar navbar-expand-lg navbar-light  bg-light" id="navbar">
     <div class="container-fluid">
@@ -38,24 +39,30 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'registro-ocorrencias' %}">Solicitar Serviço</a>
           </li>
-          {% if request.user.is_authenticated %} 
           
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'logout-user' %}">Logout</a>
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'login-user' %}">Login</a>
-          </li>
-          {% endif %}
         </ul>
-        <form class="d-flex" method=POST action ='{% url 'buscar-contatos' %}'>
-          {% csrf_token %}
-
-          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="nome">
-          <button class="btn btn-outline-success" type="submit">Buscar</button>
-        </form>
-      </div>
+        
+        
+        {% if request.user.is_authenticated %} 
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ request.user.username }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item text-dark" href="{% url 'logout-user' %}">Logout </a></li>
+            <li> <a class="dropdown-item text-dark" href="{% url 'perfil' %}">Editar Perfil</a></li>
+            {% comment %}  if user is administrator {% endcomment %}
+            {% if request.user.is_superuser %}
+              <li> <a class="dropdown-item text-dark" href="{% url 'register-user' %}">Adicionar Usuário</a></li>
+            {% endif %}
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-dark" href="{% url 'gerencia-publicacoes' %}">Publicações</a></li> 
+            <li><a class="dropdown-item text-dark" href="{% url 'gerencia-projetos' %}">Projetos</a></li>
+          </ul>
+        </div>   
+        {% else %}
+            <a class="nav-link active" aria-current="page" href="{% url 'login-user' %}">Login</a>  
+        {% endif %}
     </div>
   </nav>
 

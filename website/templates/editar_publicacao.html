@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{% block content %}
+    <h1>Editar - {{publicacao.titulo}} </h1>
+    <br/>
+    <form method=POST enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+            <div class="card h-100 p-4">
+                Arquivo:<a href={{publicacao.artigo_upload.url }}> {{publicacao.artigo_upload.url }}<a/>
+            </div>
+        </div>
+        <input type="submit" value="Salvar" class="btn btn-secondary">
+    </form>
+
+{% endblock  %}
