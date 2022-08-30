@@ -91,6 +91,7 @@ def registro_ocorrencias(request):
 def home(request):
     tipos = TipoProjeto.objects.all()
     projetos = Projeto.objects.all()
+    publicacoes = Publicacao.objects.all()
     colaboradores = Colaborador.objects.all()
     submitted = False
     if request.method == 'POST':
@@ -103,7 +104,8 @@ def home(request):
         if 'submitted' in request.GET:
             submitted = True
     
-    return render(request,'home.html', {'form':form, 'submitted':submitted, 'tipos':tipos, 'projetos':projetos, 'colaboradores':colaboradores})
+    return render(request,'home.html', {'form':form, 'submitted':submitted, 'tipos':tipos, 'projetos':projetos, 
+                  'colaboradores':colaboradores, 'publicacoes':publicacoes})
 
 @login_required
 def update_perfil(request):

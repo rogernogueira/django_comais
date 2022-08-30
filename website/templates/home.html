@@ -195,7 +195,37 @@
     
           </div>
         </section><!-- End Cta Section -->
+        <section id="faq" class="faq section-bg">
+          <div class="container aos-init aos-animate" data-aos="fade-up">
     
+            <div class="section-title">
+              <h2>Publicações</h2>
+              <p>Publicaçãos apoiadas pelos COMAIS lab.</p>
+            </div>
+    
+            <div class="faq-list">
+              <ul>
+                {% for publicacao in publicacoes %}
+                <li data-aos="fade-up" data-aos-delay="100" class="aos-init aos-animate">
+                  <a data-bs-toggle="collapse" class="collapse collapsed" data-bs-target="#faq-list-{{publicacao.id}}" aria-expanded="false">
+                    {{publicacao.ano}} - {{publicacao.titulo}}
+                  <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                  <div id="faq-list-{{publicacao.id}}" class="collapse " data-bs-parent=".faq-list" style="" >
+                    <p class="text-justify" style="padding-left:50px" >
+                      Autores: {{publicacao.autores}}
+                    </p>
+                    <p class="text-justify" style="padding-left:50px">
+                      Resumo: {{publicacao.resumo}}
+                    </p> 
+                  </div>
+                </li>
+                {% endfor %}
+                
+              </ul>
+            </div>
+    
+          </div>
+        </section>
         <!-- ======= Portfolio Section ======= -->
         <section id="portfolio" class="portfolio">
           <div class="container" data-aos="fade-up">
@@ -278,9 +308,9 @@
           </div>
         </section><!-- End Team Section -->
     
-       
-        <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact">
+
+
+        <section id="contact" class="contact ">
           <div class="container" data-aos="fade-up">
     
             <div class="section-title">
@@ -332,6 +362,8 @@
           </div>
         </section><!-- End Contact Section -->
     
+
+
       </main><!-- End #main -->
     
       <!-- ======= Footer ======= -->
