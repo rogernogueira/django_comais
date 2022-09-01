@@ -91,7 +91,7 @@ def registro_ocorrencias(request):
 def home(request):
     tipos = TipoProjeto.objects.all()
     projetos = Projeto.objects.all()
-    publicacoes = Publicacao.objects.all()
+    publicacoes = Publicacao.objects.all().order_by('-ano')
     colaboradores = Colaborador.objects.all()
     submitted = False
     if request.method == 'POST':

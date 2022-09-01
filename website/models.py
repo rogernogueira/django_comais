@@ -106,6 +106,22 @@ class Historico(models.Model):
     descricao = models.TextField("Descrição")
     ocorrencia = models.ForeignKey(Ocorrencia, on_delete=models.CASCADE)
     
+    def __str__(self):
+        return self.descricao
+    
+class ProjetoRelatorio(models.Model):
+    titulo = models.CharField('Título',max_length=250)
+    user=models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    vigencia_inicio = models.DateField('Início da vigência ')
+    vigencia_fim = models.DateField('FIM da vigência ')
+    numero_parcelas = models.IntegerField('Número de parcelas',default=1)
+    objetivo_proposto = models.TextField('Objetivo proposto')
+    objetivo_proposto_obj = models.TextField('Objetivo proposto')
+    
+    usuario = models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    descricao = models.TextField("Descrição")
+    ocorrencia = models.ForeignKey(Ocorrencia, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.descricao
+    
