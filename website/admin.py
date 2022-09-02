@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Usuario, Ocorrencia,Servico, Historico, Contato, TipoProjeto, Projeto, Publicacao, Colaborador, Categoria_publicacao
+from .models import Usuario, Ocorrencia,Servico, Historico, Contato, TipoProjeto, \
+    Projeto, Publicacao, Colaborador, Categoria_publicacao, ProjetoRelatorio, Relatorio
 # Register your models here.
 
 admin.site.register(Usuario)
@@ -10,6 +11,9 @@ admin.site.register(Contato)
 admin.site.register(TipoProjeto)
 admin.site.register(Projeto)
 admin.site.register(Colaborador)
+admin.site.register(ProjetoRelatorio)
+admin.site.register(Relatorio)
+
 
 admin.site.register(Publicacao)
 admin.site.register(Categoria_publicacao)

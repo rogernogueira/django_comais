@@ -1,4 +1,5 @@
 from pydoc import describe
+from re import template
 from django.db import models
 from django.contrib.auth.models import User
 from datetime  import datetime
@@ -114,14 +115,21 @@ class ProjetoRelatorio(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     vigencia_inicio = models.DateField('Início da vigência ')
     vigencia_fim = models.DateField('FIM da vigência ')
-    numero_parcelas = models.IntegerField('Número de parcelas',default=1)
+    numero_parcelas = models.IntegerField('Número de parcelas',default=12)
     objetivo_proposto = models.TextField('Objetivo proposto')
     objetivo_proposto_obj = models.TextField('Objetivo proposto')
-    
-    usuario = models.ForeignKey(Usuario,on_delete=models.CASCADE)
-    descricao = models.TextField("Descrição")
-    ocorrencia = models.ForeignKey(Ocorrencia, on_delete=models.CASCADE)
-    
+    dia_entrega = models.IntegerField('Dia do mês da entrega', default=0)
+    template = models.FileField(upload_to='templates/', blank=True, null=True)
     def __str__(self):
-        return self.descricao
+        return self.titulo
+class Relatorio(models.Model):
+    projeto = models.ForeignKey(ProjetoRelatorio, on_delete=models.CASCADE)
+    resultado = models.TextField('Resultado')
+    informacao_adicional = models.TextField('Informações adicionais', blank=True, null=True)
+    data_vigencia = models.DateField('Data de vigencia', blank=True, null=True)
+    data_assinatura = models.DateField('Data de assinatura', blank=True, null=True)
+    parcela=models.IntegerField('Parcela',default=1)
+    assinatura = models.FileField(upload_to='assinaturas/', blank=True, null=True)
+    def __str__(self):
+        return str(self.parcela) + ' - ' + str(self.data_vigencia) +' - ' + self.projeto.titulo + ' - '
     
