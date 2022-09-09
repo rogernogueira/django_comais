@@ -1,20 +1,21 @@
-{% extends 'base.html'%}
+{% extends 'base2.html'%}
 {% block content %}
-    <h1>Gerênciar Projetos</h1>
+    <h4 class= "page-title">Gerênciar Projetos</h4>
     {% for projeto in projetos %}
     <div class="card">
-           
+        <div class="card-header">
+               {{projeto.name}} 
+        </div>
+
         <div class='row'>
             <div class="col ">
                     <div class='card-body'>
-                     <ul>            
-                        <li>Titulo : {{projeto.name}}</li>
-                        <li>Autores: {{projeto.title}} </li>
-                        
-                     </ul>
+                        <p class="card-text" > <strong>Autores:</strong> {{projeto.title}}</p>
+                        <p class="card-text" > <strong>Descrição:</strong> {{projeto.description}}</p>
+
                     </div>
                 </div> 
-                <div class="col-md-auto" >
+                <div class="" >
                     <div class='card-body align-middle'>
                         <a class="btn btn-outline-primary" href="{% url 'editar-projeto' projeto.id %}">Editar</a>
                         <a class="btn btn-outline-danger" href="{% url 'delete-projeto' projeto.id %}">Excluir</a> 

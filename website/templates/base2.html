@@ -12,10 +12,27 @@
       <meta content="" name="description">
       <meta content="" name="keywords">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+      <!-- CSS only -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
       
-    
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+        <script src="https://cdn.tiny.cloud/1/xrmqp110wrya0chdfgnhko7kjpibyg8pbyqdld4f4im5kku5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+      
+        <script>
+          tinymce.init({
+            selector: 'textarea',
+            plugins: 'a11ychecker advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinycomments ',
+            toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter image editimage pageembed permanentpen table tableofcontents',
+            toolbar_mode: 'floating',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            language : 'pt_BR',
+            
+          });
+        </script>
+       
+      
+          
       <!-- Favicons -->
       <link href={% static "website\img\favicon.png" %} rel="icon">
       <link href={% static "website\img\apple-touch-icon.png" %} rel="apple-touch-icon">
@@ -25,12 +42,15 @@
     
       <!-- Vendor CSS Files -->
       <link href={% static "website\vendor\aos\aos.css" %} rel="stylesheet">
-      <link href={% static "website\vendor\bootstrap\css\bootstrap.min.css" %} rel="stylesheet">
-      <link href={% static "website\vendor\bootstrap-icons\bootstrap-icons.css" %} rel="stylesheet">
+      {% comment %} <link href={% static "website\vendor\bootstrap\css\bootstrap.min.css" %} rel="stylesheet"> {% endcomment %}
+      {% comment %} <link href={% static "website\vendor\bootstrap-icons\bootstrap-icons.css" %} rel="stylesheet"> {% endcomment %}
       <link href={% static "website\vendor\boxicons\css\boxicons.min.css" %} rel="stylesheet">
       <link href={% static "website\vendor\glightbox\css\glightbox.min.css" %} rel="stylesheet">
       <link href={% static "website\vendor\remixicon\remixicon.css" %} rel="stylesheet">
-      <link href={% static "website\vendor\swiper\swiper-bundle.min.css" %} rel="stylesheet">
+      {% comment %} <link href={% static "website\vendor\swiper\swiper-bundle.min.css" %} rel="stylesheet"> {% endcomment %}
+       <link href ='https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.3.2/swiper-bundle.css' crossorigin="anonymous" rel="stylesheet"> 
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"> 
+     
     
     
       <link href={% static "website\css\style.css"%} rel="stylesheet">
@@ -41,11 +61,15 @@
   <body>
     <header id="header" class="fixed-top ">
       <div class="container ">
-      <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo me-auto"><img src="{% static "website\img\logo.png" alt="" class="img-fluid"></a>-->
-          {% include 'navbar.html' %}
+        {% include 'navbar.html' %}
       </div>
     </header>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
     <div class="container">
       <div class="row">
@@ -56,7 +80,19 @@
         </div>
       </div>
       
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    
+    <script>
+      var message_tag = document.getElementById("message_box");
+      
+      setTimeout(function(){ 
+         message_tag.style.display = "none"; 
+      }, 3000);   
+     
+      </script>
+
+    
+  
   </body>
 </html>
 

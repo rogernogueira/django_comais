@@ -3,6 +3,15 @@ from re import template
 from django.db import models
 from django.contrib.auth.models import User
 from datetime  import datetime
+from django.conf import settings
+from tinymce import models as tinymce_models
+
+
+STATUS_CHOICES = [('Aguardando', 'Aguardando'),
+                  ('Em andamento', 'Em andamento'),
+                  ('Concluído', 'Concluído'),
+                  ('Cancelado', 'Cancelado'),
+                  ]
 class Servico(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
@@ -113,23 +122,27 @@ class Historico(models.Model):
 class ProjetoRelatorio(models.Model):
     titulo = models.CharField('Título',max_length=250)
     user=models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    vigencia_inicio = models.DateField('Início da vigência ')
-    vigencia_fim = models.DateField('FIM da vigência ')
+    vigencia_inicio = models.DateField('Início da vigência ', )
+    vigencia_fim = models.DateField('FIM da vigência ', )
     numero_parcelas = models.IntegerField('Número de parcelas',default=12)
     objetivo_proposto = models.TextField('Objetivo proposto')
     objetivo_proposto_obj = models.TextField('Objetivo proposto')
     dia_entrega = models.IntegerField('Dia do mês da entrega', default=0)
     template = models.FileField(upload_to='templates/', blank=True, null=True)
+    status=models.CharField('Status',max_length=100, choices=STATUS_CHOICES, default='Em elaboração')
+    
     def __str__(self):
         return self.titulo
+    
 class Relatorio(models.Model):
     projeto = models.ForeignKey(ProjetoRelatorio, on_delete=models.CASCADE)
-    resultado = models.TextField('Resultado')
+    resultado = tinymce_models.HTMLField()
     informacao_adicional = models.TextField('Informações adicionais', blank=True, null=True)
-    data_vigencia = models.DateField('Data de vigencia', blank=True, null=True)
-    data_assinatura = models.DateField('Data de assinatura', blank=True, null=True)
+    data_vigencia = models.DateField('Data de vigencia', blank=True, null=True )
+    data_assinatura = models.DateField('Data de assinatura', blank=True, null=True )
     parcela=models.IntegerField('Parcela',default=1)
     assinatura = models.FileField(upload_to='assinaturas/', blank=True, null=True)
+    doc = models.FileField(upload_to='docs/', blank=True, null=True)
     def __str__(self):
-        return str(self.parcela) + ' - ' + str(self.data_vigencia) +' - ' + self.projeto.titulo + ' - '
+        return str(self.parcela) + ' - ' + str(self.data_vigencia) +' - ' + self.projeto.titulo 
     

@@ -1,7 +1,10 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Contato, Ocorrencia, Projeto, Usuario, Servico, Historico, Colaborador, Publicacao
+from django.urls import reverse
+from .models import Contato, Ocorrencia, Projeto, Usuario, Servico, Historico, Colaborador, Publicacao, Relatorio, ProjetoRelatorio
 # create a form for the model Contato
+
+from tinymce.widgets import TinyMCE
 class ContatoForm(ModelForm):
     class Meta:
         model = Contato
@@ -113,4 +116,53 @@ class ProjetoForm(ModelForm):
             'image2':forms.FileInput( attrs={'class': 'form-control'}),
             'image3':forms.FileInput( attrs={'class': 'form-control'}),
                }
-                
+        
+class RelatorioForm(ModelForm):
+    class Meta:
+        model = Relatorio
+        fields = ('resultado', 'informacao_adicional', 'data_vigencia', 'data_assinatura','parcela')
+        exclude = [ 'projeto']
+        labels = {'resultado':'Resultados',
+                  'informacao_adicional': 'Informações adicionais',
+                  'data_vigencia': 'Data do relatório',
+                  'data_assinatura': 'Data da entrega',
+                  'parcela':'Parcela',
+                  }
+        widgets = {
+                    'resultado': TinyMCE(attrs={'cols': 80, 'rows': 30, 'class': 'form-control', 'id':'mytextarea'}),
+                    'informacao_adicional':  TinyMCE(attrs={'cols': 80, 'rows': 30, 'class': 'form-control'}),
+                    'data_vigencia': forms.DateInput(format=('%Y-%m-%d'),attrs={'class': 'form-control', 'type':'date'}),
+                    'data_assinatura': forms.DateInput(format=('%Y-%m-%d'),attrs={'class': 'form-control', 'type':'date'}),
+                    'parcela': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+class ProjetoRelatorioForm(ModelForm):
+    class Meta:
+        model = ProjetoRelatorio
+        exclude = [ 'user',]
+        fields = ('titulo','status', 'vigencia_inicio', 'vigencia_fim',
+                  'numero_parcelas','objetivo_proposto','objetivo_proposto_obj',
+                  'dia_entrega','template')
+
+        labels = {'titulo':'Título do projeto',
+                  'status':'Status',
+                  'vigencia_inicio':'Data de início',
+                  'vigencia_fim':'Data de término',
+                  'numero_parcelas': 'Quantidade de parcelas',
+                  'objetivo_proposto':'Objetivo proposto',
+                  'objetivo_proposto_obj':'Observações do objetivo proposto',
+                  'dia_entrega':'Sugestão de dia do mês do relatório, 0 para ultimo dia do mês',
+                 'template':'Modelo de relatório',
+                 
+                  }
+        widgets = {
+            'titulo': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'vigencia_inicio': forms.DateInput(format=('%Y-%m-%d'),attrs={'class': 'form-control', 'type':'date'}),
+            'vigencia_fim': forms.DateInput(format=('%Y-%m-%d'),attrs={'class': 'form-control', 'type':'date'}),
+            'numero_parcelas':forms.TextInput(attrs={'class': 'form-control'}),
+            'objetivo_proposto':TinyMCE(attrs={'cols': 40, 'rows': 30, 'class': 'form-control'}),
+            'objetivo_proposto_obj':TinyMCE(attrs={'cols': 40, 'rows': 30, 'class': 'form-control'}),
+            'dia_entrega':forms.TextInput( attrs={'class': 'form-control'}),
+            'template':forms.FileInput( attrs={'class': 'form-control'}),
+               }

@@ -28,4 +28,13 @@ urlpatterns = [
     path('cadastrar_publicacao', views.cadastrar_publicacao, name='cadastrar-publicacao'),
     path('cadastrar_projeto', views.cadastrar_projeto, name='cadastrar-projeto'),
     path('gerencia_projetos', views.gerencia_projetos, name='gerencia-projetos'),
+    path('gerar_relatorio/<id_relatorio>', views.gerar_relatorio, name='gerar-relatorio'),
+    path('gerencia_relatorios', views.gerencia_relatorios, name='gerencia-relatorios'),
+    path('cadastrar_relatorio/<id_projeto_relatorio>', views.cadastrar_relatorio, name='cadastrar-relatorio'),
+    path('editar_relatorio/<id_relatorio>', views.editar_relatorio, name='editar-relatorio'),
+    path('cadastrar_projeto_relatorio', views.cadastrar_projeto_relatorio, name='cadastrar-projeto-relatorio'),
+    path('editar_projeto_relatorio/<id_projeto_relatorio>', views.editar_projeto_relatorio, name='editar-projeto-relatorio'),
+    path('deletar_projeto_relatorio/<id_projeto_relatorio>', views.deletar_projeto_relatorio, name='deletar-projeto-relatorio'),
+    path('deletar_relatorio/<id_relatorio>', views.deletar_relatorio, name='deletar-relatorio'),
+    
 ]

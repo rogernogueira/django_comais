@@ -1,22 +1,23 @@
-{% extends 'base.html'%}
+{% extends 'base2.html'%}
 {% block content %}
-    <h1>Gerênciar Publicações</h1>
+    <h4 class= "page-title">Gerênciar Publicações</h4>
     {% for publicacao in publicacoes %}
     <div class="card">
-   
-        
+        <div class="card-header">{{publicacao.titulo}}</div>
         <div class='row'>
             <div class="col ">
-                    <div class='card-body'>
-                     <ul>            
-                        <li>Titulo : {{publicacao.titulo}}</li>
-                        <li>Autores: {{publicacao.autores}} </li>
-                        
-                     </ul>
+                    <div class='card-body'>                                 
+                     <p class="card-text" > <strong>Autores:</strong> {{publicacao.autores}} </p>
+                     <p class="card-text" > <strong>Ano:</strong> {{publicacao.ano}} </p>
+                     <p class="card-text" > <strong>Resumo:</strong> {{publicacao.resumo|striptags|safe}} </p>
+                     <div class="card h-100 p-4">
+                        Arquivo:<a href={{publicacao.artigo_upload.url }}><i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Baixar<a/>
+                    </div>
                     </div>
                 </div> 
                 <div class="col-md-auto" >
                     <div class='card-body align-middle'>
+                        
                         <a class="btn btn-outline-primary" href="{% url 'editar-publicacao' publicacao.id %}">Editar</a>
                         <a class="btn btn-outline-danger" href="{% url 'delete-publicacao' publicacao.id %}">Excluir</a> 
                     </div>                 

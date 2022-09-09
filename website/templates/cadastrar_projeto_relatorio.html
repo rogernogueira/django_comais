@@ -2,20 +2,19 @@
     
     {% block content %}
         <h4 class= "page-title">
-            Fale conosco
+            Cadastrar projeto
         </h4>
         <br/>
         {% if submitted %}
                 <div class="alert alert-success">
-                    <strong>Sucesso!</strong> O seu contato foi enviado com sucesso.
+                    <strong>Sucesso!</strong>Projeto cadastrado com sucesso.
                 </div>
 
-        {% else %}
+        {% endif%}
 
-            <form method=POST action="" >
+        <form method=POST enctype="multipart/form-data">
                 {% csrf_token %} 
                 {{form.as_p}}
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <input type="submit" value="Salvar" class="btn btn-secondary">
             </form>
-        {% endif %}
     {% endblock %}

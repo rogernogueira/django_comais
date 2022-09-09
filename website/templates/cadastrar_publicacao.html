@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
     
     {% block content %}
-        <h1>
+        <h4 class= "page-title">
             Cadastrar publicação
-        </h1>
+        </h4>
         <br/>
         {% if submitted %}
                 <div class="alert alert-success">
@@ -15,7 +15,7 @@
             <form method=POST enctype="multipart/form-data"  >
                 {% csrf_token %} 
                 {{form.as_p}}
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
         
     {% endblock %}

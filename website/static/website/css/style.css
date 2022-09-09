@@ -157,7 +157,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 10px 0 10px 30px;
   font-size: 15px;
   font-weight: 500;
-  color: #fff;
+  color: rgb(85, 72, 72);
   white-space: nowrap;
   transition: 0.3s;
 }
@@ -1587,5 +1587,14 @@ section {
   }
   #footer .credits {
     padding-top: 4px;
+  }
+  .page-title  {
+    font-size: 32px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    position: relative;
+    color: #37517e;
   }
 }

@@ -1,6 +1,6 @@
-{% extends 'base.html'%}
+{% extends 'base2.html'%}
 {% block content %}
-    <h1>Editar - {{publicacao.titulo}} </h1>
+    <h4 class= "page-title">Editar - {{publicacao.titulo}} </h4>
     <br/>
     <form method=POST enctype="multipart/form-data">
         {% csrf_token %}
