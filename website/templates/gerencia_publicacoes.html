@@ -1,0 +1,71 @@
+{% extends 'base2.html'%}
+{% block content %}
+    <h4 class= "page-title">Gerênciar Publicações</h4>
+    {% for publicacao in publicacoes %}
+    <div class="card">
+        <div class="card-header">{{publicacao.titulo}}</div>
+        <div class='row'>
+            <div class="col ">
+                    <div class='card-body'>                                 
+                     <p class="card-text" > <strong>Autores:</strong> {{publicacao.autores}} </p>
+                     <p class="card-text" > <strong>Ano:</strong> {{publicacao.ano}} </p>
+                     <p class="card-text" > <strong>Resumo:</strong> {{publicacao.resumo|striptags|safe}} </p>
+                     <div class="card h-100 p-4">
+                        Arquivo:<a href={{publicacao.artigo_upload.url }}><i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Baixar<a/>
+                    </div>
+                    </div>
+                </div> 
+                <div class="col-md-auto" >
+                    <div class='card-body align-middle'>
+                        
+                        <a class="btn btn-outline-primary" href="{% url 'editar-publicacao' publicacao.id %}">Editar</a>
+                        <a class="btn btn-outline-danger" href="{% url 'delete-publicacao' publicacao.id %}">Excluir</a> 
+                    </div>                 
+                </div>
+            </div>        
+    </div>
+    </br>
+    {% endfor %}
+    
+    <a class="btn btn-outline-primary" href="{% url 'cadastrar-publicacao' %}">Nova publicação</a>
+    <br/>
+
+    Página {{ publicacoes.number }}  
+    {% if publicacoes.number > 3 %}  
+        de {{ publicacoes.last_page }}
+    {% endif %}
+
+    <nav aria-label="...">
+        <ul class="pagination">
+          {% if publicacoes.number <= 3 %}  
+                <li class="page-item disabled">
+                <a class="page-link"  href=""">Anterior</a>
+            {% else %}
+                <li class="page-item">
+                <a class="page-link"  href="?page={{publicacoes.previous_page_number}}"> Anterior</a>
+            {% endif %}
+            
+          </li>
+          
+          {% for page in publicacoes.paginator.page_range %}
+             {% if publicacoes.number == page %}        
+                    <li class="page-item active">
+                        <a class="page-link" href="?page={{page}}">{{page}}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{page}}">{{page}}</a>
+                    </li>
+               {% endif %}  
+            {% endfor %}           
+            {% if publicacoes.number == publicacoes.paginator.num_pages %}  
+                <li class="page-item disabled">
+                <a class="page-link"  href=""">Próxima</a>
+            {% else %}
+                <li class="page-item">
+                <a class="page-link"  href="?page={{publicacoes.next_page_number}}">Próxima</a>
+            {% endif %}
+         
+        </ul>
+      </nav>
+{% endblock  %}

@@ -1,0 +1,70 @@
+{% extends 'base2.html'%}
+{% block content %}
+    <h4 class= "page-title">Gerênciar Projetos</h4>
+    {% for projeto in projetos %}
+    <div class="card">
+        <div class="card-header">
+               {{projeto.name}} 
+        </div>
+
+        <div class='row'>
+            <div class="col ">
+                    <div class='card-body'>
+                        <p class="card-text" > <strong>Autores:</strong> {{projeto.title}}</p>
+                        <p class="card-text" > <strong>Descrição:</strong> {{projeto.description}}</p>
+
+                    </div>
+                </div> 
+                <div class="" >
+                    <div class='card-body align-middle'>
+                        <a class="btn btn-outline-primary" href="{% url 'editar-projeto' projeto.id %}">Editar</a>
+                        <a class="btn btn-outline-danger" href="{% url 'delete-projeto' projeto.id %}">Excluir</a> 
+                    </div>                 
+                </div>
+            </div>        
+    </div>
+    </br>
+    {% endfor %}
+    
+    <a class="btn btn-outline-primary" href="{% url 'cadastrar-projeto' %}">Novo projeto</a>
+    <br/>
+
+    Página {{ projetos.number }}  
+    {% if projetos.number > 3 %}  
+        de {{ projetos.last_page }}
+    {% endif %}
+
+    <nav aria-label="...">
+        <ul class="pagination">
+          {% if projetos.number <= 3 %}  
+                <li class="page-item disabled">
+                <a class="page-link"  href=""">Anterior</a>
+            {% else %}
+                <li class="page-item">
+                <a class="page-link"  href="?page={{projetos.previous_page_number}}"> Anterior</a>
+            {% endif %}
+            
+          </li>
+          
+          {% for page in projetos.paginator.page_range %}
+             {% if projetos.number == page %}        
+                    <li class="page-item active">
+                        <a class="page-link" href="?page={{page}}">{{page}}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{page}}">{{page}}</a>
+                    </li>
+               {% endif %}  
+            {% endfor %}           
+            {% if projetos.number == projetos.paginator.num_pages %}  
+                <li class="page-item disabled">
+                <a class="page-link"  href=""">Próxima</a>
+            {% else %}
+                <li class="page-item">
+                <a class="page-link"  href="?page={{projetos.next_page_number}}">Próxima</a>
+            {% endif %}
+         
+        </ul>
+      </nav>
+{% endblock  %}

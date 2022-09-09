@@ -1,0 +1,97 @@
+{% extends 'base2.html' %}
+    
+    {% block content %}
+        <div class ="icon-box">
+        <h4 class= "page-title">
+            Cadastrar Relatório no Projeto: <h6> {{ projeto.titulo}}</h6>
+        </h4>
+        <div/>
+        <br/>
+
+        {% if submitted %}
+                <div class="alert alert-success">
+                    <strong>Sucesso!</strong>Relatório cadastrado com sucesso.
+                </div>
+                <div>
+                <p>
+                    <a class="btn btn-primary" href={% url 'gerar-relatorio' id_relatorio %} >
+                        <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Baixar Relatório
+                    </a>
+                    <a class="btn btn-primary" href={% url 'gerencia-relatorios' %} >
+                        Voltar
+                    </a>
+                </p>
+               </div>
+        {%else%}
+        <div>
+
+  <!-- Modal -->
+        <div class="relatorio">
+            <p>
+            <a class="btn btn-default dropdown-toggle" data-bs-toggle="collapse" href="#ultimoRelatorio" role="button" aria-expanded="true" aria-controls="ultimoRelatorio">
+                Último relatório
+            </a>
+            <a class="btn btn-default dropdown-toggle" data-bs-toggle="collapse" href="#objProjeto" role="button" aria-expanded="true" aria-controls="objProjeto">
+                Objetivos no projeto
+            </a>
+            </p>
+            <div class="collapse hide" id="objProjeto" style="">
+                <div class="card card-body border-dark " >
+                    <div class= "card-header">
+                        {{projeto.titulo}}
+                    </div>
+                    <div class="row">
+                        <p class="card-text text-break">                           
+                            Objetivo: {{projeto.objetivo_proposto|safe}}
+                        </p>
+                        <p>
+                            <a class="btn btn-default " data-bs-toggle="collapse" href="#objProjeto" role="button" aria-expanded="true" aria-controls="objProjeto">
+                                <i class="bi-chevron-up" role="img" aria-label="Baixar"></i> Esconder
+                            </a>
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bd-example">
+            <div class="collapse hide" id="ultimoRelatorio" style="">
+                <div class="card card-body border-dark " >
+                    <div class= "card-header">
+                        Data : {{ultimo_relatorio.data_vigencia}}<br/>
+                        Última Parcela: {{ultimo_relatorio.parcela}}
+                    </div>
+                    <div class="row">
+                        <p class="card-text text-break">                           
+                               Resultado: {{ultimo_relatorio.resultado|safe}} 
+                        </p>
+                        {% if ultimo_relatorio.doc %}
+                        <p>
+                            <a class="btn btn-default " href={{ultimo_relatorio.doc.url}}>
+                                <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Baixar Relatório
+                            </a>
+
+                        </p>
+                        {%endif%}
+                        <p>
+                            <a class="btn btn-default " data-bs-toggle="collapse" href="#ultimoRelatorio" role="button" aria-expanded="true" aria-controls="ultimoRelatorio">
+                                <i class="bi-chevron-up" role="img" aria-label="Esconder"></i> Esconder
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" shadow p-4 mb-5 bg-body rounded">
+            <form method=POST enctype="multipart/form-data">
+                    {% csrf_token %} 
+                    {{ form.as_p }}
+                    <br/>
+                    <input type="submit" value="Cadastrar" class="btn btn-primary"/>
+                    <a class="btn btn-primary" href={% url 'gerencia-relatorios'%}>Volta</a>
+                </form>
+                
+            </div>
+    {% endif%}       
+
+    {% endblock %}

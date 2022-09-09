@@ -1,0 +1,20 @@
+{% extends 'base2.html' %}
+    
+    {% block content %}
+        <h4 class= "page-title">
+            Cadastrar projeto
+        </h4>
+        <br/>
+        {% if submitted %}
+                <div class="alert alert-success">
+                    <strong>Sucesso!</strong>Projeto cadastrado com sucesso.
+                </div>
+
+        {% endif%}
+
+        <form method=POST enctype="multipart/form-data">
+                {% csrf_token %} 
+                {{form.as_p}}
+                <input type="submit" value="Salvar" class="btn btn-secondary">
+            </form>
+    {% endblock %}

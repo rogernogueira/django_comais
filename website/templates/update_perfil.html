@@ -1,0 +1,20 @@
+{% extends 'base2.html'%}
+{% block content %}
+{% comment %} {% load crispy_forms_tags %}     {% endcomment %}
+   
+<h4 class= "page-title">
+    Atualizar
+</h4>
+<div class=" shadow p-4 mb-5 bg-body rounded">
+    <form method=POST enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+            <div class="card h-100 p-4">
+              <img src="{{colaborador.foto.url }}" class="card-img-top">
+            </div>
+        </div>
+        <input type="submit" value="Salvar" class="btn btn-primary">
+    </form>
+</div>
+{% endblock  %}

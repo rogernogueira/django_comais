@@ -1,6 +1,6 @@
-{% extends 'base.html'%}
+{% extends 'base2.html'%}
 {% block content %}
-    <h1>Editar - {{contato.nome}} </h1>
+    <h4 class= "page-title">Editar - {{contato.nome}} </h4>
     <br/>
     <form action="" method=POST>
         {% csrf_token %}

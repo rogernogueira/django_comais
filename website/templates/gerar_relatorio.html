@@ -1,0 +1,24 @@
+{% extends 'base2.html'%}
+{% block content %}
+    <h4 class= "page-title">Gerar Relatório</h4>
+    
+    <div class="card">
+           
+        <div class='row'>
+            <div class="col ">
+                    <div class='card-body'>
+                     <ul>            
+                        <li>Parcela : {{relatorio.parcela}}</li>
+                        <li>Titulo: {{relatorio.projeto.titulo}} </li>
+                        <li>Pesquisador: {{relatorio.projeto.user.first_name}} {{relatorio.projeto.user.last_name}} </li>
+                        <li>tpl: {{relatorio.projeto.template}}  </li>
+                     </ul>
+                    </div>
+                </div> 
+                
+            </div>        
+    </div>
+
+
+
+{% endblock  %}
