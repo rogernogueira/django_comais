@@ -7,12 +7,12 @@
 
 {% if submitted %}
         <div class="alert alert-success">
-            <strong>Sucesso!</strong>Relatório autalizado com sucesso.
+            <strong>Sucesso!</strong>  Relatório autalizado com sucesso.
         </div>
         <div>
         <p>
             <a class="btn btn-primary" href={% url 'gerar-relatorio' relatorio.id %} >
-                Baixar Relatório
+                <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Gerar Relatório
             </a>
             <a class="btn btn-primary" href={% url 'gerencia-relatorios' %} >
                 Voltar
