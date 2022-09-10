@@ -329,6 +329,7 @@ def gerar_relatorio(request, id_relatorio):
             '12': 'dezembro'        
         }
     relatorio = Relatorio.objects.get(id=id_relatorio)
+    print("cheguei aqui")
     doc = DocxTemplate(relatorio.projeto.template)
     vigencia_inicio =relatorio.projeto.vigencia_inicio
     
