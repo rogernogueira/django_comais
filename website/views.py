@@ -99,13 +99,12 @@ def busca_contatos(request):
         return render(request,'busca_contatos.html', {'contatos':contatos, 'nome':nome})
 
 def update_contatos_list(request):
-    contatos = Contato.objects.all()
+    contatos = Contato.objects.all().order_by('nome')
     p = Paginator(contatos, 2)
     page = request.GET.get('page')
     contatos = p.get_page(page)
     return render(request,'update_contatos_list.html', {'contatos':contatos})
     
-
 def update_contato(request, id_contato):
     contato = Contato.objects.get(id=id_contato)
     form = ContatoForm(request.POST or None, instance=contato)
@@ -173,7 +172,7 @@ def update_perfil(request):
 
 @login_required
 def gerencia_publicacoes(request):
-    publicacoes = Publicacao.objects.filter(user=request.user)
+    publicacoes = Publicacao.objects.filter(user=request.user).order_by('-ano')
     p = Paginator(publicacoes, 3)
     page = request.GET.get('page')
     publicacoes = p.get_page(page)
@@ -181,7 +180,7 @@ def gerencia_publicacoes(request):
 
 @login_required
 def gerencia_projetos(request):
-    projetos = Projeto.objects.filter(user=request.user)
+    projetos = Projeto.objects.filter(user=request.user).order_by("-id")
     p = Paginator(projetos, 3)
     page = request.GET.get('page')
     projetos = p.get_page(page)
@@ -359,7 +358,7 @@ def gerar_relatorio(request, id_relatorio):
     
 @login_required
 def gerencia_relatorios(request):
-    projetos = ProjetoRelatorio.objects.filter(user=request.user)
+    projetos = ProjetoRelatorio.objects.filter(user=request.user).order_by('-vigencia_fim')
     p = Paginator(projetos, 3)
     page = request.GET.get('page')
     projetos = p.get_page(page)
