@@ -10,12 +10,12 @@
 
         {% if submitted %}
                 <div class="alert alert-success">
-                    <strong>Sucesso!</strong>Relatório cadastrado com sucesso.
+                    <strong>Sucesso!</strong> Relatório cadastrado com sucesso.
                 </div>
                 <div>
                 <p>
                     <a class="btn btn-primary" href={% url 'gerar-relatorio' id_relatorio %} >
-                        <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Baixar Relatório
+                        <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Gerar Relatório
                     </a>
                     <a class="btn btn-primary" href={% url 'gerencia-relatorios' %} >
                         Voltar
