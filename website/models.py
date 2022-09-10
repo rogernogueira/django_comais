@@ -65,7 +65,7 @@ class Projeto(models.Model):
     type = models.ManyToManyField(TipoProjeto)
     date = models.DateField('Data')
     url = models.URLField('URL',max_length=100)
-    description = models.TextField('Descrição')
+    description = models.TextField('Descrição', blank=True, null=True)
     image1 = models.ImageField('Imagem 1', upload_to='images/', blank=True, null=True)
     image2 = models.ImageField('Imagem 2', upload_to='images/', blank=True, null=True)
     image3 = models.ImageField('Imagem 3', upload_to='images/', blank=True, null=True)
