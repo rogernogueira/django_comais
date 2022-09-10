@@ -329,33 +329,31 @@ def gerar_relatorio(request, id_relatorio):
             '12': 'dezembro'        
         }
     relatorio = Relatorio.objects.get(id=id_relatorio)
-    print("cheguei aqui")
-    doc = DocxTemplate(relatorio.projeto.template)
-    vigencia_inicio =relatorio.projeto.vigencia_inicio
-    
-    contexto = {
-        'titulo': relatorio.projeto.titulo,
-        'nome': f'{relatorio.projeto.user.first_name} {relatorio.projeto.user.last_name}',
-        'vigencia_inicio': relatorio.projeto.vigencia_inicio.strftime(settings.DATE_INPUT_FORMATS[0]),
-        'vigencia_fim': relatorio.projeto.vigencia_fim.strftime(settings.DATE_INPUT_FORMATS[0]),
-        'parcela': relatorio.parcela,
-        'objetivo_proposto': RichText(html2markdown.convert(relatorio.projeto.objetivo_proposto)),
-        'objetivo_proposto_obj':RichText(html2markdown.convert(relatorio.projeto.objetivo_proposto_obj)),
-        'resultado':RichText(html2markdown.convert(stripHTMLTags(relatorio.resultado))),
-        'informacao_adicional':RichText(html2markdown.convert(stripHTMLTags(relatorio.informacao_adicional))),
-        'data_vigencia':f'{relatorio.data_vigencia.day} de {month_name[str(relatorio.data_vigencia.month)]} de {relatorio.data_vigencia.year}',
-        'data_assinatura':relatorio.data_assinatura.strftime(settings.DATE_INPUT_FORMATS[0]),        
-    }
-    
-    doc.render(contexto, autoescape=True)
-    dir_docs = os.path.join(settings.MEDIA_ROOT, 'docs')
-    file = f"{relatorio.parcela}-{month_name[str(relatorio.data_vigencia.month)]}-{relatorio.projeto.titulo[:40]}.docx"
-    path = os.path.join(dir_docs, file)
-    doc.save(path)
-    relatorio.doc = 'docs' + '/' + file
-    relatorio.save()
-    return FileResponse(open(path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-    #return render(request,'gerar_relatorio.html', {'relatorio':relatorio})
+    if request.user.id == relatorio.projeto.user.id:
+        doc = DocxTemplate(relatorio.projeto.template)
+        vigencia_inicio =relatorio.projeto.vigencia_inicio
+        contexto = {
+            'titulo': relatorio.projeto.titulo,
+            'nome': f'{relatorio.projeto.user.first_name} {relatorio.projeto.user.last_name}',
+            'vigencia_inicio': relatorio.projeto.vigencia_inicio.strftime(settings.DATE_INPUT_FORMATS[0]),
+            'vigencia_fim': relatorio.projeto.vigencia_fim.strftime(settings.DATE_INPUT_FORMATS[0]),
+            'parcela': relatorio.parcela,
+            'objetivo_proposto': RichText(html2markdown.convert(relatorio.projeto.objetivo_proposto)),
+            'objetivo_proposto_obj':RichText(html2markdown.convert(relatorio.projeto.objetivo_proposto_obj)),
+            'resultado':RichText(html2markdown.convert(stripHTMLTags(relatorio.resultado))),
+            'informacao_adicional':RichText(html2markdown.convert(stripHTMLTags(relatorio.informacao_adicional))),
+            'data_vigencia':f'{relatorio.data_vigencia.day} de {month_name[str(relatorio.data_vigencia.month)]} de {relatorio.data_vigencia.year}',
+            'data_assinatura':relatorio.data_assinatura.strftime(settings.DATE_INPUT_FORMATS[0]),        
+        }
+        doc.render(contexto, autoescape=True)
+        dir_docs = os.path.join(settings.MEDIA_ROOT, 'docs')
+        file = f"{relatorio.parcela}-{month_name[str(relatorio.data_vigencia.month)]}-{relatorio.projeto.titulo[:40]}.docx"
+        path = os.path.join(dir_docs, file)
+        doc.save(path)
+        relatorio.doc = 'docs' + '/' + file
+        relatorio.save()
+        return FileResponse(open(path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    return HttpResponseRedirect('/gerencia_relatorios')
     
 @login_required
 def gerencia_relatorios(request):
