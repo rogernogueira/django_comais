@@ -348,7 +348,7 @@ def gerar_relatorio(request, id_relatorio):
     
     doc.render(contexto, autoescape=True)
     dir_docs = os.path.join(settings.MEDIA_ROOT, 'docs')
-    file = f"{relatorio.parcela}-{relatorio.data_vigencia}-{relatorio.projeto.titulo[:40]}.docx"
+    file = f"{relatorio.parcela}-{month_name[str(relatorio.data_vigencia.month)]}-{relatorio.projeto.titulo[:40]}.docx"
     path = os.path.join(dir_docs, file)
     doc.save(path)
     relatorio.doc = 'docs' + '/' + file
