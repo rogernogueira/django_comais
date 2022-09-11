@@ -1,6 +1,7 @@
 {% extends 'base2.html'%}
 {% block content %}
     <h4 class= "page-title">Gerênciar Publicações</h4>
+<div class=" shadow p-4 mb-5 bg-body rounded">
     {% for publicacao in publicacoes %}
     <div class="card">
         <div class="card-header">{{publicacao.titulo}}</div>
@@ -68,4 +69,5 @@
          
         </ul>
       </nav>
+    </div>
 {% endblock  %}

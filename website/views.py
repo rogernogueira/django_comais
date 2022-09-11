@@ -57,18 +57,15 @@ def last_day_of_month(any_day):
 
 
 def  contato(request):
-    submitted = False
     if request.method == 'POST':
         form = ContatoForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/contato?submitted=True')
-    else:
-        form = ContatoForm
-        if 'submitted' in request.GET:
-            submitted = True
-        
-    return render(request,'contato_form.html', {'form':form, 'submitted':submitted})
+            messages.success(request, 'Sua manifestação foi enviado com sucesso, obrigado pelo contato!')
+
+            return HttpResponseRedirect('/#contato')
+    else:        
+        return render(request,'contato_form.html', {'form':form})
 
 def index(request):
     return render(request,'index.html', {})
@@ -144,7 +141,8 @@ def home(request):
         form = ContatoForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/home?submitted=True#contact')
+            messages.success(request, 'Sua manifestação foi enviado com sucesso, obrigado pelo contato!')
+            return HttpResponseRedirect('/#contact')
     else:
         form = ContatoForm
         if 'submitted' in request.GET:
@@ -197,6 +195,7 @@ def editar_publicacao(request, id_publicacao):
             form = PublicacaoForm(request.POST or None, request.FILES or None, instance=publicacao)
             if form.is_valid():
                 form.save()
+                messages.success(request, 'Publicação atualizada com sucesso!')
                 return HttpResponseRedirect('/gerencia_publicacoes')
         form = PublicacaoForm(request.POST or None, instance=publicacao)
         return render(request,'editar_publicacao.html', {'form':form, 'publicacao':publicacao})
@@ -208,6 +207,7 @@ def delete_publicacao(request,id_publicacao):
     if request.user.id == Publicacao.objects.get(id=id_publicacao).user.id:
         publicacao = Publicacao.objects.get(id=id_publicacao)
         publicacao.delete()
+        messages.success(request, 'Publicação excluída com sucesso!')
         return HttpResponseRedirect('/gerencia_publicacoes')
     else:
         return HttpResponseRedirect('/gerencia_publicacoes')
@@ -220,6 +220,7 @@ def editar_projeto(request, id_projeto):
             form = ProjetoForm(request.POST or None, request.FILES or None, instance=projeto)
             if form.is_valid():
                 form.save()
+                messages.success(request, 'Projeto atualizado com sucesso!')
                 return HttpResponseRedirect('/gerencia_projetos')
         form = ProjetoForm(request.POST or None, instance=projeto)
         return render(request,'editar_projeto.html', {'form':form, 'projeto':projeto})
@@ -272,6 +273,7 @@ def delete_projeto(request,id_projeto):
     if request.user.id == Projeto.objects.get(id=id_projeto).user.id:
         projeto = Projeto.objects.get(id=id_projeto)
         projeto.delete()
+        messages.success(request, 'Projeto excluído com sucesso!')
         return HttpResponseRedirect('/gerencia_projetos')
     else:
         return HttpResponseRedirect('/gerencia_projetos')
@@ -286,6 +288,7 @@ def cadastrar_publicacao(request):
             form.save(commit=False)
             form.user = request.user         
             form.save()
+            messages.success(request, 'Publicação cadastrada com sucesso!')
             return HttpResponseRedirect('/cadastrar_publicacao?submitted=True')
     else:
         form = PublicacaoForm()
@@ -304,6 +307,7 @@ def cadastrar_projeto(request):
             form.save(commit=False)
             form.user = request.user         
             form.save()
+            messages.success(request, 'Projeto salvo com sucesso!')
             return HttpResponseRedirect('/cadastrar_projeto?submitted=True')
     else:
         form = ProjetoForm()
@@ -352,6 +356,8 @@ def gerar_relatorio(request, id_relatorio):
         doc.save(path)
         relatorio.doc = 'docs' + '/' + file
         relatorio.save()
+        messages.success(request, 'Relatório gerado com sucesso!')
+        
         return FileResponse(open(path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     return HttpResponseRedirect('/gerencia_relatorios')
     
@@ -423,6 +429,7 @@ def cadastrar_projeto_relatorio(request):
             form.save(commit=False)
             form.user = request.user         
             form.save()
+            messages.success(request, 'Projeto cadastrado com sucesso!')
             return HttpResponseRedirect('/gerencia_relatorios?submitted=True')
       else:
           print(form.errors.as_json())  
@@ -431,6 +438,7 @@ def cadastrar_projeto_relatorio(request):
         if 'submitted' in request.GET:
             submitted = True 
     return render(request,'cadastrar_projeto_relatorio.html', {'form':form, 'submitted':submitted})
+
 @login_required
 def deletar_projeto_relatorio(request, id_projeto_relatorio):
     if request.user == ProjetoRelatorio.objects.get(id=id_projeto_relatorio).user:
