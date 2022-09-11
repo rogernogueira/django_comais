@@ -6,12 +6,13 @@
         </h4>
         <br/>
         
+        <div class=" shadow p-4 mb-5 bg-body rounded">
+            <form method=POST enctype="multipart/form-data">
+                    {% csrf_token %} 
+                    {{form.as_p}}
 
-        <form method=POST enctype="multipart/form-data">
-                {% csrf_token %} 
-                {{form.as_p}}
-
-                <input type="submit" value="Salvar" class="btn btn-primary">
-                <a class="btn btn-primary" href={% url 'gerencia-projetos'%}>Volta</a>
-            </form>
+                    <input type="submit" value="Salvar" class="btn btn-primary">
+                    <a class="btn btn-primary" href={% url 'gerencia-projetos'%}>Volta</a>
+                </form>
+        </div>    
     {% endblock %}
