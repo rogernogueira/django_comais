@@ -11,11 +11,12 @@
                 </div>
 
         {% endif%}
-
+        <div class=" shadow p-4 mb-5 bg-body rounded">
             <form method=POST enctype="multipart/form-data"  >
                 {% csrf_token %} 
                 {{form.as_p}}
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
+        </div>
         
     {% endblock %}

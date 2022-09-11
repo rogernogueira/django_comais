@@ -5,13 +5,6 @@
             Fale conosco
         </h4>
         <br/>
-        {% if submitted %}
-                <div class="alert alert-success">
-                    <strong>Sucesso!</strong> O seu contato foi enviado com sucesso.
-                </div>
-
-        {% else %}
-
             <form method=POST action="" >
                 {% csrf_token %} 
                 {{form.as_p}}

@@ -27,7 +27,11 @@
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
             language : 'pt_BR',
-            
+            setup: function (editor) {
+              editor.on('change', function () {
+                  tinymce.triggerSave();
+              });
+          }
           });
         </script>
        

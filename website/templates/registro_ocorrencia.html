@@ -11,11 +11,12 @@
             </div>
 
         {% else %}
-
+        <div class=" shadow p-4 mb-5 bg-body rounded">
             <form method=POST action="" >
                 {% csrf_token %} 
                 {{form.as_p}}
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
+        </div>
         {% endif %}
     {% endblock %}

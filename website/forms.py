@@ -111,7 +111,7 @@ class ProjetoForm(ModelForm):
             'type': forms.SelectMultiple(attrs={'class': 'form-select'}),
             'date':forms.DateInput(attrs={'class': 'form-control'}),
             'url':forms.URLInput(attrs={'class': 'form-control'}),
-            'description':forms.Textarea(attrs={'class': 'form-control'}),
+            'description':TinyMCE(attrs={'cols': 40, 'rows': 30, 'class': 'form-control'}),
             'image1':forms.FileInput( attrs={'class': 'form-control'}),
             'image2':forms.FileInput( attrs={'class': 'form-control'}),
             'image3':forms.FileInput( attrs={'class': 'form-control'}),
