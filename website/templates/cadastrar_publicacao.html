@@ -5,12 +5,7 @@
             Cadastrar publicação
         </h4>
         <br/>
-        {% if submitted %}
-                <div class="alert alert-success">
-                    <strong>Sucesso!</strong> Publicação cadastrada com sucesso.
-                </div>
-
-        {% endif%}
+     
         <div class=" shadow p-4 mb-5 bg-body rounded">
             <form method=POST enctype="multipart/form-data"  >
                 {% csrf_token %} 

@@ -146,3 +146,24 @@ class Relatorio(models.Model):
     def __str__(self):
         return str(self.parcela) + ' - ' + str(self.data_vigencia) +' - ' + self.projeto.titulo 
     
+class RelatorioFinal(models.Model):
+    projeto = models.ForeignKey(ProjetoRelatorio, on_delete=models.CASCADE)
+    objetivos_principais  = tinymce_models.HTMLField()
+    principais_obstaculos  = tinymce_models.HTMLField()
+    resultados_esperados_alcancados  = tinymce_models.HTMLField()
+    informacao_adicional  = tinymce_models.HTMLField()
+    conclusoes  = tinymce_models.HTMLField()
+    data_vigencia = models.DateField('Data de vigencia', blank=True, null=True )
+    data_assinatura = models.DateField('Data de assinatura', blank=True, null=True )
+    assinatura = models.FileField(upload_to='assinaturas/', blank=True, null=True)
+    doc = models.FileField(upload_to='docs/', blank=True, null=True)
+    def __str__(self):
+        return 'Relatorio Conclusivo - ' + str(self.data_vigencia) +' - ' + self.projeto.titulo 
+    
+    
+class Templates(models.Model):
+    nome = models.CharField('Título',max_length=250)
+    descricao = models.TextField('Descrição')
+    template = models.FileField(upload_to='templates/', blank=True, null=True)
+    def __str__(self):
+        return self.nome

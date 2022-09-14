@@ -5,12 +5,7 @@
             Cadastrar projeto
         </h4>
         <br/>
-        {% if submitted %}
-                <div class="alert alert-success">
-                    <strong>Sucesso!</strong>Projeto cadastrado com sucesso.
-                </div>
-
-        {% endif%}
+        
 
         <form method=POST enctype="multipart/form-data">
                 {% csrf_token %} 

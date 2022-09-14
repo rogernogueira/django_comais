@@ -13,12 +13,28 @@
             <p class="card-text"> Quantidade de parcelas: {{projeto.numero_parcelas}}</p>
             <p class="card-text"> Quantidade de relatórios: {{projeto.qtd_relatorios}}</p>
             <p class="card-text"> Parcela atual: {{projeto.ultima_parcela}}</p>
+            <div > 
+           
+                <div class="progress" style="height: 1px; ">
+                    <div class="progress-bar" role="progressbar" aria-label="Example 1px high" style="width: {{projeto.percentual}}%;" aria-valuenow={{projeto.percentual}} aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="progress" style="margin-top:5px;">
+                    <div class="progress-bar" role="progressbar" aria-label="Example with label" style="width: {{projeto.percentual}}%" aria-valuenow={{projeto.percentual}} aria-valuemin="0" aria-valuemax="100">{{projeto.percentual}}%</div>
+                </div> 
+                <div>
+                    <p class="text-center">Andamento</p>
+                </div>
+           
+            </div>
+             
             <div>
-                    <a href={% url 'cadastrar-relatorio' projeto.id %} class="btn btn-outline-success">Novo Relatório</a>
+                    
                     <a href={% url 'editar-projeto-relatorio' projeto.id %} class="btn btn-outline-primary">Editar projeto</a>
                     <a href={% url 'deletar-projeto-relatorio' projeto.id%} onclick="return confirm('Tem certeza que deseja excluir o projeto?');"  class="btn btn-outline-danger" >Excluir projeto</a>
             </div>
+           
             </div>
+            
             </div>
             
             {% if projeto.qtd_relatorios %}
@@ -26,39 +42,88 @@
                     <div class="card-body">
                         
                         <div class="relatorios" >
-                            <p>
-                            <a class="btn btn-default dropdown-toggle" data-bs-toggle="collapse" href="#collapse{{projeto.id}}" role="button" aria-expanded="true" aria-controls="collapse{{projeto.id}}">
-                                Relatórios 
-                            </a>
-                            </p>
-                            <div class="collapse hide" id="collapse{{projeto.id}}" style="">
-                                <div class="card " style="padding:3px" >         
-                                    <div class="row">
-                                        <div >                                                                   
-                                            {% for relatorio in projeto.relatorios%}   
-                                            <div class="btn-group" style="width:195px;">                                           
-                                                <a href={% url 'editar-relatorio' relatorio.id %} type="button" class="btn btn-outline-info  btn-sm" style="width:140px;  margin-bottom:5px;">
-                                                    {{relatorio.parcela}} - {{relatorio.data_vigencia|date:"F Y"}} 
-                                                </a>
-                                                {%if relatorio.doc %}    
-                                                <a href={{relatorio.doc.url}} type="button" class="btn btn-outline-info  btn-sm" 
-                                                style="width:40px;  margin-bottom:5px; white-space:nowrap; overflow:hidden;max-width:40px;border-left:0;">
-                                                    <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i>    
-                                                </a>
-                                                {%else%}
-                                                <a href="" type="button" class="btn btn-outline-info  btn-sm disabled" 
-                                                style="width:40px;  margin-bottom:5px; white-space:nowrap; overflow:hidden;max-width:40px;border-left:0;">
-                                                    <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i>    
-                                                </a>
+                            <fieldset class="flex-column d-inline-flex p-2 " style="display: block;
+                            margin-inline-start: 2px;
+                            margin-inline-end: 2px;
+                            padding-block-start: 0.35em;
+                            padding-inline-start: 0.75em;
+                            padding-inline-end: 0.75em;
+                            padding-block-end: 0.625em;
+                            min-inline-size: min-content;
+                            border-width: 2px;
+                            border-style: groove;
+                            border-color: rgb(192, 192, 192);
+                            border-image: initial;
+                            margin: 2px;
+                            border: 1px solid silver;
+                            padding: 8px;
+                            border-radius: 4px; ">    
+                                                                          
+                                <legend style="display: block;
+                                padding-inline-start: 2px;
+                                padding-inline-end: 2px;
+                                border-width: initial;
+                                border-style: none;
+                                border-color: initial;
+                                border-image: initial;
+                                padding: 2px;
+                                all:revert;
+                                ">
+                                        Relatórios
+                                </legend>
+                                <div> 
+                                    <a href={% url 'cadastrar-relatorio' projeto.id %} class="btn btn-outline-success">Novo Relatório</a>
+                                </div>
 
-                                                {%endif%}
+                                <div class="input-group ">
+                                    <a class="btn btn-outline-success"  href={% url 'cadastrar-relatorio-final' projeto.id %} style="margin-top:10px;margin-bottom:10px;" >
+                                        Relatório Final
+                                    </a>
+                                    {% if projeto.relatorio_final %}
+                                        <a href={{projeto.relatorio_final.url}}   type="button" class="btn btn-outline-success"  style="margin-top:10px;margin-bottom:10px;">
+                                            <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> 
+                                        </a>
+                                    {% endif %}
+                                    
+                                </div>
+                                <div>
+                                    <a class="btn btn-outline-success dropdown-toggle" data-bs-toggle="collapse" href="#collapse{{projeto.id}}" role="button" aria-expanded="true" aria-controls="collapse{{projeto.id}}">
+                                        Todos Relatórios
+                                    </a>
+                                
+                                </div>
 
-                                            </div>    
-                                            {% endfor %}
-                                        </div>                                   
+
+
+                                <div class="collapse hide" id="collapse{{projeto.id}}" style="">
+                                    <div class="card " style="padding:3px" >         
+                                        <div class="row">
+                                            <div >                                                                   
+                                                {% for relatorio in projeto.relatorios%}   
+                                                <div class="btn-group" style="width:195px;">                                           
+                                                    <a href={% url 'editar-relatorio' relatorio.id %} type="button" class="btn btn-outline-info  btn-sm" style="width:140px;  margin-bottom:5px;">
+                                                        {{relatorio.parcela}} - {{relatorio.data_vigencia|date:"F Y"}} 
+                                                    </a>
+                                                    {%if relatorio.doc %}    
+                                                    <a href={{relatorio.doc.url}} type="button" class="btn btn-outline-info  btn-sm" 
+                                                    style="width:40px;  margin-bottom:5px; white-space:nowrap; overflow:hidden;max-width:40px;border-left:0;">
+                                                        <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i>    
+                                                    </a>
+                                                    {%else%}
+                                                    <a href="" type="button" class="btn btn-outline-info  btn-sm disabled" 
+                                                    style="width:40px;  margin-bottom:5px; white-space:nowrap; overflow:hidden;max-width:40px;border-left:0;">
+                                                        <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i>    
+                                                    </a>
+
+                                                    {%endif%}
+
+                                                </div>    
+                                                {% endfor %}
+                                            </div>                                   
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                        </fieldset>
                         </div>
                     </div>
                 </div>
