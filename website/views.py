@@ -504,7 +504,7 @@ def cadastrar_relatorio_final(request, id_projeto_relatorio):
             else:
                 ultimo_dia_mes = datetime.datetime(ano, mes,int(projeto.dia_entrega))
             
-            form = RelatorioFinalForm(data={
+            form = RelatorioFinalForm(initial={
                 'data_vigencia':ultimo_dia_mes,
                 'data_assinatura':hoje,
                 })
