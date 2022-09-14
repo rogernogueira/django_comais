@@ -385,13 +385,13 @@ def gerencia_relatorios(request):
         else:
            projeto.ultima_parcela = "Não iniciado"
            projeto.percentual=0
-        relatorio_final=RelatorioFinal.objects.get(projeto=projeto)
-        if RelatorioFinal:
-            projeto.relatorio_final = relatorio_final.doc
-            
+        try:
+            relatorio_final = RelatorioFinal.objects.get(projeto=projeto)
+            if relatorio_final.doc:
+                projeto.relatorio_final = relatorio_final.doc
+        except RelatorioFinal.DoesNotExist:
+            relatorio_final = None   
         projeto.relatorios = Relatorio.objects.filter(projeto=projeto)
-         
-            
     return render(request,'gerencia_relatorios.html', {'projetos':projetos})
 
 
