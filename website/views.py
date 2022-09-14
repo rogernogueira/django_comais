@@ -4,8 +4,10 @@ from urllib import response
 from django.db import close_old_connections
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect, FileResponse
-from .models import Ocorrencia, Contato, Projeto, Relatorio, TipoProjeto, Colaborador,Publicacao, Relatorio, ProjetoRelatorio 
-from .forms import ContatoForm, OcorrenciaForm, ColaboradorForm, PublicacaoForm, ProjetoForm, RelatorioForm, ProjetoRelatorioForm
+from .models import Ocorrencia, Contato, Projeto, Relatorio, TipoProjeto, Colaborador,Publicacao,\
+Relatorio, ProjetoRelatorio , RelatorioFinal, Templates
+from .forms import ContatoForm, OcorrenciaForm, ColaboradorForm, PublicacaoForm,\
+ProjetoForm, RelatorioForm, ProjetoRelatorioForm, RelatorioFinalForm
 from django.core.paginator import Paginator
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
@@ -20,6 +22,22 @@ import html2markdown
 from django.contrib import messages
 import re
 
+
+
+month_name = {
+            '1': 'janeiro',
+            '2': 'fevereiro',
+            '3': 'março',
+            '4': 'abril',
+            '5': 'maio',
+            '6': 'junho',
+            '7': 'julho',
+            '8': 'agosto',
+            '9': 'setembro',
+            '10': 'outubro',
+            '11': 'novembro',
+            '12': 'dezembro'        
+        }
 
 def stripHTMLTags(html):
     text = html
@@ -107,6 +125,7 @@ def update_contato(request, id_contato):
     form = ContatoForm(request.POST or None, instance=contato)
     if form.is_valid():
         form.save()
+        messages.success(request, 'Contato atualizado com sucesso!')
         return HttpResponseRedirect('/update_contatos_list')
     return render(request,'update_contato.html', {'form':form})
 
@@ -122,6 +141,7 @@ def registro_ocorrencias(request):
       form = OcorrenciaForm(request.POST)  
       if form.is_valid():
             form.save()
+            messages.success(request, 'Ocorrência registrada com sucesso!')
             return HttpResponseRedirect('/registro_ocorrencias?submitted=True')
     else:
         form = OcorrenciaForm
@@ -161,6 +181,7 @@ def update_perfil(request):
         form = ColaboradorForm(request.POST or None, request.FILES or None, instance=colaborador)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Perfil atualizado com sucesso!')
             return HttpResponseRedirect('/perfil')
     
     form = ColaboradorForm(request.POST or None, instance=colaborador )    
@@ -257,6 +278,7 @@ def editar_relatorio(request, id_relatorio):
             form = RelatorioForm(request.POST or None, request.FILES or None, instance=relatorio)
             if form.is_valid():
                 form.save()
+                messages.success(request, "Relatório atualizado com sucesso" )
                 return HttpResponseRedirect(f'/editar_relatorio/{id_relatorio}?submitted=True')
         else:
             form = RelatorioForm(request.POST or None, instance=relatorio)
@@ -318,20 +340,7 @@ def cadastrar_projeto(request):
 
 @login_required
 def gerar_relatorio(request, id_relatorio):
-    month_name = {
-            '1': 'janeiro',
-            '2': 'fevereiro',
-            '3': 'março',
-            '4': 'abril',
-            '5': 'maio',
-            '6': 'junho',
-            '7': 'julho',
-            '8': 'agosto',
-            '9': 'setembro',
-            '10': 'outubro',
-            '11': 'novembro',
-            '12': 'dezembro'        
-        }
+
     relatorio = Relatorio.objects.get(id=id_relatorio)
     if request.user.id == relatorio.projeto.user.id:
         doc = DocxTemplate(relatorio.projeto.template)
@@ -372,9 +381,16 @@ def gerencia_relatorios(request):
         projeto.qtd_relatorios = Relatorio.objects.filter(projeto=projeto).count()
         if  projeto.qtd_relatorios >0:
            projeto.ultima_parcela = Relatorio.objects.filter(projeto=projeto).order_by('-parcela').first().parcela
+           projeto.percentual= f'{projeto.qtd_relatorios/projeto.numero_parcelas*100:.2f}'
         else:
            projeto.ultima_parcela = "Não iniciado"
+           projeto.percentual=0
+        relatorio_final=RelatorioFinal.objects.get(projeto=projeto)
+        if RelatorioFinal:
+            projeto.relatorio_final = relatorio_final.doc
+            
         projeto.relatorios = Relatorio.objects.filter(projeto=projeto)
+         
             
     return render(request,'gerencia_relatorios.html', {'projetos':projetos})
 
@@ -389,32 +405,38 @@ def cadastrar_relatorio(request, id_projeto_relatorio):
     submitted = False
     ultimo_relatorio = Relatorio.objects.filter(projeto=id_projeto_relatorio).order_by('-parcela').first()
     projeto=ProjetoRelatorio.objects.get(id=id_projeto_relatorio)
+    id_relatorio=''
     if request.method == 'POST':
       form = RelatorioForm(request.POST,request.FILES)  
       form.instance.projeto = projeto
       if form.is_valid():                   
             form.save()
+            messages.success(request, 'Relatório salvo com sucesso!')
             return HttpResponseRedirect(f'/cadastrar_relatorio/{id_projeto_relatorio}?submitted=True')
     else:
-        if projeto.dia_entrega == 0:
-            ultimo_dia_mes =last_day_of_month(data_anterior)
-        else:
-            ultimo_dia_mes = datetime.datetime(ano, mes,int(projeto.dia_entrega))
-        if ultimo_relatorio:
-            sugestao_parcela = ultimo_relatorio.parcela + 1
-        else:
-            sugestao_parcela =1
-        form = RelatorioForm(data={
-            'resultado': 'Adicionar os resultados obtidos mês anterior.',
-            'parcela':sugestao_parcela, 
-            'data_vigencia':ultimo_dia_mes,
-            'data_assinatura':hoje,
-            })
         if 'submitted' in request.GET:
             submitted = True
             id_relatorio = Relatorio.objects.filter(projeto=id_projeto_relatorio).last().id
+            form=''
+            ultimo_relatorio=''
+            
         else:
             id_relatorio=''
+            if projeto.dia_entrega == 0:
+                ultimo_dia_mes =last_day_of_month(data_anterior)
+            else:
+                ultimo_dia_mes = datetime.datetime(ano, mes,int(projeto.dia_entrega))
+            if ultimo_relatorio:
+                sugestao_parcela = ultimo_relatorio.parcela + 1
+            else:
+                sugestao_parcela =1
+            form = RelatorioForm(initial={
+                
+                'parcela':sugestao_parcela, 
+                'data_vigencia':ultimo_dia_mes,
+                'data_assinatura':hoje,
+                })
+       
     return render(request,'cadastrar_relatorio.html', {'form':form, 'submitted':submitted,
                                                        'id_relatorio': id_relatorio, 'ultimo_relatorio':ultimo_relatorio, 
                                                        'projeto':projeto})
@@ -457,3 +479,96 @@ def deletar_relatorio(request, id_relatorio):
         return HttpResponseRedirect('/gerencia_relatorios')
     else:
         messages.warning(request, 'Você não tem permissão para excluir este projeto!')
+        
+
+@login_required
+def cadastrar_relatorio_final(request, id_projeto_relatorio):
+    submitted= False
+    if RelatorioFinal.objects.filter(projeto=id_projeto_relatorio).count()==0:
+        mes, ano = (datetime.datetime.now().month-1,datetime.datetime.now().year) if datetime.datetime.now().month-1 > 0 else (12, datetime.datetime.now().year-1)
+        data_anterior = datetime.datetime(ano, mes, 1)
+        hoje=datetime.datetime.now().strftime('%Y-%m-%d')
+        submitted = False
+        ultimo_relatorio = Relatorio.objects.filter(projeto=id_projeto_relatorio).order_by('-parcela').first()
+        projeto=ProjetoRelatorio.objects.get(id=id_projeto_relatorio)
+        if request.method == 'POST':
+            form = RelatorioFinalForm(request.POST,request.FILES)  
+            form.instance.projeto = projeto
+            if form.is_valid():                   
+                form.save() 
+                messages.success(request, 'Relatório final cadastrado com sucesso!')
+                return HttpResponseRedirect(f'/cadastrar_relatorio_final/{id_projeto_relatorio}?submitted=True')
+        else:
+            if projeto.dia_entrega == 0:
+                ultimo_dia_mes =last_day_of_month(data_anterior)
+            else:
+                ultimo_dia_mes = datetime.datetime(ano, mes,int(projeto.dia_entrega))
+            
+            form = RelatorioFinalForm(data={
+                'data_vigencia':ultimo_dia_mes,
+                'data_assinatura':hoje,
+                })
+            if 'submitted' in request.GET:
+                submitted = True
+                id_relatorio = RelatorioFinal.objects.filter(projeto=id_projeto_relatorio).first().id
+            else:
+                id_relatorio=''
+        return render(request,'cadastrar_relatorio_final.html', {'form':form, 'submitted':submitted,
+                                                        'id_relatorio': id_relatorio, 'ultimo_relatorio':ultimo_relatorio, 
+                                                            'projeto':projeto})
+    else:
+        relatorio = RelatorioFinal.objects.get(projeto=id_projeto_relatorio)
+        if request.user.id == relatorio.projeto.user.id:
+            if request.method == 'POST':
+                form = RelatorioFinalForm(request.POST or None, request.FILES or None, instance=relatorio)
+                if form.is_valid():
+                    form.save()
+                    messages.success(request, 'Relatório final atualizado com sucesso!')
+                    return HttpResponseRedirect(f'/cadastrar_relatorio_final/{id_projeto_relatorio}?submitted=True')
+            else:
+                form = RelatorioFinalForm(request.POST or None, instance=relatorio)
+                if 'submitted' in request.GET:
+                    submitted = True
+                id_relatorio = RelatorioFinal.objects.filter(projeto=id_projeto_relatorio).first().id
+                ultimo_relatorio = Relatorio.objects.filter(projeto=id_projeto_relatorio).order_by('-parcela').first()
+                projeto=ProjetoRelatorio.objects.get(id=id_projeto_relatorio)
+                return render(request,'cadastrar_relatorio_final.html', {'form':form, 'submitted':submitted,
+                                                        'id_relatorio': id_relatorio, 'ultimo_relatorio':ultimo_relatorio, 
+                                                            'projeto':projeto})
+        else:
+            return HttpResponseRedirect('/gerencia_relatorios')
+
+def gerar_relatorio_final(request, id_relatorio):   
+    relatorio = RelatorioFinal.objects.get(id=id_relatorio)
+    if request.user.id == relatorio.projeto.user.id:
+        template = Templates.objects.get(nome='Relatório Final')
+        doc = DocxTemplate(template.template)
+      
+        contexto = {
+            'titulo': relatorio.projeto.titulo,
+            'nome': f'{relatorio.projeto.user.first_name} {relatorio.projeto.user.last_name}',
+            'vigencia_inicio': relatorio.projeto.vigencia_inicio.strftime(settings.DATE_INPUT_FORMATS[0]),
+            'vigencia_fim': relatorio.projeto.vigencia_fim.strftime(settings.DATE_INPUT_FORMATS[0]),
+            'dia': relatorio.data_vigencia.day,
+            'mes': month_name[str(relatorio.data_vigencia.month)],
+            'ano': str(relatorio.data_vigencia.year)[2:],
+            'dia_entrega': relatorio.data_assinatura.day,
+            'mes_entrega': relatorio.data_assinatura.month,
+            'ano_entrega': relatorio.data_assinatura.year,
+            'objetivos_principais': RichText(html2markdown.convert(relatorio.objetivos_principais)),
+            'principais_obstaculos': RichText(html2markdown.convert(relatorio.principais_obstaculos)),
+            'resultados_esperados_alcancados':RichText(html2markdown.convert(relatorio.resultados_esperados_alcancados)),
+            'informacao_adicional':RichText(html2markdown.convert(relatorio.informacao_adicional)),
+            'conclusoes':RichText(html2markdown.convert(relatorio.conclusoes)),
+            }
+        doc.render(contexto, autoescape=True)
+        dir_docs = os.path.join(settings.MEDIA_ROOT, 'docs')
+        file = f"Relatorio_final - {relatorio.projeto.titulo[:40]}.docx"
+        path = os.path.join(dir_docs, file)
+        doc.save(path)
+        relatorio.doc = 'docs' + '/' + file
+        relatorio.save()
+        messages.success(request, 'Relatório Final gerado com sucesso!')
+        
+        return FileResponse(open(path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    return HttpResponseRedirect('/gerencia_relatorios')

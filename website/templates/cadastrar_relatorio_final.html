@@ -3,7 +3,7 @@
     {% block content %}
         <div class ="icon-box">
         <h4 class= "page-title">
-            Cadastrar Relatório no Projeto: <h6> {{ projeto.titulo}}</h6>
+            Cadastrar Relatório Final do Projeto: <h6> {{ projeto.titulo}}</h6>
         </h4>
         <div/>
         <br/>
@@ -12,7 +12,7 @@
                 
                 <div>
                 <p>
-                    <a class="btn btn-primary" href={% url 'gerar-relatorio' id_relatorio %} >
+                    <a class="btn btn-primary" href={% url 'gerar-relatorio-final' id_relatorio %} >
                         <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Gerar Relatório
                     </a>
                     <a class="btn btn-primary" href={% url 'gerencia-relatorios' %} >
@@ -85,7 +85,7 @@
                     {% csrf_token %} 
                     {{ form.as_p }}
                     <br/>
-                    <input type="submit" value="Cadastrar" class="btn btn-primary"/>
+                    <input type="submit" value="Salvar" class="btn btn-primary"/>
                     <a class="btn btn-primary" href={% url 'gerencia-relatorios'%}>Volta</a>
                 </form>
                 

@@ -5,12 +5,7 @@
             Solicitação de Serviço
         </h4>
         <br/>
-        {% if submitted %}
-            <div class="alert alert-success">
-                <strong>Sucesso!</strong> Sua solicitação foi registrada.
-            </div>
-
-        {% else %}
+       
         <div class=" shadow p-4 mb-5 bg-body rounded">
             <form method=POST action="" >
                 {% csrf_token %} 

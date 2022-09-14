@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 from django.urls import reverse
-from .models import Contato, Ocorrencia, Projeto, Usuario, Servico, Historico, Colaborador, Publicacao, Relatorio, ProjetoRelatorio
+from .models import Contato, Ocorrencia, Projeto, Usuario, Servico,\
+    Historico, Colaborador, Publicacao, Relatorio, ProjetoRelatorio, RelatorioFinal
 # create a form for the model Contato
 
 from tinymce.widgets import TinyMCE
@@ -135,6 +136,40 @@ class RelatorioForm(ModelForm):
                     'data_assinatura': forms.DateInput(format=('%Y-%m-%d'),attrs={'class': 'form-control', 'type':'date'}),
                     'parcela': forms.TextInput(attrs={'class': 'form-control'}),
         }
+        
+class RelatorioFinalForm(ModelForm):
+    class Meta:
+        model = RelatorioFinal
+        fields = ('objetivos_principais', 'principais_obstaculos',
+                  'resultados_esperados_alcancados','informacao_adicional', 
+                  'conclusoes', 'data_vigencia', 'data_assinatura')
+        
+        exclude = [ 'projeto']
+        labels = {
+                    'objetivos_principais':'Objetivos Principais resultados alcançados',
+                    'principal_obstaculos':'Principais obstáculos ou dificuldades encontradas',
+                    'resultados_esperados_alcancados':'Satisfação entre resultados esperados e os resultados alcançados',
+                    'informacao_adicional': 'Informações adicionais',
+                    'conclusoes': 'Conclusões',
+                    'data_vigencia': 'Data do relatório',
+                    'data_assinatura': 'Data da entrega',
+                  }
+        widgets = {
+                    'objetivos_principais': TinyMCE(attrs={'cols': 80, 'rows': 30, 'class': 'form-control'}),
+                    'principal_obstaculos': TinyMCE(attrs={'cols': 80, 'rows': 30, 'class': 'form-control'}),
+                    'resultados_esperados_alcancados': TinyMCE(attrs={'cols': 80, 'rows': 30, 'class': 'form-control'}),
+                    'informacao_adicional': TinyMCE(attrs={'cols': 80, 'rows': 30, 'class': 'form-control'}),
+                    'conclusoes': TinyMCE(attrs={'cols': 80, 'rows': 30, 'class': 'form-control'}),
+                    'data_vigencia': forms.DateInput(format=('%Y-%m-%d'),attrs={'class': 'form-control', 'type':'date'}),
+                    'data_assinatura': forms.DateInput(format=('%Y-%m-%d'),attrs={'class': 'form-control', 'type':'date'}),
+        }
+
+
+
+
+
+
+
 
 class ProjetoRelatorioForm(ModelForm):
     class Meta:

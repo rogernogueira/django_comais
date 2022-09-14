@@ -2,13 +2,7 @@
 {% block content %}
     <h4 class= "page-title">Editar - {{projeto.titulo}} </h4>
     <br/>
-    {% if submitted %}
-                <div class="alert alert-success">
-                    <strong>Sucesso!</strong>Projeto salvo com sucesso.
-                </div>
-
-        {% endif%}
-        <div class=" shadow p-4 mb-5 bg-body rounded">
+       <div class=" shadow p-4 mb-5 bg-body rounded">
         <form method=POST enctype="multipart/form-data">
             {% csrf_token %}
             {{form.as_p}}
