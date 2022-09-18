@@ -1,5 +1,8 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
+from django.db.models import BaseConstraint
+
+from django.contrib import messages
 from django.urls import reverse
 from .models import Contato, Ocorrencia, Projeto, Usuario, Servico,\
     Historico, Colaborador, Publicacao, Relatorio, ProjetoRelatorio, RelatorioFinal
@@ -136,6 +139,31 @@ class RelatorioForm(ModelForm):
                     'data_assinatura': forms.DateInput(format=('%Y-%m-%d'),attrs={'class': 'form-control', 'type':'date'}),
                     'parcela': forms.TextInput(attrs={'class': 'form-control'}),
         }
+    def check_rules(self, *args, **kwargs):
+        valid = True
+        relatorio =  super(RelatorioForm, self).save(commit=False)
+        if not self.is_valid():
+            self.add_error('Por favor, verifique os dados informados')
+            valid = False
+        parcela = relatorio.parcela
+        id_projeto = relatorio.projeto.id
+        if Relatorio.objects.filter(parcela=parcela, projeto=id_projeto).exists():
+            self.add_error('Já existe um relatório para esta parcela')
+            valid = False
+        if relatorio.data_vigencia > relatorio.data_assinatura:
+            self.add_error('A data de vigência não pode ser maior que a data de assinatura')
+            valid = False
+        
+        if relatorio.parcela > relatorio.projeto.numero_parcelas:
+            self.add_error('Parcela não prevista no projeto')
+            valid = False
+        return valid
+        
+    
+    def add_error(self, message):
+            errors = self._errors.setdefault(forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList())
+            errors.append(message)
+ 
         
 class RelatorioFinalForm(ModelForm):
     class Meta:
