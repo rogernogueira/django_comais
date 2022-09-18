@@ -9,10 +9,11 @@ Relatorio, ProjetoRelatorio , RelatorioFinal, Templates
 from .forms import ContatoForm, OcorrenciaForm, ColaboradorForm, PublicacaoForm,\
 ProjetoForm, RelatorioForm, ProjetoRelatorioForm, RelatorioFinalForm
 from django.core.paginator import Paginator
-from django.db.models import Max
+from django.db.models import Max, BaseConstraint
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.core import serializers
+from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.dateparse import parse_date
 import datetime
@@ -408,12 +409,12 @@ def cadastrar_relatorio(request, id_projeto_relatorio):
     id_relatorio=''
     if request.method == 'POST':
       form = RelatorioForm(request.POST,request.FILES)  
-      form.instance.projeto = projeto
-      if form.is_valid():                   
-            form.save()
+      form.instance.projeto = projeto    
+      if form.check_rules():
+            form.save()    
             messages.success(request, 'Relatório salvo com sucesso!')
             return HttpResponseRedirect(f'/cadastrar_relatorio/{id_projeto_relatorio}?submitted=True')
-    else:
+    else: 
         if 'submitted' in request.GET:
             submitted = True
             id_relatorio = Relatorio.objects.filter(projeto=id_projeto_relatorio).last().id

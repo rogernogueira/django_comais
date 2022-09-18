@@ -1,6 +1,8 @@
 from pydoc import describe
 from re import template
 from django.db import models
+from django.db.models import UniqueConstraint, BaseConstraint
+
 from django.contrib.auth.models import User
 from datetime  import datetime
 from django.conf import settings
@@ -143,6 +145,11 @@ class Relatorio(models.Model):
     parcela=models.IntegerField('Parcela',default=1)
     assinatura = models.FileField(upload_to='assinaturas/', blank=True, null=True)
     doc = models.FileField(upload_to='docs/', blank=True, null=True)
+    
+    
+    class Meta:
+            constraints = [UniqueConstraint(fields=['projeto', 'parcela'], name='unica_parcela', violation_error_message='Já existe um relatório para esta parcela')]
+            
     def __str__(self):
         return str(self.parcela) + ' - ' + str(self.data_vigencia) +' - ' + self.projeto.titulo 
     
