@@ -193,10 +193,21 @@ class RelatorioFinalForm(ModelForm):
         }
 
 
+    def check_rules(self, *args, **kwargs):
+        valid = True
+        relatorio =  super(RelatorioFinalForm, self).save(commit=False)
+        if not self.is_valid():
+            self.add_error('Por favor, verifique os dados informados')
+            valid = False
+        if relatorio.data_vigencia > relatorio.data_assinatura:
+            self.add_error('A data de vigência não pode ser maior que a data de assinatura')
+            valid = False
+        return valid
 
-
-
-
+    def add_error(self, message):
+            errors = self._errors.setdefault(forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList())
+            errors.append(message)
+ 
 
 
 class ProjetoRelatorioForm(ModelForm):
