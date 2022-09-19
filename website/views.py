@@ -277,7 +277,7 @@ def editar_relatorio(request, id_relatorio):
     if request.user.id == relatorio.projeto.user.id:
         if request.method == 'POST':
             form = RelatorioForm(request.POST or None, request.FILES or None, instance=relatorio)
-            if form.is_valid():
+            if form.check_rules():
                 form.save()
                 messages.success(request, "Relatório atualizado com sucesso" )
                 return HttpResponseRedirect(f'/editar_relatorio/{id_relatorio}?submitted=True')
@@ -495,7 +495,7 @@ def cadastrar_relatorio_final(request, id_projeto_relatorio):
         if request.method == 'POST':
             form = RelatorioFinalForm(request.POST,request.FILES)  
             form.instance.projeto = projeto
-            if form.is_valid():                   
+            if form.check_rules():                   
                 form.save() 
                 messages.success(request, 'Relatório final cadastrado com sucesso!')
                 return HttpResponseRedirect(f'/cadastrar_relatorio_final/{id_projeto_relatorio}?submitted=True')
@@ -522,7 +522,7 @@ def cadastrar_relatorio_final(request, id_projeto_relatorio):
         if request.user.id == relatorio.projeto.user.id:
             if request.method == 'POST':
                 form = RelatorioFinalForm(request.POST or None, request.FILES or None, instance=relatorio)
-                if form.is_valid():
+                if form.check_rules():
                     form.save()
                     messages.success(request, 'Relatório final atualizado com sucesso!')
                     return HttpResponseRedirect(f'/cadastrar_relatorio_final/{id_projeto_relatorio}?submitted=True')
