@@ -277,10 +277,13 @@ def editar_relatorio(request, id_relatorio):
     if request.user.id == relatorio.projeto.user.id:
         if request.method == 'POST':
             form = RelatorioForm(request.POST or None, request.FILES or None, instance=relatorio)
-            if form.check_rules():
+            if form.check_rules_update(id_relatorio):
                 form.save()
                 messages.success(request, "Relatório atualizado com sucesso" )
                 return HttpResponseRedirect(f'/editar_relatorio/{id_relatorio}?submitted=True')
+            else:
+                return render(request,'editar_relatorio.html', {'form':form, 'relatorio':relatorio, 'submitted':submitted})
+                
         else:
             form = RelatorioForm(request.POST or None, instance=relatorio)
             
@@ -410,7 +413,7 @@ def cadastrar_relatorio(request, id_projeto_relatorio):
     if request.method == 'POST':
       form = RelatorioForm(request.POST,request.FILES)  
       form.instance.projeto = projeto    
-      if form.check_rules():
+      if form.check_rules_new():
             form.save()    
             messages.success(request, 'Relatório salvo com sucesso!')
             return HttpResponseRedirect(f'/cadastrar_relatorio/{id_projeto_relatorio}?submitted=True')
@@ -485,7 +488,9 @@ def deletar_relatorio(request, id_relatorio):
 @login_required
 def cadastrar_relatorio_final(request, id_projeto_relatorio):
     submitted= False
-    if RelatorioFinal.objects.filter(projeto=id_projeto_relatorio).count()==0:
+    id_relatorio=''
+ 
+    if not RelatorioFinal.objects.filter(projeto=id_projeto_relatorio).exists():
         mes, ano = (datetime.datetime.now().month-1,datetime.datetime.now().year) if datetime.datetime.now().month-1 > 0 else (12, datetime.datetime.now().year-1)
         data_anterior = datetime.datetime(ano, mes, 1)
         hoje=datetime.datetime.now().strftime('%Y-%m-%d')
@@ -495,6 +500,7 @@ def cadastrar_relatorio_final(request, id_projeto_relatorio):
         if request.method == 'POST':
             form = RelatorioFinalForm(request.POST,request.FILES)  
             form.instance.projeto = projeto
+            
             if form.check_rules():                   
                 form.save() 
                 messages.success(request, 'Relatório final cadastrado com sucesso!')
@@ -511,7 +517,7 @@ def cadastrar_relatorio_final(request, id_projeto_relatorio):
                 })
             if 'submitted' in request.GET:
                 submitted = True
-                id_relatorio = RelatorioFinal.objects.filter(projeto=id_projeto_relatorio).first().id
+                id_relatorio = RelatorioFinal.objects.get(projeto=id_projeto_relatorio).id
             else:
                 id_relatorio=''
         return render(request,'cadastrar_relatorio_final.html', {'form':form, 'submitted':submitted,
@@ -530,7 +536,7 @@ def cadastrar_relatorio_final(request, id_projeto_relatorio):
                 form = RelatorioFinalForm(request.POST or None, instance=relatorio)
                 if 'submitted' in request.GET:
                     submitted = True
-                id_relatorio = RelatorioFinal.objects.filter(projeto=id_projeto_relatorio).first().id
+                id_relatorio = RelatorioFinal.objects.get(projeto=id_projeto_relatorio).id
                 ultimo_relatorio = Relatorio.objects.filter(projeto=id_projeto_relatorio).order_by('-parcela').first()
                 projeto=ProjetoRelatorio.objects.get(id=id_projeto_relatorio)
                 return render(request,'cadastrar_relatorio_final.html', {'form':form, 'submitted':submitted,

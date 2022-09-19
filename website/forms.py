@@ -139,28 +139,51 @@ class RelatorioForm(ModelForm):
                     'data_assinatura': forms.DateInput(format=('%Y-%m-%d'),attrs={'class': 'form-control', 'type':'date'}),
                     'parcela': forms.TextInput(attrs={'class': 'form-control'}),
         }
-    def check_rules(self, *args, **kwargs):
+    def check_rules_new(self, *args, **kwargs):
         valid = True
-        relatorio =  super(RelatorioForm, self).save(commit=False)
         if not self.is_valid():
-            self.add_error('Por favor, verifique os dados informados')
-            valid = False
+            self.adicionar_error('Por favor, verifique os dados informados')
+            return False
+        relatorio =  super(RelatorioForm, self).save(commit=False)
         parcela = relatorio.parcela
         id_projeto = relatorio.projeto.id
         if Relatorio.objects.filter(parcela=parcela, projeto=id_projeto).exists():
-            self.add_error('Já existe um relatório para esta parcela')
+            self.adicionar_error('Já existe um relatório para esta parcela')
             valid = False
         if relatorio.data_vigencia > relatorio.data_assinatura:
-            self.add_error('A data de vigência não pode ser maior que a data de assinatura')
+            self.adicionar_error('A data de vigência não pode ser maior que a data de assinatura')
             valid = False
         
         if relatorio.parcela > relatorio.projeto.numero_parcelas:
-            self.add_error('Parcela não prevista no projeto')
+            self.adicionar_error('Parcela não prevista no projeto')
+            valid = False
+        return valid
+    
+    def check_rules_update(self, id_relatorio, *args, **kwargs):
+        valid = True
+        relatorio =  super(RelatorioForm, self).save(commit=False)
+        if not self.is_valid():
+            self.adicionar_error('Por favor, verifique os dados informados')
+            valid = False
+        parcela = relatorio.parcela
+        id_projeto = relatorio.projeto.id
+        
+        if Relatorio.objects.get(id=id_relatorio).parcela!= parcela:
+            if Relatorio.objects.filter(parcela=parcela, projeto=id_projeto).exists():
+                self.adicionar_error('Já existe um relatório para esta parcela')
+                valid = False
+        
+        if relatorio.data_vigencia > relatorio.data_assinatura:
+            self.adicionar_error('A data de vigência não pode ser maior que a data de assinatura')
+            valid = False
+        
+        if relatorio.parcela > relatorio.projeto.numero_parcelas:
+            self.adicionar_error('Parcela não prevista no projeto')
             valid = False
         return valid
         
     
-    def add_error(self, message):
+    def adicionar_error(self, message):
             errors = self._errors.setdefault(forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList())
             errors.append(message)
  
@@ -195,20 +218,23 @@ class RelatorioFinalForm(ModelForm):
 
     def check_rules(self, *args, **kwargs):
         valid = True
-        relatorio =  super(RelatorioFinalForm, self).save(commit=False)
+        
+     
         if not self.is_valid():
-            self.add_error('Por favor, verifique os dados informados')
-            valid = False
+            self.adicionar_error("Por favor, verifique os dados informados")
+            return False
+        
+        relatorio =  super(RelatorioFinalForm, self).save(commit=False)
+            
         if relatorio.data_vigencia > relatorio.data_assinatura:
-            self.add_error('A data de vigência não pode ser maior que a data de assinatura')
+            self.adicionar_error("A data de vigência não pode ser maior que a data de assinatura")
             valid = False
         return valid
-
-    def add_error(self, message):
+ 
+    def adicionar_error(self, message):
             errors = self._errors.setdefault(forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList())
             errors.append(message)
  
-
 
 class ProjetoRelatorioForm(ModelForm):
     class Meta:
