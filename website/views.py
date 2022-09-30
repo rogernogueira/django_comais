@@ -344,10 +344,17 @@ def cadastrar_projeto(request):
 
 @login_required
 def gerar_relatorio(request, id_relatorio):
-
-    relatorio = Relatorio.objects.get(id=id_relatorio)
+    relatorio = Relatorio.objects.get(id=id_relatorio)  
+    
+    if not relatorio.projeto.template_default:
+        if not os.path.exists(relatorio.projeto.template.path):
+            messages.error(request, 'Template não encontrado!')
+            return HttpResponseRedirect('/gerencia_relatorios')
+        template = relatorio.projeto.template
+    else:
+        template = Templates.objects.get(nome='RTP').template
     if request.user.id == relatorio.projeto.user.id:
-        doc = DocxTemplate(relatorio.projeto.template)
+        doc = DocxTemplate(template)
         vigencia_inicio =relatorio.projeto.vigencia_inicio
         contexto = {
             'titulo': relatorio.projeto.titulo,
