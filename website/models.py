@@ -132,6 +132,8 @@ class ProjetoRelatorio(models.Model):
     dia_entrega = models.IntegerField('Dia do mês da entrega', default=0)
     template = models.FileField(upload_to='templates/', blank=True, null=True)
     status=models.CharField('Status',max_length=100, choices=STATUS_CHOICES, default='Em elaboração')
+    data_criacao = models.DateTimeField('Data de criação',  default=datetime.now)
+    template_default = models.BooleanField('Usar template padrão', default=False)
     
     def __str__(self):
         return self.titulo
