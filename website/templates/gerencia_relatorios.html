@@ -37,7 +37,7 @@
             
             </div>
             
-            {% if projeto.qtd_relatorios %}
+           
                     <div class="col">
                     <div class="card-body">
                         
@@ -74,7 +74,6 @@
                                 <div> 
                                     <a href={% url 'cadastrar-relatorio' projeto.id %} class="btn btn-outline-success">Novo Relatório</a>
                                 </div>
-
                                 <div class="input-group ">
                                     <a class="btn btn-outline-success"  href={% url 'cadastrar-relatorio-final' projeto.id %} style="margin-top:10px;margin-bottom:10px;" >
                                         Relatório Final
@@ -84,8 +83,8 @@
                                             <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> 
                                         </a>
                                     {% endif %}
-                                    
                                 </div>
+                                {% if projeto.qtd_relatorios %}
                                 <div>
                                     <a class="btn btn-outline-success dropdown-toggle" data-bs-toggle="collapse" href="#collapse{{projeto.id}}" role="button" aria-expanded="true" aria-controls="collapse{{projeto.id}}">
                                         Todos Relatórios
@@ -123,11 +122,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% endif %}
                         </fieldset>
                         </div>
                     </div>
                 </div>
-                            {% endif %}
+                          x
                         
                     
                     
