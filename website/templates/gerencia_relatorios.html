@@ -127,10 +127,7 @@
                         </div>
                     </div>
                 </div>
-                          x
                         
-                    
-                    
             </div>
             <div class="card-footer text-muted">
                 Vigência : {{projeto.vigencia_fim|date:"SHORT_DATE_FORMAT"}}
@@ -157,9 +154,7 @@
                     <li class="page-item">
                     <a class="page-link"  href="?page={{projetos.previous_page_number}}"> Anterior</a>
                 {% endif %}
-                
             </li>
-            
             {% for page in projetos.paginator.page_range %}
                 {% if projetos.number == page %}        
                         <li class="page-item active">
@@ -178,7 +173,6 @@
                     <li class="page-item">
                     <a class="page-link"  href="?page={{projetos.next_page_number}}">Próxima</a>
                 {% endif %}
-            
             </ul>
         </nav>
     </div>
