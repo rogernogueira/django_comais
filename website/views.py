@@ -283,7 +283,6 @@ def editar_relatorio(request, id_relatorio):
                 return HttpResponseRedirect(f'/editar_relatorio/{id_relatorio}?submitted=True')
             else:
                 return render(request,'editar_relatorio.html', {'form':form, 'relatorio':relatorio, 'submitted':submitted})
-                
         else:
             form = RelatorioForm(request.POST or None, instance=relatorio)
             
@@ -292,7 +291,6 @@ def editar_relatorio(request, id_relatorio):
             return render(request,'editar_relatorio.html', {'form':form, 'relatorio':relatorio, 'submitted':submitted})
     else:
         return HttpResponseRedirect('/gerencia_relatorios')
-
 
 @login_required
 def delete_projeto(request,id_projeto):
