@@ -1,0 +1,252 @@
+[
+{
+    "model": "website.contato",
+    "pk": 1,
+    "fields": {
+        "nome": "as",
+        "email": "asd@sad.vom.br",
+        "telefone": "asd",
+        "cidade": "asd",
+        "mensagem": "asds",
+        "status": 0
+    }
+},
+{
+    "model": "website.tipoprojeto",
+    "pk": 1,
+    "fields": {
+        "type": "Visão Computacional",
+        "filter": "filter-vc"
+    }
+},
+{
+    "model": "website.tipoprojeto",
+    "pk": 2,
+    "fields": {
+        "type": "Processamento de Linguagem Natural",
+        "filter": "filter-pln"
+    }
+},
+{
+    "model": "website.tipoprojeto",
+    "pk": 3,
+    "fields": {
+        "type": "Outros",
+        "filter": ".filter-outros"
+    }
+},
+{
+    "model": "website.projeto",
+    "pk": 8,
+    "fields": {
+        "name": "RedCap",
+        "client": "sdf",
+        "title": "asdf",
+        "date": "2020-04-06",
+        "url": "http://comais.uft.edu.br",
+        "description": "asdfasd",
+        "image1": "images/team-4_s1Yp4I0.jpg",
+        "image2": "",
+        "image3": "",
+        "user": 1,
+        "type": [
+            1
+        ]
+    }
+},
+{
+    "model": "website.colaborador",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "name": "ROGÉRIO NOGUEIRA DE SOUSA",
+        "url_latters": "http://lattes.cnpq.br/7533983313189933",
+        "funcao": "Analista e Pesquisadora",
+        "url_twitter": "https://twitter.com/roger_nogueira",
+        "url_facebook": "https://www.facebook.com/rogerio.nogueira.140",
+        "url_instagram": "https://www.instagram.com/roger_nogueira/",
+        "url_linkedin": "https://www.linkedin.com/in/rog%C3%A9rio-nogueira-9b304a47/",
+        "foto": "images/roger_Ov0hAFC.jpeg",
+        "post_date": "2022-07-26T23:53:34.716Z"
+    }
+},
+{
+    "model": "website.categoria_publicacao",
+    "pk": 1,
+    "fields": {
+        "name": "Artigos completos publicados em periódicos"
+    }
+},
+{
+    "model": "website.publicacao",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "titulo": "RESUMO AUTOMÁTICO DE TEXTOS JURÍDICOS USANDO GRAFOS COM VOCABULÁRIO CONTROLADO E ALGORITMO K-MEANS C",
+        "resumo": "<p>O processo judicial eletr&ocirc;nico &eacute; uma realidade no Brasil, onde 70% dos casos novos em todo Poder Judici&aacute;rio s&atilde;o virtuais. Fazer uso adequado desta realidade e aprimor&aacute;-lo &eacute; primordial para dar vaz&atilde;o &agrave; demanda de aproximadamente 25 milh&otilde;es de processos novos por ano. Neste contexto, buscar facilitar o dia a dia dos operadores da justi&ccedil;a brasileira, respons&aacute;veis pelas an&aacute;lises do crescente volume de informa&ccedil;&atilde;o digital presentes nos autos &eacute; primordial para a efici&ecirc;ncia na presta&ccedil;&atilde;o jurisdicional e amplo acesso &agrave; justi&ccedil;a. Usar resumos textos &eacute; uma forma &aacute;gil de se inteirar sobre o assunto do texto, podendo ser um meio de empregar maior agilidade &agrave; tramita&ccedil;&atilde;o processual. Assim esta pesquisa, visa o desenvolvimento de uma ferramenta capaz de gerar automaticamente resumos de textos jur&iacute;dicos, fazendo uso de t&eacute;cnicas de Processamento de Linguagem Natural e teoria de grafos em conjunto com o vocabul&aacute;rio jur&iacute;dico advindo do Supremo Tribunal Federal.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+        "ano": 2020,
+        "autores": "SOUSA, ROGÉRIO NOGUEIRA DE; PRATA, DAVID NADLER",
+        "artigo_upload": "artigos/RTP-01.docx",
+        "post_date": "2022-08-03T12:58:39Z",
+        "categoria": [
+            1
+        ]
+    }
+},
+{
+    "model": "website.publicacao",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "titulo": "Robot Chow: Automatic Animal Feeding with Intelligent Interface to Monitor Pets.",
+        "resumo": "<p>De acordo com &uacute;ltima pesquisa do IBGE, existem mais de 74,3 milh&otilde;es de c&atilde;es e gatos no Brasil, e o maior custo na cria&ccedil;&atilde;o desses animais &eacute; com a ra&ccedil;&atilde;o, devendo ser servida em hor&aacute;rios e quantidades adequadas. Contrapondo isso, no cotidiano dos criadores de animais de estima&ccedil;&atilde;o, n&atilde;o raramente ocorrem imprevistos como reuni&otilde;es, viagens de &uacute;ltima hora, engarrafamento no tr&acirc;nsito, entre outros. Com o prop&oacute;sito de auxiliar &agrave;s dificuldades postas aos criadores de animais dom&eacute;sticos de pequeno porte, este trabalho apresenta a implanta&ccedil;&atilde;o de uma solu&ccedil;&atilde;o denominada RoboBoia, capaz de servir ra&ccedil;&atilde;o granulada e troca de &aacute;gua em hor&aacute;rios e volume pr&eacute;-agendados de acordo com o usu&aacute;rio, podendo monitorar se o mesmo est&aacute; se alimentando. Para isso, o usu&aacute;rio usa mensagens instant&acirc;neas no celular, tendo uma interface de solu&ccedil;&atilde;o que controla as funcionalidades apenas interagindo (&ldquo;conversando&rdquo;) com o aplicativo. A solu&ccedil;&atilde;o al&eacute;m de proporcionar comandos, permite enviar fotos ou ainda notificar se algo est&aacute; fora do normal. Isto, independente de espa&ccedil;o-tempo, bastando apenas acesso &agrave; internet. A solu&ccedil;&atilde;o foi toda desenvolvida em Raspberry pi, usando Python, e integrado aos servi&ccedil;os em nuvem Watson Assistent e Telegram.</p>",
+        "ano": 2019,
+        "autores": "NOGUEIRA, ROGERIO; ARAÚJO, HUMBERTO ; PRATA, DAVID .",
+        "artigo_upload": "artigos/RTP-02_zhwNr7H.pdf",
+        "post_date": "2022-08-03T13:05:55Z",
+        "categoria": [
+            1
+        ]
+    }
+},
+{
+    "model": "website.projetorelatorio",
+    "pk": 1,
+    "fields": {
+        "titulo": "Central QualiTOPAMA - Qualificação das Ações de Vigilância em Saúde, Fortalecimento e Organização da Rede de Saúde Interfederativa",
+        "user": 1,
+        "vigencia_inicio": "2022-03-01",
+        "vigencia_fim": "2022-12-30",
+        "numero_parcelas": 12,
+        "objetivo_proposto": "<p>Coordenar e supervisionar os servi&ccedil;os contratados para consecu&ccedil;&atilde;o das metas previstas no campo da interven&ccedil;&atilde;o tecnol&oacute;gica; assessorar a Coordena&ccedil;&atilde;o Geral quanto ao monitoramento e avalia&ccedil;&atilde;o do desenvolvimento das a&ccedil;&otilde;es previstas no campo da interven&ccedil;&atilde;o tecnol&oacute;gica.</p>",
+        "objetivo_proposto_obj": "<p>Obj. alcan&ccedil;ado: MONITORAMENTO E AVALIA&Ccedil;&Atilde;O da solu&ccedil;&atilde;o tecnol&oacute;gica em desenvolvimento.sd</p>",
+        "dia_entrega": 0,
+        "template": "templates/tpl2_Ywjos0A.docx",
+        "status": "Aguardando",
+        "data_criacao": "2022-10-06T12:56:25.166Z",
+        "template_default": false
+    }
+},
+{
+    "model": "website.projetorelatorio",
+    "pk": 5,
+    "fields": {
+        "titulo": "teste",
+        "user": 1,
+        "vigencia_inicio": "2022-09-06",
+        "vigencia_fim": "2022-09-08",
+        "numero_parcelas": 12,
+        "objetivo_proposto": "<p>fghdfgh</p>",
+        "objetivo_proposto_obj": "<p>dfghdfgh</p>",
+        "dia_entrega": 0,
+        "template": "templates/tpl2_TJKYyvy.docx",
+        "status": "Em andamento",
+        "data_criacao": "2022-10-06T12:56:25.170Z",
+        "template_default": false
+    }
+},
+{
+    "model": "website.relatorio",
+    "pk": 1,
+    "fields": {
+        "projeto": 5,
+        "resultado": "<p>sdfg</p>",
+        "informacao_adicional": "<p>sfdg</p>",
+        "data_vigencia": "2022-09-30",
+        "data_assinatura": "2022-10-03",
+        "parcela": 1,
+        "assinatura": "",
+        "doc": "docs/1-setembro-teste.docx"
+    }
+},
+{
+    "model": "website.relatorio",
+    "pk": 27,
+    "fields": {
+        "projeto": 1,
+        "resultado": "<p>Foi criado o protocolo para entrega de produtos da empresa contratada, visando garantir que o produto entregue pela empresa tenha total ader&ecirc;ncia ao produto<br>contratado.</p>",
+        "informacao_adicional": "<p>Os artefatos necess&aacute;rios para entrega dos produtos s&atilde;o divididos em: &nbsp;Lista usu&aacute;rios<br>cadastrados, Capacita&ccedil;&otilde;es dos usu&aacute;rios, Documenta&ccedil;&atilde;o do sistema e Relat&oacute;rio de teste em<br>campo do sistema</p>",
+        "data_vigencia": "2022-05-30",
+        "data_assinatura": "2022-05-30",
+        "parcela": 3,
+        "assinatura": "",
+        "doc": "docs/3-2022-05-30-Central QualiTOPAMA - Qualificação das A.docx"
+    }
+},
+{
+    "model": "website.relatorio",
+    "pk": 28,
+    "fields": {
+        "projeto": 1,
+        "resultado": "<p>Resultado obtido. Est&aacute; sendo acompanhado algumas atualiza&ccedil;&otilde;es a serem realizadas no sistema<br>de vigil&acirc;ncia sanit&aacute;ria, que s&atilde;o:</p>\r\n<p>Relat&oacute;rio de todas as situa&ccedil;&otilde;es por setor cadastradas e que eventualmente venham a ser<br>cadastradas;<br>Relat&oacute;rio das empresas cadastradas e exclu&iacute;das mensalmente;<br>Relat&oacute;rio das empresas que possuem pendencias nas assinaturas;<br>Relat&oacute;rio de visita por dia por setor e por t&eacute;cnico;<br>Relat&oacute;rio do quantitativo de empresas licenciadas mensalmente por setor e por atividade;<br>Adequa&ccedil;&atilde;o na licen&ccedil;a sanit&aacute;ria haja visto que algumas licen&ccedil;as, principalmente as<br>drogarias, necessitam de carimbos, conforme foto abaixo:<br>Adequa&ccedil;&atilde;o no relat&oacute;rio consulta de estabelecimento, acrescentar CNPJ para ficar mais<br>f&aacute;cil a consulta;<br>Relat&oacute;rio que demonstre quem fez altera&ccedil;&atilde;o em um processo, quem inativou, quem<br>excluiu etc;<br>Adequa&ccedil;&atilde;o no tamanho dos arquivos anexados, tendo em vista que possuem processo em<br>que s&oacute; o contrato social atinge uns 20MB. Dentro da possibilidade verificar o tamanho<br>m&aacute;ximo.</p>",
+        "informacao_adicional": "",
+        "data_vigencia": "2022-06-30",
+        "data_assinatura": "2022-06-30",
+        "parcela": 4,
+        "assinatura": "",
+        "doc": "docs/4-2022-06-30-Central QualiTOPAMA - Qualificação das A.docx"
+    }
+},
+{
+    "model": "website.relatorio",
+    "pk": 29,
+    "fields": {
+        "projeto": 1,
+        "resultado": "<p>Resultado obtido. O munic&iacute;pio de Marab&aacute; realizou a checagem das novas funcionalidades<br>implantadas no sistema de vigil&acirc;ncia sanit&aacute;ria, e certificou que as funcionalidades abaixo<br>atendem a expectativa:<br> Lista dos operadores que exclu&iacute;ram Documentos, Processos, Visitas...<br> Permitir digitar o per&iacute;odo da visita do operador;<br> Especifica&ccedil;&atilde;o do Bairro a ser visitado;<br> Lista de CNPJ de outros munic&iacute;pios;<br><br></p>",
+        "informacao_adicional": "",
+        "data_vigencia": "2022-07-30",
+        "data_assinatura": "2022-07-30",
+        "parcela": 5,
+        "assinatura": "",
+        "doc": ""
+    }
+},
+{
+    "model": "website.relatorio",
+    "pk": 30,
+    "fields": {
+        "projeto": 1,
+        "resultado": "<p>Resultados obtidos.&nbsp; Entre os dias 24/08/2022 e 27/08/2022, foi realizada visita t&eacute;cnica nos municipios de Itupiranga, Marab&aacute; e Rondon do Par&aacute;,&nbsp; na ocasi&atilde;o foi definido que o munic&iacute;pio de Marab&aacute; ter&aacute; prioridade na implanta&ccedil;&atilde;o de todos os sistemas contratados, devido ao fato de ser o munic&iacute;pio mais avan&ccedil;ado no processo de implanta&ccedil;&atilde;o das ferramentas.</p>\r\n<p>O sistema de Vigil&acirc;ncia Sant&aacute;ria&nbsp; est&aacute; conclu&iacute;ndo o processo de implanta&ccedil;&atilde;o, restando apenas a valida&ccedil;&atilde;o em campo do mesmo.</p>\r\n<p>&nbsp;</p>",
+        "informacao_adicional": "",
+        "data_vigencia": "2022-08-31",
+        "data_assinatura": "2022-09-06",
+        "parcela": 6,
+        "assinatura": "",
+        "doc": "docs/6-2022-08-31-Central QualiTOPAMA - Qualificação das A.docx"
+    }
+},
+{
+    "model": "website.relatoriofinal",
+    "pk": 1,
+    "fields": {
+        "projeto": 5,
+        "objetivos_principais": "<p>asdf</p>",
+        "principais_obstaculos": "<p>asf</p>",
+        "resultados_esperados_alcancados": "<p>adf</p>",
+        "informacao_adicional": "<p>asdf</p>",
+        "conclusoes": "<p>asf</p>",
+        "data_vigencia": "2022-09-30",
+        "data_assinatura": "2022-10-03",
+        "assinatura": "",
+        "doc": "docs/Relatorio_final - teste.docx"
+    }
+},
+{
+    "model": "website.templates",
+    "pk": 1,
+    "fields": {
+        "nome": "RTP",
+        "descricao": "Relatório Técnico Parcial",
+        "template": "templates/tpl_rtp_lUL7ugM.docx"
+    }
+},
+{
+    "model": "website.templates",
+    "pk": 2,
+    "fields": {
+        "nome": "Relatório Final",
+        "descricao": "Relatório de Conclusão do sistema",
+        "template": "templates/tplRelatorioFinal_nZhkM3M.docx"
+    }
+}
+]

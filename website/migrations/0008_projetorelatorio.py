@@ -13,18 +13,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='ProjetoRelatorio',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('titulo', models.CharField(max_length=250, verbose_name='Título')),
-                ('vigencia_inicio', models.DateField(verbose_name='Início da vigência ')),
-                ('vigencia_fim', models.DateField(verbose_name='FIM da vigência ')),
-                ('numero_parcelas', models.IntegerField(default=1, verbose_name='Número de parcelas')),
-                ('objetivo_proposto', models.TextField(verbose_name='Objetivo proposto')),
-                ('objetivo_proposto_obj', models.TextField(verbose_name='Objetivo proposto')),
-                ('template', models.FileField(blank=True, null=True, upload_to='templates/')),
-                ('user', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
     ]
