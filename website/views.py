@@ -558,7 +558,7 @@ def gerar_relatorio_final(request, id_relatorio):
       
         contexto = {
             'titulo': relatorio.projeto.titulo,
-            'nome': f'{relatorio.projeto.user.first_name} {relatorio.projeto.user.last_name}',
+            'nome': relatorio.projeto.user.first_name+' '+ relatorio.projeto.user.last_name,
             'vigencia_inicio': relatorio.projeto.vigencia_inicio.strftime(settings.DATE_INPUT_FORMATS[0]),
             'vigencia_fim': relatorio.projeto.vigencia_fim.strftime(settings.DATE_INPUT_FORMATS[0]),
             'dia': relatorio.data_vigencia.day,
