@@ -343,7 +343,7 @@ def cadastrar_projeto(request):
 @login_required
 def gerar_relatorio(request, id_relatorio):
     relatorio = Relatorio.objects.get(id=id_relatorio)  
-    colaborador = Colaborador.objects.get(user=request.user.id)
+    
     
     if not relatorio.projeto.template_default:
         if not os.path.exists(relatorio.projeto.template.path):
@@ -357,7 +357,7 @@ def gerar_relatorio(request, id_relatorio):
         vigencia_inicio =relatorio.projeto.vigencia_inicio
         contexto = {
             'titulo': relatorio.projeto.titulo,
-            'nome': colaborador.nome,
+            'nome': f'{relatorio.projeto.user.first_name} {relatorio.projeto.user.last_name}',
             'vigencia_inicio': relatorio.projeto.vigencia_inicio.strftime(settings.DATE_INPUT_FORMATS[0]),
             'vigencia_fim': relatorio.projeto.vigencia_fim.strftime(settings.DATE_INPUT_FORMATS[0]),
             'parcela': relatorio.parcela,
