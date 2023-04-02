@@ -343,7 +343,7 @@ def cadastrar_projeto(request):
 @login_required
 def gerar_relatorio(request, id_relatorio):
     relatorio = Relatorio.objects.get(id=id_relatorio)  
-    colaborador = Colaborador.objects.get(user=request.user)
+    colaborador = Colaborador.objects.get(user=request.user.id)
     
     if not relatorio.projeto.template_default:
         if not os.path.exists(relatorio.projeto.template.path):
