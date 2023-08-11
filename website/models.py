@@ -1,12 +1,19 @@
 from pydoc import describe
 from re import template
+import django.utils
 from django.db import models
 from django.db.models import UniqueConstraint, BaseConstraint
-
+from django.utils import timezone
 from django.contrib.auth.models import User
-from datetime  import datetime
-from django.conf import settings
+import datetime
+
 from tinymce import models as tinymce_models
+from django.conf import settings
+
+# configure timezone
+
+
+
 
 
 STATUS_CHOICES = [('Aguardando', 'Aguardando'),
@@ -86,7 +93,7 @@ class Colaborador(models.Model):
     url_instagram  = models.URLField('URL Instagram',max_length=100, null=True, blank=True)
     url_linkedin = models.URLField('URL linkedin',max_length=100, null=True, blank=True)
     foto = models.ImageField('foto', upload_to='images/', blank=True, null=True, default='images/default.png')
-    post_date = models.DateTimeField('Data do Post',  default=datetime.now)
+    post_date = models.DateTimeField('Data do Post',  default=django.utils.timezone.now)
     
     def __str__(self):
         return self.name
@@ -104,7 +111,7 @@ class Publicacao(models.Model):
     #categoria = models.CharField('Categoria',max_length=100)
     autores = models.CharField('Autores',max_length=100)
     artigo_upload = models.FileField(upload_to='artigos/', blank=True, null=True)
-    post_date = models.DateTimeField('Data do Post',  default=datetime.now)
+    post_date = models.DateTimeField('Data do Post',  default=django.utils.timezone.now)
     #categoria = models.ForeignKey(Categoria_publicacao, on_delete=models.SET_NULL,  null=True, blank=True)
     categoria = models.ManyToManyField(Categoria_publicacao)
     def __str__(self):
@@ -128,11 +135,12 @@ class ProjetoRelatorio(models.Model):
     vigencia_fim = models.DateField('FIM da vigência ', )
     numero_parcelas = models.IntegerField('Número de parcelas',default=12)
     objetivo_proposto = models.TextField('Objetivo proposto')
-    objetivo_proposto_obj = models.TextField('Objetivo proposto')
+    resultado_esperado = models.TextField('Resultados esperados ')
+    objetivo_proposto_obj = models.TextField('Objetivos propostos')
     dia_entrega = models.IntegerField('Dia do mês da entrega', default=0)
     template = models.FileField(upload_to='templates/', blank=True, null=True)
     status=models.CharField('Status',max_length=100, choices=STATUS_CHOICES, default='Em elaboração')
-    data_criacao = models.DateTimeField('Data de criação',  default=datetime.now)
+    data_criacao = models.DateTimeField('Data de criação',  default=django.utils.timezone.now)
     template_default = models.BooleanField('Usar template padrão', default=False)
     
     def __str__(self):

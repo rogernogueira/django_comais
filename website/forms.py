@@ -242,7 +242,7 @@ class ProjetoRelatorioForm(ModelForm):
         exclude = [ 'user',]
         fields = ('titulo','status', 'vigencia_inicio', 'vigencia_fim',
                   'numero_parcelas','objetivo_proposto','objetivo_proposto_obj',
-                  'dia_entrega','template_default','template')
+                  'resultado_esperado','dia_entrega','template_default','template')
 
         labels = {'titulo':'Título do projeto',
                   'status':'Status',
@@ -251,6 +251,7 @@ class ProjetoRelatorioForm(ModelForm):
                   'numero_parcelas': 'Quantidade de parcelas',
                   'objetivo_proposto':'Objetivo proposto',
                   'objetivo_proposto_obj':'Observações do objetivo proposto',
+                  'resultado_esperado':'Resultados esperados',
                   'dia_entrega':'Sugestão de dia do mês do relatório, 0 para ultimo dia do mês',
                   'template_default':'Usar template padrão',
                   'template':'Modelo de relatório',
@@ -263,6 +264,7 @@ class ProjetoRelatorioForm(ModelForm):
             'numero_parcelas':forms.TextInput(attrs={'class': 'form-control'}),
             'objetivo_proposto':TinyMCE(attrs={'cols': 40, 'rows': 30, 'class': 'form-control'}),
             'objetivo_proposto_obj':TinyMCE(attrs={'cols': 40, 'rows': 30, 'class': 'form-control'}),
+            'resultado_esperado':TinyMCE(attrs={'cols': 40, 'rows': 30, 'class': 'form-control'}),
             'dia_entrega':forms.TextInput( attrs={'class': 'form-control'}),
             'template_default':forms.CheckboxInput( ),
             'template':forms.FileInput( attrs={'class': 'form-control'}),

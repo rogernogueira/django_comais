@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,12 +11,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a4-ae9xcxx3#^14oyl33+--nic!3wnkra8re&b7&_a-ymz(f7m'
+#SECRET_KEY = 'django-insecure-a4-ae9xcxx3#^14oyl33+--nic!3wnkra8re&b7&_a-ymz(f7m'
 
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
-ALLOWED_HOSTS = ['161.35.233.244', 'comais.uft.edu.br', '127.0.0.1', 'www.comais.uft.edu.br', 'localhost']
+ALLOWED_HOSTS = ['161.35.233.244', 'comais.uft.edu.br', '127.0.0.1', 'www.comais.uft.edu.br']
 
 
 # Application definition
@@ -64,27 +66,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'comais.wsgi.application'
 
+DEVELOPMENT_MODE = True
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
-
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'comais_site',
-    'USER': 'doadmin',
-    'PASSWORD': 'l1bvjjpdn5kj3kx6',
-    'HOST': 'db-mysql-nyc3-75938-do-user-7683279-0.b.db.ondigitalocean.com',
-    'PORT': '25060',
-  }
-  }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -116,10 +108,10 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 
 USE_TZ = True
-MEDIA_URL = '/media/'
-MEDIA_ROOT  =  os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
+MEDIA_ROOT  =  os.path.join(BASE_DIR, 'media/')
 
-
+#website\static\website\img\Comaisedu.jpeg
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -132,9 +124,6 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
         messages.INFO: 'alert-info',
