@@ -71,12 +71,22 @@ DEVELOPMENT_MODE = True
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'comais_site',
+    'USER': 'doadmin',
+    'PASSWORD': 'l1bvjjpdn5kj3kx6',
+    'HOST': 'db-mysql-nyc3-75938-do-user-7683279-0.b.db.ondigitalocean.com',
+    'PORT': '25060',
+  }
+  }
 
 
 # Password validation
