@@ -9,7 +9,7 @@ html2markdown==0.1.7
 Jinja2==3.1.2
 lxml==4.9.1
 MarkupSafe==2.1.1
-mod-wsgi==4.9.3
+#mod-wsgi==4.9.3
 mysqlclient==2.1.1
 Pillow==9.2.0
 python-docx==0.8.11
