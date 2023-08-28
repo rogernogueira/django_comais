@@ -136,6 +136,13 @@ def download(request):
     # Set the mime type
     response = FileResponse(path)
     return response
+            
+def download_inscritos(request):
+    filepath = os.path.join(settings.MEDIA_ROOT, 'docs', 'inscritos.pdf')
+    path = open(filepath, 'rb')
+    # Set the mime type
+    response = FileResponse(path)
+    return response
 
 @login_required
 def delete_contato(request, id_contato):
