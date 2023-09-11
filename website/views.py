@@ -144,6 +144,13 @@ def download_inscritos(request):
     response = FileResponse(path)
     return response
 
+def download_config(request):
+    filepath = os.path.join(settings.MEDIA_ROOT, 'docs', 'config.pdf')
+    path = open(filepath, 'rb')
+    # Set the mime type
+    response = FileResponse(path)
+    return response
+
 @login_required
 def delete_contato(request, id_contato):
     contato = Contato.objects.get(id=id_contato)

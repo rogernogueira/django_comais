@@ -10,7 +10,8 @@ urlpatterns = [
     path('sobre', views.sobre, name='sobre'),
     path('download', views.download, name='download'),
     path('download_inscritos', views.download_inscritos, name='download_inscritos'),
-    
+    path('download_config', views.download_config, name='download_config'),
+
     path('ocorrencias', views.ocorrencias, name='ocorrencias'),
     path('contato', views.contato, name='contato'),
     path('contatos', views.contatos, name='contato-list'),
