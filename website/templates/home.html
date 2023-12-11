@@ -166,7 +166,7 @@
               <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="300">
                 <div class="icon-box">
                   <div class="icon"><i class="bx bx-tachometer"></i></div>
-                  <h4><a href="sr.comais.uft.edu.br">Smart Review</a></h4>
+                  <h4><a href="http://sr.comais.uft.edu.br">Smart Review</a></h4>
                   <p>Serviço de apoio ao processo de revisão bibliográfica.</p>
                 </div>
               </div>
@@ -174,7 +174,7 @@
               <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
                 <div class="icon-box">
                   <div class="icon"><i class="bx bx-layer"></i></div>
-                  <h4><a href="http://comais.uft.edu.br/registro_ocorrencias">Apoio técnico</a></h4>
+							<h4><a href="{% url 'registro-ocorrencias' %}">Apoio técnico</a></h4>
                   <p>Registo de solicitação de apoio técnico em Pesquisas.</p>
                 </div>
               </div>
@@ -217,10 +217,10 @@
                   <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
                   <div id="faq-list-{{publicacao.id}}" class="collapse " data-bs-parent=".faq-list" style="" >
                     <p class="text-justify" style="padding-left:50px" >
-                      Autores: {{publicacao.autores}}
+									<b>Autores:</b> {{publicacao.autores}}
                     </p>
                     <p class="text-justify" style="padding-left:50px">
-                      Resumo: {{publicacao.resumo|striptags|safe }}
+									<b>Resumo:</b> {{publicacao.resumo|striptags|safe }}
                     </p> 
                   </div>
                 </li>
@@ -296,10 +296,10 @@
                     <span>{{colaborador.funcao}}</span>
                     <p><a href ={{colaborador.url}} >Currículo Lattes</a></p>
                     <div class="social">
-                      <a href={{colaborador.url_twitter}}><i class="ri-twitter-fill"></i></a>
-                      <a href={{colaborador.url_facebook}}><i class="ri-facebook-fill"></i></a>
-                      <a href={{colaborador.url_instagram}}><i class="ri-instagram-fill"></i></a>
-                      <a href={{colaborador.url_linkedin}}> <i class="ri-linkedin-box-fill"></i> </a>
+					<a {% if colaborador.url_twitter %} href={{colaborador.url_twitter}} {% endif %}><i class="ri-twitter-fill"></i></a>
+                      <a {% if colaborador.url_facebook %}href={{colaborador.url_facebook}}{% endif %}><i class="ri-facebook-fill"></i></a>
+                      <a {% if colaborador.uri_instagram %}href={{colaborador.url_instagram}}{% endif %}><i class="ri-instagram-fill"></i></a>
+                      <a {% if colaborador.url_linkedin %}href={{colaborador.url_linkedin}}{% endif %}> <i class="ri-linkedin-box-fill"></i> </a>
                     </div>
                   </div>
                 </div>
