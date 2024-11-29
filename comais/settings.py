@@ -15,9 +15,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
-ALLOWED_HOSTS = ['161.35.233.244', 'comais.uft.edu.br', '127.0.0.1', 'www.comais.uft.edu.br']
+
+ALLOWED_HOSTS = ['192.168.105.13', 'comais.uft.edu.br', '127.0.0.1', 'www.comais.uft.edu.br']
 
 
 # Application definition
@@ -29,9 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'website.apps.WebsiteConfig',  
-    'membros',
-    'reset_migrations',  
+    'website.apps.WebsiteConfig', 
+    'membros', 
     'tinymce',
 ]
 
@@ -47,6 +47,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'comais.urls'
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS = ['https://comais.uft.edu.br', 'https://www.comais.uft.edu.br']
+
+
+
 
 TEMPLATES = [
     {
@@ -64,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'comais.wsgi.application'
+WSGI_APPLICATION = 'comais.wsgi'
 
 DEVELOPMENT_MODE = False
 
@@ -81,10 +87,10 @@ DATABASES = {
 'default': {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'comais_site',
-    'USER': 'doadmin',
-    'PASSWORD': 'l1bvjjpdn5kj3kx6',
-    'HOST': 'db-mysql-nyc3-75938-do-user-7683279-0.b.db.ondigitalocean.com',
-    'PORT': '25060',
+    'USER': 'comais_user',
+    'PASSWORD': 'mviednf451s',
+    'HOST': 'localhost',
+    'PORT': '3306',
   }
   }
 
@@ -119,19 +125,35 @@ USE_I18N = True
 
 USE_TZ = True
 MEDIA_URL = 'media/'
-MEDIA_ROOT  =  os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT  =  os.path.join(BASE_DIR, 'media')
 
 #website\static\website\img\Comaisedu.jpeg
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 STATIC_URL = 'static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'website','static'),
-)
+
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+STATICFILES_DIRS = [
+   # os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "website/static/"),
+    os.path.join(BASE_DIR, "website/static/website"),
+]
+
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR,'static'),
+#)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+
+
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MESSAGE_TAGS = {
