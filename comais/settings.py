@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
 ALLOWED_HOSTS = ['161.35.233.244', 'comais.uft.edu.br', '127.0.0.1', 'www.comais.uft.edu.br']
 
@@ -66,7 +66,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'comais.wsgi.application'
 
-DEVELOPMENT_MODE = True
+DEVELOPMENT_MODE = False
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
