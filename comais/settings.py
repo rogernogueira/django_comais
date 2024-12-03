@@ -84,6 +84,13 @@ TEMPLATES = [
 #     }
 # }
 if os.getenv("DJANGO_DEV") == 'True':
+    DJANGO_DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DJANGO_DB_ENGINE'),
+            'NAME': BASE_DIR / os.getenv('DJANGO_DB_NAME'),
+        }
+    }
+else:
     DATABASES = {
     'default': {
         'ENGINE': os.getenv('DJANGO_DB_ENGINE'),
@@ -94,14 +101,7 @@ if os.getenv("DJANGO_DEV") == 'True':
         'PORT':  os.getenv('DJANGO_DB_PORT'),
       }
     } 
-else:
-    DJANGO_DATABASES = {
-        'default': {
-            'ENGINE': os.getenv('DJANGO_DB_ENGINE'),
-            'NAME': BASE_DIR / os.getenv('DJANGO_DB_NAME'),
-        }
-    }
-
+    
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
