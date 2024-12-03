@@ -2,25 +2,30 @@ from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
 from django.core.management.utils import get_random_secret_key
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+if os.getenv("DJANGO_DEV") == 'True':
+    load_dotenv('.env.dev')
+else:
+    load_dotenv(os.path.join(BASE_DIR,'.env.prod' ))
+    #configurações de segurança para trabalhar com https no reverso
+    SECURE_PROXY_SSL_HEADER =os.getenv("DJANGO_SECURE_PROXY_SSL_HEADER").split(',')
+    CSRF_TRUSTED_ORIGINS = os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS").split(',')
+    WSGI_APPLICATION = os.getenv('DJANGO_WSGI_APPLICATION')
+    DEVELOPMENT_MODE = os.getenv('DJANGO_DEVELOPMENT_MODE')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-a4-ae9xcxx3#^14oyl33+--nic!3wnkra8re&b7&_a-ymz(f7m'
-
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DEBUG = bool(os.getenv("DJANGO_DEBUG") )
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
-
-ALLOWED_HOSTS = ['192.168.105.13', 'comais.uft.edu.br', '127.0.0.1', 'www.comais.uft.edu.br']
-
-
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(',')
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,9 +53,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'comais.urls'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-CSRF_TRUSTED_ORIGINS = ['https://comais.uft.edu.br', 'https://www.comais.uft.edu.br']
-
 
 
 
@@ -70,9 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'comais.wsgi'
 
-DEVELOPMENT_MODE = False
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -83,16 +83,24 @@ DEVELOPMENT_MODE = False
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'comais_site',
-    'USER': 'comais_user',
-    'PASSWORD': 'mviednf451s',
-    'HOST': 'localhost',
-    'PORT': '3306',
-  }
-  }
+if os.getenv("DJANGO_DEV") == 'True':
+    DATABASES = {
+    'default': {
+        'ENGINE': os.getenv('DJANGO_DB_ENGINE'),
+        'NAME':  os.getenv('DJANGO_DB_NAME'),
+        'USER':  os.getenv('DJANGO_DB_USER'),
+        'PASSWORD':  os.getenv('DJANGO_DB_PASSWORD'),
+        'HOST':  os.getenv('DJANGO_DB_HOST'),
+        'PORT':  os.getenv('DJANGO_DB_PORT'),
+      }
+    } 
+else:
+    DJANGO_DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DJANGO_DB_ENGINE'),
+            'NAME': BASE_DIR / os.getenv('DJANGO_DB_NAME'),
+        }
+    }
 
 
 # Password validation
