@@ -211,7 +211,7 @@
 
             <div class="row" id="cursos-container">
               {% for curso in cursos %}
-              <a href="{% url 'curso-detail' id=curso.id %}" target='_blank' rel='noopener noreferrer'>
+             
                  <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mb-3 mt-xl-0 aos-init aos-animate" 
                    data-aos="fade-up" 
                    data-aos-delay="{{ forloop.counter|add:100 }}"
@@ -223,7 +223,7 @@
                    data-aos-offset="200">
                 <div class="icon-box">
                   <div class="icon"><i class="bx bx-layer"></i></div>
-                  <h4><a href="{% url 'curso-detail' id=curso.id %}" target='_blank' rel='noopener noreferrer'>{{ curso.titulo }}</a></h4>
+                  <h4><a href="{% url 'curso-detail' curso.id %}" target='_blank' rel='noopener noreferrer'>{{ curso.titulo }}</a></h4>
                   <p>{{ curso.descricao|truncatechars:120 }}</p>
                   <div class="curso-info">
                     <span class="badge">{{ curso.modalidade }}</span>
@@ -231,13 +231,13 @@
                   </div>
                   <div class="d-flex justify-content-between align-items-center mt-3">
                     <small class="text-muted">{{ curso.data_inicio|date:"d/m/Y" }}</small>
-                    <a href="{% url 'curso-detail' id=curso.id %}" target='_blank' rel='noopener noreferrer' class="btn btn-sm btn-outline-primary">
+                    <a href="{% url 'curso-detail' curso.id %}" target='_blank' rel='noopener noreferrer' class="btn btn-sm btn-outline-primary">
                       <i class="bi bi-arrow-right"></i>
                     </a>
                   </div>
                 </div>
                 </div>
-              </a>
+             
               {% empty %}
               <div class="col-12">
                 <div class="alert alert-info text-center" role="alert">
