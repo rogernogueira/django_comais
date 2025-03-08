@@ -202,6 +202,7 @@ class Curso(models.Model):
     instrutor = models.CharField('Instrutor', max_length=100)
     local = models.CharField('Local', max_length=100)
     parceiros = models.ManyToManyField(Parceiro, blank=True)
+    data_criacao = models.DateTimeField('Data de Criação',  default=django.utils.timezone.now)
     
     def __str__(self):
         return self.titulo
