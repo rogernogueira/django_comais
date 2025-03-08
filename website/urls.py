@@ -43,4 +43,11 @@ urlpatterns = [
     path('deletar_projeto_relatorio/<id_projeto_relatorio>', views.deletar_projeto_relatorio, name='deletar-projeto-relatorio'),
     path('deletar_relatorio/<id_relatorio>', views.deletar_relatorio, name='deletar-relatorio'),
     path('cadastrar_relatorio_final/<id_projeto_relatorio>', views.cadastrar_relatorio_final, name='cadastrar-relatorio-final'),
+    
+    # URLs para cursos
+    path('cursos', views.listar_cursos, name='listar_cursos'),
+    path('cursos/novo', views.criar_curso, name='criar_curso'),
+    path('cursos/editar/<int:id>', views.editar_curso, name='editar_curso'),
+    path('cursos/deletar/<int:id>', views.deletar_curso, name='deletar_curso'),
+    path('cursos/<int:id>', views.detalhes_curso, name='curso-detail'),
 ]

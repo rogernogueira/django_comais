@@ -184,3 +184,24 @@ class Templates(models.Model):
     template = models.FileField(upload_to='templates/', blank=True, null=True)
     def __str__(self):
         return self.nome
+
+class Parceiro(models.Model):
+    nome = models.CharField('Nome', max_length=200)
+    logo = models.ImageField('Logo', upload_to='parceiros/', blank=True, null=True)
+    site = models.URLField('Site', blank=True, null=True)
+    
+    def __str__(self):
+        return self.nome
+
+class Curso(models.Model):
+    titulo = models.CharField('Título', max_length=300)
+    descricao = models.TextField('Descrição')
+    carga_horaria = models.IntegerField('Carga Horária')
+    data_inicio = models.DateField('Data de Início')
+    data_termino = models.DateField('Data de Término')
+    instrutor = models.CharField('Instrutor', max_length=100)
+    local = models.CharField('Local', max_length=100)
+    parceiros = models.ManyToManyField(Parceiro, blank=True)
+    
+    def __str__(self):
+        return self.titulo

@@ -1,0 +1,122 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+<main id="main">
+
+  <div class="container">
+    <h2 class='page-title mb-4'>{{ curso.titulo }}</h2>
+  </div>
+
+  <section class="course-details">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="course-description bg-white p-4 rounded shadow-sm">
+            <h3 class="mb-4">Descrição do Curso</h3>
+            <div class="lead text-secondary">{{ curso.descricao|linebreaks }}</div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="course-info bg-white p-4 rounded shadow-sm">
+            <h3 class="mb-4">Informações</h3>
+            <ul class="list-unstyled">
+              <li class="mb-3 d-flex align-items-center">
+                <i class="bi bi-clock me-2 text-primary"></i>
+                <div>
+                  <strong>Carga Horária:</strong> 
+                  <span class="d-block">{{ curso.carga_horaria }} horas</span>
+                </div>
+              </li>
+              <li class="mb-3 d-flex align-items-center">
+                <i class="bi bi-calendar me-2 text-primary"></i>
+                <div>
+                  <strong>Período:</strong> 
+                  <span class="d-block">
+                    {{ curso.data_inicio|date:"d/m/Y" }} - {{ curso.data_termino|date:"d/m/Y" }}
+                  </span>
+                </div>
+              </li>
+              <li class="mb-3 d-flex align-items-center">
+                <i class="bi bi-person me-2 text-primary"></i>
+                <div>
+                  <strong>Instrutor:</strong> 
+                  <span class="d-block">{{ curso.instrutor }}</span>
+                </div>
+              </li>
+              <li class="d-flex align-items-start">
+                <i class="bi bi-people me-2 text-primary"></i>
+                <div>
+                  <strong>Parceiros:</strong>
+                  <div class="mt-2">
+                    {% for parceiro in curso.parceiros.all %}
+                      <span class="badge bg-primary me-1 mb-1">{{ parceiro.nome }}</span>
+                    {% endfor %}
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div class="text-center mt-4">
+              <a href="{% url 'home' %}" class="btn btn-back w-100">
+                <i class="bi bi-arrow-left me-2"></i>
+                Voltar para home
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      <!-- Seção de Parceiros -->
+      {% if curso.parceiros.exists %}
+      <div class="row mt-5">
+        <div class="col-12">
+          <div class="partners-section bg-white p-4 rounded shadow-sm">
+            <h3 class="mb-4">
+              <i class="bi bi-handshake me-2 text-primary"></i>
+              {% if curso.parceiros.count == 1 %}
+                Nosso Parceiro
+              {% else %}
+                Nossos Parceiros
+              {% endif %}
+            </h3>
+            <div class="row row-cols-2 row-cols-md-4 g-4">
+              {% for parceiro in curso.parceiros.all %}
+                <div class="col">
+                  <div class="partner-card text-center p-3">
+                    <img src="{{ parceiro.logo.url }}" 
+                         alt="{{ parceiro.nome }}" 
+                         class="img-fluid mb-3"
+                         style="max-height: 100px;">
+                    <h6 class="mb-0 text-dark">{{ parceiro.nome }}</h6>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+</main>
+
+{% include 'footer.html' %}
+
+<div id="preloader"></div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+  <i class="bi bi-arrow-up-short"></i>
+</a>
+
+<!-- Vendor JS Files -->
+<script src={% static "website/vendor/aos/aos.js" %}></script>
+<script src={% static "website/vendor/bootstrap/js/bootstrap.bundle.min.js" %}></script>
+<script src={% static "website/vendor/glightbox/js/glightbox.min.js" %}></script>
+<script src={% static "website/vendor/isotope-layout/isotope.pkgd.min.js" %}></script>
+<script src={% static "website/vendor/swiper/swiper-bundle.min.js" %}></script>
+<script src={% static "website/vendor/waypoints/noframework.waypoints.js" %}></script>
+<script src={% static "website/vendor/php-email-form/validate.js" %}></script>
+
+<!-- Template Main JS File -->
+<script src={% static "website/js/main.js" %}></script>
+
+{% endblock %}

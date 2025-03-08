@@ -1,0 +1,41 @@
+{% extends "base2.html" %}
+{% block content %}
+<div class="container">
+  <h2>Cursos Ministrados</h2>
+  <a href="{% url 'criar_curso' %}" class="btn btn-primary mb-3">Novo Curso</a>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Carga Horária</th>
+        <th>Data Início</th>
+        <th>Data Fim</th>
+        <th>Parceiros</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for curso in cursos %}
+      <tr>
+        <td>{{ curso.nome }}</td>
+        <td>{{ curso.descricao }}</td>
+        <td>{{ curso.carga_horaria }} horas</td>
+        <td>{{ curso.data_inicio|date:"d/m/Y" }}</td>
+        <td>{{ curso.data_fim|date:"d/m/Y" }}</td>
+        <td>
+          {% for parceiro in curso.parceiros.all %}
+            {{ parceiro.nome }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </td>
+        <td>
+          <a href="{% url 'editar_curso' curso.id %}" class="btn btn-sm btn-warning">Editar</a>
+          <a href="{% url 'deletar_curso' curso.id %}" class="btn btn-sm btn-danger">Excluir</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

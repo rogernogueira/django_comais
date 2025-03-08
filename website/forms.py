@@ -5,8 +5,33 @@ from django.db.models import BaseConstraint
 from django.contrib import messages
 from django.urls import reverse
 from .models import Contato, Ocorrencia, Projeto, Usuario, Servico,\
-    Historico, Colaborador, Publicacao, Relatorio, ProjetoRelatorio, RelatorioFinal
+    Historico, Colaborador, Publicacao, Relatorio, ProjetoRelatorio, RelatorioFinal, Curso
 # create a form for the model Contato
+
+class CursoForm(ModelForm):
+    class Meta:
+        model = Curso
+        fields = ('titulo', 'descricao', 'carga_horaria', 'data_inicio', 'data_termino', 'instrutor', 'local', 'parceiros')
+        labels = {
+            'titulo': 'titulo do Curso',
+            'descricao': 'Descrição',
+            'carga_horaria': 'Carga Horária',
+            'data_inicio': 'Data de Início',
+            'data_termino': 'Data de Término', 
+            'instrutor': 'Instrutores',
+            'local':'Tipo de Curso',
+            'parceiros': 'Parceiros'
+        }
+        widgets = {
+            'titulo': forms.TextInput(attrs={'class': 'form-control'}),
+            'descricao': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'carga_horaria': forms.NumberInput(attrs={'class': 'form-control'}),
+            'data_inicio': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'data_termino': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}), 
+            'instrutor': forms.TextInput(attrs={'class': 'form-control'}),
+            'local': forms.TextInput(attrs={'class': 'form-control'}),
+            'parceiros': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
 
 from tinymce.widgets import TinyMCE
 class ContatoForm(ModelForm):
@@ -244,7 +269,7 @@ class ProjetoRelatorioForm(ModelForm):
                   'numero_parcelas','objetivo_proposto','objetivo_proposto_obj',
                   'resultado_esperado','dia_entrega','template_default','template')
 
-        labels = {'titulo':'Título do projeto',
+        labels = {'titulo':'Titulo do projeto',
                   'status':'Status',
                   'vigencia_inicio':'Data de início',
                   'vigencia_fim':'Data de término',
@@ -268,4 +293,4 @@ class ProjetoRelatorioForm(ModelForm):
             'dia_entrega':forms.TextInput( attrs={'class': 'form-control'}),
             'template_default':forms.CheckboxInput( ),
             'template':forms.FileInput( attrs={'class': 'form-control'}),
-               }
+        }

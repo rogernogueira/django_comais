@@ -1,0 +1,63 @@
+{% extends "base2.html" %}
+{% block content %}
+<div class="container">
+  <h2>{% if form.instance.id %}Editar{% else %}Novo{% endif %} Curso</h2>
+  
+  <form method="post">
+    {% csrf_token %}
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="{{ form.nome.id_for_label }}">Nome:</label>
+          {{ form.nome }}
+          {{ form.nome.errors }}
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.descricao.id_for_label }}">Descrição:</label>
+          {{ form.descricao }}
+          {{ form.descricao.errors }}
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="{{ form.carga_horaria.id_for_label }}">Carga Horária:</label>
+          {{ form.carga_horaria }}
+          {{ form.carga_horaria.errors }}
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.data_inicio.id_for_label }}">Data Início:</label>
+          {{ form.data_inicio }}
+          {{ form.data_inicio.errors }}
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.data_fim.id_for_label }}">Data Fim:</label>
+          {{ form.data_termino }}
+          {{ form.data_termino.errors }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.instrutor.id_for_label }}">Instrutores:</label>
+          {{ form.instrutor }}
+          {{ form.instrutor.errors }}
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.parceiros.id_for_label }}">Parceiros:</label>
+          {{ form.parceiros }}
+          {{ form.parceiros.errors }}
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a href="{% url 'listar_cursos' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

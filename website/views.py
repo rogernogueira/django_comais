@@ -5,9 +5,9 @@ from django.db import close_old_connections
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect, FileResponse
 from .models import Ocorrencia, Contato, Projeto, Relatorio, TipoProjeto, Colaborador,Publicacao,\
-Relatorio, ProjetoRelatorio , RelatorioFinal, Templates
+Relatorio, ProjetoRelatorio , RelatorioFinal, Templates, Curso
 from .forms import ContatoForm, OcorrenciaForm, ColaboradorForm, PublicacaoForm,\
-ProjetoForm, RelatorioForm, ProjetoRelatorioForm, RelatorioFinalForm
+ProjetoForm, RelatorioForm, ProjetoRelatorioForm, RelatorioFinalForm, CursoForm
 from django.core.paginator import Paginator
 from django.db.models import Max, BaseConstraint
 from django.contrib.auth.decorators import login_required
@@ -190,8 +190,9 @@ def home(request):
         if 'submitted' in request.GET:
             submitted = True
     
+    cursos = Curso.objects.all()
     return render(request,'home.html', {'form':form, 'submitted':submitted, 'tipos':tipos, 'projetos':projetos, 
-                  'colaboradores':colaboradores, 'publicacoes':publicacoes})
+                  'colaboradores':colaboradores, 'publicacoes':publicacoes, 'cursos':cursos})
 
 @login_required
 def update_perfil(request):
@@ -398,8 +399,50 @@ def gerar_relatorio(request, id_relatorio):
         relatorio.save()
         messages.success(request, 'Relatório gerado com sucesso!')
         
-        return FileResponse(open(path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    return FileResponse(open(path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     return HttpResponseRedirect('/gerencia_relatorios')
+
+# Views para Cursos
+@login_required
+def listar_cursos(request):
+    cursos = Curso.objects.all()
+    return render(request, 'cursos/listar.html', {'cursos': cursos})
+
+@login_required    
+def criar_curso(request):
+    if request.method == 'POST':
+        form = CursoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Curso criado com sucesso!')
+            return redirect('listar_cursos')
+    else:
+        form = CursoForm()
+    return render(request, 'cursos/form.html', {'form': form})
+
+@login_required
+def editar_curso(request, id):
+    curso = Curso.objects.get(id=id)
+    if request.method == 'POST':
+        form = CursoForm(request.POST, instance=curso)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Curso atualizado com sucesso!')
+            return redirect('listar_cursos')
+    else:
+        form = CursoForm(instance=curso)
+    return render(request, 'cursos/form.html', {'form': form})
+
+@login_required    
+def deletar_curso(request, id):
+    curso = Curso.objects.get(id=id)
+    curso.delete()
+    messages.success(request, 'Curso removido com sucesso!')
+    return redirect('listar_cursos')
+
+def detalhes_curso(request, id):
+    curso = Curso.objects.get(id=id)
+    return render(request, 'cursos/detalhes.html', {'curso': curso})
     
 @login_required
 def gerencia_relatorios(request):
