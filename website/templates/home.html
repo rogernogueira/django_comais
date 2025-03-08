@@ -209,9 +209,17 @@
               <p>Explore nossos programas de capacitação em Inteligência Artificial e Modelagem Computacional</p>
             </div>
 
-            <div class="row">
+            <div class="row" id="cursos-container">
               {% for curso in cursos %}
-              <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mb-3 mt-xl-0 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="400">
+              <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mb-3 mt-xl-0 aos-init aos-animate" 
+                   data-aos="fade-up" 
+                   data-aos-delay="{{ forloop.counter|add:100 }}"
+                   data-aos-anchor="#cursos-container"
+                   data-aos-once="true"
+                   data-aos-duration="800"
+                   data-aos-easing="ease-in-out"
+                   data-aos-mirror="false"
+                   data-aos-offset="200">
                 <div class="icon-box">
                   <div class="icon"><i class="bx bx-layer"></i></div>
                   <h4><a href="{% url 'curso-detail' id=curso.id %}">{{ curso.titulo }}</a></h4>
@@ -325,8 +333,6 @@
     
             <div class="row">
     
-              
-             
 
     {% for colaborador in colaboradores %}
               <div class="col-lg-6 mt-4">
@@ -431,6 +437,16 @@
     
       <!-- Template Main JS File -->
       <script src={% static "website/js/main.js"%}></script>
+      
+      <!-- Initialize AOS -->
+      <script>
+        AOS.init({
+          duration: 800,
+          easing: 'ease-in-out',
+          once: true,
+          mirror: false
+        });
+      </script>
     
     </body>
     
