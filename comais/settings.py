@@ -32,6 +32,8 @@ print("DJANGO_DB_USER:", os.getenv('DJANGO_DB_USER'))
 print("DJANGO_DB_PASSWORD:", os.getenv('DJANGO_DB_PASSWORD'))
 print("DJANGO_DB_HOST:", os.getenv('DJANGO_DB_HOST'))
 print("DJANGO_DB_PORT:", os.getenv('DJANGO_DB_PORT'))
+print("DJANGO_DEV:", os.getenv('DJANGO_DEV'))
+print("DJANGO_DEBUG:", os.getenv('DJANGO_DEBUG'))
 
 # Application definition
 INSTALLED_APPS = [
