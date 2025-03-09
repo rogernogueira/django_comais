@@ -5,6 +5,14 @@
 * License: https://bootstrapmade.com/license/
 */
 
+:root {
+  --primary-color: #47b2e4;
+  --secondary-color: #37517e;
+  --text-color: #444444;
+  --white: #ffffff;
+  --transition-speed: 0.3s;
+}
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -14,12 +22,12 @@ body {
 }
 
 a {
-  color: #47b2e4;
+  color: var(--primary-color);
   text-decoration: none;
 }
 
 a:hover {
-  color: #73c5eb;
+  color: color-mix(in srgb, var(--primary-color), white 20%);
   text-decoration: none;
 }
 
@@ -84,7 +92,7 @@ h1, h2, h3, h4, h5, h6 {
   right: 15px;
   bottom: 15px;
   z-index: 996;
-  background: #47b2e4;
+  background: var(--primary-color);
   width: 40px;
   height: 40px;
   border-radius: 50px;
@@ -92,12 +100,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 .back-to-top i {
   font-size: 24px;
-  color: #fff;
+  color: var(--white);
   line-height: 0;
 }
 .back-to-top:hover {
-  background: #6bc1e9;
-  color: #fff;
+  background: color-mix(in srgb, var(--primary-color), white 20%);
+  color: var(--white);
 }
 .back-to-top.active {
   visibility: visible;
@@ -173,14 +181,14 @@ h1, h2, h3, h4, h5, h6 {
   padding: 8px 20px;
   margin-left: 30px;
   border-radius: 50px;
-  color: #fff;
+  color: var(--white);
   font-size: 14px;
-  border: 2px solid #47b2e4;
+  border: 2px solid var(--primary-color);
   font-weight: 600;
 }
 .navbar .getstarted:hover, .navbar .getstarted:focus:hover {
-  color: #fff;
-  background: #31a9e1;
+  color: var(--white);
+  background: color-mix(in srgb, var(--primary-color), black 20%);
 }
 .navbar .dropdown  ul {
   display: block;
@@ -378,11 +386,11 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 50px;
   transition: 0.5s;
   margin: 10px 0 0 0;
-  color: #fff;
-  background: #47b2e4;
+  color: var(--white);
+  background: var(--primary-color);
 }
 #hero .btn-get-started:hover {
-  background: #209dd8;
+  background: color-mix(in srgb, var(--primary-color), black 20%);
 }
 #hero .btn-watch-video {
   font-size: 16px;
@@ -390,18 +398,18 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   transition: 0.5s;
   margin: 10px 0 0 25px;
-  color: rgb(80, 137, 215);
+  color: color-mix(in srgb, var(--primary-color), white 40%);
   line-height: 1;
 }
 #hero .btn-watch-video i {
   line-height: 0;
-  color: #fff;
+  color: var(--white);
   font-size: 32px;
   transition: 0.3s;
   margin-right: 8px;
 }
 #hero .btn-watch-video:hover i {
-  color: #47b2e4;
+  color: var(--primary-color);
 }
 #hero .animated {
   animation: up-down 2s ease-in-out infinite alternate-reverse both;
@@ -575,15 +583,15 @@ section {
   border-radius: 4px;
   transition: 0.3s;
   line-height: 1;
-  color: #47b2e4;
+  color: var(--primary-color);
   -webkit-animation-delay: 0.8s;
   animation-delay: 0.8s;
   margin-top: 6px;
-  border: 2px solid #47b2e4;
+  border: 2px solid var(--primary-color);
 }
 .about .content .btn-learn-more:hover {
-  background: #47b2e4;
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--white);
   text-decoration: none;
 }
 
@@ -833,12 +841,12 @@ section {
   border-radius: 50px;
   transition: 0.5s;
   margin: 10px;
-  border: 2px solid #fff;
-  color: #fff;
+  border: 2px solid var(--white);
+  color: var(--white);
 }
 .cta .cta-btn:hover {
-  background: #47b2e4;
-  border: 2px solid #47b2e4;
+  background: var(--primary-color);
+  border: 2px solid var(--primary-color);
 }
 @media (max-width: 1024px) {
   .cta {
@@ -1133,27 +1141,27 @@ section {
   display: inline-block;
   padding: 12px 35px;
   border-radius: 50px;
-  color: #47b2e4;
+  color: var(--primary-color);
   transition: none;
   font-size: 16px;
   font-weight: 500;
   font-family: "Jost", sans-serif;
   transition: 0.3s;
-  border: 1px solid #47b2e4;
+  border: 1px solid var(--primary-color);
 }
 .pricing .buy-btn:hover {
-  background: #47b2e4;
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--white);
 }
 .pricing .featured {
-  border-top-color: #47b2e4;
+  border-top-color: var(--primary-color);
 }
 .pricing .featured .buy-btn {
-  background: #47b2e4;
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--white);
 }
 .pricing .featured .buy-btn:hover {
-  background: #23a3df;
+  background: color-mix(in srgb, var(--primary-color), black 20%);
 }
 @media (max-width: 992px) {
   .pricing .box {
@@ -1344,15 +1352,15 @@ section {
 
 /* Estilos para o botão de voltar */
 .btn-back {
-  background: #47b2e4;
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--white);
   padding: 10px 20px;
   border-radius: 50px;
   transition: all 0.3s ease;
 }
 
 .btn-back:hover {
-  background: #209dd8;
+  background: color-mix(in srgb, var(--primary-color), black 20%);
   transform: translateY(-2px);
 }
 
@@ -1427,14 +1435,14 @@ section {
 }
 
 .cursos .icon-box .btn-outline-primary {
-  border-color: #47b2e4;
-  color: #47b2e4;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
   transition: all 0.3s ease;
 }
 
 .cursos .icon-box .btn-outline-primary:hover {
-  background: #47b2e4;
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--white);
   transform: translateY(-2px);
 }
 
