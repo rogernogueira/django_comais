@@ -1366,21 +1366,35 @@ section {
   overflow: hidden;
   transform: translateY(0);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-bottom: 30px;
-  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-  border: 1px solid rgba(71, 178, 228, 0.2);
+}
+
+.cursos .icon-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(71, 178, 228, 0.1);
+  z-index: 1;
+  transition: 0.5s;
+  opacity: 0;
+}
+
+.cursos .icon-box:hover::before {
+  opacity: 1;
 }
 
 .cursos .icon-box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(71, 178, 228, 0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .cursos .icon-box .icon i {
   color: #47b2e4;
   font-size: 48px;
-  margin-bottom: 20px;
-  transition: all 0.3s ease;
+  transition: 0.3s;
+  margin-bottom: 15px;
 }
 
 .cursos .icon-box:hover .icon i {
@@ -1389,11 +1403,17 @@ section {
 }
 
 .cursos .icon-box h4 {
-  color: #37517e;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  margin-bottom: 15px;
+  font-size: 24px;
 }
 
-.cursos .icon-box:hover h4 {
+.cursos .icon-box h4 a {
+  color: #37517e;
+  transition: ease-in-out 0.3s;
+}
+
+.cursos .icon-box:hover h4 a {
   color: #47b2e4;
 }
 
