@@ -1605,6 +1605,8 @@ section {
 
 .cursos .icon-box .icon {
   margin-bottom: 10px;
+  align-items: center;
+  display: flex;
 }
 
 .cursos .icon-box .icon i {
