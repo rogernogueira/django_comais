@@ -761,6 +761,11 @@ section {
   margin-bottom: 10px;
   text-align: center;
 }
+
+.cursos .icon-box .btn-curso:hover {
+  color: #47b2e4;
+}
+
 .services .icon-box .icon i,
 .cursos .icon-box .icon i {
   color: #47b2e4;
