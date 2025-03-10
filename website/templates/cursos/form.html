@@ -1,4 +1,5 @@
 {% extends "base2.html" %}
+{% load i18n %}
 {% block content %}
 <div class="container">
   <h2>{% if form.instance.id %}Editar{% else %}Novo{% endif %} Curso</h2>
@@ -9,13 +10,13 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="{{ form.nome.id_for_label }}">Nome:</label>
+          <label for="{{ form.nome.id_for_label }}">{% trans "Nome" %}:</label>
           {{ form.nome }}
           {{ form.nome.errors }}
         </div>
         
         <div class="form-group">
-          <label for="{{ form.descricao.id_for_label }}">Descrição:</label>
+          <label for="{{ form.descricao.id_for_label }}">{% trans "Descrição" %}:</label>
           {{ form.descricao }}
           {{ form.descricao.errors }}
         </div>
@@ -23,30 +24,30 @@
       
       <div class="col-md-6">
         <div class="form-group">
-          <label for="{{ form.carga_horaria.id_for_label }}">Carga Horária:</label>
+          <label for="{{ form.carga_horaria.id_for_label }}">{% trans "Carga Horária" %}:</label>
           {{ form.carga_horaria }}
           {{ form.carga_horaria.errors }}
         </div>
         
         <div class="form-group">
-          <label for="{{ form.data_inicio.id_for_label }}">Data Início:</label>
+          <label for="{{ form.data_inicio.id_for_label }}">{% trans "Data Início" %}:</label>
           {{ form.data_inicio }}
           {{ form.data_inicio.errors }}
         </div>
         
         <div class="form-group">
-          <label for="{{ form.data_fim.id_for_label }}">Data Fim:</label>
+          <label for="{{ form.data_fim.id_for_label }}">{% trans "Data Fim" %}:</label>
           {{ form.data_termino }}
           {{ form.data_termino.errors }}
         </div>
         <div class="form-group">
-          <label for="{{ form.instrutor.id_for_label }}">Instrutores:</label>
+          <label for="{{ form.instrutor.id_for_label }}">{% trans "Instrutores" %}:</label>
           {{ form.instrutor }}
           {{ form.instrutor.errors }}
         </div>
 
         <div class="form-group">
-          <label for="{{ form.parceiros.id_for_label }}">Parceiros:</label>
+          <label for="{{ form.parceiros.id_for_label }}">{% trans "Parceiros" %}:</label>
           {{ form.parceiros }}
           {{ form.parceiros.errors }}
         </div>
@@ -55,8 +56,8 @@
     </div>
     
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Salvar</button>
-      <a href="{% url 'listar_cursos' %}" class="btn btn-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-primary">{% trans "Salvar" %}</button>
+      <a href="{% url 'listar_cursos' %}" class="btn btn-secondary">{% trans "Cancelar" %}</a>
     </div>
   </form>
 </div>

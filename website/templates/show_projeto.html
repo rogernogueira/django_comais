@@ -1,5 +1,6 @@
 {% extends 'base2.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <main id="main">
 
@@ -36,14 +37,14 @@
               <div class="portfolio-info">
                 <h3>{{projeto.name}}</h3>
                 <ul>
-                  <li><strong>Categoria</strong>: {% for tipo in projeto.type.all %}
+                  <li><strong>{% trans "Categoria" %}</strong>: {% for tipo in projeto.type.all %}
                     {{tipo}}
                   {% endfor %}</li>
                   </li>
                   {% if projeto.client %}
-                  <li><strong>Client</strong>: {{projeto.client}}</li>
+                  <li><strong>{% trans "Cliente" %}</strong>: {{projeto.client}}</li>
                   {% endif %}
-                  <li><strong>Saiba mais</strong>: <a href={{projeto.url}}>{{projeto.url}}</a></li>
+                  <li><strong>{% trans "Saiba mais" %}</strong>: <a href={{projeto.url}}>{{projeto.url}}</a></li>
                 </ul>
               </div>
               <div class="portfolio-description">

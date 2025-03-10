@@ -1,5 +1,8 @@
 {% extends 'base2.html' %}
+
 {% load static %}
+{% load i18n %}
+
 {% block content %}
     <body>
     <!-- ======= Hero Section ======= -->
@@ -10,11 +13,11 @@
         <div class="container">
         <div class="row">
             <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-                <h1>Modelagem Computacional de Soluções de Inteligência Artificial </h1>
-                <h2>Laboratório multidisciplinar  do Programa de Pós-Graduação em Modelagem Computacional de Sistemas da Universidade Federal do Tocantins</h2>
+                <h1>{% trans "Modelagem Computacional de Soluções de Inteligência Artificial" %}</h1>
+                <h2>{% trans "Laboratório multidisciplinar do Programa de Pós-Graduação em Modelagem Computacional de Sistemas da Universidade Federal do Tocantins" %}</h2>
                 <div class="d-flex justify-content-center justify-content-lg-start">
-                  <a href="/#portfolio" class="btn-get-started scrollto">Projetos</a>
-                  <a href="https://www.youtube.com/watch?v=jsd29YgSaM4" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Assistir Video</span></a>
+                  <a href="/#portfolio" class="btn-get-started scrollto">{% trans "Projetos" %}</a>
+                  <a href="https://www.youtube.com/watch?v=jsd29YgSaM4" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>{% trans "Assistir Video" %}</span></a>
                 </div>
               </div>
               <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
@@ -53,28 +56,28 @@
           <br/>
           <div class="container" data-aos="fade-up">
             <div class="section-title">
-              <h2>Sobre</h2>
+              <h2>{% trans "Sobre" %}</h2>
             </div>
             <div class="row content">
               <div class="col-lg-6">
                 <p>
-                   A missão do laboratório COMAIS(Computational Modeling of Artificial Intelligence Solutions Labs.) é catalisar a colaboração entre pesquisadores, empresas e governo, para formulação de soluções tecnológicas, que possuem seus valores agregados potencializados pelo uso de inteligência artificial.
+                   {% trans "A missão do laboratório COMAIS(Computational Modeling of Artificial Intelligence Solutions Labs.) é catalisar a colaboração entre pesquisadores, empresas e governo, para formulação de soluções tecnológicas, que possuem seus valores agregados potencializados pelo uso de inteligência artificial." %}
                 </p>
                 <p>
-                   O COMAIS visa :
+                   {% trans "O COMAIS visa:" %}
                 </p>
                 <ul>
-                  <li><i class="ri-check-double-line"></i>Ser um ambiente que estimule a integração </li>
-                  <li><i class="ri-check-double-line"></i> Trabalhar multidisciplinaridade de forma colaborativa e criativa</li>
-                  <li><i class="ri-check-double-line"></i> Propiciar a geração de projetos inovadores</li>
+                  <li><i class="ri-check-double-line"></i>{% trans "Ser um ambiente que estimule a integração" %}</li>
+                  <li><i class="ri-check-double-line"></i>{% trans "Trabalhar multidisciplinaridade de forma colaborativa e criativa" %}</li>
+                  <li><i class="ri-check-double-line"></i>{% trans "Propiciar a geração de projetos inovadores" %}</li>
                 </ul>
               </div>
               <div class="col-lg-6 pt-4 pt-lg-0">
                 <p>
-                    O laboratório tem em seu portfólio diversos projetos que usam técnicas de Inteligência Artificial. A concepção e modelagem desses projetos requerem uma equipe multidisciplinar, uma vez que são desenvolvidos para aturem e diversas áreas de conhecimento, tais como: judicial, segurança pública, ambiental e social.
+                    {% trans "O laboratório tem em seu portfólio diversos projetos que usam técnicas de Inteligência Artificial. A concepção e modelagem desses projetos requerem uma equipe multidisciplinar, uma vez que são desenvolvidos para aturem e diversas áreas de conhecimento, tais como: judicial, segurança pública, ambiental e social." %}
                 </p>
                 <p>
-                    Concomitante contribuindo com a comunidade científica, validando aprendizado dos acadêmicos envolvidos e agregando de forma qualitativa e quantitativa em sua produção científica.
+                    {% trans "Concomitante contribuindo com a comunidade científica, validando aprendizado dos acadêmicos envolvidos e agregando de forma qualitativa e quantitativa em sua produção científica." %}
                 </p>
                 
               </div>
@@ -88,7 +91,7 @@
           <div class="container-fluid" data-aos="fade-up">
             <div class="section-title">
               <br/>
-              <h2>Notícias</h2>
+              <h2>{% trans "Notícias" %}</h2>
             </div>
     
             <div class="row">
@@ -96,11 +99,11 @@
               <div class="col-lg-7 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
     
                 <div class="content">
-                  <h3>Laboratório de <strong>inteligência artificial</strong> é apresentado ao público</h3>
+                  <h3>{% trans "Laboratório de" %} <strong>{% trans "inteligência artificial" %}</strong> {% trans "é apresentado ao público" %}</h3>
                   <p>
-                    Na última quarta-feira (25), as portas do Laboratório de Computational Modeling of Artificial Intelligence Solutions (Comais), no Câmpus de Palmas, foram abertas oficialmente em uma cerimônia para convidados.
+                    {% trans "Na última quarta-feira (25), as portas do Laboratório de Computational Modeling of Artificial Intelligence Solutions (Comais), no Câmpus de Palmas, foram abertas oficialmente em uma cerimônia para convidados." %}
 
-                    A missão do laboratório é catalisar a colaboração entre pesquisadores, empresas e governo, para formulação de soluções tecnológicas, que possuem seus valores agregados e potencializados pelo uso de inteligência artificial. Além disso, criará pontes entre a universidade e a sociedade, promovendo o uso de tecnologias inteligentes para solução de problemas reais de forma mais efetiva.
+                    {% trans "A missão do laboratório é catalisar a colaboração entre pesquisadores, empresas e governo, para formulação de soluções tecnológicas, que possuem seus valores agregados e potencializados pelo uso de inteligência artificial. Além disso, criará pontes entre a universidade e a sociedade, promovendo o uso de tecnologias inteligentes para solução de problemas reais de forma mais efetiva." %}
                   </p>
                   <br/>
                   Fonte: <a href="https://ww2.uft.edu.br/index.php/ultimas-noticias/29942-laboratorio-de-inteligencia-artificial-e-apresentado-ao-publico">www.uft.edu.br</a>
@@ -123,12 +126,12 @@
                 <img src={% static "website/img/ComaisAmbiente.jpeg"%} class="img-fluid" alt="">
               </div>
               <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left" data-aos-delay="100">
-                <h3>Projeto Metrotins implementa redes de alta velocidade no Tocantins</h3>
+                <h3>{% trans "Projeto Metrotins implementa redes de alta velocidade no Tocantins"%}</h3>
                 <p >
-                  Implantado em Palmas no ano de 2010, o projeto da Rede Metropolitana de Ensino e Pesquisa de Palmas (Metrotins) está exposto na II Feira Tecnológica Universidade e Empresa (Unitec), dentro da Arena do Conhecimento do Sebrae.  A Metrotins é um consórcio sem fins lucrativos e visa oferecer uma rede de alta velocidade com taxas de 1 a 10 Gigabits a custo mais acessível do que o oferecido pela iniciativa privada.<br/>
-                  O projeto é uma iniciativa do Ministério da Ciência e Tecnologia (MCT), coordenado pela Rede Nacional de Ensino e Pesquisa (RNP), por meio do professor da Universidade Federal do Tocantins, Gentil Veloso. Seu objetivo é interligar o maior número de instituições públicas, com alta velocidade de transferência de dados e com baixo custo para os órgãos.
+                  {% trans "Implantado em Palmas no ano de 2010, o projeto da Rede Metropolitana de Ensino e Pesquisa de Palmas (Metrotins) está exposto na II Feira Tecnológica Universidade e Empresa (Unitec), dentro da Arena do Conhecimento do Sebrae.  A Metrotins é um consórcio sem fins lucrativos e visa oferecer uma rede de alta velocidade com taxas de 1 a 10 Gigabits a custo mais acessível do que o oferecido pela iniciativa privada." %}<br/>
+                  {% trans "O projeto é uma iniciativa do Ministério da Ciência e Tecnologia (MCT), coordenado pela Rede Nacional de Ensino e Pesquisa (RNP), por meio do professor da Universidade Federal do Tocantins, Gentil Veloso. Seu objetivo é interligar o maior número de instituições públicas, com alta velocidade de transferência de dados e com baixo custo para os órgãos." %}
                 </p><br/>
-                Fonte: <a href="https://ww2.uft.edu.br/index.php/ultimas-noticias/26259-projeto-metrotins-implementa-redes-de-alta-velocidade-no-tocantins">https://ww2.uft.edu.br/index.php/ultimas-noticias/26259-projeto-metrotins-implementa-redes-de-alta-velocidade-no-tocantins</a>
+                {% trans "Fonte:"%} <a href="https://ww2.uft.edu.br/index.php/ultimas-noticias/26259-projeto-metrotins-implementa-redes-de-alta-velocidade-no-tocantins">https://ww2.uft.edu.br/index.php/ultimas-noticias/26259-projeto-metrotins-implementa-redes-de-alta-velocidade-no-tocantins</a>
     
               </div>
             </div>
@@ -142,8 +145,8 @@
     
             <div class="section-title">
               <br/>
-              <h2>Serviços</h2>
-              <p>O laboratório mantém alguns serviços on-line para dá suporte aos pesquisadores da Universidade Federal do Tocantins e parceiros.</p>
+              <h2>{% trans "Serviços" %}</h2>
+              <p>{% trans "O laboratório mantém alguns serviços on-line para dá suporte aos pesquisadores da Universidade Federal do Tocantins e parceiros." %}</p>
             </div>
     
             <div class="row">
@@ -151,15 +154,15 @@
                 <div class="icon-box">
                   <div class="icon"><i class="bx bxl-dribbble"></i></div>
                   <h4><a href="http://redcap.comais.uft.edu.br/">RedCap</a></h4>
-                  <p>REDCap é uma plataforma web segura para construir e gerenciar bancos de dados e pesquisas online.</p>
+                  <p>{% trans "REDCap é uma plataforma web segura para construir e gerenciar bancos de dados e pesquisas online." %}</p>
                 </div>
               </div>
     
               <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
                 <div class="icon-box">
                   <div class="icon"><i class="bx bx-file"></i></div>
-                  <h4><a href="http://pdf.comais.uft.edu.br">Conversor PDF</a></h4>
-                  <p>Serviço que converte arquivos pdf para o padrão aberto PDFa e aplica OCR.</p>
+                  <h4><a href="http://pdf.comais.uft.edu.br">{% trans "Conversor PDF" %}</a></h4>
+                  <p>{% trans "Serviço que converte arquivos pdf para o padrão aberto PDFa e aplica OCR." %}</p>
                 </div>
               </div>
     
@@ -167,15 +170,15 @@
                 <div class="icon-box">
                   <div class="icon"><i class="bx bx-tachometer"></i></div>
                   <h4><a href="http://sr.comais.uft.edu.br">Smart Review</a></h4>
-                  <p>Serviço de apoio ao processo de revisão bibliográfica.</p>
+                  <p>{% trans "Serviço de apoio ao processo de revisão bibliográfica." %}</p>
                 </div>
               </div>
     
               <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
                 <div class="icon-box">
                   <div class="icon"><i class="bx bx-layer"></i></div>
-							<h4><a href="{% url 'registro-ocorrencias' %}">Apoio técnico</a></h4>
-                  <p>Registo de solicitação de apoio técnico em Pesquisas.</p>
+							<h4><a href="{% url 'registro-ocorrencias' %}">{% trans "Apoio técnico" %}</a></h4>
+                  <p>{% trans "Registo de solicitação de apoio técnico em Pesquisas." %}</p>
                 </div>
               </div>
     
@@ -191,7 +194,7 @@
             <div class="row">
               <div class="col-lg-9 text-center text-lg-start">
                 <h3>RedCap</h3>
-                <p> REDCap é um serviço web seguro  usado para construir e gerenciar pesquisas e bancos de dados online. Coleta praticamente qualquer tipo de dados em qualquer ambiente (em conformidade com 21 CFR Part 11, FISMA, HIPAA e GDPR), ele é capaz de dar suporte à captura de dados online e offline para estudos e operações de pesquisa.</p>
+                <p>{% trans "REDCap é um serviço web seguro usado para construir e gerenciar pesquisas e bancos de dados online. Coleta praticamente qualquer tipo de dados em qualquer ambiente (em conformidade com 21 CFR Part 11, FISMA, HIPAA e GDPR), ele é capaz de dar suporte à captura de dados online e offline para estudos e operações de pesquisa." %}</p>
               </div>
               <div class="col-lg-3 cta-btn-container text-center">
                 <a class="cta-btn align-middle" href="http://redcap.comais.uft.edu.br/">Acessar</a>
@@ -205,8 +208,8 @@
           <div class="container" data-aos="fade-up">
 
             <div class="section-title">
-              <h2>Cursos e Formações</h2>
-              <p>Explore nossos programas de capacitação em Inteligência Artificial e Modelagem Computacional</p>
+              <h2>{% trans "Cursos e Formações" %}</h2>
+              <p>{% trans "Explore nossos programas de capacitação em Inteligência Artificial e Modelagem Computacional" %}</p>
             </div>
 
             <div class="row" id="cursos-container">
@@ -241,8 +244,8 @@
              
               {% empty %}
               <div class="col-12">
-                <div class="alert alert-info text-center" role="alert">
-                  <i class="bi bi-info-circle"></i> Nenhum curso disponível no momento
+                  <div class="alert alert-info text-center" role="alert">
+                  <i class="bi bi-info-circle"></i> {% trans "Nenhum curso disponível no momento" %}
                 </div>
               </div>
               {% endfor %}
@@ -256,8 +259,8 @@
           <div class="container aos-init aos-animate" data-aos="fade-up">
     
             <div class="section-title">
-              <h2>Publicações</h2>
-              <p>Publicaçãos apoiadas pelos COMAIS lab.</p>
+              <h2>{% trans "Publicações" %}</h2>
+              <p>{% trans "Publicações apoiadas pelos COMAIS lab." %}</p>
             </div>
     
             <div class="faq-list">
@@ -269,10 +272,10 @@
                   <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
                   <div id="faq-list-{{publicacao.id}}" class="collapse " data-bs-parent=".faq-list" style="" >
                     <p class="text-justify" style="padding-left:50px" >
-									<b>Autores:</b> {{publicacao.autores}}
+									<b>{% trans "Autores:" %}</b> {{publicacao.autores}}
                     </p>
                     <p class="text-justify" style="padding-left:50px">
-									<b>Resumo:</b> {{publicacao.resumo|striptags|safe }}
+									<b>{% trans "Resumo:" %}</b> {{publicacao.resumo|striptags|safe }}
                     </p> 
                   </div>
                 </li>
@@ -288,12 +291,12 @@
           <div class="container" data-aos="fade-up">
     
             <div class="section-title">
-              <h2>Projetos</h2>
-              <p>Conheça algumas das iniciativas apoiadas pelo COMAIS.</p>
+              <h2>{% trans "Projetos" %}</h2>
+              <p>{% trans "Conheça algumas das iniciativas apoiadas pelo COMAIS." %}</p>
             </div>
     
             <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-              <li data-filter="*" class="filter-active">Todos</li>
+              <li data-filter="*" class="filter-active">{% trans "Todos" %}</li>
               {%for tipo in tipos %}
               <li data-filter=.{{tipo.filter}}>{{tipo.type}}</li>
               {% endfor%}
@@ -314,7 +317,7 @@
                   <h4><a class="nav-link" href="/projetos/{{projeto.id}}">{{projeto.name}}</a></h4>
                   <p><a class="nav-link" href="/projetos/{{projeto.id}}">{{projeto.title}}</a></p>
                   <a href={{projeto.image1.url}} data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="{{projeto.name}}"><i class="bx bx-plus"></i></a>
-                  <a href="/projetos/{{projeto.id}}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+                  <a href="/projetos/{{projeto.id}}" class="details-link" title="{% trans 'Mais Detalhes' %}"><i class="bx bx-link"></i></a>
                 </div>
                 {% endif %}
               </div>
@@ -330,7 +333,7 @@
           <div class="container" data-aos="fade-up">
     
             <div class="section-title">
-              <h2>Equipe</h2>
+              <h2>{% trans "Equipe" %}</h2>
               
             </div>
     
@@ -344,7 +347,7 @@
                   <div class="member-info">
                     <h4>{{colaborador.name}}</h4>
                     <span>{{colaborador.funcao}}</span>
-                    <p><a href ={{colaborador.url}} >Currículo Lattes</a></p>
+                    <p><a href ={{colaborador.url}} >{% trans "Currículo Lattes" %}</a></p>
                     <div class="social">
 					<a {% if colaborador.url_twitter %} href={{colaborador.url_twitter}} {% endif %}><i class="ri-twitter-fill"></i></a>
                       <a {% if colaborador.url_facebook %}href={{colaborador.url_facebook}}{% endif %}><i class="ri-facebook-fill"></i></a>
@@ -369,7 +372,7 @@
           <div class="container" data-aos="fade-up">
     
             <div class="section-title">
-              <h2>Contato</h2>
+              <h2>{% trans "Contato" %}</h2>
               
             </div>
     
@@ -380,15 +383,13 @@
                   <div class="address">
                     <i class="bi bi-geo-alt"></i>
                     <h4>Localização:</h4>
-                    <p>Quadra 109 Norte, Avenida NS-15,
-                      ALCNO-14, Bloco III, Sala 105,  Plano Diretor Norte
-                      Palmas/TO</p>
+                    <p>{% trans "Quadra 109 Norte, Avenida NS-15, ALCNO-14, Bloco III, Sala 105, Plano Diretor Norte, Palmas/TO" %}</p>
                   </div>
     
                   <div class="email">
                     <i class="bi bi-envelope"></i>
                     <h4>Email:</h4>
-                    <p>comais@uft.edu.br</p>
+                    <p>{% trans "comais@uft.edu.br" %}</p>
                   </div>
                   <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d26418.003900915173!2d-48.35507667391182!3d-10.175796844112822!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6908f8e88d9f46e1!2sComais%20Labs!5e0!3m2!1spt-BR!2sbr!4v1657227187835!5m2!1spt-BR!2sbr" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
                 </div>
@@ -398,14 +399,14 @@
               <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
                 {% if submitted %}
                         <div class="alert alert-success">
-                            <strong>Sucesso!</strong> O seu contato foi enviado com sucesso.
+                            <strong>{% trans "Sucesso!" %}</strong> {% trans "O seu contato foi enviado com sucesso." %}
                         </div>
                 {% else %}
 
                     <form method=POST action="" >
                         {% csrf_token %} 
                         {{form.as_p}}
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="submit" class="btn btn-primary">{% trans "Enviar" %}</button>
                     </form>
                 {% endif %}
 

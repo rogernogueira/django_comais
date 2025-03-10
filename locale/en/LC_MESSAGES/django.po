@@ -1,0 +1,501 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-10 18:23-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\website\templates\base2.html:12
+msgid "Comais Labs"
+msgstr "Comais Labs"
+
+#: .\website\templates\base2.html:65
+msgid "COMAIS"
+msgstr "COMAIS"
+
+#: .\website\templates\cursos\detalhes.html:17
+msgid "Objetivos do Curso"
+msgstr "Course Objectives"
+
+#: .\website\templates\cursos\detalhes.html:24
+#, fuzzy
+#| msgid "Cursos e Formações"
+msgid "Informações"
+msgstr "Courses and Training"
+
+#: .\website\templates\cursos\detalhes.html:29
+#: .\website\templates\cursos\form.html:27
+#: .\website\templates\cursos\listar.html:13
+msgid "Carga Horária"
+msgstr "Workload"
+
+#: .\website\templates\cursos\detalhes.html:36
+msgid "Período"
+msgstr "Period"
+
+#: .\website\templates\cursos\detalhes.html:45
+msgid "Instrutor"
+msgstr "Instructor"
+
+#: .\website\templates\cursos\detalhes.html:52
+#: .\website\templates\cursos\form.html:50
+#: .\website\templates\cursos\listar.html:16
+msgid "Parceiros"
+msgstr "Partners"
+
+#: .\website\templates\cursos\detalhes.html:64
+msgid "Voltar para home"
+msgstr "Back to Home"
+
+#: .\website\templates\cursos\detalhes.html:79
+msgid "Nosso Parceiro"
+msgstr "Our Partner"
+
+#: .\website\templates\cursos\detalhes.html:81
+msgid "Nossos Parceiros"
+msgstr "Our Partners"
+
+#: .\website\templates\cursos\form.html:13
+#: .\website\templates\cursos\listar.html:11
+msgid "Nome"
+msgstr "Name"
+
+#: .\website\templates\cursos\form.html:19
+#: .\website\templates\cursos\listar.html:12
+msgid "Descrição"
+msgstr ""
+
+#: .\website\templates\cursos\form.html:33
+#: .\website\templates\cursos\listar.html:14
+#, fuzzy
+#| msgid "Início"
+msgid "Data Início"
+msgstr "Start Date"
+
+#: .\website\templates\cursos\form.html:39
+#: .\website\templates\cursos\listar.html:15
+msgid "Data Fim"
+msgstr "End Date"
+
+#: .\website\templates\cursos\form.html:44
+#, fuzzy
+#| msgid "Autores:"
+msgid "Instrutores"
+msgstr ""
+
+#: .\website\templates\cursos\form.html:59
+msgid "Salvar"
+msgstr "Save"
+
+#: .\website\templates\cursos\form.html:60
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: .\website\templates\cursos\listar.html:5
+msgid "Cursos Ministrados"
+msgstr "Taught Courses"
+
+#: .\website\templates\cursos\listar.html:6
+#, fuzzy
+#| msgid "Cursos"
+msgid "Novo Curso"
+msgstr "New Course"
+
+#: .\website\templates\cursos\listar.html:17
+#, fuzzy
+#| msgid "Publicações"
+msgid "Ações"
+msgstr "Actions"
+
+#: .\website\templates\cursos\listar.html:34
+#, fuzzy
+#| msgid "Editar Perfil"
+msgid "Editar"
+msgstr "Edit Profile"
+
+#: .\website\templates\cursos\listar.html:35
+msgid "Excluir"
+msgstr "Delete"
+
+#: .\website\templates\footer.html:20
+msgid "Links Úteis"
+msgstr "Useful Links"
+
+#: .\website\templates\footer.html:22
+msgid "Início"
+msgstr "Home"
+
+#: .\website\templates\footer.html:23 .\website\templates\home.html:59
+#: .\website\templates\navbar.html:15
+msgid "Sobre"
+msgstr "About"
+
+#: .\website\templates\footer.html:24 .\website\templates\footer.html:30
+#: .\website\templates\home.html:148 .\website\templates\navbar.html:30
+msgid "Serviços"
+msgstr "Services"
+
+#: .\website\templates\footer.html:25 .\website\templates\home.html:19
+#: .\website\templates\home.html:294 .\website\templates\navbar.html:27
+#: .\website\templates\navbar.html:99
+msgid "Projetos"
+msgstr "Projects"
+
+#: .\website\templates\footer.html:33 .\website\templates\home.html:164
+msgid "Conversor PDF"
+msgstr "PDF Converter"
+
+#: .\website\templates\footer.html:34
+msgid "Solicitações"
+msgstr "Requests"
+
+#: .\website\templates\footer.html:35 .\website\templates\home.html:375
+msgid "Contato"
+msgstr "Contact"
+
+#: .\website\templates\footer.html:40
+msgid "Redes Sociais"
+msgstr "Social Networks"
+
+#: .\website\templates\footer.html:41
+msgid "Conheça nossas ações"
+msgstr "Discover our actions"
+
+#: .\website\templates\home.html:16
+msgid "Modelagem Computacional de Soluções de Inteligência Artificial"
+msgstr "Computational Modeling of Artificial Intelligence Solutions"
+
+#: .\website\templates\home.html:17
+msgid ""
+"Laboratório multidisciplinar do Programa de Pós-Graduação em Modelagem "
+"Computacional de Sistemas da Universidade Federal do Tocantins"
+msgstr ""
+"Multidisciplinary laboratory of the Graduate Program in Computational "
+"Modeling of Systems at the Federal University of Tocantins"
+
+#: .\website\templates\home.html:20
+msgid "Assistir Video"
+msgstr "Watch Video"
+
+#: .\website\templates\home.html:64
+msgid ""
+"A missão do laboratório COMAIS(Computational Modeling of Artificial "
+"Intelligence Solutions Labs.) é catalisar a colaboração entre pesquisadores, "
+"empresas e governo, para formulação de soluções tecnológicas, que possuem "
+"seus valores agregados potencializados pelo uso de inteligência artificial."
+msgstr ""
+"The mission of the COMAIS laboratory (Computational Modeling of Artificial "
+"Intelligence Solutions Labs.) is to catalyze collaboration among "
+"researchers, companies, and government to formulate technological solutions "
+"whose added value is enhanced by the use of artificial intelligence."
+
+#: .\website\templates\home.html:67
+msgid "O COMAIS visa:"
+msgstr "COMAIS aims to:"
+
+#: .\website\templates\home.html:70
+msgid "Ser um ambiente que estimule a integração"
+msgstr "Be an environment that stimulates integration"
+
+#: .\website\templates\home.html:71
+msgid "Trabalhar multidisciplinaridade de forma colaborativa e criativa"
+msgstr "Work with multidisciplinarity in a collaborative and creative way"
+
+#: .\website\templates\home.html:72
+msgid "Propiciar a geração de projetos inovadores"
+msgstr "Enable the generation of innovative projects"
+
+#: .\website\templates\home.html:77
+msgid ""
+"O laboratório tem em seu portfólio diversos projetos que usam técnicas de "
+"Inteligência Artificial. A concepção e modelagem desses projetos requerem "
+"uma equipe multidisciplinar, uma vez que são desenvolvidos para aturem e "
+"diversas áreas de conhecimento, tais como: judicial, segurança pública, "
+"ambiental e social."
+msgstr ""
+"The laboratory has in its portfolio several projects that use Artificial "
+"Intelligence techniques. The design and modeling of these projects require a "
+"multidisciplinary team, as they are developed to operate in various fields "
+"such as judicial, public safety, environmental, and social."
+
+#: .\website\templates\home.html:80
+msgid ""
+"Concomitante contribuindo com a comunidade científica, validando aprendizado "
+"dos acadêmicos envolvidos e agregando de forma qualitativa e quantitativa em "
+"sua produção científica."
+msgstr ""
+"At the same time, it contributes to the scientific community by validating "
+"the learning of involved academics and adding both qualitative and "
+"quantitative value to their scientific output."
+
+#: .\website\templates\home.html:94 .\website\templates\navbar.html:18
+msgid "Notícias"
+msgstr "News"
+
+#: .\website\templates\home.html:102
+msgid "Laboratório de"
+msgstr "Laboratory of"
+
+#: .\website\templates\home.html:102
+msgid "inteligência artificial"
+msgstr "artificial intelligence"
+
+#: .\website\templates\home.html:102
+msgid "é apresentado ao público"
+msgstr "is presented to the public"
+
+#: .\website\templates\home.html:104
+msgid ""
+"Na última quarta-feira (25), as portas do Laboratório de Computational "
+"Modeling of Artificial Intelligence Solutions (Comais), no Câmpus de Palmas, "
+"foram abertas oficialmente em uma cerimônia para convidados."
+msgstr ""
+"Last Wednesday (25), the doors of the Computational Modeling of Artificial "
+"Intelligence Solutions (Comais) Laboratory at the Palmas campus were "
+"officially opened during a ceremony for invited guests."
+
+#: .\website\templates\home.html:106
+msgid ""
+"A missão do laboratório é catalisar a colaboração entre pesquisadores, "
+"empresas e governo, para formulação de soluções tecnológicas, que possuem "
+"seus valores agregados e potencializados pelo uso de inteligência "
+"artificial. Além disso, criará pontes entre a universidade e a sociedade, "
+"promovendo o uso de tecnologias inteligentes para solução de problemas reais "
+"de forma mais efetiva."
+msgstr ""
+"The laboratory's mission is to catalyze collaboration among researchers, "
+"companies, and government to formulate technological solutions whose value "
+"is enhanced by the use of artificial intelligence. In addition, it will "
+"create bridges between the university and society, promoting the use of "
+"intelligent technologies to solve real-world problems more effectively."
+
+#: .\website\templates\home.html:129
+msgid "Projeto Metrotins implementa redes de alta velocidade no Tocantins"
+msgstr "The Metrotins Project implements high-speed networks in Tocantins"
+
+#: .\website\templates\home.html:131
+msgid ""
+"Implantado em Palmas no ano de 2010, o projeto da Rede Metropolitana de "
+"Ensino e Pesquisa de Palmas (Metrotins) está exposto na II Feira Tecnológica "
+"Universidade e Empresa (Unitec), dentro da Arena do Conhecimento do Sebrae.  "
+"A Metrotins é um consórcio sem fins lucrativos e visa oferecer uma rede de "
+"alta velocidade com taxas de 1 a 10 Gigabits a custo mais acessível do que o "
+"oferecido pela iniciativa privada."
+msgstr ""
+"Deployed in Palmas in 2010, the Palmas Metropolitan Education and Research "
+"Network (Metrotins) project is showcased at the 2nd University and "
+"Enterprise Technological Fair (Unitec), within Sebrae’s Knowledge Arena. "
+"Metrotins is a nonprofit consortium whose goal is to provide a high-speed "
+"network with speeds ranging from 1 to 10 gigabits at a more affordable cost "
+"than what is offered by the private sector."
+
+#: .\website\templates\home.html:132
+msgid ""
+"O projeto é uma iniciativa do Ministério da Ciência e Tecnologia (MCT), "
+"coordenado pela Rede Nacional de Ensino e Pesquisa (RNP), por meio do "
+"professor da Universidade Federal do Tocantins, Gentil Veloso. Seu objetivo "
+"é interligar o maior número de instituições públicas, com alta velocidade de "
+"transferência de dados e com baixo custo para os órgãos."
+msgstr ""
+"The project is an initiative of the Ministry of Science and Technology "
+"(MCT), coordinated by the National Education and Research Network (RNP) "
+"through Professor Gentil Veloso, from the Federal University of Tocantins. "
+"Its goal is to connect as many public institutions as possible, offering "
+"high-speed data transfer at a lower cost to these agencies."
+
+#: .\website\templates\home.html:134
+msgid "Fonte:"
+msgstr "Source :"
+
+#: .\website\templates\home.html:149
+msgid ""
+"O laboratório mantém alguns serviços on-line para dá suporte aos "
+"pesquisadores da Universidade Federal do Tocantins e parceiros."
+msgstr ""
+"The laboratory provides some online services to support researchers at the "
+"Federal University of Tocantins and its partners."
+
+#: .\website\templates\home.html:157
+msgid ""
+"REDCap é uma plataforma web segura para construir e gerenciar bancos de "
+"dados e pesquisas online."
+msgstr ""
+"REDCap is a secure web platform for building and managing online databases "
+"and surveys."
+
+#: .\website\templates\home.html:165
+msgid ""
+"Serviço que converte arquivos pdf para o padrão aberto PDFa e aplica OCR."
+msgstr ""
+"A service that converts PDF files to the open PDFa standard and applies OCR."
+
+#: .\website\templates\home.html:173
+msgid "Serviço de apoio ao processo de revisão bibliográfica."
+msgstr "A service that supports the bibliographic review process."
+
+#: .\website\templates\home.html:180
+msgid "Apoio técnico"
+msgstr "Technical support"
+
+#: .\website\templates\home.html:181
+msgid "Registo de solicitação de apoio técnico em Pesquisas."
+msgstr "Request registration for technical support in research."
+
+#: .\website\templates\home.html:197
+msgid ""
+"REDCap é um serviço web seguro usado para construir e gerenciar pesquisas e "
+"bancos de dados online. Coleta praticamente qualquer tipo de dados em "
+"qualquer ambiente (em conformidade com 21 CFR Part 11, FISMA, HIPAA e GDPR), "
+"ele é capaz de dar suporte à captura de dados online e offline para estudos "
+"e operações de pesquisa."
+msgstr ""
+"REDCap is a secure web service used to build and manage online surveys and "
+"databases. It can collect virtually any type of data in any environment (in "
+"compliance with 21 CFR Part 11, FISMA, HIPAA, and GDPR), and it supports "
+"online and offline data capture for research studies and operations."
+
+#: .\website\templates\home.html:211
+msgid "Cursos e Formações"
+msgstr "Courses and Training"
+
+#: .\website\templates\home.html:212
+msgid ""
+"Explore nossos programas de capacitação em Inteligência Artificial e "
+"Modelagem Computacional"
+msgstr ""
+"Explore our training programs in Artificial Intelligence and Computational "
+"Modeling"
+
+#: .\website\templates\home.html:248
+msgid "Nenhum curso disponível no momento"
+msgstr "No courses available at the moment"
+
+#: .\website\templates\home.html:262 .\website\templates\navbar.html:21
+#: .\website\templates\navbar.html:98
+msgid "Publicações"
+msgstr "Publications"
+
+#: .\website\templates\home.html:263
+msgid "Publicações apoiadas pelos COMAIS lab."
+msgstr "Publications supported by COMAIS lab."
+
+#: .\website\templates\home.html:275
+msgid "Autores:"
+msgstr "Authors:"
+
+#: .\website\templates\home.html:278
+msgid "Resumo:"
+msgstr "Abstract:"
+
+#: .\website\templates\home.html:295
+msgid "Conheça algumas das iniciativas apoiadas pelo COMAIS."
+msgstr "Discover some of the initiatives supported by COMAIS."
+
+#: .\website\templates\home.html:299
+msgid "Todos"
+msgstr "All"
+
+#: .\website\templates\home.html:320
+msgid "Mais Detalhes"
+msgstr "More Details"
+
+#: .\website\templates\home.html:336 .\website\templates\navbar.html:33
+msgid "Equipe"
+msgstr "Team"
+
+#: .\website\templates\home.html:350
+msgid "Currículo Lattes"
+msgstr "Lattes CV"
+
+#: .\website\templates\home.html:386
+msgid ""
+"Quadra 109 Norte, Avenida NS-15, ALCNO-14, Bloco III, Sala 105, Plano "
+"Diretor Norte, Palmas/TO"
+msgstr ""
+"Quadra 109 Norte, Avenida NS-15, ALCNO-14, Bloco III, Sala 105, Plano "
+"Diretor Norte, Palmas/TO"
+
+#: .\website\templates\home.html:392
+msgid "comais@uft.edu.br"
+msgstr "comais@uft.edu.br"
+
+#: .\website\templates\home.html:402
+msgid "Sucesso!"
+msgstr "Success!"
+
+#: .\website\templates\home.html:402
+msgid "O seu contato foi enviado com sucesso."
+msgstr "Your contact has been successfully sent."
+
+#: .\website\templates\home.html:409
+msgid "Enviar"
+msgstr "Send"
+
+#: .\website\templates\navbar.html:24
+msgid "Cursos"
+msgstr "Courses"
+
+#: .\website\templates\navbar.html:36
+msgid "Contatos"
+msgstr "Contacts"
+
+#: .\website\templates\navbar.html:42
+msgid "Gerenciar contatos"
+msgstr "Manage contacts"
+
+#: .\website\templates\navbar.html:45
+msgid "Ocorrências"
+msgstr "Incidents"
+
+#: .\website\templates\navbar.html:57 .\website\templates\navbar.html:65
+msgid "Português"
+msgstr "Portuguese"
+
+#: .\website\templates\navbar.html:73
+msgid "English"
+msgstr "English"
+
+#: .\website\templates\navbar.html:92
+msgid "Logout"
+msgstr "Logout"
+
+#: .\website\templates\navbar.html:93
+msgid "Editar Perfil"
+msgstr "Edit Profile"
+
+#: .\website\templates\navbar.html:95
+msgid "Adicionar Usuário"
+msgstr "Add User"
+
+#: .\website\templates\navbar.html:100
+msgid "Relatórios"
+msgstr "Reports"
+
+#: .\website\templates\navbar.html:114
+msgid "Login"
+msgstr "Login"
+
+#: .\website\templates\show_projeto.html:40
+msgid "Categoria"
+msgstr "Category"
+
+#: .\website\templates\show_projeto.html:45
+msgid "Cliente"
+msgstr "Client"
+
+#: .\website\templates\show_projeto.html:47
+msgid "Saiba mais"
+msgstr "Learn more"

@@ -1,0 +1,444 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-10 18:23-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\website\templates\base2.html:12
+msgid "Comais Labs"
+msgstr ""
+
+#: .\website\templates\base2.html:65
+msgid "COMAIS"
+msgstr ""
+
+#: .\website\templates\cursos\detalhes.html:17
+msgid "Objetivos do Curso"
+msgstr ""
+
+#: .\website\templates\cursos\detalhes.html:24
+msgid "Informações"
+msgstr ""
+
+#: .\website\templates\cursos\detalhes.html:29
+#: .\website\templates\cursos\form.html:27
+#: .\website\templates\cursos\listar.html:13
+msgid "Carga Horária"
+msgstr ""
+
+#: .\website\templates\cursos\detalhes.html:36
+msgid "Período"
+msgstr ""
+
+#: .\website\templates\cursos\detalhes.html:45
+msgid "Instrutor"
+msgstr ""
+
+#: .\website\templates\cursos\detalhes.html:52
+#: .\website\templates\cursos\form.html:50
+#: .\website\templates\cursos\listar.html:16
+msgid "Parceiros"
+msgstr ""
+
+#: .\website\templates\cursos\detalhes.html:64
+msgid "Voltar para home"
+msgstr ""
+
+#: .\website\templates\cursos\detalhes.html:79
+msgid "Nosso Parceiro"
+msgstr ""
+
+#: .\website\templates\cursos\detalhes.html:81
+msgid "Nossos Parceiros"
+msgstr ""
+
+#: .\website\templates\cursos\form.html:13
+#: .\website\templates\cursos\listar.html:11
+msgid "Nome"
+msgstr ""
+
+#: .\website\templates\cursos\form.html:19
+#: .\website\templates\cursos\listar.html:12
+msgid "Descrição"
+msgstr ""
+
+#: .\website\templates\cursos\form.html:33
+#: .\website\templates\cursos\listar.html:14
+msgid "Data Início"
+msgstr ""
+
+#: .\website\templates\cursos\form.html:39
+#: .\website\templates\cursos\listar.html:15
+msgid "Data Fim"
+msgstr ""
+
+#: .\website\templates\cursos\form.html:44
+msgid "Instrutores"
+msgstr ""
+
+#: .\website\templates\cursos\form.html:59
+msgid "Salvar"
+msgstr ""
+
+#: .\website\templates\cursos\form.html:60
+msgid "Cancelar"
+msgstr ""
+
+#: .\website\templates\cursos\listar.html:5
+msgid "Cursos Ministrados"
+msgstr ""
+
+#: .\website\templates\cursos\listar.html:6
+msgid "Novo Curso"
+msgstr ""
+
+#: .\website\templates\cursos\listar.html:17
+msgid "Ações"
+msgstr ""
+
+#: .\website\templates\cursos\listar.html:34
+msgid "Editar"
+msgstr ""
+
+#: .\website\templates\cursos\listar.html:35
+msgid "Excluir"
+msgstr ""
+
+#: .\website\templates\footer.html:20
+msgid "Links Úteis"
+msgstr ""
+
+#: .\website\templates\footer.html:22
+msgid "Início"
+msgstr ""
+
+#: .\website\templates\footer.html:23 .\website\templates\home.html:59
+#: .\website\templates\navbar.html:15
+msgid "Sobre"
+msgstr ""
+
+#: .\website\templates\footer.html:24 .\website\templates\footer.html:30
+#: .\website\templates\home.html:148 .\website\templates\navbar.html:30
+msgid "Serviços"
+msgstr ""
+
+#: .\website\templates\footer.html:25 .\website\templates\home.html:19
+#: .\website\templates\home.html:294 .\website\templates\navbar.html:27
+#: .\website\templates\navbar.html:99
+msgid "Projetos"
+msgstr ""
+
+#: .\website\templates\footer.html:33 .\website\templates\home.html:164
+msgid "Conversor PDF"
+msgstr ""
+
+#: .\website\templates\footer.html:34
+msgid "Solicitações"
+msgstr ""
+
+#: .\website\templates\footer.html:35 .\website\templates\home.html:375
+msgid "Contato"
+msgstr ""
+
+#: .\website\templates\footer.html:40
+msgid "Redes Sociais"
+msgstr ""
+
+#: .\website\templates\footer.html:41
+msgid "Conheça nossas ações"
+msgstr ""
+
+#: .\website\templates\home.html:16
+msgid "Modelagem Computacional de Soluções de Inteligência Artificial"
+msgstr ""
+
+#: .\website\templates\home.html:17
+msgid ""
+"Laboratório multidisciplinar do Programa de Pós-Graduação em Modelagem "
+"Computacional de Sistemas da Universidade Federal do Tocantins"
+msgstr ""
+
+#: .\website\templates\home.html:20
+msgid "Assistir Video"
+msgstr ""
+
+#: .\website\templates\home.html:64
+msgid ""
+"A missão do laboratório COMAIS(Computational Modeling of Artificial "
+"Intelligence Solutions Labs.) é catalisar a colaboração entre pesquisadores, "
+"empresas e governo, para formulação de soluções tecnológicas, que possuem "
+"seus valores agregados potencializados pelo uso de inteligência artificial."
+msgstr ""
+
+#: .\website\templates\home.html:67
+msgid "O COMAIS visa:"
+msgstr ""
+
+#: .\website\templates\home.html:70
+msgid "Ser um ambiente que estimule a integração"
+msgstr ""
+
+#: .\website\templates\home.html:71
+msgid "Trabalhar multidisciplinaridade de forma colaborativa e criativa"
+msgstr ""
+
+#: .\website\templates\home.html:72
+msgid "Propiciar a geração de projetos inovadores"
+msgstr ""
+
+#: .\website\templates\home.html:77
+msgid ""
+"O laboratório tem em seu portfólio diversos projetos que usam técnicas de "
+"Inteligência Artificial. A concepção e modelagem desses projetos requerem "
+"uma equipe multidisciplinar, uma vez que são desenvolvidos para aturem e "
+"diversas áreas de conhecimento, tais como: judicial, segurança pública, "
+"ambiental e social."
+msgstr ""
+
+#: .\website\templates\home.html:80
+msgid ""
+"Concomitante contribuindo com a comunidade científica, validando aprendizado "
+"dos acadêmicos envolvidos e agregando de forma qualitativa e quantitativa em "
+"sua produção científica."
+msgstr ""
+
+#: .\website\templates\home.html:94 .\website\templates\navbar.html:18
+msgid "Notícias"
+msgstr ""
+
+#: .\website\templates\home.html:102
+msgid "Laboratório de"
+msgstr ""
+
+#: .\website\templates\home.html:102
+msgid "inteligência artificial"
+msgstr ""
+
+#: .\website\templates\home.html:102
+msgid "é apresentado ao público"
+msgstr ""
+
+#: .\website\templates\home.html:104
+msgid ""
+"Na última quarta-feira (25), as portas do Laboratório de Computational "
+"Modeling of Artificial Intelligence Solutions (Comais), no Câmpus de Palmas, "
+"foram abertas oficialmente em uma cerimônia para convidados."
+msgstr ""
+
+#: .\website\templates\home.html:106
+msgid ""
+"A missão do laboratório é catalisar a colaboração entre pesquisadores, "
+"empresas e governo, para formulação de soluções tecnológicas, que possuem "
+"seus valores agregados e potencializados pelo uso de inteligência "
+"artificial. Além disso, criará pontes entre a universidade e a sociedade, "
+"promovendo o uso de tecnologias inteligentes para solução de problemas reais "
+"de forma mais efetiva."
+msgstr ""
+
+#: .\website\templates\home.html:129
+msgid "Projeto Metrotins implementa redes de alta velocidade no Tocantins"
+msgstr ""
+
+#: .\website\templates\home.html:131
+msgid ""
+"Implantado em Palmas no ano de 2010, o projeto da Rede Metropolitana de "
+"Ensino e Pesquisa de Palmas (Metrotins) está exposto na II Feira Tecnológica "
+"Universidade e Empresa (Unitec), dentro da Arena do Conhecimento do Sebrae.  "
+"A Metrotins é um consórcio sem fins lucrativos e visa oferecer uma rede de "
+"alta velocidade com taxas de 1 a 10 Gigabits a custo mais acessível do que o "
+"oferecido pela iniciativa privada."
+msgstr ""
+
+#: .\website\templates\home.html:132
+msgid ""
+"O projeto é uma iniciativa do Ministério da Ciência e Tecnologia (MCT), "
+"coordenado pela Rede Nacional de Ensino e Pesquisa (RNP), por meio do "
+"professor da Universidade Federal do Tocantins, Gentil Veloso. Seu objetivo "
+"é interligar o maior número de instituições públicas, com alta velocidade de "
+"transferência de dados e com baixo custo para os órgãos."
+msgstr ""
+
+#: .\website\templates\home.html:134
+msgid "Fonte:"
+msgstr ""
+
+#: .\website\templates\home.html:149
+msgid ""
+"O laboratório mantém alguns serviços on-line para dá suporte aos "
+"pesquisadores da Universidade Federal do Tocantins e parceiros."
+msgstr ""
+
+#: .\website\templates\home.html:157
+msgid ""
+"REDCap é uma plataforma web segura para construir e gerenciar bancos de "
+"dados e pesquisas online."
+msgstr ""
+
+#: .\website\templates\home.html:165
+msgid ""
+"Serviço que converte arquivos pdf para o padrão aberto PDFa e aplica OCR."
+msgstr ""
+
+#: .\website\templates\home.html:173
+msgid "Serviço de apoio ao processo de revisão bibliográfica."
+msgstr ""
+
+#: .\website\templates\home.html:180
+msgid "Apoio técnico"
+msgstr ""
+
+#: .\website\templates\home.html:181
+msgid "Registo de solicitação de apoio técnico em Pesquisas."
+msgstr ""
+
+#: .\website\templates\home.html:197
+msgid ""
+"REDCap é um serviço web seguro usado para construir e gerenciar pesquisas e "
+"bancos de dados online. Coleta praticamente qualquer tipo de dados em "
+"qualquer ambiente (em conformidade com 21 CFR Part 11, FISMA, HIPAA e GDPR), "
+"ele é capaz de dar suporte à captura de dados online e offline para estudos "
+"e operações de pesquisa."
+msgstr ""
+
+#: .\website\templates\home.html:211
+msgid "Cursos e Formações"
+msgstr ""
+
+#: .\website\templates\home.html:212
+msgid ""
+"Explore nossos programas de capacitação em Inteligência Artificial e "
+"Modelagem Computacional"
+msgstr ""
+
+#: .\website\templates\home.html:248
+msgid "Nenhum curso disponível no momento"
+msgstr ""
+
+#: .\website\templates\home.html:262 .\website\templates\navbar.html:21
+#: .\website\templates\navbar.html:98
+msgid "Publicações"
+msgstr ""
+
+#: .\website\templates\home.html:263
+msgid "Publicações apoiadas pelos COMAIS lab."
+msgstr ""
+
+#: .\website\templates\home.html:275
+msgid "Autores:"
+msgstr ""
+
+#: .\website\templates\home.html:278
+msgid "Resumo:"
+msgstr ""
+
+#: .\website\templates\home.html:295
+msgid "Conheça algumas das iniciativas apoiadas pelo COMAIS."
+msgstr ""
+
+#: .\website\templates\home.html:299
+msgid "Todos"
+msgstr ""
+
+#: .\website\templates\home.html:320
+msgid "Mais Detalhes"
+msgstr ""
+
+#: .\website\templates\home.html:336 .\website\templates\navbar.html:33
+msgid "Equipe"
+msgstr ""
+
+#: .\website\templates\home.html:350
+msgid "Currículo Lattes"
+msgstr ""
+
+#: .\website\templates\home.html:386
+msgid ""
+"Quadra 109 Norte, Avenida NS-15, ALCNO-14, Bloco III, Sala 105, Plano "
+"Diretor Norte, Palmas/TO"
+msgstr ""
+
+#: .\website\templates\home.html:392
+msgid "comais@uft.edu.br"
+msgstr ""
+
+#: .\website\templates\home.html:402
+msgid "Sucesso!"
+msgstr ""
+
+#: .\website\templates\home.html:402
+msgid "O seu contato foi enviado com sucesso."
+msgstr ""
+
+#: .\website\templates\home.html:409
+msgid "Enviar"
+msgstr ""
+
+#: .\website\templates\navbar.html:24
+msgid "Cursos"
+msgstr ""
+
+#: .\website\templates\navbar.html:36
+msgid "Contatos"
+msgstr ""
+
+#: .\website\templates\navbar.html:42
+msgid "Gerenciar contatos"
+msgstr ""
+
+#: .\website\templates\navbar.html:45
+msgid "Ocorrências"
+msgstr ""
+
+#: .\website\templates\navbar.html:57 .\website\templates\navbar.html:65
+msgid "Português"
+msgstr ""
+
+#: .\website\templates\navbar.html:73
+msgid "English"
+msgstr ""
+
+#: .\website\templates\navbar.html:92
+msgid "Logout"
+msgstr ""
+
+#: .\website\templates\navbar.html:93
+msgid "Editar Perfil"
+msgstr ""
+
+#: .\website\templates\navbar.html:95
+msgid "Adicionar Usuário"
+msgstr ""
+
+#: .\website\templates\navbar.html:100
+msgid "Relatórios"
+msgstr ""
+
+#: .\website\templates\navbar.html:114
+msgid "Login"
+msgstr ""
+
+#: .\website\templates\show_projeto.html:40
+msgid "Categoria"
+msgstr ""
+
+#: .\website\templates\show_projeto.html:45
+msgid "Cliente"
+msgstr ""
+
+#: .\website\templates\show_projeto.html:47
+msgid "Saiba mais"
+msgstr ""

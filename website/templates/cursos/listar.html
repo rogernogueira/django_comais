@@ -1,19 +1,20 @@
 {% extends "base2.html" %}
+{% load i18n %}
 {% block content %}
 <div class="container">
-  <h2>Cursos Ministrados</h2>
-  <a href="{% url 'criar_curso' %}" class="btn btn-primary mb-3">Novo Curso</a>
+  <h2>{% trans "Cursos Ministrados" %}</h2>
+  <a href="{% url 'criar_curso' %}" class="btn btn-primary mb-3">{% trans "Novo Curso" %}</a>
   
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Nome</th>
-        <th>Descrição</th>
-        <th>Carga Horária</th>
-        <th>Data Início</th>
-        <th>Data Fim</th>
-        <th>Parceiros</th>
-        <th>Ações</th>
+        <th>{% trans "Nome" %}</th>
+        <th>{% trans "Descrição" %}</th>
+        <th>{% trans "Carga Horária" %}</th>
+        <th>{% trans "Data Início" %}</th>
+        <th>{% trans "Data Fim" %}</th>
+        <th>{% trans "Parceiros" %}</th>
+        <th>{% trans "Ações" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -30,8 +31,8 @@
           {% endfor %}
         </td>
         <td>
-          <a href="{% url 'editar_curso' curso.id %}" class="btn btn-sm btn-warning">Editar</a>
-          <a href="{% url 'deletar_curso' curso.id %}" class="btn btn-sm btn-danger">Excluir</a>
+          <a href="{% url 'editar_curso' curso.id %}" class="btn btn-sm btn-warning">{% trans "Editar" %}</a>
+          <a href="{% url 'deletar_curso' curso.id %}" class="btn btn-sm btn-danger">{% trans "Excluir" %}</a>
         </td>
       </tr>
       {% endfor %}

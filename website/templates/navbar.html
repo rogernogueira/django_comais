@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!--<nav class="navbar navbar-expand-lg navbar-light bg-light"> !-->
   <nav class="navbar navbar-expand-lg navbar-light  bg-light" id="navbar">
     <div class="container-fluid" id="container_menu">
@@ -11,41 +12,71 @@
         <div class="collapse navbar-collapse" id="navMenu">
           <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="/#about">Sobre</a>
+              <a class="nav-link " aria-current="page" href="/#about">{% trans "Sobre" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="/#why-us">Notícias</a>
+              <a class="nav-link " aria-current="page" href="/#why-us">{% trans "Notícias" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="/#publicacoes">Publicações</a>
+              <a class="nav-link " aria-current="page" href="/#publicacoes">{% trans "Publicações" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="/#cursos">Cursos</a>
+              <a class="nav-link " aria-current="page" href="/#cursos">{% trans "Cursos" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="/#portfolio">Projetos</a>
+              <a class="nav-link " aria-current="page" href="/#portfolio">{% trans "Projetos" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="/#services">Serviços</a>
+              <a class="nav-link " aria-current="page" href="/#services">{% trans "Serviços" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="/#team">Equipe</a>
+              <a class="nav-link " aria-current="page" href="/#team">{% trans "Equipe" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/#contact">Contatos</a>
+              <a class="nav-link" aria-current="page" href="/#contact">{% trans "Contatos" %}</a>
             </li>
           
             {% if request.user.is_superuser %}
           
             <li class="nav-item">
-                <a class="nav-link " aria-current="page" href="{% url 'update-contatos-list' %}">Gerenciar contatos</a>
+                <a class="nav-link " aria-current="page" href="{% url 'update-contatos-list' %}">{% trans "Gerenciar contatos" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="{% url 'ocorrencias' %}">Ocorrências</a>
+              <a class="nav-link " aria-current="page" href="{% url 'ocorrencias' %}">{% trans "Ocorrências" %}</a>
             </li>
             {% endif %}
             
           </ul>
+          <div class="d-flex nav-item">
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="languageSelector">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-translate" viewBox="0 0 16 16">
+                  <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286H4.545zm1.634-.736L5.5 3.956h-.049l-.679 2.022H6.18z"/>
+                  <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2zm7.138 9.995c.193.301.402.583.63.846-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6.066 6.066 0 0 1-.415-.492 1.988 1.988 0 0 1-.94.31z"/>
+                </svg>
+                <span id="currentLanguage">{% trans "Português" %}</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <input name="language" type="hidden" value="pt-br">
+                    <button type="submit" class="dropdown-item text-dark">{% trans "Português" %}</button>
+                  </form>
+                </li>
+                <li>
+                  <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <input name="language" type="hidden" value="en">
+                    <button type="submit" class="dropdown-item text-dark">{% trans "English" %}</button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+
           {% if request.user.is_authenticated %}
           <div class="d-flex nav-item"> 
                 <div class="dropdown">
@@ -58,15 +89,15 @@
                         </div>
                     </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item text-dark" href="{% url 'logout-user' %}">Logout </a></li>
-                    <li> <a class="dropdown-item text-dark" href="{% url 'perfil' %}">Editar Perfil</a></li>
+                    <li><a class="dropdown-item text-dark" href="{% url 'logout-user' %}">{% trans "Logout" %} </a></li>
+                    <li> <a class="dropdown-item text-dark" href="{% url 'perfil' %}">{% trans "Editar Perfil" %}</a></li>
                     {% if request.user.is_superuser %}
-                      <li> <a class="dropdown-item text-dark" href="{% url 'register-user' %}">Adicionar Usuário</a></li>
+                      <li> <a class="dropdown-item text-dark" href="{% url 'register-user' %}">{% trans "Adicionar Usuário" %}</a></li>
                     {% endif %}
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-dark" href="{% url 'gerencia-publicacoes' %}">Publicações</a></li> 
-                    <li><a class="dropdown-item text-dark" href="{% url 'gerencia-projetos' %}">Projetos</a></li>
-                    <li><a class="dropdown-item text-dark" href="{% url 'gerencia-relatorios' %}">Relatórios</a></li>
+                    <li><a class="dropdown-item text-dark" href="{% url 'gerencia-publicacoes' %}">{% trans "Publicações" %}</a></li> 
+                    <li><a class="dropdown-item text-dark" href="{% url 'gerencia-projetos' %}">{% trans "Projetos" %}</a></li>
+                    <li><a class="dropdown-item text-dark" href="{% url 'gerencia-relatorios' %}">{% trans "Relatórios" %}</a></li>
                   </ul>
                 </div>
               </div>
@@ -80,7 +111,7 @@
                     <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"></path>
                     <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"></path>
                   </svg>
-                  Login
+                  {% trans "Login" %}
               </div>
               </a>  
             </div>
@@ -91,5 +122,25 @@
   </nav>
 
 
-  {% include 'messages.html' %}
+  <script>
+    // Salvar a linguagem selecionada no localStorage
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar se há uma linguagem salva
+      const savedLang = localStorage.getItem('selectedLanguage');
+      console.log('saveLang : ',savedLang);
+      if (savedLang) {
+        document.getElementById('currentLanguage').textContent = 
+          savedLang === 'pt-br' ? 'Português' : 'English';
+      }
 
+      // Adicionar listeners aos formulários de idioma
+      document.querySelectorAll('form[action="{% url "set_language" %}"]').forEach(form => {
+        form.addEventListener('submit', function(e) {
+          const lang = this.querySelector('input[name="language"]').value;
+          localStorage.setItem('selectedLanguage', lang);
+        });
+      });
+    });
+  </script>
+
+  {% include 'messages.html' %}
