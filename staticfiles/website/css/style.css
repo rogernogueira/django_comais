@@ -778,7 +778,7 @@ section {
   margin-bottom: 15px;
   font-size: 24px;
 }
-.services .icon-box h4 a,
+.services .icon-box  a,
 .cursos .icon-box h4 a {
   color: #37517e;
   transition: ease-in-out 0.3s;
@@ -794,13 +794,11 @@ section {
   transform: translateY(-10px);
 }
 .services .icon-box:hover h4 a,
-.cursos .icon-box:hover h4 a {
+.cursos .icon-box:hover  a {
   color: #47b2e4;
 }
 
-.cursos .icon-box:hover a  {
-  color: #093e57;
-}
+
 /*--------------------------------------------------------------
 # Cta
 --------------------------------------------------------------*/
