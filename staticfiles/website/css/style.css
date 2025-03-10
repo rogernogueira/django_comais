@@ -759,6 +759,7 @@ section {
 .services .icon-box .icon,
 .cursos .icon-box .icon {
   margin-bottom: 10px;
+  text-align: center;
 }
 .services .icon-box .icon i,
 .cursos .icon-box .icon i {
@@ -793,7 +794,7 @@ section {
 }
 
 .cursos .icon-box:hover a  {
-  color: #47b2e4;
+  color: #093e57;
 }
 /*--------------------------------------------------------------
 # Cta
