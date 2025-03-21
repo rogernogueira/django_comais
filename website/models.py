@@ -208,13 +208,9 @@ class Curso(models.Model):
     
     def __str__(self):
         return self.titulo
-class Imagem(models.Model):
-    nome = models.CharField('Nome', max_length=200,null=True)
-    
-    def __str__(self):
-        return self.nome
 
-class Imagems(models.Model):
+
+class Imagem(models.Model):
     arquivo = models.ImageField(upload_to='imagens/')
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
