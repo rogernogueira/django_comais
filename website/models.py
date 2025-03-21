@@ -214,7 +214,7 @@ class Imagem(models.Model):
     arquivo = models.ImageField(upload_to='imagens/',default='imagens/default.png')
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    data_criacao = models.DateTimeField(auto_now_add=True)
+    data_criacao = models.DateTimeField(auto_now_add=True, null=True)
     tag = models.CharField(max_length=200, blank=True, null=True)
 
     def save(self, *args, **kwargs):
