@@ -213,7 +213,7 @@ class Imagem(models.Model):
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     data_criacao = models.DateTimeField(auto_now_add=True)
-    tag = models.CharField(max_length=200, blank=True)
+    tag = models.CharField(max_length=200, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         created = not self.pk
