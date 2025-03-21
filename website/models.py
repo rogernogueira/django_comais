@@ -319,7 +319,10 @@ class Imagem(models.Model):
     @property
     def thumbnail_url(self):
         if self.arquivo:
-            return self.arquivo.name.replace('imagens/', 'thumbnails/').replace('.', '_thumb.')
+            url_thumb = self.arquivo.name.replace('imagens/', 'thumbnails/').replace('.', '_thumb.')
+            ext_type = url_thumb.split('.')[-1]
+            url_thumb = self.arquivo.name.replace(ext_type, ext_type.lower())
+            return url_thumb
         
         return None
 
