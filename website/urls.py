@@ -1,6 +1,10 @@
 from django.urls import path
-
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
+
+router = DefaultRouter()
+router.register(r'api/imagens', views.ImagemViewSet, basename='imagem')
 
 
 urlpatterns = [
@@ -50,4 +54,7 @@ urlpatterns = [
     path('cursos/editar/<int:id>', views.editar_curso, name='editar_curso'),
     path('cursos/deletar/<int:id>', views.deletar_curso, name='deletar_curso'),
     path('cursos/<int:id>', views.detalhes_curso, name='curso-detail'),
+    path('galeria', views.galeria, name='galeria'),
+    path('galeria-moderna', views.galeria_moderna, name='galeria-moderna'),
+    path('', include(router.urls)),
 ]

@@ -6,7 +6,9 @@ from django.db.models import UniqueConstraint, BaseConstraint
 from django.utils import timezone
 from django.contrib.auth.models import User
 import datetime
-
+from django.core.files.storage import default_storage
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 from tinymce import models as tinymce_models
 from django.conf import settings
 
@@ -206,3 +208,127 @@ class Curso(models.Model):
     
     def __str__(self):
         return self.titulo
+class Imagem(models.Model):
+    arquivo = models.ImageField(upload_to='imagens/')
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    data_criacao = models.DateTimeField(auto_now_add=True)
+    tag = models.CharField(max_length=200, blank=True)
+
+    def save(self, *args, **kwargs):
+        created = not self.pk
+        super().save(*args, **kwargs)  # Save first to get file path
+        if created:
+            self.create_thumbnail()
+
+    def create_thumbnail(self):
+        from PIL import Image
+        from io import BytesIO
+        from django.core.files.base import ContentFile
+        import os
+        import logging
+
+        logger = logging.getLogger(__name__)
+        print("gerando thumbnail")
+        try:
+            max_width = 400
+            max_height = 400
+            
+            # Processa a imagem e cria o thumbnail em um único bloco with
+            with Image.open(self.arquivo) as image:
+                width, height = image.size
+                
+                # Calcula as novas dimensões mantendo a proporção
+                if width > height:
+                    ratio = max_width / float(width)
+                    new_height = int(float(height) * float(ratio))
+                    new_width = max_width
+                else:
+                    ratio = max_height / float(height)
+                    new_width = int(float(width) * float(ratio))
+                    new_height = max_height
+                    
+                # Redimensiona a imagem
+                image.thumbnail((new_width, new_height), Image.LANCZOS)
+                
+                # Prepara o nome do arquivo do thumbnail
+                thumb_name, thumb_extension = os.path.splitext(self.arquivo.name)
+                thumb_name = thumb_name.split('/')[-1]
+                thumb_extension = thumb_extension.lower()
+                thumb_filename = thumb_name + '_thumb' + thumb_extension
+                
+                # Determina o formato da imagem
+                if thumb_extension in ['.jpg', '.jpeg']:
+                    FTYPE = 'JPEG'
+                    quality = 85
+                elif thumb_extension == '.gif':
+                    FTYPE = 'GIF'
+                    quality = 75
+                elif thumb_extension == '.png':
+                    FTYPE = 'PNG'
+                    quality = 9
+                elif thumb_extension == '.webp':
+                    FTYPE = 'WEBP'
+                    quality = 80
+                else:
+                    logger.error(f'Formato de imagem não suportado: {thumb_extension}')
+                    return False
+
+                # Cria o thumbnail em memória com gerenciamento de contexto
+                with BytesIO() as temp_thumb:
+                    image.save(temp_thumb, FTYPE, quality=quality)
+                    temp_thumb.seek(0)
+                    
+                    # Salva o thumbnail
+                    self.thumbnail.save(
+                        thumb_filename, 
+                        ContentFile(temp_thumb.read()), 
+                        save=False
+                    )
+
+            logger.info(f'Thumbnail criado com sucesso: {thumb_filename}')
+            return True
+            
+        except Exception as e:
+            logger.error(f'Erro ao criar thumbnail: {str(e)}')
+            return False
+
+    def __str__(self):
+        return self.arquivo.name
+
+    @property
+    def url(self):
+        return default_storage.url(self.arquivo.name)
+
+    def delete(self, *args, **kwargs):
+        # Remove os arquivos físicos
+        print('Deletando arquivos...')
+        if self.arquivo:
+            file_path = self.arquivo.path
+            if default_storage.exists(file_path):
+                default_storage.delete(file_path)
+        if self.thumbnail:
+            thumb_path = self.thumbnail.path
+            if default_storage.exists(thumb_path):
+                default_storage.delete(thumb_path)
+        # Chama o método delete original
+        super().delete(*args, **kwargs)
+
+    @property
+    def thumbnail_url(self):
+        if self.arquivo:
+            return self.arquivo.name.replace('imagens/', 'thumbnails/').replace('.', '_thumb.')
+        
+        return None
+
+@receiver(post_delete, sender=Imagem)
+def delete_imagem_files(sender, instance, **kwargs):
+    """Signal para deletar os arquivos físicos quando uma Imagem for deletada"""
+    if instance.arquivo:
+        file_path = instance.arquivo.path
+        if default_storage.exists(file_path):
+            default_storage.delete(file_path)
+    if instance.thumbnail:
+        thumb_path = instance.thumbnail.path
+        if default_storage.exists(thumb_path):
+            default_storage.delete(thumb_path)

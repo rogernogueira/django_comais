@@ -5,7 +5,7 @@ from django.db import close_old_connections
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect, FileResponse
 from .models import Ocorrencia, Contato, Projeto, Relatorio, TipoProjeto, Colaborador,Publicacao,\
-Relatorio, ProjetoRelatorio , RelatorioFinal, Templates, Curso
+Relatorio, ProjetoRelatorio , RelatorioFinal, Templates, Curso, Imagem
 from .forms import ContatoForm, OcorrenciaForm, ColaboradorForm, PublicacaoForm,\
 ProjetoForm, RelatorioForm, ProjetoRelatorioForm, RelatorioFinalForm, CursoForm
 from django.core.paginator import Paginator
@@ -13,10 +13,12 @@ from django.db.models import Max, BaseConstraint
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.core import serializers
+from .serializers import ImagemSerializer
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.dateparse import parse_date
 import datetime
+from rest_framework import generics, permissions, viewsets
 import os
 from docxtpl import DocxTemplate, RichText
 import html2markdown
@@ -443,6 +445,27 @@ def deletar_curso(request, id):
 def detalhes_curso(request, id):
     curso = Curso.objects.get(id=id)
     return render(request, 'cursos/detalhes.html', {'curso': curso})
+
+def galeria(request):
+    imagens = Imagem.objects.all().order_by('-data_criacao')
+    p = Paginator(imagens, 12)
+    page = request.GET.get('page')
+    imagens = p.get_page(page)
+    return render(request, 'galeria.html', {'imagens': imagens})
+
+def galeria_moderna(request):
+    imagens = Imagem.objects.all().order_by('-data_criacao')
+    p = Paginator(imagens, 12)
+    page = request.GET.get('page')
+    imagens = p.get_page(page)
+    return render(request, 'galeria_moderna.html', {'imagens': imagens})
+
+def galeria_moderna(request):
+    imagens = Imagem.objects.all().order_by('-data_criacao')
+    p = Paginator(imagens, 12)
+    page = request.GET.get('page')
+    imagens = p.get_page(page)
+    return render(request, 'galeria.html', {'imagens': imagens})
     
 @login_required
 def gerencia_relatorios(request):
@@ -649,3 +672,12 @@ def gerar_relatorio_final(request, id_relatorio):
         
         return FileResponse(open(path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     return HttpResponseRedirect('/gerencia_relatorios')
+
+class ImagemViewSet(viewsets.ModelViewSet):
+    serializer_class = ImagemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Imagem.objects.filter(usuario=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(usuario=self.request.user)

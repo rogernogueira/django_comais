@@ -1,0 +1,148 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<main id="main">
+  <div class="container">
+    <h2 class="page-title">Galeria de Imagens</h2>
+  </div>
+
+  <div class="shadow p-4 mb-5 bg-body rounded">
+    <section id="gallery" class="gallery">
+      <div class="container">
+        <div class="row gy-4">
+          {% for imagem in imagens %}
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-item">
+              <a href="{{ imagem.url }}" data-gallery="gallery" class="gallery-lightbox">
+                <div class="gallery-img-container">
+                  <img src="media/{{ imagem.thumbnail_url }}" class="img-fluid" alt="{{ imagem.titulo }}">
+                  <div class="gallery-overlay">
+                    <div class="gallery-overlay-content">
+                      <h4>{{ imagem.titulo }}</h4>
+                      <p>{{ imagem.descricao|truncatechars:100 }}</p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Paginação -->
+        <div class="row mt-4">
+          <div class="col-12">
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                {% if imagens.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ imagens.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                {% endif %}
+                
+                {% for num in imagens.paginator.page_range %}
+                  {% if imagens.number == num %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                  {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                
+                {% if imagens.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ imagens.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <a href="{% url 'home' %}" class="btn-get-started scrollto">
+            <i class="bi bi-arrow-left me-2"></i>
+            {% trans "Voltar para home" %}
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- Estilos customizados para a galeria -->
+<style>
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.03);
+  }
+
+  .gallery-img-container {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .gallery-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+
+  .gallery-overlay-content {
+    color: white;
+  }
+
+  .gallery-overlay-content h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .gallery-overlay-content p {
+    font-size: 0.9rem;
+  }
+</style>
+
+{% include 'footer.html' %}
+
+<!-- Scripts -->
+<script src={% static "website/vendor/glightbox/js/glightbox.min.js" %}></script>
+<script>
+  // Inicializa o lightbox
+  const lightbox = GLightbox({
+    selector: '.gallery-lightbox'
+  });
+</script>
+
+{% endblock %}
