@@ -211,7 +211,7 @@ class Curso(models.Model):
 
 
 class Imagem(models.Model):
-    arquivo = models.ImageField(upload_to='imagens/')
+    arquivo = models.ImageField(upload_to='imagens/',default='imagens/default.png')
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     data_criacao = models.DateTimeField(auto_now_add=True)
