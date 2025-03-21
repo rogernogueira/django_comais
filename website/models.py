@@ -209,7 +209,7 @@ class Curso(models.Model):
     def __str__(self):
         return self.titulo
 class Imagem(models.Model):
-    nome = models.CharField('Nome', max_length=200)
+    nome = models.CharField('Nome', max_length=200,null=True)
     
     def __str__(self):
         return self.nome
