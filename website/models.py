@@ -210,6 +210,9 @@ class Curso(models.Model):
         return self.titulo
 class Imagem(models.Model):
     nome = models.CharField('Nome', max_length=200)
+    
+    def __str__(self):
+        return self.nome
 
 class Imagems(models.Model):
     arquivo = models.ImageField(upload_to='imagens/')
