@@ -321,7 +321,7 @@ class Imagem(models.Model):
         if self.arquivo:
             url_thumb = self.arquivo.name.replace('imagens/', 'thumbnails/').replace('.', '_thumb.')
             ext_type = url_thumb.split('.')[-1]
-            url_thumb = self.arquivo.name.replace(ext_type, ext_type.lower())
+            url_thumb = url_thumb.replace(ext_type, ext_type.lower())
             return url_thumb
         
         return None
