@@ -62,5 +62,6 @@ urlpatterns = [
     path('playground/arvore', views.arvore, name='arvore'),
     path('playground/knn', views.knn, name='knn'),
     path('playground/kmeans', views.kmeans, name='kmeans'),
+    path('playground/', views.painel, name='painel'),
     path('', include(router.urls)),
 ]
