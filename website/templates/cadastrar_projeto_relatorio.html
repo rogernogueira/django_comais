@@ -1,15 +1,36 @@
 {% extends 'base2.html' %}
     
-    {% block content %}
-        <h4 class= "page-title">
-            Cadastrar projeto
-        </h4>
-        <br/>
-        
+{% block content %}
+    <h4 class="page-title">
+        Cadastrar projeto
+    </h4>
+    <br/>
+    
+    <form method=POST enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="termo_upload">Upload do Termo de Outorga (PDF/DOCX):</label>
+            <input type="file" class="form-control-file" id="termo_upload" name="termo_upload" accept=".pdf,.docx">
+        </div>
+        {{form.as_p}}
+        <input type="submit" value="Salvar" class="btn btn-secondary">
+    </form>
+{% endblock %}
 
-        <form method=POST enctype="multipart/form-data">
-                {% csrf_token %} 
-                {{form.as_p}}
-                <input type="submit" value="Salvar" class="btn btn-secondary">
-            </form>
-    {% endblock %}
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const termoSelect = document.querySelector('#id_termo_outorga');
+    const tituloInput = document.querySelector('#id_titulo');
+    
+    if (termoSelect && tituloInput) {
+        termoSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            if (selectedOption.value) {
+                tituloInput.value = selectedOption.text;
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,96 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador Interativo de SVM (Kernels)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+  <!-- TensorFlow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+  <!-- Link para o script externo -->
+  <script defer src="\static\website\js\script.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 flex flex-col">
+  <header class="mb-4 text-center">
+    <h1 class="text-2xl font-bold">Visualizador Interativo de SVM (Kernels)</h1>
+    <p class="text-sm text-gray-700">Escolha entre Linear, Polinomial e RBF via Feature Maps</p>
+  </header>
+  <div class="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-4">
+    <!-- Painel de Controle -->
+    <aside class="col-span-1 p-4 bg-white rounded shadow space-y-4">
+      <div>
+        <h2 class="font-semibold">Seleção de Classe</h2>
+        <div class="mt-2 flex space-x-2">
+          <button id="btn-class-0" class="px-3 py-1 bg-blue-200 rounded hover:bg-blue-300">Classe 0</button>
+          <button id="btn-class-1" class="px-3 py-1 bg-red-200 rounded hover:bg-red-300">Classe 1</button>
+        </div>
+      </div>
+      <div>
+        <h2 class="font-semibold">Configuração SVM</h2>
+        <label>Kernel:</label>
+        <select id="select-kernel" class="w-full border rounded p-1 mb-2">
+          <option value="linear">Linear</option>
+          <option value="poly">Polinomial</option>
+          <option value="rbf">RBF</option>
+        </select>
+        <div id="kernel-params" class="space-y-2">
+          <div id="param-degree" class="hidden">
+            <label>Grau: <span id="label-degree">3</span></label>
+            <input id="input-degree" type="number" min="1" max="10" step="1" value="3" class="w-full border rounded p-1" />
+          </div>
+          <div id="param-gamma" class="hidden">
+            <label>Gamma: <span id="label-gamma">0.5</span></label>
+            <input id="input-gamma" type="range" min="0.01" max="5" step="0.01" value="0.5" class="w-full" />
+          </div>
+          <div id="param-ff" class="hidden">
+            <label>Dim. Fourier: <span id="label-ff">100</span></label>
+            <input id="input-ff" type="range" min="10" max="500" step="10" value="100" class="w-full" />
+          </div>
+          <div>
+            <label>C (regularização): <span id="label-C">1.0</span></label>
+            <input id="input-C" type="range" min="0.01" max="10" step="0.01" value="1" class="w-full" />
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 class="font-semibold">Dados</h2>
+        <div class="mt-2 space-y-2">
+          <button id="btn-linear" class="w-full px-2 py-1 bg-green-200 rounded hover:bg-green-300">Linearmente Separável</button>
+          <button id="btn-circle" class="w-full px-2 py-1 bg-yellow-200 rounded hover:bg-yellow-300">Círculos</button>
+          <button id="btn-noise" class="w-full px-2 py-1 bg-purple-200 rounded hover:bg-purple-300">Ruído</button>
+          <div class="flex space-x-2">
+            <button id="btn-clear" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Limpar</button>
+            <button id="btn-undo" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Desfazer</button>
+          </div>
+        </div>
+      </div>
+      <button id="btn-train" class="w-full px-3 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600">Treinar SVM</button>
+      <progress id="progress-training" value="0" max="100" class="w-full mt-2"></progress>
+    </aside>
+    <!-- Área de Visualização -->
+    <main class="col-span-3 bg-white rounded shadow p-2">
+      <div id="plot" class="w-full h-[600px]"></div>
+    </main>
+    <!-- Painel de Métricas e Vetores -->
+    <aside class="col-span-3 lg:col-span-1 space-y-4">
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="font-semibold mb-2">Métricas de Desempenho</h2>
+        <div class="space-y-1 text-sm text-gray-700">
+          <p><span class="font-semibold">Acurácia:</span> <span id="metric-acc">0%</span></p>
+          <p><span class="font-semibold">Precisão:</span> <span id="metric-prec">0%</span></p>
+          <p><span class="font-semibold">Recall:</span> <span id="metric-recall">0%</span></p>
+          <p><span class="font-semibold">F1-Score:</span> <span id="metric-f1">0%</span></p>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="font-semibold mb-2">Vetores de Suporte (<span id="sv-count">0</span>)</h2>
+        <ul id="sv-list" class="list-disc list-inside text-sm text-gray-700"></ul>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

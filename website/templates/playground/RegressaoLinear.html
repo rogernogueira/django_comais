@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Regressão Linear Interativa</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6 min-h-screen">
+
+  <h2 class="text-2xl font-bold mb-6 text-center">📈 Regressão Linear Interativa</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+    <!-- Gráfico ocupa 2/3 -->
+    <div class="md:col-span-2 bg-white p-4 rounded shadow">
+      <canvas id="chart" width="600" height="400"></canvas>
+      <div class="mt-6 text-center">
+        <button onclick="atualizar()"
+          class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded shadow">
+          ➕ Adicionar Ponto
+        </button>
+      </div>
+    </div>
+
+    <!-- Métricas ocupa 1/3 -->
+    <div id="metrics" class="flex flex-col gap-4"></div>
+  </div>
+
+  <!-- Botão -->
+ 
+
+  <!-- substitua sua tag <script> pela abaixo -->
+<script>
+    const pontos = [
+      { x: 2, y: 60 },
+      { x: 4, y: 65 },
+      { x: 6, y: 75 },
+      { x: 8, y: 80 },
+      { x: 10, y: 90 }, 
+      { x: 12, y: 95 },
+      { x: 1, y: 50 },
+      { x: 3, y: 55 },
+      { x: 5, y: 70 },
+      { x: 7, y: 85 },
+      { x: 2.5, y: 80 },
+      { x: 3.5, y: 92 }
+    ];
+  
+    let current = 0;
+    let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+  
+    const chart = new Chart(document.getElementById("chart"), {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: 'Pontos',
+            data: [],
+            backgroundColor: 'blue'
+          },
+          {
+            label: 'Reta de Regressão',
+            data: [],
+            type: 'line',
+            borderColor: 'red',
+            borderWidth: 2,
+            fill: false,
+            pointRadius: 0
+          },
+          {
+            label: 'Erros',
+            data: [],
+            type: 'line',
+            borderColor: 'orange',
+            borderWidth: 1,
+            fill: false,
+            pointRadius: 0,
+            showLine: true,
+            segment: {
+              borderDash: [5, 5]
+            }
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        animation: false,
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'bottom',
+            title: { display: true, text: 'Horas de Estudo' }
+          },
+          y: {
+            title: { display: true, text: 'Nota' },
+            suggestedMin: 40,
+            suggestedMax: 100
+          }
+        }
+      }
+    });
+  
+    function calcularMetricas(dados, a, b) {
+      const n = dados.length;
+      let mse = 0, ssTot = 0, ssRes = 0;
+      const yMean = dados.reduce((acc, p) => acc + p.y, 0) / n;
+  
+      dados.forEach(p => {
+        const yPred = a * p.x + b;
+        const erro = p.y - yPred;
+        mse += erro ** 2;
+        ssTot += (p.y - yMean) ** 2;
+        ssRes += erro ** 2;
+      });
+  
+      mse /= n;
+      const rmse = Math.sqrt(mse);
+      const r2 = 1 - (ssRes / ssTot);
+  
+      return { mse, rmse, r2 };
+    }
+  
+    function atualizar() {
+      if (current >= pontos.length) return;
+  
+      const p = pontos[current];
+      chart.data.datasets[0].data.push(p);
+  
+      sumX += p.x;
+      sumY += p.y;
+      sumXY += p.x * p.y;
+      sumX2 += p.x * p.x;
+      current++;
+  
+      const n = current;
+      const a = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+      const b = (sumY - a * sumX) / n;
+  
+      // Atualizar reta
+      const xMin = 0;
+      const xMax = 12;
+      chart.data.datasets[1].data = [
+        { x: xMin, y: a * xMin + b },
+        { x: xMax, y: a * xMax + b }
+      ];
+  
+      // Recriar as linhas de erro
+      const erroDataset = chart.data.datasets[2];
+      erroDataset.data = [];
+  
+      chart.data.datasets[0].data.forEach(pt => {
+        const yPred = a * pt.x + b;
+        // adicionar linha vertical de erro: ponto real até previsão
+        erroDataset.data.push({ x: pt.x, y: pt.y });
+        erroDataset.data.push({ x: pt.x, y: yPred });
+        // quebra de linha
+        erroDataset.data.push({ x: null, y: null });
+      });
+  
+      // Calcular métricas
+      const { mse, rmse, r2 } = calcularMetricas(chart.data.datasets[0].data, a, b);
+  
+      // Adicionar novo card
+      const metricsDiv = document.getElementById("metrics");
+      const card = document.createElement("div");
+      card.className = "bg-white p-4 rounded shadow border border-blue-200";
+      card.innerHTML = `
+        <h3 class="font-bold text-blue-700 mb-2">🔁 Iteração ${current}</h3>
+        <p><strong>a (inclinação):</strong> ${a.toFixed(2)}</p>
+        <p><strong>b (intercepto):</strong> ${b.toFixed(2)}</p>
+        <p><strong>MSE:</strong> ${mse.toFixed(2)}</p>
+        <p><strong>RMSE:</strong> ${rmse.toFixed(2)}</p>
+        <p><strong>R²:</strong> ${r2.toFixed(4)}</p>
+      `;
+      metricsDiv.prepend(card);
+  
+      chart.update();
+    }
+  </script>
+  
+</body>
+</html>

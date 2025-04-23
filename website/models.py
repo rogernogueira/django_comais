@@ -130,17 +130,35 @@ class Historico(models.Model):
     def __str__(self):
         return self.descricao
     
+class TermoOutorga(models.Model):
+    arquivo = models.FileField(upload_to='termos/', blank=True, null=True)
+    nome = models.CharField(max_length=255, blank=True)
+    data_upload = models.DateTimeField(auto_now_add=True)
+    
+    def save(self, *args, **kwargs):
+        if self.arquivo and not self.nome:
+            # Remove o caminho e extensão do arquivo, mantendo apenas o nome base
+            import os
+            filename = os.path.basename(self.arquivo.name)
+            self.nome = os.path.splitext(filename)[0]
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return self.nome if self.nome else "Termo sem nome"
+
 class ProjetoRelatorio(models.Model):
     titulo = models.CharField('Título',max_length=250)
     user=models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    vigencia_inicio = models.DateField('Início da vigência ', )
-    vigencia_fim = models.DateField('FIM da vigência ', )
+    vigencia_inicio = models.DateField('Início da vigência', )
+    vigencia_fim = models.DateField('FIM da vigência', )
     numero_parcelas = models.IntegerField('Número de parcelas',default=12)
     objetivo_proposto = models.TextField('Objetivo proposto')
     resultado_esperado = models.TextField('Resultados esperados ')
     objetivo_proposto_obj = models.TextField('Objetivos propostos')
     dia_entrega = models.IntegerField('Dia do mês da entrega', default=0)
     template = models.FileField(upload_to='templates/', blank=True, null=True)
+    termo_outorga = models.ForeignKey(TermoOutorga, on_delete=models.SET_NULL, blank=True, null=True)
+    termo_path = models.CharField('Caminho do Termo', max_length=255, blank=True, null=True)
     status=models.CharField('Status',max_length=100, choices=STATUS_CHOICES, default='Em elaboração')
     data_criacao = models.DateTimeField('Data de criação',  default=django.utils.timezone.now)
     template_default = models.BooleanField('Usar template padrão', default=False)

@@ -76,7 +76,18 @@ def last_day_of_month(any_day):
     # subtracting the number of the current day brings us back one month
     return next_month - datetime.timedelta(days=next_month.day)
 
-
+def regressao_linear(request):
+    return render(request, 'playground/RegressaoLinear.html')
+def regressao_logistica(request):
+    return render(request, 'playground/regressaologistica.html')
+def svm(request):
+    return render(request, 'playground/svm.html')
+def arvore(request):
+    return render(request, 'playground/arvore.html')
+def knn(request):
+    return render(request, 'playground/knn.html')
+def kmeans(request):
+    return render(request, 'playground/kmeans.html')
 def  contato(request):
     if request.method == 'POST':
         form = ContatoForm(request.POST)
@@ -542,16 +553,87 @@ def cadastrar_relatorio(request, id_projeto_relatorio):
 def cadastrar_projeto_relatorio(request):
     submitted = False
     if request.method == 'POST':
-      form = ProjetoRelatorioForm(request.POST,request.FILES)  
-      form.instance.user = request.user
-      if form.is_valid():
-            form.save(commit=False)
-            form.user = request.user         
-            form.save()
+        form = ProjetoRelatorioForm(request.POST, request.FILES)
+        form.instance.user = request.user
+        
+        # Processar upload do termo
+        termo_upload = request.FILES.get('termo_upload')
+        if termo_upload:
+            # Verificar tipo do arquivo
+            import magic
+            import requests
+            import json
+            
+            # Validar se é um arquivo de texto ou PDF
+            mime = magic.Magic(mime=True)
+            file_type = mime.from_buffer(termo_upload.read(1024))
+            termo_upload.seek(0)  # Reset file pointer
+            
+            if file_type not in ['text/plain', 'application/pdf']:
+                messages.error(request, 'Tipo de arquivo inválido. Envie um arquivo PDF ou texto.')
+                return render(request, 'cadastrar_projeto_relatorio.html', {'form': form})
+            
+            # Salvar arquivo temporariamente
+            fs = FileSystemStorage()
+            filename = fs.save(f'termos_outorga/{termo_upload.name}', termo_upload)
+            form.instance.termo_path = fs.url(filename)
+            
+            # Chamar API da Deepseek para processar o termo
+            try:
+                # Converter para markdown se for PDF
+                if file_type == 'application/pdf':
+                    import pdfplumber
+                    text_content = ""
+                    with pdfplumber.open(termo_upload) as pdf:
+                        for page in pdf.pages:
+                            text_content += page.extract_text()
+                else:
+                    text_content = termo_upload.read().decode('utf-8')
+                
+                # Chamar API da Deepseek
+                api_url = "https://api.deepseek.com/v1/process_document"
+                headers = {
+                    "Authorization": f"Bearer {settings.DEEPSEEK_API_KEY}",
+                    "Content-Type": "application/json"
+                }
+                prompt = """
+                Extraia do documento as seguintes informações em formato JSON:
+                {
+                    'titulo': 'Título do projeto',
+                    'vigencia_inicio': 'Data de início no formato YYYY-MM-DD',
+                    'vigencia_fim': 'Data de término no formato YYYY-MM-DD', 
+                    'numero_parcelas': 'Número de parcelas/meses'
+                }
+                """
+                
+                payload = {
+                    "document": text_content,
+                    "prompt": prompt
+                }
+                
+                response = requests.post(api_url, headers=headers, json=payload)
+                response.raise_for_status()
+                data = response.json()
+                
+                # Preencher automaticamente os campos do formulário
+                if data:
+                    form.initial = {
+                        'titulo': data.get('titulo', ''),
+                        'vigencia_inicio': data.get('vigencia_inicio', ''),
+                        'vigencia_fim': data.get('vigencia_fim', ''),
+                        'numero_parcelas': data.get('numero_parcelas', 1)
+                    }
+                    messages.info(request, 'Termo processado com sucesso! Verifique as informações sugeridas.')
+            
+            except Exception as e:
+                messages.warning(request, f'Erro ao processar termo: {str(e)}')
+            
+        if form.is_valid():
+            projeto = form.save(commit=False)
+            projeto.user = request.user
+            projeto.save()
             messages.success(request, 'Projeto cadastrado com sucesso!')
             return HttpResponseRedirect('/gerencia_relatorios?submitted=True')
-      else:
-          print(form.errors.as_json())  
     else:
         form = ProjetoRelatorioForm()
         if 'submitted' in request.GET:

@@ -262,14 +262,22 @@ class RelatorioFinalForm(ModelForm):
  
 
 class ProjetoRelatorioForm(ModelForm):
+    novo_termo = forms.FileField(
+        label='Novo Termo de Outorga',
+        required=False,
+        widget=forms.FileInput(attrs={'class': 'form-control'})
+    )
+    
     class Meta:
         model = ProjetoRelatorio
         exclude = [ 'user',]
-        fields = ('titulo','status', 'vigencia_inicio', 'vigencia_fim',
+        fields = ('termo_outorga', 'novo_termo', 'titulo','status', 'vigencia_inicio', 'vigencia_fim',
                   'numero_parcelas','objetivo_proposto','objetivo_proposto_obj',
                   'resultado_esperado','dia_entrega','template_default','template')
 
-        labels = {'titulo':'Titulo do projeto',
+        labels = {'termo_outorga':'Termo de outorga existente',
+                 'novo_termo':'Ou enviar novo termo',
+                 'titulo':'Titulo do projeto',
                   'status':'Status',
                   'vigencia_inicio':'Data de início',
                   'vigencia_fim':'Data de término',
@@ -293,4 +301,151 @@ class ProjetoRelatorioForm(ModelForm):
             'dia_entrega':forms.TextInput( attrs={'class': 'form-control'}),
             'template_default':forms.CheckboxInput( ),
             'template':forms.FileInput( attrs={'class': 'form-control'}),
+            'termo_outorga': forms.Select(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'termo_outorga' in self.data:
+            try:
+                termo_id = int(self.data.get('termo_outorga'))
+                termo = TermoOutorga.objects.get(id=termo_id)
+                self.initial['titulo'] = termo.nome
+            except (ValueError, TermoOutorga.DoesNotExist):
+                pass
+
+    def call_deepseek_api(self, termo_file):
+        """Chama API Deepseek para extrair informações do termo"""
+        import requests
+        import os
+        from django.conf import settings
+        import magic
+        
+        # Verifica se o arquivo é markdown
+        file_path = os.path.join(settings.MEDIA_ROOT, termo_file.name)
+        mime = magic.Magic(mime=True)
+        file_type = mime.from_file(file_path)
+        
+        if not file_type.startswith('text/') and not termo_file.name.lower().endswith('.md'):
+            raise forms.ValidationError("O arquivo deve ser um documento Markdown (.md)")
+        
+        # Lê o conteúdo do arquivo
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                termo_content = f.read()
+        except Exception as e:
+            raise forms.ValidationError(f"Erro ao ler arquivo: {str(e)}")
+        
+        # Configuração da chamada à API
+        url = "https://api.deepseek.com/v1/analyze"
+        headers = {
+            "Authorization": f"Bearer {settings.DEEPSEEK_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        prompt = """Extraia as seguintes informações do termo de outorga em formato JSON:
+        {
+            'titulo': 'Título do projeto',
+            'vigencia_inicio': 'Data de início no formato YYYY-MM-DD',
+            'vigencia_fim': 'Data de término no formato YYYY-MM-DD',
+            'numero_parcelas': 'Número de parcelas (inteiro)'
+        }"""
+        
+        payload = {
+            "document": termo_content,
+            "prompt": prompt
+        }
+        
+        try:
+            response = requests.post(url, json=payload, headers=headers, timeout=30)
+            response.raise_for_status()
+            api_data = response.json()
+            
+            # Valida os dados retornados
+            required_fields = ['titulo', 'vigencia_inicio', 'vigencia_fim', 'numero_parcelas']
+            if not all(field in api_data for field in required_fields):
+                raise forms.ValidationError("A API não retornou todos os campos necessários")
+                
+            return api_data
+        except requests.exceptions.RequestException as e:
+            raise forms.ValidationError(f"Erro na comunicação com a API Deepseek: {str(e)}")
+        except ValueError as e:
+            raise forms.ValidationError(f"Resposta inválida da API: {str(e)}")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        termo_outorga = cleaned_data.get('termo_outorga')
+        novo_termo = cleaned_data.get('novo_termo')
+        
+        if novo_termo and termo_outorga:
+            raise forms.ValidationError("Escolha apenas uma opção: termo existente ou novo upload")
+            
+        if novo_termo:
+            try:
+                # Cria novo TermoOutorga automaticamente
+                termo = TermoOutorga(arquivo=novo_termo)
+                termo.save()
+                cleaned_data['termo_outorga'] = termo
+                cleaned_data['termo_path'] = termo.arquivo.name
+                
+                # Chama API Deepseek para extrair informações
+                api_data = self.call_deepseek_api(termo.arquivo)
+                
+                # Valida e converte os dados da API
+                from datetime import datetime
+                try:
+                    vigencia_inicio = datetime.strptime(api_data['vigencia_inicio'], '%Y-%m-%d').date()
+                    vigencia_fim = datetime.strptime(api_data['vigencia_fim'], '%Y-%m-%d').date()
+                    numero_parcelas = int(api_data['numero_parcelas'])
+                except (ValueError, KeyError) as e:
+                    raise forms.ValidationError(f"Dados inválidos retornados pela API: {str(e)}")
+                
+                # Valida consistência das datas
+                if vigencia_inicio >= vigencia_fim:
+                    raise forms.ValidationError("Data de início deve ser anterior à data de término")
+                
+                if numero_parcelas <= 0:
+                    raise forms.ValidationError("Número de parcelas deve ser maior que zero")
+                
+                # Preenche campos com dados validados
+                cleaned_data.update({
+                    'titulo': api_data['titulo'],
+                    'vigencia_inicio': vigencia_inicio,
+                    'vigencia_fim': vigencia_fim,
+                    'numero_parcelas': numero_parcelas
+                })
+                
+                # Atualiza campos no formulário
+                self.initial.update({
+                    'titulo': cleaned_data['titulo'],
+                    'vigencia_inicio': cleaned_data['vigencia_inicio'],
+                    'vigencia_fim': cleaned_data['vigencia_fim'],
+                    'numero_parcelas': cleaned_data['numero_parcelas']
+                })
+                
+                if any(field in self.data for field in ['titulo', 'vigencia_inicio', 'vigencia_fim', 'numero_parcelas']):
+                    self.data = self.data.copy()
+                    self.data.update({
+                        'titulo': cleaned_data['titulo'],
+                        'vigencia_inicio': cleaned_data['vigencia_inicio'],
+                        'vigencia_fim': cleaned_data['vigencia_fim'],
+                        'numero_parcelas': cleaned_data['numero_parcelas']
+                    })
+                    
+            except Exception as e:
+                if hasattr(termo, 'arquivo') and termo.arquivo:
+                    termo.arquivo.delete()
+                if hasattr(termo, 'id'):
+                    termo.delete()
+                raise forms.ValidationError(f"Erro ao processar termo: {str(e)}")
+                
+        elif termo_outorga:
+            cleaned_data['titulo'] = termo_outorga.nome
+            cleaned_data['termo_path'] = termo_outorga.arquivo.name
+            
+            # Atualiza o campo título no formulário
+            self.initial['titulo'] = termo_outorga.nome
+            if 'titulo' in self.data:
+                self.data = self.data.copy()
+                self.data['titulo'] = termo_outorga.nome
+            
+        return cleaned_data

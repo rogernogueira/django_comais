@@ -56,5 +56,11 @@ urlpatterns = [
     path('cursos/<int:id>', views.detalhes_curso, name='curso-detail'),
     path('galeria', views.galeria, name='galeria'),
     path('galeria-moderna', views.galeria_moderna, name='galeria-moderna'),
+    path('playground/regressaolinear', views.regressao_linear, name='regressao_linear'),
+    path('playground/regressaologistica', views.regressao_logistica, name='regressao_logistica'),
+    path('playground/svm', views.svm, name='svm'),
+    path('playground/arvore', views.arvore, name='arvore'),
+    path('playground/knn', views.knn, name='knn'),
+    path('playground/kmeans', views.kmeans, name='kmeans'),
     path('', include(router.urls)),
 ]

@@ -1,0 +1,48 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizador Interativo de K-Means (2D)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Script externo -->
+  <script defer src="\static\website\js\script_kmeans.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 flex flex-col">
+  <header class="mb-4 text-center">
+    <h1 class="text-2xl font-bold">Visualizador Interativo de K-Means (2D)</h1>
+    <p class="text-sm text-gray-700">Escolha K, adicione pontos e acompanhe passo a passo os centróides</p>
+  </header>
+  <div class="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-4">
+    <!-- Controles -->
+    <aside class="col-span-1 p-4 bg-white rounded shadow space-y-4">
+      <h2 class="font-semibold">Parâmetro K</h2>
+      <label>K: <span id="label-k">3</span></label>
+      <input id="input-k" type="range" min="1" max="10" step="1" value="3" class="w-full" />
+      <h2 class="font-semibold mt-4">Dados</h2>
+      <div class="mt-2 space-y-2">
+        <button id="btn-linear" class="w-full px-2 py-1 bg-green-200 rounded hover:bg-green-300">Linearmente Separável</button>
+        <button id="btn-circle" class="w-full px-2 py-1 bg-yellow-200 rounded hover:bg-yellow-300">Círculos</button>
+        <button id="btn-noise" class="w-full px-2 py-1 bg-purple-200 rounded hover:bg-purple-300">Ruído</button>
+        <div class="flex space-x-2 mt-2">
+          <button id="btn-clear" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Limpar</button>
+          <button id="btn-undo" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Desfazer</button>
+        </div>
+      </div>
+      <button id="btn-init" class="w-full px-3 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600">Inicializar K-Means</button>
+      <button id="btn-step" class="w-full px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Próximo Passo</button>
+      <div class="mt-4">
+        <span class="font-semibold">Iteração:</span> <span id="current-step">0</span>
+      </div>
+    </aside>
+    <!-- Gráfico -->
+    <main class="col-span-3 bg-white rounded shadow p-2">
+      <canvas id="chart" class="w-full h-[600px]"></canvas>
+    </main>
+  </div>
+</body>
+</html>

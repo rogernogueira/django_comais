@@ -1,0 +1,60 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizador Interativo de KNN (2D)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+  <!-- Link para script externo -->
+  <script defer src="\static\website\js\script_knn.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 flex flex-col">
+  <header class="mb-4 text-center">
+    <h1 class="text-2xl font-bold">Visualizador Interativo de KNN (2D)</h1>
+    <p class="text-sm text-gray-700">Selecione K, adicione pontos e visualize regiões de classificação</p>
+  </header>
+  <div class="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-4">
+    <!-- Painel de Controle -->
+    <aside class="col-span-1 p-4 bg-white rounded shadow space-y-4">
+      <h2 class="font-semibold">Seleção de Classe</h2>
+      <div class="mt-2 flex space-x-2">
+        <button id="btn-class-0" class="px-3 py-1 bg-blue-200 rounded hover:bg-blue-300">Classe 0</button>
+        <button id="btn-class-1" class="px-3 py-1 bg-red-200 rounded hover:bg-red-300">Classe 1</button>
+      </div>
+      <h2 class="font-semibold mt-4">Parâmetro K</h2>
+      <label>K: <span id="label-k">3</span></label>
+      <input id="input-k" type="range" min="1" max="20" step="1" value="3" class="w-full" />
+      <h2 class="font-semibold mt-4">Dados</h2>
+      <div class="mt-2 space-y-2">
+        <button id="btn-linear" class="w-full px-2 py-1 bg-green-200 rounded hover:bg-green-300">Linearmente Separável</button>
+        <button id="btn-circle" class="w-full px-2 py-1 bg-yellow-200 rounded hover:bg-yellow-300">Círculos</button>
+        <button id="btn-noise" class="w-full px-2 py-1 bg-purple-200 rounded hover:bg-purple-300">Ruído</button>
+        <div class="flex space-x-2 mt-2">
+          <button id="btn-clear" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Limpar</button>
+          <button id="btn-undo" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Desfazer</button>
+        </div>
+      </div>
+      <button id="btn-train" class="w-full px-3 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600">Classificar (KNN)</button>
+      <progress id="progress" value="0" max="100" class="w-full mt-2"></progress>
+    </aside>
+    <!-- Plot -->
+    <main class="col-span-3 bg-white rounded shadow p-2">
+      <div id="plot" class="w-full h-[600px]"></div>
+    </main>
+    <!-- Métricas -->
+    <aside class="col-span-3 lg:col-span-1 p-4 bg-white rounded shadow space-y-4">
+      <div>
+        <h2 class="font-semibold">Métricas de Desempenho</h2>
+        <p>Acurácia: <span id="metric-acc">0%</span></p>
+        <p>Precisão: <span id="metric-prec">0%</span></p>
+        <p>Recall: <span id="metric-recall">0%</span></p>
+        <p>F1-Score: <span id="metric-f1">0%</span></p>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>
