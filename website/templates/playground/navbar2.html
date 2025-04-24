@@ -1,0 +1,89 @@
+{% load static %}
+{% load i18n %}
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light"> !-->
+  <nav class="bg-white shadow sticky top-0 z-50" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="container_menu">
+      <div class="flex justify-between h-16">
+        <div class="flex">
+          <a href="/#hero" class="flex-shrink-0 flex items-center">
+            <img src="{% static 'website/img/logoNavbar_l.png' %}" class="h-10 w-auto" alt="Logo">
+          </a>
+          <div class="hidden md:ml-6 md:flex md:space-x-4 items-center">
+            <a href="/#about" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Sobre" %}</a>
+            <a href="/#why-us" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Notícias" %}</a>
+            <a href="/#publicacoes" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Publicações" %}</a>
+            <a href="/#cursos" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Cursos" %}</a>
+            <a href="/#portfolio" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Projetos" %}</a>
+            <a href="/#services" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Serviços" %}</a>
+            <a href="/#team" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Equipe" %}</a>
+            <a href="/#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Contatos" %}</a>
+  
+            {% if request.user.is_superuser %}
+              <a href="{% url 'update-contatos-list' %}" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Gerenciar contatos" %}</a>
+              <a href="{% url 'ocorrencias' %}" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">{% trans "Ocorrências" %}</a>
+            {% endif %}
+          </div>
+        </div>
+  
+        <div class="flex items-center space-x-4">
+          <!-- Seletor de idioma -->
+          <div class="relative inline-block text-left">
+            <div>
+              <button type="button" class="inline-flex justify-center items-center w-full text-sm font-medium text-gray-700 hover:text-blue-600" id="languageSelector">
+                <svg class="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 16 16">...</svg>
+                <span id="currentLanguage">{% trans "Português" %}</span>
+              </button>
+            </div>
+            <div class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden group-hover:block">
+              <div class="py-1">
+                <form action="{% url 'set_language' %}" method="post">
+                  {% csrf_token %}
+                  <input name="next" type="hidden" value="{{ redirect_to }}">
+                  <input name="language" type="hidden" value="pt-br">
+                  <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700">{% trans "Português" %}</button>
+                </form>
+                <form action="{% url 'set_language' %}" method="post">
+                  {% csrf_token %}
+                  <input name="next" type="hidden" value="{{ redirect_to }}">
+                  <input name="language" type="hidden" value="en">
+                  <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700">{% trans "English" %}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+  
+          {% if request.user.is_authenticated %}
+          <!-- Dropdown usuário -->
+          <div class="relative inline-block text-left">
+            <div>
+              <button type="button" class="inline-flex justify-center items-center w-full text-sm font-medium text-gray-700 hover:text-blue-600">
+                <svg class="h-6 w-6 mr-2" fill="currentColor" viewBox="0 0 16 16">...</svg>
+                {{ request.user.username }}
+              </button>
+            </div>
+            <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden group-hover:block">
+              <div class="py-1">
+                <a href="{% url 'logout-user' %}" class="block px-4 py-2 text-sm text-gray-700">{% trans "Logout" %}</a>
+                <a href="{% url 'perfil' %}" class="block px-4 py-2 text-sm text-gray-700">{% trans "Editar Perfil" %}</a>
+                {% if request.user.is_superuser %}
+                <a href="{% url 'register-user' %}" class="block px-4 py-2 text-sm text-gray-700">{% trans "Adicionar Usuário" %}</a>
+                {% endif %}
+                <hr class="my-1">
+                <a href="{% url 'gerencia-publicacoes' %}" class="block px-4 py-2 text-sm text-gray-700">{% trans "Publicações" %}</a>
+                <a href="{% url 'gerencia-projetos' %}" class="block px-4 py-2 text-sm text-gray-700">{% trans "Projetos" %}</a>
+                <a href="{% url 'gerencia-relatorios' %}" class="block px-4 py-2 text-sm text-gray-700">{% trans "Relatórios" %}</a>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <a href="{% url 'login-user' %}" class="flex items-center text-gray-700 hover:text-blue-600">
+            <svg class="h-6 w-6 mr-2" fill="currentColor" viewBox="0 0 16 16">...</svg>
+            {% trans "Login" %}
+          </a>
+          {% endif %}
+        </div>
+  
+      </div>
+    </div>
+  </nav>
+  
