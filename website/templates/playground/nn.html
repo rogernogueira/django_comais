@@ -1,0 +1,118 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador Interativo de Rede Neural (2D)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <!-- TensorFlow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.2.0/dist/tf.min.js"></script>
+  <!-- D3.js para visualização da arquitetura -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 flex flex-col">
+  <header class="mb-4 text-center">
+    <h1 class="text-2xl font-bold">Visualizador Interativo de Rede Neural (2D)</h1>
+    <p class="text-sm text-gray-700">Experimente interativamente o aprendizado de uma rede neural para classificação binária em 2D</p>
+  </header>
+
+  <div class="flex-1 grid grid-cols-1 lg:grid-cols-6 gap-4">
+    <!-- Painel de Controles -->
+    <aside class="col-span-1 p-4 bg-white rounded shadow space-y-4">
+      <h2 class="font-semibold">Seleção de Classe</h2>
+      <div class="mt-2 flex space-x-2">
+        <button id="btn-class-0" class="px-3 py-1 bg-blue-200 rounded hover:bg-blue-300">Classe 0</button>
+        <button id="btn-class-1" class="px-3 py-1 bg-red-200 rounded hover:bg-red-300">Classe 1</button>
+      </div>
+
+      <h2 class="font-semibold mt-4">Configuração da Rede</h2>
+      <label>Camadas Ocultas: <span id="label-layers">1</span></label>
+      <input id="input-layers" type="range" min="0" max="5" step="1" value="1" class="w-full" />
+
+      <label class="mt-2">Neurônios/Camada: <span id="label-neurons">8</span></label>
+      <input id="input-neurons" type="range" min="1" max="32" step="1" value="8" class="w-full" />
+
+      <label class="mt-2">Ativação:</label>
+      <select id="select-activation" class="w-full border rounded p-1">
+        <option value="relu">ReLU</option>
+        <option value="sigmoid">Sigmoid</option>
+        <option value="tanh">Tanh</option>
+      </select>
+
+      <h2 class="font-semibold mt-4">Parâmetros de Treinamento</h2>
+      <label>Otimizador:</label>
+      <select id="select-optimizer" class="w-full border rounded p-1">
+        <option value="sgd">SGD</option>
+        <option value="adam" selected>Adam</option>
+        <option value="rmsprop">RMSprop</option>
+      </select>
+      <label class="mt-2">Taxa de Aprendizado:</label>
+      <input id="input-lr" type="number" step="0.001" min="0.0001" max="1" value="0.01" class="w-full border rounded p-1" />
+      <label class="mt-2">Épocas:</label>
+      <input id="input-epochs" type="number" min="1" max="100" value="20" class="w-full border rounded p-1" />
+
+      <h2 class="font-semibold mt-4">Dados</h2>
+      <div class="mt-2 space-y-2">
+        <button id="btn-linear" class="w-full px-2 py-1 bg-green-200 rounded hover:bg-green-300">Linearmente Separável</button>
+        <button id="btn-circles" class="w-full px-2 py-1 bg-yellow-200 rounded hover:bg-yellow-300">Círculos</button>
+        <button id="btn-spiral" class="w-full px-2 py-1 bg-purple-200 rounded hover:bg-purple-300">Espiral</button>
+        <button id="btn-xor" class="w-full px-2 py-1 bg-pink-200 rounded hover:bg-pink-300">XOR</button>
+        <button id="btn-noise" class="w-full px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Ruído</button>
+        <div class="flex space-x-2 mt-2">
+          <button id="btn-clear" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Limpar</button>
+          <button id="btn-undo" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Desfazer</button>
+        </div>
+      </div>
+
+      <button id="btn-train" class="w-full px-3 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600">Treinar Rede</button>
+      <progress id="progress-training" value="0" max="100" class="w-full mt-2"></progress>
+      <!-- Botão para abrir visualização da arquitetura -->
+      <button id="btn-show-graph" class="w-full mt-2 bg-emerald-500 text-white px-3 py-2 rounded hidden">Ver Rede</button>
+    </aside>
+
+    <!-- Área de Visualização -->
+    <main class="col-span-3 bg-white rounded shadow p-4 space-y-4">
+      <canvas id="dataChart" class="w-full"></canvas>
+      <canvas id="lossChart" class="w-full"></canvas>
+    </main>
+
+    <!-- Métricas -->
+    <aside class="col-span-2 space-y-4">
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="font-semibold mb-2">Métricas de Desempenho</h2>
+        <p>Loss: <span id="metric-loss">0.00</span></p>
+        <p>Acurácia: <span id="metric-acc">0%</span></p>
+        <p>Precisão: <span id="metric-prec">0%</span></p>
+        <p>Recall: <span id="metric-recall">0%</span></p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="font-semibold mb-2">Parâmetros do Modelo</h2>
+        <p>Nº de Parâmetros: <span id="param-count">0</span></p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modal para visualização da rede com D3 -->
+  <!-- Modal para visualização da rede com D3 -->
+  <div id="nn-modal" class="fixed inset-0 hidden flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white w-11/12 md:w-3/4 h-5/6 p-4 rounded shadow flex flex-col overflow-hidden">
+      <div class="flex justify-between items-center mb-2 border-b pb-1">
+        <h2 class="text-lg font-semibold">Rede Neural Treinada</h2>
+        <button id="btn-close-modal" class="text-red-600 hover:text-red-800">Fechar</button>
+      </div>
+      <svg id="nn-graph" class="flex-1 w-full h-full" viewBox="0,0,800,800"></svg>
+    </div>
+  </div>
+      <svg id="nn-graph" class="flex-1 w-full h-full"></svg>
+    </div>
+  </div>
+
+  <!-- Script externo -->
+  <script defer src="/static/website/js/script_nn.js"></script>
+</body>
+</html>
+

@@ -88,6 +88,8 @@ def knn(request):
     return render(request, 'playground/knn.html')
 def kmeans(request):
     return render(request, 'playground/kmeans.html')
+def nn(request):
+    return render(request, 'playground/nn.html')
 def painel(request):
     return render(request, 'playground/painel.html')
 def  contato(request):
