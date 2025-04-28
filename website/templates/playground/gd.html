@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regressão Linear – Gradiente Descendente</title>
+
+  <!-- Tailwind para UI rápida -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js para gráficos 2-D -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Importmap: carrega Three.js como módulo ES -->
+  <script type="importmap">
+  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js" } }
+  </script>
+
+  <style>
+    /* altura máxima dos canvases de Chart.js */
+   /* canvas { max-height: 600px }*/
+    /* faz o WebGL ocupar 100 % da div threeContainer */
+    #threeContainer canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 p-4">
+  <h1 class="text-2xl font-bold mb-4">
+    Regressão Linear – Visualização do Gradiente Descendente
+  </h1>
+
+  <!-- Painel + 3-D -->
+  <div class="flex flex-col md:flex-row gap-4">
+    <!-- Painel de Controles -->
+    <div class="w-full md:w-1/4 bg-white p-4 rounded shadow space-y-4">
+      <p class="text-sm text-gray-600">
+        Dataset fixo:<br />
+        x = [1, 2, 4, 5, 6, 7]<br />
+        y = [4, -12, 3, -11, -5, -17]
+      </p>
+
+      <div>
+        <label class="block font-semibold">Taxa de Aprendizagem η:</label>
+        <input id="lrInput" type="number" step="0.001" value="0.01"
+               class="w-full border rounded px-2 py-1" />
+      </div>
+
+      <div>
+        <label class="block font-semibold">Épocas:</label>
+        <input id="stepsInput" type="number" step="1" value="50"
+               class="w-full border rounded px-2 py-1" />
+      </div>
+
+      <div>
+        <label class="block font-semibold">Métrica de Custo</label>
+        <select id="costSelect" class="w-full border rounded px-2 py-1">
+          <option value="mse" selected>MSE</option>
+          <option value="mae">MAE</option>
+          <option value="rmse">RMSE</option>
+        </select>
+      </div>
+
+      <div class="border-t pt-3 space-y-2">
+        <p class="font-semibold text-sm">Intervalo de w</p>
+        <div class="flex gap-1">
+          <input id="wMinInput" type="number" step="0.5" value="-20"
+                 class="w-1/2 border rounded px-1 py-0.5" />
+          <input id="wMaxInput" type="number" step="0.5" value="20"
+                 class="w-1/2 border rounded px-1 py-0.5" />
+        </div>
+
+        <p class="font-semibold text-sm">Intervalo de b</p>
+        <div class="flex gap-1">
+          <input id="bMinInput" type="number" step="0.5" value="-30"
+                 class="w-1/2 border rounded px-1 py-0.5" />
+          <input id="bMaxInput" type="number" step="0.5" value="30"
+                 class="w-1/2 border rounded px-1 py-0.5" />
+        </div>
+
+        <div>
+          <label class="block font-semibold">Densidade da Malha</label>
+          <input id="meshInput" type="number" min="10" value="120"
+                 class="w-full border rounded px-1 py-0.5" />
+        </div>
+
+        <div>
+          <label class="block font-semibold">Escala vertical</label>
+          <input id="vScaleInput" type="number" min="1" value="100"
+                 class="w-full border rounded px-1 py-0.5" />
+        </div>
+
+        <button id="updateSurfaceBtn"
+                class="w-full bg-blue-600 text-white py-1.5 rounded hover:bg-blue-700">
+          Atualizar Superfície
+        </button>
+      </div>
+
+      <div class="flex gap-2 pt-3">
+        <button id="initBtn"
+                class="flex-1 bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+          Novo Ponto
+        </button>
+        <button id="runBtn"
+                class="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700">
+          Executar
+        </button>
+      </div>
+
+      <div class="text-sm space-y-1 pt-2">
+        <div><span class="font-semibold">Época:</span> <span id="currentStep">0</span></div>
+        <div><span class="font-semibold">w:</span> <span id="wVal">-</span></div>
+        <div><span class="font-semibold">b:</span> <span id="bVal">-</span></div>
+        <div><span class="font-semibold">Custo:</span> <span id="costVal">-</span></div>
+      </div>
+    </div>
+
+    <!-- Área WebGL – ocupa 100 % do container -->
+    <div id="threeContainer"
+         class=" flex w-[1200px] md:w-3/4 bg-white rounded shadow h-[800px]"></div>
+  </div>
+
+  <!-- Gráficos 2-D -->
+  <div class="flex flex-col md:flex-row gap-4 mt-6">
+    <div class="w-full md:w-1/2 bg-white p-4 rounded shadow">
+      <h2 class="font-medium mb-2">Custo, w e b vs Época</h2>
+      <canvas id="costCanvas" class = "max-h-[320px]"></canvas>
+    </div>
+
+    <div class="w-full md:w-1/2 bg-white p-4 rounded shadow">
+      <h2 class="font-medium mb-2">Reta de Regressão</h2>
+      <canvas id="regCanvas" class = "max-h-[320px]"></canvas>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from
+      'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/controls/OrbitControls.js';
+
+    /* ---------- Dados ---------- */
+    const x = [1, 2, 4, 5, 6, 7];
+    const y = [4, -12, 3, -11, -5, -17];
+    const m = x.length;
+    const xMin = Math.min(...x), xMax = Math.max(...x);
+
+    /* ---------- Métricas ---------- */
+    const mse  = (w,b) => x.reduce((s,xi,i)=>s+(w*xi+b-y[i])**2,0)/m;
+    const mae  = (w,b) => x.reduce((s,xi,i)=>s+Math.abs(w*xi+b-y[i]),0)/m;
+    const rmse = (w,b) => Math.sqrt(mse(w,b));
+
+    /* ---------- Gradientes ---------- */
+    const mseG =(w,b)=>{let dw=0,db=0;for(let i=0;i<m;i++){const d=w*x[i]+b-y[i];dw+=2*d*x[i];db+=2*d;}return[dw/m,db/m];};
+    const maeG =(w,b)=>{let dw=0,db=0;for(let i=0;i<m;i++){const s=Math.sign(w*x[i]+b-y[i]);dw+=s*x[i];db+=s;}return[dw/m,db/m];};
+    const rmseG=(w,b)=>{const r=rmse(w,b);if(!r) return[0,0];const [dw,db]=mseG(w,b);return[dw/(2*r),db/(2*r)];};
+
+    const costMap = { mse, mae, rmse };
+    const gradMap = { mse: mseG, mae: maeG, rmse: rmseG };
+
+    /* ---------- THREE ---------- */
+    const container = document.getElementById('threeContainer');
+    const scene     = new THREE.Scene();
+    const camera    = new THREE.PerspectiveCamera(
+                        45, container.clientWidth/container.clientHeight, 0.1, 1000);
+    camera.position.set(0,40,60);
+
+    const renderer  = new THREE.WebGLRenderer({ antialias:true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    const controls  = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    scene.add(new THREE.AmbientLight(0xffffff,0.8));
+    const dir = new THREE.DirectionalLight(0xffffff,0.8);
+    dir.position.set(30,50,30);
+    scene.add(dir);
+
+    /* ---------- Variáveis ---------- */
+    let axes        = new THREE.AxesHelper(10); scene.add(axes);
+    let mesh, traj = [], line, spheres = [];
+    let off = 0, vScale = 100,
+        wMin = -20, wMax = 20,
+        bMin = -30, bMax = 30,
+        stepsMesh = 120;
+
+    /* ---------- Utilitários ---------- */
+    const clearSp = () => { spheres.forEach(s=>scene.remove(s)); spheres=[]; };
+    const addSphere = p => {
+      const s = new THREE.Mesh(
+        new THREE.SphereGeometry(1.4,20,20),
+        new THREE.MeshStandardMaterial({ color:0xff0000 })
+      );
+      s.position.copy(p); scene.add(s); spheres.push(s);
+    };
+
+    /* ---------- Construção da superfície ---------- */
+    function buildSurface() {
+      mesh && scene.remove(mesh);
+      axes && scene.remove(axes);
+
+      const cost = costMap[costSelect.value];
+      const wR = wMax - wMin, bR = bMax - bMin;
+      const geo = new THREE.PlaneGeometry(wR, bR, stepsMesh-1, stepsMesh-1);
+      const pos = geo.attributes.position;
+      const colors = [];
+
+      let minC =  Infinity, maxC = -Infinity;
+      const vals = [];
+      for (let i=0;i<pos.count;i++) {
+        const W = THREE.MathUtils.mapLinear(pos.getX(i), -wR/2, wR/2, wMin, wMax);
+        const B = THREE.MathUtils.mapLinear(pos.getY(i), -bR/2, bR/2, bMin, bMax);
+        const c = cost(W,B);
+        vals.push(c);
+        minC = Math.min(minC,c);
+        maxC = Math.max(maxC,c);
+      }
+      off = minC;
+
+      for (let i=0;i<pos.count;i++) {
+        pos.setZ(i, (vals[i]-off) / vScale);
+        const t = (vals[i]-minC) / (maxC-minC || 1);
+        colors.push(t,0.2,1-t);
+      }
+      geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors),3));
+
+      mesh = new THREE.Mesh(
+        geo,
+        new THREE.MeshPhongMaterial({ vertexColors:true, side:THREE.DoubleSide,
+                                      transparent:true, opacity:0.85 })
+      );
+      mesh.rotation.x = -Math.PI/2;
+      scene.add(mesh);
+
+      axes = new THREE.AxesHelper(
+        Math.max(wR,bR,(maxC-minC)/vScale,10)
+      );
+      scene.add(axes);
+    }
+
+    /* ---------- Chart.js ---------- */
+    const costChart = new Chart(costCanvas.getContext('2d'), {
+      type:'line',
+      data:{ labels:[], datasets:[
+        { label:'Custo', data:[], borderWidth:2 },
+        { label:'w',     data:[], borderWidth:1, borderDash:[5,3] },
+        { label:'b',     data:[], borderWidth:1, borderDash:[5,3] }
+      ]},
+      options:{ animation:false, responsive:true,
+        scales:{ x:{ title:{ text:'Época', display:true } } } }
+    });
+
+    const regChart = new Chart(regCanvas.getContext('2d'), {
+      type:'scatter',
+      data:{ datasets:[
+        { label:'Pontos', data:x.map((xi,i)=>({x:xi,y:y[i]})), pointRadius:5 },
+        { label:'Reta',   data:[], type:'line', borderWidth:2 }
+      ]},
+      options:{ animation:false, responsive:true,
+        scales:{ x:{ title:{ text:'x' } }, y:{ title:{ text:'y' } } } }
+    });
+
+    let ep=[], cArr=[], wArr=[], bArr=[];
+    const resetCharts = () => {
+      ep.length = cArr.length = wArr.length = bArr.length = 0;
+      costChart.data.labels = [];
+      costChart.data.datasets.forEach(d=>d.data = []);
+      costChart.update();
+    };
+
+    function updCharts(e,w,b,c) {
+      ep.push(e); cArr.push(c); wArr.push(w); bArr.push(b);
+
+      costChart.data.labels = ep;
+      costChart.data.datasets[0].label = 'Custo ('+costSelect.value.toUpperCase()+')';
+      costChart.data.datasets[0].data  = cArr;
+      costChart.data.datasets[1].data  = wArr;
+      costChart.data.datasets[2].data  = bArr;
+      costChart.update('none');
+
+      regChart.data.datasets[1].data = [
+        { x:xMin, y:w*xMin+b },
+        { x:xMax, y:w*xMax+b }
+      ];
+      regChart.update('none');
+
+      currentStep.textContent = e;
+      wVal.textContent        = w.toFixed(3);
+      bVal.textContent        = b.toFixed(3);
+      costVal.textContent     = c.toFixed(3);
+    }
+
+    /* ---------- Trajetória ---------- */
+    function initPoint() {
+      resetCharts(); clearSp();
+      const cost = costMap[costSelect.value];
+
+      const w = THREE.MathUtils.randFloat(wMin,wMax);
+      const b = THREE.MathUtils.randFloat(bMin,bMax);
+      const c = cost(w,b);
+
+      traj = [ new THREE.Vector3(w,(c-off)/vScale,-b) ];
+      line && scene.remove(line);
+      line = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(traj),
+        new THREE.LineBasicMaterial({ color:0xff0000 })
+      );
+      scene.add(line);
+
+      addSphere(traj[0]);
+      updCharts(0,w,b,c);
+    }
+
+    async function runGD() {
+      const grad = gradMap[costSelect.value];
+      const cost = costMap[costSelect.value];
+      const lr   = parseFloat(lrInput.value);
+      const st   = parseInt(stepsInput.value);
+
+      for (let e=1; e<=st; e++) {
+        let w = traj[traj.length-1].x;
+        let b = -traj[traj.length-1].z;
+
+        const [dw,db] = grad(w,b);
+        w -= lr*dw;  b -= lr*db;
+
+        const c = cost(w,b);
+        const p = new THREE.Vector3(w,(c-off)/vScale,-b);
+
+        traj.push(p);
+        line.geometry.setFromPoints(traj);
+        addSphere(p);
+
+        updCharts(e,w,b,c);
+        await new Promise(res=>setTimeout(res,800));
+      }
+    }
+
+    /* ---------- Eventos ---------- */
+    function rebuild() {
+      wMin = parseFloat(wMinInput.value);
+      wMax = parseFloat(wMaxInput.value);
+      bMin = parseFloat(bMinInput.value);
+      bMax = parseFloat(bMaxInput.value);
+      stepsMesh = Math.max(10, parseInt(meshInput.value));
+      vScale    = Math.max(1,  parseInt(vScaleInput.value));
+
+      buildSurface();
+      initPoint();
+    }
+
+    updateSurfaceBtn.addEventListener('click', rebuild);
+    costSelect       .addEventListener('change', rebuild);
+    initBtn          .addEventListener('click', initPoint);
+    runBtn           .addEventListener('click', runGD);
+
+    window.addEventListener('resize', () => {
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+    });
+
+    /* ---------- Loop ---------- */
+    (function animate(){
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene,camera);
+    })();
+
+    /* ---------- Primeira construção ---------- */
+    buildSurface();
+    initPoint();
+  </script>
+</body>
+</html>

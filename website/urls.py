@@ -64,5 +64,6 @@ urlpatterns = [
     path('playground/nn', views.nn, name='nn'),
     path('playground/', views.painel, name='painel'),
     path('playground/kmeans', views.kmeans, name='kmeans'),
+    path('playground/gd', views.gd, name='gd'),
     path('', include(router.urls)),
 ]
