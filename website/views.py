@@ -94,6 +94,9 @@ def gd(request):
     return render(request, 'playground/gd.html')
 def painel(request):
     return render(request, 'playground/painel.html')
+
+def instrucoes(request):
+    return render(request, 'instrucoes.html')
 def  contato(request):
     if request.method == 'POST':
         form = ContatoForm(request.POST)
