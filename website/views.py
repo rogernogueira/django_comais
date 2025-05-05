@@ -369,8 +369,6 @@ def cadastrar_termo(request):
     submitted = False
     if request.method == 'POST':
       form = TermoOutorgaForm(request.POST ,request.FILES ) 
-      
-
       if form.is_valid():
             form.save(commit=False)        
             form.save()
@@ -602,7 +600,9 @@ def cadastrar_projeto_relatorio(request):
                 'vigencia_inicio': termo.vigencia_inicio,
                 'vigencia_fim': termo.vigencia_fim,
                 'numero_parcelas': termo.numero_parcelas,
-                'objetivo_proposto':termo.resultado_esperado, 
+                'objetivo_proposto':termo.objetivo_proposto, 
+                'objetivo_proposto_obj': termo.objetivo_proposto_obj,
+                'resultado_esperado': termo.resultado_esperado,
                 'termo_outorga': termo,
             })
     return render(request,'cadastrar_projeto_relatorio.html', {'form':form, 'submitted':submitted })

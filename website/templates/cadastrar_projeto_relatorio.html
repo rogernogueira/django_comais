@@ -31,19 +31,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const termoSelect = document.querySelector('#id_termo_outorga');
-    const tituloInput = document.querySelector('#id_titulo');
-    
-    if (termoSelect && tituloInput) {
-        termoSelect.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            if (selectedOption.value) {
-                tituloInput.value = selectedOption.text;
-            }
-        });
-    }
-});
-</script>
+
 {% endblock %}

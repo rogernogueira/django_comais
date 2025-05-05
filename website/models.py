@@ -15,19 +15,51 @@ from textwrap import dedent
 from datetime import datetime
 
 # configure timezone
+from datetime import datetime, date
+from typing import Optional
+from pydantic import BaseModel, Field, field_validator, model_validator
 
-from pydantic import BaseModel, Field
 class dados_termo(BaseModel):
-    titulo: str = Field(..., description="Título do projeto")
-    vigencia_inicio: str = Field(..., description="Data de início da vigência")
-    vigencia_fim: str = Field(..., description="Data de fim da vigência")
-    numero_parcelas: int = Field(..., description="Número de parcelas")
-    objetivo_proposto: str = Field(..., description="Objetivo proposto")
-    resultado_esperado: str = Field(..., description="Resultados esperados")
-    objetivo_proposto_obj: str = Field(..., description="Objetivos propostos")
-    valor_parcela: float = Field(..., description="Valor da parcela")
+    titulo: str = Field(..., min_length=5, max_length=255, description="Título do projeto")
+    vigencia_inicio: Optional[date] = Field(None, description="Data de início da vigência")
+    vigencia_fim: Optional[date] = Field(None, description="Data de fim da vigência")
+    numero_parcelas: Optional[int] = Field(None, gt=0, le=100, description="Número de parcelas entre 1 e 100")
+    objetivo_proposto: Optional[str] = Field(None, description="Objetivo proposto")
+    resultado_esperado: Optional[str] = Field(None, description="Resultados esperados")
+    objetivo_proposto_obj: Optional[str] = Field(None, description="Objetivos propostos")
 
+    @field_validator('vigencia_inicio', 'vigencia_fim', mode='before')
+    @classmethod
+    def parse_date(cls, value):
+        if not value:
+            return None
+        if isinstance(value, date):
+            return value
 
+        formatos = ["%Y-%m-%d", "%d/%m/%Y", "%m/%Y", "%m-%Y"]
+        for fmt in formatos:
+            try:
+                dt = datetime.strptime(value, fmt)
+                return dt.replace(day=1).date() if '%d' not in fmt else dt.date()
+            except ValueError:
+                continue
+        raise ValueError(f"Data inválida: '{value}'. Use formatos como YYYY-MM-DD, DD/MM/AAAA ou MM/AAAA.")
+
+    @field_validator('objetivo_proposto', 'resultado_esperado', 'objetivo_proposto_obj', mode='before')
+    @classmethod
+    def texto_minimo(cls, v):
+        if v is None:
+            return None
+        v = v.strip()
+        if len(v) < 10:
+            raise ValueError("O campo deve conter pelo menos 10 caracteres.")
+        return v
+
+    @model_validator(mode='after')
+    def validar_periodo(self):
+        if self.vigencia_inicio and self.vigencia_fim and self.vigencia_fim < self.vigencia_inicio:
+            raise ValueError("A data de fim da vigência deve ser posterior à de início.")
+        return self
 
 STATUS_CHOICES = [('Aguardando', 'Aguardando'),
                   ('Em andamento', 'Em andamento'),
@@ -161,62 +193,79 @@ class TermoOutorga(models.Model):
 
             self.extract_data( )
     def extract_data(self):
-        #update os dados do termo de outorga
-
-        file = self.arquivo.path
-        # converter pdf para markdown
-        import pymupdf4llm
-        #import ipdb; ipdb.set_trace()
-        md_text = pymupdf4llm.to_markdown(file)
-        # Enviar para llm deepseek para extrair os dados
         from agno.agent import Agent
         from agno.models.deepseek import DeepSeek
+        import pymupdf4llm
+        from datetime import datetime
+
+        file = self.arquivo.path
+        md_text = pymupdf4llm.to_markdown(file)
+
         agent_extract = Agent(
-            model= DeepSeek(),
-            description="Você é um assistente de IA que extrai dados de um termo de outorga. Você deve extrair os seguintes dados: vigencia_inicio, vigencia_fim, numero_parcelas, objetivo_proposto, resultado_esperado, objetivo_proposto_obj, valor_parcela. Retorne os dados em formato JSON.",
+            model=DeepSeek(),
+            description="Você é um assistente de IA que extrai dados de um termo de outorga. Você deve extrair os seguintes dados: titulo, vigencia_inicio, vigencia_fim, numero_parcelas, objetivo_proposto, resultado_esperado, objetivo_proposto_obj. Retorne os dados em formato JSON.",
             response_model=dados_termo,
             instructions=dedent("""\
-             Você deve extrair os seguintes dados:
-                                Titulo do projeto, 
-                                vigencia_inicio,
-                                vigencia_fim,
-                                numero_parcelas, 
-                                objetivo_proposto,
-                                 resultado_esperado,
-                                 objetivo_proposto_obj, valor_parcela. 
-                                
-                                Retorne os dados em formato JSON.
-                   
-                                """),
-    use_json_mode=True,
+                Você deve extrair os seguintes dados:
+                - titulo
+                - vigencia_inicio
+                - vigencia_fim
+                - numero_parcelas
+                - objetivo_proposto
+                - resultado_esperado
+                - objetivo_proposto_obj
+                
+                Caso não consiga extrair algum dado, retorne como null.
+            """),
+            use_json_mode=True,
         )
-        result = agent_extract.run( md_text).content
-        # Salvar os dados no banco de dados
-        #update os dados do termo de outorga
-      
-        self.titulo = result.titulo
-        self.vigencia_inicio =datetime.strptime(result.vigencia_inicio, '%d/%m/%Y').date()
-        self.vigencia_fim = datetime.strptime(result.vigencia_fim,'%d/%m/%Y').date()
-        self.numero_parcelas = result.numero_parcelas
-        self.objetivo_proposto = result.objetivo_proposto
-        self.resultado_esperado = result.resultado_esperado
-        self.objetivo_proposto_obj = result.objetivo_proposto_obj
-        self.valor_parcela = result.valor_parcela
-        #salvar
-        super().save(update_fields=[
+
+        try:
+            result = agent_extract.run(md_text).content
+        except Exception as e:
+            # Log ou print opcional para depuração
+            print(f"Erro ao extrair dados do PDF: {e}")
+            return  # ou definir campos default
+
+        def parse_date_safe(value):
+            if not value:
+                return None
+
+            if isinstance(value, date):
+                return value  # já está pronto
+
+            if isinstance(value, datetime):
+                return value.date()
+
+            if isinstance(value, str):
+                formatos = ["%Y-%m-%d", "%d/%m/%Y", "%m/%Y", "%m-%Y"]
+                for fmt in formatos:
+                    try:
+                        dt = datetime.strptime(value, fmt)
+                        return dt.replace(day=1).date() if '%d' not in fmt else dt.date()
+                    except ValueError:
+                        continue
+            return None
+
+        # Preenchimento seguro dos campos
+        self.titulo = result.titulo or ""
+        self.vigencia_inicio = parse_date_safe(result.vigencia_inicio)
+        self.vigencia_fim = parse_date_safe(result.vigencia_fim)
+        self.numero_parcelas = result.numero_parcelas or 0
+        self.objetivo_proposto = result.objetivo_proposto or ""
+        self.resultado_esperado = result.resultado_esperado or ""
+        self.objetivo_proposto_obj = result.objetivo_proposto_obj or ""
+
+        self.save(update_fields=[
             'titulo', 'vigencia_inicio', 'vigencia_fim', 'numero_parcelas',
             'objetivo_proposto', 'resultado_esperado', 'objetivo_proposto_obj',
-            'valor_parcela'
         ])
 
 
 
 
-
-
-
     def __str__(self):
-        return self.nome if self.nome else "Termo sem nome"
+        return self.titulo if self.titulo else "Termo sem nome"
 
 class ProjetoRelatorio(models.Model):
     titulo = models.CharField('Título',max_length=250)
