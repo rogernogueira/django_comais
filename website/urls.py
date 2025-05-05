@@ -66,7 +66,7 @@ urlpatterns = [
     path('playground/kmeans', views.kmeans, name='kmeans'),
     path('playground/gd', views.gd, name='gd'),
     path('instrucoes', views.instrucoes, name='instrucoes'),
-    path('cadastrar_termo', views.cadastrar_termo, name='cadastrar_termo'),
+    path('cadastrar_termo', views.cadastrar_termo, name='cadastrar-termo'),
     
     path('', include(router.urls)),
 ]
