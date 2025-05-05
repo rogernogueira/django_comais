@@ -19,3 +19,5 @@ admin.site.register(Templates)
 admin.site.register(Curso)
 admin.site.register(Parceiro)
 admin.site.register(Imagem)
+admin.site.register(TermoOutorga)
+

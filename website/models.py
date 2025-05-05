@@ -11,10 +11,21 @@ from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from tinymce import models as tinymce_models
 from django.conf import settings
+from textwrap import dedent
+from datetime import datetime
 
 # configure timezone
 
-
+from pydantic import BaseModel, Field
+class dados_termo(BaseModel):
+    titulo: str = Field(..., description="Título do projeto")
+    vigencia_inicio: str = Field(..., description="Data de início da vigência")
+    vigencia_fim: str = Field(..., description="Data de fim da vigência")
+    numero_parcelas: int = Field(..., description="Número de parcelas")
+    objetivo_proposto: str = Field(..., description="Objetivo proposto")
+    resultado_esperado: str = Field(..., description="Resultados esperados")
+    objetivo_proposto_obj: str = Field(..., description="Objetivos propostos")
+    valor_parcela: float = Field(..., description="Valor da parcela")
 
 
 
@@ -134,15 +145,76 @@ class TermoOutorga(models.Model):
     arquivo = models.FileField(upload_to='termos/', blank=True, null=True)
     nome = models.CharField(max_length=255, blank=True)
     data_upload = models.DateTimeField(auto_now_add=True)
-    
+    titulo = models.CharField('Título do projeto',max_length=250, blank=True, null=True)
+    vigencia_inicio = models.DateField('Início da vigência',blank=True, null=True)
+    vigencia_fim = models.DateField('Fim da vigência',blank=True, null=True)
+    numero_parcelas = models.IntegerField('Número de parcelas',blank=True, null=True)
+    objetivo_proposto = models.TextField('Objetivo proposto',blank=True, null=True)
+    resultado_esperado = models.TextField('Resultados esperados ',blank=True, null=True)
+    objetivo_proposto_obj = models.TextField('Objetivos propostos',blank=True, null=True)
+    valor_parcela = models.DecimalField('Valor da parcela', decimal_places=10, max_digits=20  ,blank=True, null=True)
     def save(self, *args, **kwargs):
-        if self.arquivo and not self.nome:
-            # Remove o caminho e extensão do arquivo, mantendo apenas o nome base
-            import os
-            filename = os.path.basename(self.arquivo.name)
-            self.nome = os.path.splitext(filename)[0]
-        super().save(*args, **kwargs)
-    
+        created = not self.pk
+        super().save(*args, **kwargs)  # Save first to get file path
+        if created:
+            
+
+            self.extract_data( )
+    def extract_data(self):
+        #update os dados do termo de outorga
+
+        file = self.arquivo.path
+        # converter pdf para markdown
+        import pymupdf4llm
+        #import ipdb; ipdb.set_trace()
+        md_text = pymupdf4llm.to_markdown(file)
+        # Enviar para llm deepseek para extrair os dados
+        from agno.agent import Agent
+        from agno.models.deepseek import DeepSeek
+        agent_extract = Agent(
+            model= DeepSeek(),
+            description="Você é um assistente de IA que extrai dados de um termo de outorga. Você deve extrair os seguintes dados: vigencia_inicio, vigencia_fim, numero_parcelas, objetivo_proposto, resultado_esperado, objetivo_proposto_obj, valor_parcela. Retorne os dados em formato JSON.",
+            response_model=dados_termo,
+            instructions=dedent("""\
+             Você deve extrair os seguintes dados:
+                                Titulo do projeto, 
+                                vigencia_inicio,
+                                vigencia_fim,
+                                numero_parcelas, 
+                                objetivo_proposto,
+                                 resultado_esperado,
+                                 objetivo_proposto_obj, valor_parcela. 
+                                
+                                Retorne os dados em formato JSON.
+                   
+                                """),
+    use_json_mode=True,
+        )
+        result = agent_extract.run( md_text).content
+        # Salvar os dados no banco de dados
+        #update os dados do termo de outorga
+      
+        self.titulo = result.titulo
+        self.vigencia_inicio =datetime.strptime(result.vigencia_inicio, '%d/%m/%Y').date()
+        self.vigencia_fim = datetime.strptime(result.vigencia_fim,'%d/%m/%Y').date()
+        self.numero_parcelas = result.numero_parcelas
+        self.objetivo_proposto = result.objetivo_proposto
+        self.resultado_esperado = result.resultado_esperado
+        self.objetivo_proposto_obj = result.objetivo_proposto_obj
+        self.valor_parcela = result.valor_parcela
+        #salvar
+        super().save(update_fields=[
+            'titulo', 'vigencia_inicio', 'vigencia_fim', 'numero_parcelas',
+            'objetivo_proposto', 'resultado_esperado', 'objetivo_proposto_obj',
+            'valor_parcela'
+        ])
+
+
+
+
+
+
+
     def __str__(self):
         return self.nome if self.nome else "Termo sem nome"
 
@@ -158,13 +230,11 @@ class ProjetoRelatorio(models.Model):
     dia_entrega = models.IntegerField('Dia do mês da entrega', default=0)
     template = models.FileField(upload_to='templates/', blank=True, null=True)
     termo_outorga = models.ForeignKey(TermoOutorga, on_delete=models.SET_NULL, blank=True, null=True)
-    termo_path = models.CharField('Caminho do Termo', max_length=255, blank=True, null=True)
+    
     status=models.CharField('Status',max_length=100, choices=STATUS_CHOICES, default='Em elaboração')
     data_criacao = models.DateTimeField('Data de criação',  default=django.utils.timezone.now)
     template_default = models.BooleanField('Usar template padrão', default=False)
     
-    def __str__(self):
-        return self.titulo
     
 class Relatorio(models.Model):
     projeto = models.ForeignKey(ProjetoRelatorio, on_delete=models.CASCADE)

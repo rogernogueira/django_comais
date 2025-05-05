@@ -5,9 +5,9 @@ from django.db import close_old_connections
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect, FileResponse
 from .models import Ocorrencia, Contato, Projeto, Relatorio, TipoProjeto, Colaborador,Publicacao,\
-Relatorio, ProjetoRelatorio , RelatorioFinal, Templates, Curso, Imagem
+Relatorio, ProjetoRelatorio , RelatorioFinal, Templates, Curso, Imagem, TermoOutorga
 from .forms import ContatoForm, OcorrenciaForm, ColaboradorForm, PublicacaoForm,\
-ProjetoForm, RelatorioForm, ProjetoRelatorioForm, RelatorioFinalForm, CursoForm
+ProjetoForm, RelatorioForm, ProjetoRelatorioForm, RelatorioFinalForm, CursoForm, TermoOutorgaForm
 from django.core.paginator import Paginator
 from django.db.models import Max, BaseConstraint
 from django.contrib.auth.decorators import login_required
@@ -364,6 +364,26 @@ def cadastrar_publicacao(request):
             submitted = True
         
     return render(request,'cadastrar_publicacao.html', {'form':form, 'submitted':submitted})
+@login_required
+def cadastrar_termo(request):
+    submitted = False
+    if request.method == 'POST':
+      form = TermoOutorgaForm(request.POST ,request.FILES ) 
+      
+
+      if form.is_valid():
+            form.save(commit=False)        
+            form.save()
+            form.instance
+            messages.success(request, 'Termo cadastrado com sucesso!')
+    
+            return HttpResponseRedirect(f'/cadastrar_projeto_relatorio?id_termo={form.instance.id}', )
+    else:
+        form =TermoOutorgaForm()
+        if 'submitted' in request.GET:
+            submitted = True
+        
+    return render(request,'pre_cadastro_projeto_relatorio.html', {'form':form, 'submitted':submitted})
 
 @login_required
 def cadastrar_projeto(request):
@@ -382,7 +402,7 @@ def cadastrar_projeto(request):
         if 'submitted' in request.GET:
             submitted = True
         
-    return render(request,'cadastrar_projeto.html', {'form':form, 'submitted':submitted})
+    return render(request,'cadastrar_projeto.html', {'form':form,  'submitted':submitted})
 
 @login_required
 def gerar_relatorio(request, id_relatorio):
@@ -564,79 +584,6 @@ def cadastrar_projeto_relatorio(request):
     if request.method == 'POST':
         form = ProjetoRelatorioForm(request.POST, request.FILES)
         form.instance.user = request.user
-        
-        # Processar upload do termo
-        termo_upload = request.FILES.get('termo_upload')
-        if termo_upload:
-            # Verificar tipo do arquivo
-            import magic
-            import requests
-            import json
-            
-            # Validar se é um arquivo de texto ou PDF
-            mime = magic.Magic(mime=True)
-            file_type = mime.from_buffer(termo_upload.read(1024))
-            termo_upload.seek(0)  # Reset file pointer
-            
-            if file_type not in ['text/plain', 'application/pdf']:
-                messages.error(request, 'Tipo de arquivo inválido. Envie um arquivo PDF ou texto.')
-                return render(request, 'cadastrar_projeto_relatorio.html', {'form': form})
-            
-            # Salvar arquivo temporariamente
-            fs = FileSystemStorage()
-            filename = fs.save(f'termos_outorga/{termo_upload.name}', termo_upload)
-            form.instance.termo_path = fs.url(filename)
-            
-            # Chamar API da Deepseek para processar o termo
-            try:
-                # Converter para markdown se for PDF
-                if file_type == 'application/pdf':
-                    import pdfplumber
-                    text_content = ""
-                    with pdfplumber.open(termo_upload) as pdf:
-                        for page in pdf.pages:
-                            text_content += page.extract_text()
-                else:
-                    text_content = termo_upload.read().decode('utf-8')
-                
-                # Chamar API da Deepseek
-                api_url = "https://api.deepseek.com/v1/process_document"
-                headers = {
-                    "Authorization": f"Bearer {settings.DEEPSEEK_API_KEY}",
-                    "Content-Type": "application/json"
-                }
-                prompt = """
-                Extraia do documento as seguintes informações em formato JSON:
-                {
-                    'titulo': 'Título do projeto',
-                    'vigencia_inicio': 'Data de início no formato YYYY-MM-DD',
-                    'vigencia_fim': 'Data de término no formato YYYY-MM-DD', 
-                    'numero_parcelas': 'Número de parcelas/meses'
-                }
-                """
-                
-                payload = {
-                    "document": text_content,
-                    "prompt": prompt
-                }
-                
-                response = requests.post(api_url, headers=headers, json=payload)
-                response.raise_for_status()
-                data = response.json()
-                
-                # Preencher automaticamente os campos do formulário
-                if data:
-                    form.initial = {
-                        'titulo': data.get('titulo', ''),
-                        'vigencia_inicio': data.get('vigencia_inicio', ''),
-                        'vigencia_fim': data.get('vigencia_fim', ''),
-                        'numero_parcelas': data.get('numero_parcelas', 1)
-                    }
-                    messages.info(request, 'Termo processado com sucesso! Verifique as informações sugeridas.')
-            
-            except Exception as e:
-                messages.warning(request, f'Erro ao processar termo: {str(e)}')
-            
         if form.is_valid():
             projeto = form.save(commit=False)
             projeto.user = request.user
@@ -647,7 +594,18 @@ def cadastrar_projeto_relatorio(request):
         form = ProjetoRelatorioForm()
         if 'submitted' in request.GET:
             submitted = True 
-    return render(request,'cadastrar_projeto_relatorio.html', {'form':form, 'submitted':submitted})
+        id_termo = request.GET.get('id_termo')
+        if id_termo:
+            termo = TermoOutorga.objects.get(id=id_termo)
+            form = ProjetoRelatorioForm(initial={
+                'titulo': termo.titulo,
+                'vigencia_inicio': termo.vigencia_inicio,
+                'vigencia_fim': termo.vigencia_fim,
+                'numero_parcelas': termo.numero_parcelas,
+                'objetivo_proposto':termo.resultado_esperado, 
+                'termo_outorga': termo,
+            })
+    return render(request,'cadastrar_projeto_relatorio.html', {'form':form, 'submitted':submitted })
 
 @login_required
 def deletar_projeto_relatorio(request, id_projeto_relatorio):

@@ -8,11 +8,24 @@
     
     <form method=POST enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="termo_upload">Upload do Termo de Outorga (PDF/DOCX):</label>
-            <input type="file" class="form-control-file" id="termo_upload" name="termo_upload" accept=".pdf,.docx">
+      
+        {% for field in form %}
+        <div class="fieldWrapper">
+         
+            {{ field.errors }}
+            {{ field.label_tag }} 
+            
+                {{ field }}
+            
+           
+           
+            {% if field.help_text %}
+              <p class="help" id="{{ field.auto_id }}_helptext">
+                {{ field.help_text|safe }}
+              </p>
+            {% endif %}
         </div>
-        {{form.as_p}}
+    {% endfor %}
         <input type="submit" value="Salvar" class="btn btn-secondary">
     </form>
 {% endblock %}

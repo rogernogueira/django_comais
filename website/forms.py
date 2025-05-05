@@ -5,7 +5,8 @@ from django.db.models import BaseConstraint
 from django.contrib import messages
 from django.urls import reverse
 from .models import Contato, Ocorrencia, Projeto, Usuario, Servico,\
-    Historico, Colaborador, Publicacao, Relatorio, ProjetoRelatorio, RelatorioFinal, Curso
+    Historico, Colaborador, Publicacao, Relatorio, ProjetoRelatorio, \
+    RelatorioFinal, Curso, TermoOutorga
 # create a form for the model Contato
 
 class CursoForm(ModelForm):
@@ -78,6 +79,20 @@ class ColaboradorForm(ModelForm):
             }
            
            
+
+class TermoOutorgaForm(ModelForm):
+    class Meta:
+        model = TermoOutorga
+        fields = ('nome', 'arquivo')
+        labels = {
+            'nome': 'Nome do Termo',
+            'arquivo': 'Arquivo do Termo'
+        }
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'arquivo': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
 class OcorrenciaForm(ModelForm):
     class Meta:
         model = Ocorrencia
@@ -262,21 +277,17 @@ class RelatorioFinalForm(ModelForm):
  
 
 class ProjetoRelatorioForm(ModelForm):
-    novo_termo = forms.FileField(
-        label='Novo Termo de Outorga',
-        required=False,
-        widget=forms.FileInput(attrs={'class': 'form-control'})
-    )
+
     
     class Meta:
         model = ProjetoRelatorio
         exclude = [ 'user',]
-        fields = ('termo_outorga', 'novo_termo', 'titulo','status', 'vigencia_inicio', 'vigencia_fim',
+        fields = (  'titulo','status', 'vigencia_inicio', 'vigencia_fim',
                   'numero_parcelas','objetivo_proposto','objetivo_proposto_obj',
                   'resultado_esperado','dia_entrega','template_default','template')
 
-        labels = {'termo_outorga':'Termo de outorga existente',
-                 'novo_termo':'Ou enviar novo termo',
+        labels = {
+                 
                  'titulo':'Titulo do projeto',
                   'status':'Status',
                   'vigencia_inicio':'Data de início',
@@ -301,7 +312,7 @@ class ProjetoRelatorioForm(ModelForm):
             'dia_entrega':forms.TextInput( attrs={'class': 'form-control'}),
             'template_default':forms.CheckboxInput( ),
             'template':forms.FileInput( attrs={'class': 'form-control'}),
-            'termo_outorga': forms.Select(attrs={'class': 'form-control'}),
+            
         }
 
     def __init__(self, *args, **kwargs):
