@@ -9,14 +9,11 @@ router.register(r'api/imagens', views.ImagemViewSet, basename='imagem')
 
 urlpatterns = [
     path('', views.home, name='home'),
-    
     path('index', views.index, name='index'),
-    
     path('sobre', views.sobre, name='sobre'),
     path('download', views.download, name='download'),
     path('download_inscritos', views.download_inscritos, name='download_inscritos'),
     path('download_config', views.download_config, name='download_config'),
-
     path('ocorrencias', views.ocorrencias, name='ocorrencias'),
     path('contato', views.contato, name='contato'),
     path('contatos', views.contatos, name='contato-list'),
@@ -66,7 +63,7 @@ urlpatterns = [
     path('playground/kmeans', views.kmeans, name='kmeans'),
     path('playground/gd', views.gd, name='gd'),
     path('instrucoes', views.instrucoes, name='instrucoes'),
-    path('cadastrar_termo', views.cadastrar_termo, name='cadastrar-termo'),
-    
+    path('cadastrar_termo', views.cadastrar_termo, name='cadastrar-termo'),    
     path('', include(router.urls)),
+    path('api/gera_texto', views.GeraCampusView.as_view(), name='gera-texto')
 ]

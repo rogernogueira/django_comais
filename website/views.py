@@ -1,3 +1,4 @@
+from textwrap import dedent
 from calendar import month
 from multiprocessing import context
 from urllib import response
@@ -13,17 +14,21 @@ from django.db.models import Max, BaseConstraint
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.core import serializers
-from .serializers import ImagemSerializer
+from .serializers import ImagemSerializer, DadosCampoSerializer
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.dateparse import parse_date
 import datetime
-from rest_framework import generics, permissions, viewsets
+from rest_framework import generics, permissions, viewsets, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
 import os
 from docxtpl import DocxTemplate, RichText
 import html2markdown
 from django.contrib import messages
 import re
+from agno.agent import Agent
+from agno.models.deepseek import DeepSeek
 
 
 
@@ -730,3 +735,46 @@ class ImagemViewSet(viewsets.ModelViewSet):
         return Imagem.objects.filter(usuario=self.request.user)
     def perform_create(self, serializer):
         serializer.save(usuario=self.request.user)
+
+class GeraCampusView(APIView):
+    def post(self, request):
+        # Verificar se o texto foi enviado
+        texto = request.data.get('texto')
+        data = request.data.get('data')
+        exemplo = request.data.get('exemplo')
+       
+        
+        if not texto:
+            return Response(
+                {'error': 'Nenhum texto enviado'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Configurar o agente de IA
+        agent_extract = Agent(
+            model=DeepSeek(),
+            description="Você é um assistente de IA que gera textos para projetos de pesquisa e extensão.",
+            instructions=dedent(f"""\
+                                
+            Com base no exemplo: {exemplo}
+            Siga as instruções: {texto}
+            Gere um novo texto considerando:
+           
+            - Data do relatório: {data}
+        
+            """),
+            use_json_mode=True,
+        )
+
+        try:
+            # Processar o texto com o agente
+            resultado = agent_extract.run(texto)
+            return Response({
+                'texto_gerado': resultado.content,
+                'status': 'sucesso'
+            })
+        except Exception as e:
+            return Response(
+                {'error': f'Erro ao processar o texto: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

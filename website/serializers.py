@@ -18,3 +18,8 @@ class ImagemSerializer(serializers.ModelSerializer):
         if obj.thumbnail_url:
             return obj.thumbnail_url
         return None
+
+class DadosCampoSerializer(serializers.ModelSerializer):
+    campo = serializers.CharField(source='campo', read_only=True)
+    exemplo = serializers.CharField(source='exemplo', read_only=True)
+    data = serializers.DateTimeField()

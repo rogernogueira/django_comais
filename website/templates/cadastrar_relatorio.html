@@ -1,78 +1,80 @@
 {% extends 'base2.html' %}
-    
-    {% block content %}
-        <div class ="icon-box">
-        <h4 class= "page-title">
-            Cadastrar Relatório no Projeto: <h6> {{ projeto.titulo}}</h6>
-        </h4>
-        <div/>
-        <br/>
 
-        {% if submitted %}
-                
-                <div>
-                <p>
-                    <a class="btn btn-primary" href={% url 'gerar-relatorio' id_relatorio %} >
-                        <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Gerar Relatório
-                    </a>
-                    <a class="btn btn-primary" href={% url 'gerencia-relatorios' %} >
-                        Voltar
-                    </a>
-                </p>
-               </div>
-        {%else%}
-        <div>
+{% block content %}
+<div class="icon-box">
+    <h4 class="page-title">
+        Cadastrar Relatório no Projeto: <h6>{{ projeto.titulo }}</h6>
+    </h4>
+</div>
+<br/>
 
-  <!-- Modal -->
+{% if submitted %}
+    <div>
+        <p>
+            <a class="btn btn-primary" href="{% url 'gerar-relatorio' id_relatorio %}">
+                <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Gerar Relatório
+            </a>
+            <a class="btn btn-primary" href="{% url 'gerencia-relatorios' %}">
+                Voltar
+            </a>
+        </p>
+    </div>
+{% else %}
+    <div>
+        <!-- Collapse Buttons -->
         <div class="relatorio">
             <p>
-            <a class="btn btn-default dropdown-toggle" data-bs-toggle="collapse" href="#ultimoRelatorio" role="button" aria-expanded="true" aria-controls="ultimoRelatorio">
-                Último relatório
-            </a>
-            <a class="btn btn-default dropdown-toggle" data-bs-toggle="collapse" href="#objProjeto" role="button" aria-expanded="true" aria-controls="objProjeto">
-                Objetivos no projeto
-            </a>
+                <a class="btn btn-default dropdown-toggle" data-bs-toggle="collapse" href="#ultimoRelatorio" role="button" aria-expanded="true" aria-controls="ultimoRelatorio">
+                    Último relatório
+                </a>
+                <a class="btn btn-default dropdown-toggle" data-bs-toggle="collapse" href="#objProjeto" role="button" aria-expanded="true" aria-controls="objProjeto">
+                    Objetivos no projeto
+                </a>
+                <button type="button" id="gerarBtn" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#gerarTextoModal">
+                    <i class="bi-magic"></i> Gerar Texto Automático
+                </button>
             </p>
-            <div class="collapse hide" id="objProjeto" style="">
-                <div class="card card-body border-dark " >
-                    <div class= "card-header">
-                        {{projeto.titulo}}
+            <div class="collapse hide" id="objProjeto">
+                <div class="card card-body border-dark">
+                    <div class="card-header">
+                        {{ projeto.titulo }}
                     </div>
                     <div class="row">
-                        <p class="card-text text-break">                           
-                            Objetivo: {{projeto.objetivo_proposto|safe}}
+                        <p class="card-text text-break">
+                            Objetivo: {{ projeto.objetivo_proposto|safe }}
                         </p>
                         <p>
-                            <a class="btn btn-default " data-bs-toggle="collapse" href="#objProjeto" role="button" aria-expanded="true" aria-controls="objProjeto">
+                            <a class="btn btn-default" data-bs-toggle="collapse" href="#objProjeto" role="button" aria-expanded="true" aria-controls="objProjeto">
                                 <button type="button" class="btn-close" aria-label="Close"></button>
                             </a>
                         </p>
-                        
                     </div>
                 </div>
             </div>
         </div>
         <div class="bd-example">
-            <div class="collapse hide" id="ultimoRelatorio" style="">
-                <div class="card card-body border-dark " >
-                    <div class= "card-header">
-                        Data : {{ultimo_relatorio.data_vigencia}}<br/>
-                        Última Parcela: {{ultimo_relatorio.parcela}}
+            <div class="collapse hide" id="ultimoRelatorio">
+                <div class="card card-body border-dark">
+                    <div class="card-header">
+                        Data: {{ ultimo_relatorio.data_vigencia }}<br/>
+                        Última Parcela: {{ ultimo_relatorio.parcela }}
                     </div>
-                    <div class="row">
-                        <p class="card-text text-break">                           
-                               Resultado: {{ultimo_relatorio.resultado|safe}} 
+                    <div class="row" >
+                        <p class="card-text text-break">
+                            Resultado:<div id = "resultado_ultimo_relatorio">
+                                                {{ ultimo_relatorio.resultado|safe }}
+                                       </div>
+                                       
                         </p>
                         {% if ultimo_relatorio.doc %}
                         <p>
-                            <a class="btn btn-default " href={{ultimo_relatorio.doc.url}}>
+                            <a class="btn btn-default" href="{{ ultimo_relatorio.doc.url }}">
                                 <i class="bi-file-earmark-word" role="img" aria-label="Baixar"></i> Baixar Relatório
                             </a>
-
                         </p>
-                        {%endif%}
+                        {% endif %}
                         <p>
-                            <a class="btn btn-default " data-bs-toggle="collapse" href="#ultimoRelatorio" role="button" aria-expanded="true" aria-controls="ultimoRelatorio">
+                            <a class="btn btn-default" data-bs-toggle="collapse" href="#ultimoRelatorio" role="button" aria-expanded="true" aria-controls="ultimoRelatorio">
                                 <button type="button" class="btn-close" aria-label="Close"></button>
                             </a>
                         </p>
@@ -80,16 +82,127 @@
                 </div>
             </div>
         </div>
-        <div class=" shadow p-4 mb-5 bg-body rounded">
-            <form method=POST enctype="multipart/form-data">
-                    {% csrf_token %} 
-                    {{ form.as_p }}
-                    <br/>
-                    <input type="submit" value="Cadastrar" class="btn btn-primary"/>
-                    <a class="btn btn-primary" href={% url 'gerencia-relatorios'%}>Volta</a>
-                </form>
-                
-            </div>
-    {% endif%}       
+        <div class="shadow p-4 mb-5 bg-body rounded">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                  {{form.as_p}}
 
-    {% endblock %}
+                <br/>
+                
+                <input type="submit" value="Cadastrar" class="btn btn-primary"/>
+                <a class="btn btn-primary" href="{% url 'gerencia-relatorios' %}">Voltar</a>
+            </form>
+        </div>
+
+        <!-- Modal para gerar texto -->
+        <div class="modal fade" id="gerarTextoModal" tabindex="-1" aria-labelledby="gerarTextoModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="gerarTextoModalLabel">Gerar Texto Automático</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="textoEntrada" class="form-label">Descreva as atividades:</label>
+                            <textarea class="form-control" id="textoEntrada" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="submitGerarTexto" class="btn btn-primary">Gerar Texto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+function obterMesAnoAnterior() {
+    const dataAtual = new Date();
+    let mes = dataAtual.getMonth(); // getMonth() retorna de 0 a 11
+    let ano = dataAtual.getFullYear();
+    if (mes === 0) { // Janeiro
+        mes = 12;
+        ano -= 1;
+    }
+    return `${String(mes).padStart(2, '0')}/${ano}`;
+}
+console.log('Script de geracao')
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('submitGerarTexto');
+    if (!btn) {
+        console.error('Botão submitGerarTexto não encontrado!');
+        return;
+    }
+    btn.addEventListener('click', async function() {
+        const texto = document.getElementById('textoEntrada').value;
+    
+        const mesAno = obterMesAnoAnterior(); // Obtém o mês e ano atual no formato "MM/AAAA"
+        const divConteudo = document.getElementById('resultado_ultimo_relatorio');
+
+// Pega todos os parágrafos dentro dessa <div>
+const paragrafos = divConteudo.querySelectorAll('p');
+
+// Concatena os textos dos parágrafos
+let textoCompleto = '';
+paragrafos.forEach(p => {
+  textoCompleto += p.textContent.trim() + ' ';
+});
+const exemplo = textoCompleto.trim() || 'Foram realizadas aulas de aprendizado de máquina com alunos do , combinando atividades presenciais e remotas.'; // Se não houver parágrafos, usa um texto padrão
+        console.log(
+            `Texto: ${texto}, Exemplo: ${exemplo}, Mês/Ano: ${mesAno}`
+        )
+        
+
+        if (!texto.trim()) {
+            alert('Por favor, descreva as atividades realizadas');
+            return;
+        }
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Gerando...';
+        try {
+            const response = await fetch('/api/gera_texto', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    exemplo: exemplo,
+                    data: mesAno,
+                    texto: texto
+                })
+            });
+            if (!response.ok) throw new Error('Erro ao gerar texto');
+            const data = await response.json();
+            if (data.texto_gerado) {
+                // TinyMCE usa um <body> dentro do iframe do editor
+                const iframe = document.querySelector('iframe.tox-edit-area__iframe');
+                if (iframe && iframe.contentDocument && iframe.contentDocument.body) {
+                    iframe.contentDocument.body.innerHTML = `<p>${data.texto_gerado}</p>`;
+                } else {
+                    alert('Editor de resultado não encontrado.');
+                }
+             
+                const modalEl = document.getElementById('gerarTextoModal');
+                if (modalEl) {
+                    const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                    modalInstance.hide();
+                    document.getElementById('gerarBtn').focus();
+                }
+            }
+        } catch (error) {
+            alert('Ocorreu um erro ao gerar o texto');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    });
+});
+</script>
+{% endblock %}
