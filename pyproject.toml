@@ -5,5 +5,28 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "agno>=1.5.8",
     "django>=5.2.2",
+    "django-cors-headers>=4.7.0",
+    "django-tinymce>=4.1.0",
+    "djangorestframework>=3.16.0",
+    "docxtpl>=0.20.0",
+    "html2markdown>=0.1.7",
+    "markdown>=3.8",
+    "openai>=1.84.0",
+    "pillow>=11.2.1",
+    "pydantic>=2.11.5",
+    "python-dotenv>=1.1.0",
+]
+[tool.taskipy.tasks]
+gitadd = "git add ."
+gitcommit = "git commit -m 'update'"
+gitpush = "git push origin main"
+deploy = "ssh root@192.168. 'cd /caminho/do/repositorio && git pull'"
+pushdeploy = "task gitadd && task gitcommit && task gitpush && task deploy"
+psh = "task gitadd && task gitcommit && task gitpush "
+
+[dependency-groups]
+dev = [
+    "taskipy>=1.14.1",
 ]
