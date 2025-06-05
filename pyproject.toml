@@ -22,8 +22,9 @@ dependencies = [
 gitadd = "git add ."
 gitcommit = "git commit -m 'update'"
 gitpush = "git push origin main"
-deploy = "ssh root@192.168. 'cd /caminho/do/repositorio && git pull'"
+deploy = "ssh comais@192.168.105.13 bash -c '\"cd /app/django_comais &&   git pull\"'"
 pushdeploy = "task gitadd && task gitcommit && task gitpush && task deploy"
+
 psh = "task gitadd && task gitcommit && task gitpush "
 
 [dependency-groups]
