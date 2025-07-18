@@ -1,0 +1,23 @@
+{% extends 'base2.html'%}
+{% block content %}
+    <h4 class= "page-title">Editar - {{tipo_documento.nome}} </h4>
+    <br/>
+    <div class="shadow p-4 mb-5 bg-body rounded">
+    <form method=POST enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+            <div class="card h-100 p-4">
+                {% if tipo_documento.template %}
+                Arquivo:<a href={{tipo_documento.template.url }}> {{tipo_documento.template.url }}<a/>
+                {% else %}
+                <p>Nenhum arquivo encontrado.</p>
+                {% endif %}
+            </div>
+        </div>
+        <input type="submit" value="Salvar" class="btn btn-secondary">
+    </form>
+    </div>
+
+
+{% endblock  %}

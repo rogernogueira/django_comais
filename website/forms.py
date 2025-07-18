@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.urls import reverse
 from .models import Contato, Ocorrencia, Projeto, Usuario, Servico,\
     Historico, Colaborador, Publicacao, Relatorio, ProjetoRelatorio, \
-    RelatorioFinal, Curso, TermoOutorga
+    RelatorioFinal, Curso, TermoOutorga, DocumentosColaborador, TipoDocumento
 # create a form for the model Contato
 
 class CursoForm(ModelForm):
@@ -55,7 +55,7 @@ class ContatoForm(ModelForm):
 class ColaboradorForm(ModelForm):
     class Meta:
         model = Colaborador
-        fields = ('name', 'url_latters', 'funcao', 'url_twitter', 'url_facebook','url_instagram','url_linkedin','foto',)
+        fields = ('name', 'url_latters', 'funcao', 'url_twitter', 'url_facebook','url_instagram','url_linkedin','matricula','cpf', 'foto',)
         labels = {
                   'name':'Nome',
                   'url_latters':'URL do latters',
@@ -64,6 +64,8 @@ class ColaboradorForm(ModelForm):
                   'url_facebook':'URL facebook',
                   'url_instagram':'URL Instagram',
                   'url_linkedin':'URL linkedin',
+                  'matricula':'Matrícula',
+                  'cpf':'CPF',
                   'foto':'Foto',
                   }
         widgets = {
@@ -75,6 +77,8 @@ class ColaboradorForm(ModelForm):
             'url_facebook':forms.TextInput(attrs={'class': 'form-control'}),
             'url_instagram':forms.TextInput(attrs={'class': 'form-control'}),
             'url_linkedin':forms.TextInput(attrs={'class': 'form-control'}),
+            'matricula':forms.TextInput(attrs={'class': 'form-control'}),
+            'cpf':forms.TextInput(attrs={'class': 'form-control'}),
             'foto':forms.FileInput( attrs={'class': 'form-control'})
             }
            
@@ -108,6 +112,7 @@ class OcorrenciaForm(ModelForm):
             'solicitante':forms.Select(attrs={'class': 'form-select'}),
             'descricao':forms.Textarea(attrs={'class': 'form-control'}),
                }
+
 class PublicacaoForm(ModelForm):
     class Meta:
         model = Publicacao
@@ -276,6 +281,36 @@ class RelatorioFinalForm(ModelForm):
             errors.append(message)
  
 
+class DocumentosColaboradorForm(ModelForm):
+    class Meta:
+        model = DocumentosColaborador
+        fields = ('tipo_documento', 'descricao', 'arquivo')
+        labels = {
+            'tipo_documento': 'Tipo de Documento',
+            'arquivo': 'Documento',
+            'descricao': 'Descrição'
+        }
+        widgets = {
+            'tipo_documento': forms.Select(attrs={'class': 'form-select'}),
+            'arquivo': forms.FileInput(attrs={'class': 'form-control'}),
+            'descricao': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
+
+class TipoDocumentoForm(ModelForm):
+    class Meta:
+        model = TipoDocumento
+        fields = ('nome','descricao', 'obrigatorio', 'ativo', 'declaracao', 'template')
+        labels = {
+            'nome': 'Tipo de Documento'
+        }
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'descricao': forms.TextInput(attrs={'class': 'form-control'}),
+            'obrigatorio': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'ativo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'declaracao': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'template': forms.FileInput(attrs={'class': 'form-control'})
+        }
 class ProjetoRelatorioForm(ModelForm):
 
     

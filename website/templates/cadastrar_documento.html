@@ -1,0 +1,77 @@
+
+{% extends 'base2.html' %}
+  
+{% block content %}
+        <h4 class= "page-title">
+            Cadastrar Documento
+        </h4>
+        <br/>
+        <div class=" shadow p-4 mb-5 bg-body rounded">
+            <form method=POST enctype="multipart/form-data">
+                    {% csrf_token %} 
+                    {{form.as_p}}
+                    <div id="gerar-documento-container" style="display: none; margin-top: 10px; margin-bottom: 10px;">
+                        <button type="button" id="gerar-documento-btn" class="btn btn-success">Baixar Modelo</button>
+                    </div>
+                    <input type="submit" value="Salvar" class="btn btn-primary">
+                    <a class="btn btn-primary" href={% url 'gerencia_documentos'%}>Volta</a>
+                </form>
+        </div>    
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const tipoDocumentoSelect = document.querySelector('select[name="tipo_documento"]');
+                const gerarDocumentoContainer = document.getElementById('gerar-documento-container');
+                
+                // Verificar se já tem um tipo selecionado (edição)
+                if (tipoDocumentoSelect.value) {
+                    checkTipoDocumento(tipoDocumentoSelect.value);
+                }
+
+                tipoDocumentoSelect.addEventListener('change', function() {
+                    checkTipoDocumento(this.value);
+                });
+
+                function checkTipoDocumento(tipoId) {
+                    fetch(`/api/tipo-documento/${tipoId}/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.declaracao) {
+                                gerarDocumentoContainer.style.display = 'block';
+                            } else {
+                                gerarDocumentoContainer.style.display = 'none';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro ao verificar tipo de documento:', error);
+                        });
+                }
+
+                document.getElementById('gerar-documento-btn').addEventListener('click', function () {
+    const tipoId = tipoDocumentoSelect.value;
+
+    fetch(`/api/gerar_documento/${tipoId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Falha na requisição");
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `documento_${tipoId}.docx`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Erro ao baixar template:', error);
+            alert('Erro ao gerar documento');
+        });
+});
+            });
+        </script>
+    {% endblock %}

@@ -1,14 +1,16 @@
 from textwrap import dedent
 from calendar import month
-from multiprocessing import context
+from django.http import JsonResponse
 from urllib import response
 from django.db import close_old_connections
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect, FileResponse
 from .models import Ocorrencia, Contato, Projeto, Relatorio, TipoProjeto, Colaborador,Publicacao,\
-Relatorio, ProjetoRelatorio , RelatorioFinal, Templates, Curso, Imagem, TermoOutorga
+Relatorio, ProjetoRelatorio , RelatorioFinal, Templates, Curso, Imagem, TermoOutorga,\
+DocumentosColaborador, TipoDocumento
 from .forms import ContatoForm, OcorrenciaForm, ColaboradorForm, PublicacaoForm,\
-ProjetoForm, RelatorioForm, ProjetoRelatorioForm, RelatorioFinalForm, CursoForm, TermoOutorgaForm
+ProjetoForm, RelatorioForm, ProjetoRelatorioForm, RelatorioFinalForm, CursoForm, \
+TermoOutorgaForm, DocumentosColaboradorForm, TipoDocumentoForm
 from django.core.paginator import Paginator
 from django.db.models import Max, BaseConstraint
 from django.contrib.auth.decorators import login_required
@@ -612,6 +614,26 @@ def cadastrar_projeto_relatorio(request):
             })
     return render(request,'cadastrar_projeto_relatorio.html', {'form':form, 'submitted':submitted })
 
+
+@login_required
+def cadastrar_documento(request):
+    submitted = False
+    if request.method == 'POST':
+        form = DocumentosColaboradorForm(request.POST, request.FILES)
+        form.instance.user = request.user
+        if form.is_valid():
+            documento = form.save(commit=False)
+            documento.user = request.user
+            documento.save()
+            messages.success(request, 'Documento cadastrado com sucesso!')
+            return HttpResponseRedirect('/gerencia_documentos?submitted=True')
+    else:
+        form = DocumentosColaboradorForm()
+        if 'submitted' in request.GET:
+            submitted = True 
+       
+    return render(request,'cadastrar_documento.html', {'form':form, 'submitted':submitted })
+
 @login_required
 def deletar_projeto_relatorio(request, id_projeto_relatorio):
     if request.user == ProjetoRelatorio.objects.get(id=id_projeto_relatorio).user:
@@ -736,6 +758,77 @@ class ImagemViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(usuario=self.request.user)
 
+@login_required
+def cadastra_tipo_documentos(request):
+    if request.method == 'POST':
+        form = TipoDocumentoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tipo de documento cadastrado com sucesso!')
+            return HttpResponseRedirect('/gerencia_tipo_documentos')
+    else:
+        form = TipoDocumentoForm()
+    return render(request, 'cadastrar_tipo_documento.html', {'form': form})
+
+@login_required
+def deletar_tipo_documentos(request, id):
+    try:
+        tipo_documento = TipoDocumento.objects.get(id=id)
+        tipo_documento.delete()
+        messages.success(request, 'Tipo de documento excluído com sucesso!')
+    except TipoDocumento.DoesNotExist:
+            messages.error(request, 'Tipo de documento não encontrado.')
+    return HttpResponseRedirect('/gerencia_tipo_documentos')
+
+@login_required
+def editar_tipo_documento(request, id):
+    try:
+        tipo_documento = TipoDocumento.objects.get(id=id)
+    except TipoDocumento.DoesNotExist:
+        messages.error(request, 'Tipo de documento não encontrado.')
+        return HttpResponseRedirect('/gerencia_tipo_documentos')
+
+    if request.method == 'POST':
+        form = TipoDocumentoForm(request.POST, request.FILES, instance=tipo_documento)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tipo de documento atualizado com sucesso!')
+            return HttpResponseRedirect('/gerencia_tipo_documentos')
+    else:
+        form = TipoDocumentoForm(instance=tipo_documento)
+
+    return render(request, 'editar_tipo_documento.html', {'form': form, 'tipo_documento': tipo_documento})
+
+    
+@login_required
+def gerencia_tipo_documentos(request):
+    tipos_documentos = TipoDocumento.objects.all()
+    todos_tipos = TipoDocumento.objects.all()
+    p = Paginator(tipos_documentos, 4)
+    page = request.GET.get('page')
+    tipos_documentos = p.get_page(page)
+    return render(request, 'gerencia_tipo_documentos.html', {'tipos_documentos': tipos_documentos, 'todos_tipos': todos_tipos})
+
+
+@login_required
+def gerencia_documentos(request):
+    # Obter todos os tipos de documentos existentes para o usuário ANTES da paginação
+    tipos_documentos = TipoDocumento.objects.all()
+    
+    # Paginar os documentos
+    documentos = DocumentosColaborador.objects.filter(user=request.user).order_by('-post_date')
+    
+    ids_cadastrados = [doc.tipo_documento.id for doc in documentos]
+    p = Paginator(documentos, 4)
+    page = request.GET.get('page')
+    documentos = p.get_page(page)
+    
+    return render(request, 'gerencia_documentos.html', {
+        'documentos': documentos,
+        'tipos_documentos': tipos_documentos,
+        'ids_cadastrados': ids_cadastrados ,
+    })
+
 class GeraCampusView(APIView):
     def post(self, request):
         # Verificar se o texto foi enviado
@@ -778,3 +871,58 @@ class GeraCampusView(APIView):
                 {'error': f'Erro ao processar o texto: {str(e)}'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+def tipo_documento(request, id):
+    print(id)
+    tipo_documento = TipoDocumento.objects.get(id=id)
+    return JsonResponse({
+        'id': tipo_documento.id,
+        'nome': tipo_documento.nome,
+        'declaracao': tipo_documento.declaracao, 
+        'template': tipo_documento.template.url if tipo_documento.template else None,
+    })
+
+@login_required
+def gerar_documento(request, id):
+    colaborador = Colaborador.objects.get(user=request.user)  # Garante que o usuário é um colaborador
+
+    try:
+        tipo_documento = TipoDocumento.objects.get(id=id)
+    except TipoDocumento.DoesNotExist:
+        messages.error(request, 'Tipo de documento não encontrado!')
+        return HttpResponseRedirect('/gerencia_tipo_documentos')
+
+    if not tipo_documento.template:
+        messages.error(request, 'Template não encontrado!')
+        return HttpResponseRedirect('/gerencia_tipo_documentos')
+
+    # Carrega o template DOCX
+    doc = DocxTemplate(tipo_documento.template)
+
+    # Preenche o contexto com os dados necessários
+    hoje = datetime.datetime.now()
+    context = {
+        'nome': colaborador.name,
+        'data': hoje.strftime('%d/%m/%Y'),
+        'matricula': colaborador.matricula,
+        'cpf': colaborador.cpf,
+        'dia': hoje.strftime('%d'),
+        'mes': month_name[str(hoje.month)],
+        'ano': hoje.strftime('%Y'),
+    }
+
+    # Renderiza o template
+    doc.render(context)
+
+    # Define caminho de salvamento
+    dir_docs = os.path.join(settings.MEDIA_ROOT, 'docs')
+    os.makedirs(dir_docs, exist_ok=True)  # Garante que o diretório existe
+
+    file_name = f"{tipo_documento.nome.replace(' ', '_')}_{request.user.id}.docx"
+    file_path = os.path.join(dir_docs, file_name)
+    
+    # Salva o arquivo
+    doc.save(file_path)
+
+    # Retorna o arquivo gerado para download
+    return FileResponse(open(file_path, 'rb'), as_attachment=True, filename=file_name)

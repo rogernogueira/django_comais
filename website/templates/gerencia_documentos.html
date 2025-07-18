@@ -1,0 +1,134 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-3">
+    <div class="card shadow p-3 mb-5 bg-body rounded">
+      <div class="card-header">
+        <h5>Checklist de Documentos</h5>
+      </div>
+      <div class="card-body">
+        <style>
+          .form-check-input:checked:disabled {
+            background-color: #6c757d;
+            border-color: #6c757d;
+          }
+          .form-check-label.disabled {
+            color: #6c757d;
+          }
+        </style>
+        
+
+
+{% for tipo in tipos_documentos %}
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" id="{{ tipo.nome|slugify }}" 
+           {% if tipo.id in ids_cadastrados %}checked disabled{% endif %}>
+    
+    <label class="form-check-label {% if tipo.id in ids_cadastrados %}disabled{% endif %}" 
+           for="{{ tipo.nome|slugify }}">
+      <i class="bi bi-{% if tipo.id in ids_cadastrados %}check-circle-fill text-success{% else %}circle{% endif %}"></i> 
+      {{ tipo.nome }}
+    </label>
+  </div>
+{% endfor %}
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Atualiza checkboxes quando um novo documento é adicionado
+            document.querySelector('form').addEventListener('submit', function() {
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+            });
+        });
+        </script>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+        <ol>
+          <li><a href="{% url 'home' %}">Início</a></li>
+          <li>Gerenciar Documentos</li>
+        </ol>
+        <h2>Gerenciar Documentos</h2>
+      </div>
+    </section>
+
+    <div class="container shadow p-4 mb-5 bg-body rounded">
+      <h4>Documentos Cadastrados</h4>
+      
+      {% for documento in documentos %}
+      <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span class="badge bg-secondary">{{ documento.tipo_documento }}</span>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              {% if documento.arquivo %}
+              <a href="{{ documento.arquivo.url }}" class="btn btn-outline-success btn-sm">
+                <i class="bi bi-download"></i> Baixar
+              </a>
+              {% endif %}
+              <small class="text-muted">Postado em: {{ documento.post_date|date:"d/m/Y H:i" }}</small>
+            </div>
+            <div>
+              <a href="#" class="btn btn-outline-primary btn-sm me-2">Editar</a>
+              <a href="#" onclick="return confirm('Tem certeza que deseja excluir este documento?');" 
+                 class="btn btn-outline-danger btn-sm">Excluir</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- Paginação -->
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          {% if documentos.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1" aria-label="First">
+                <span aria-hidden="true">&laquo;&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ documentos.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          {% endif %}
+
+          {% for num in documentos.paginator.page_range %}
+            {% if documentos.number == num %}
+              <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% elif num > documentos.number|add:'-3' and num < documentos.number|add:'3' %}
+              <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if documentos.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ documentos.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ documentos.paginator.num_pages }}" aria-label="Last">
+                <span aria-hidden="true">&raquo;&raquo;</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+          <a href="{% url 'cadastrar_documento' %}" class="btn btn-primary me-md-2">Novo Documento</a>
+          <a href="{% url 'home' %}" class="btn btn-outline-secondary">Voltar</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -98,6 +98,19 @@
                     <li><a class="dropdown-item text-dark" href="{% url 'gerencia-publicacoes' %}">{% trans "Publicações" %}</a></li> 
                     <li><a class="dropdown-item text-dark" href="{% url 'gerencia-projetos' %}">{% trans "Projetos" %}</a></li>
                     <li><a class="dropdown-item text-dark" href="{% url 'gerencia-relatorios' %}">{% trans "Relatórios" %}</a></li>
+                    <li>
+                      <div class="dropdown">
+                        <a class="dropdown-item dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          {% trans "Documentos" %}
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item text-dark" href="{% url 'gerencia_documentos' %}">{% trans "Meu Documentos" %}</a></li>
+                          <li><a class="dropdown-item text-dark" href="{% url 'gerencia_tipo_documentos' %}">{% trans "Tipos de Documentos" %}</a></li>
+                          
+                        </ul>
+                      </div>
+                    </li>
+
                   </ul>
                 </div>
               </div>

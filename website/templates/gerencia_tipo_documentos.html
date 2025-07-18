@@ -1,0 +1,114 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-3">
+    <div class="card shadow p-3 mb-5 bg-body rounded">
+      <div class="card-header">
+        <h5>Tipos de Documentos</h5>
+      </div>
+      <div class="card-body">
+        <style>
+          .form-check-input:checked:disabled {
+            background-color: #6c757d;
+            border-color: #6c757d;
+          }
+          .form-check-label.disabled {
+            color: #6c757d;
+          }
+        </style>
+        
+        {% for tipo in todos_tipos %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="tipo_{{ tipo.id }}" checked disabled>
+          <label class="form-check-label disabled" for="tipo_{{ tipo.id }}">
+            <i class="bi bi-check-circle-fill text-success"></i> {{ tipo.nome }}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+        <ol>
+          <li><a href="{% url 'home' %}">Início</a></li>
+          <li>Gerenciar Tipos de Documentos</li>
+        </ol>
+        <h2>Gerenciar Tipos de Documentos</h2>
+      </div>
+    </section>
+
+    <div class="container shadow p-4 mb-5 bg-body rounded">
+      <h4>Tipos Cadastrados</h4>
+      
+      {% for tipo in tipos_documentos %}
+      <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span class="badge bg-secondary">{{ tipo.nome }}</span>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Descrição: {{ tipo.descricao|safe }}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <small class="text-muted">Criado em: {{ tipo.criado_em|date:"d/m/Y H:i" }}</small>
+            </div>
+            <div>
+              <a href="{% url 'editar_tipo_documento' tipo.id %}" class="btn btn-outline-primary btn-sm me-2">Editar</a>
+              <a href="{% url 'deletar_tipo_documentos' tipo.id %}" 
+                 onclick="return confirm('Tem certeza que deseja excluir este tipo de documento?');" 
+                 class="btn btn-outline-danger btn-sm">Excluir</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- Paginação -->
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          {% if tipos_documentos.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1" aria-label="First">
+                <span aria-hidden="true">&laquo;&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ tipos_documentos.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          {% endif %}
+
+          {% for num in tipos_documentos.paginator.page_range %}
+            {% if tipos_documentos.number == num %}
+              <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% elif num > tipos_documentos.number|add:'-3' and num < tipos_documentos.number|add:'3' %}
+              <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if tipos_documentos.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ tipos_documentos.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ tipos_documentos.paginator.num_pages }}" aria-label="Last">
+                <span aria-hidden="true">&raquo;&raquo;</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+          <a href="{% url 'cadastra_tipo_documentos' %}" class="btn btn-primary me-md-2">Novo Tipo</a>
+          <a href="{% url 'home' %}" class="btn btn-outline-secondary">Voltar</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

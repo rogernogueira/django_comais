@@ -64,6 +64,16 @@ urlpatterns = [
     path('playground/gd', views.gd, name='gd'),
     path('instrucoes', views.instrucoes, name='instrucoes'),
     path('cadastrar_termo', views.cadastrar_termo, name='cadastrar-termo'),    
+    path('cadastrar_documento', views.cadastrar_documento, name='cadastrar_documento'),    
+    path('gerencia_documentos', views.gerencia_documentos, name='gerencia_documentos'), 
+    path('cadastra_tipo_documentos', views.cadastra_tipo_documentos, name='cadastra_tipo_documentos'), 
+    path('editar_tipo_documento/<int:id>', views.editar_tipo_documento, name='editar_tipo_documento'),
+    path('gerencia_tipo_documentos', views.gerencia_tipo_documentos, name='gerencia_tipo_documentos'), 
+    path('tipo_documentos/deletar/<int:id>', views.deletar_tipo_documentos, name='deletar_tipo_documentos'), 
+    path('api/gerar_documento/<int:id>', views.gerar_documento, name='gerar_documento'), 
+
     path('', include(router.urls)),
-    path('api/gera_texto', views.GeraCampusView.as_view(), name='gera-texto')
+    path('api/gera_texto', views.GeraCampusView.as_view(), name='gera-texto'),
+    path('api/tipo-documento/<int:id>/', views.tipo_documento, name='tipo-documento')
+
 ]

@@ -66,6 +66,15 @@ STATUS_CHOICES = [('Aguardando', 'Aguardando'),
                   ('Concluído', 'Concluído'),
                   ('Cancelado', 'Cancelado'),
                   ]
+class TipoDocumento(models.Model):
+    nome = models.CharField(max_length=100, unique=True)
+    descricao = models.TextField(blank=True)
+    obrigatorio = models.BooleanField(default=True)
+    ativo = models.BooleanField(default=True)
+    declaracao = models.BooleanField(default=False,blank=True, null=True, help_text="Indica se o tipo de documento é uma declaração ou plano de trabalho")
+    template = models.FileField(upload_to='templates/', blank=True, null=True, help_text="Template para o tipo de documento")
+    def __str__(self):
+        return self.nome
 class Servico(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
@@ -137,11 +146,23 @@ class Colaborador(models.Model):
     url_facebook = models.URLField('URL facebook',max_length=100, null=True, blank=True)
     url_instagram  = models.URLField('URL Instagram',max_length=100, null=True, blank=True)
     url_linkedin = models.URLField('URL linkedin',max_length=100, null=True, blank=True)
+    matricula = models.CharField('matricula',max_length=100, null=True, blank=True)
+    cpf = models.CharField('cpf',max_length=100, null=True, blank=True)
     foto = models.ImageField('foto', upload_to='images/', blank=True, null=True, default='images/default.png')
     post_date = models.DateTimeField('Data do Post',  default=django.utils.timezone.now)
     
     def __str__(self):
         return self.name
+class DocumentosColaborador(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    descricao = models.TextField('Descrição', blank=True, null=True)
+    arquivo = models.FileField(upload_to='documentos/', blank=True, null=True)
+    post_date = models.DateTimeField('Data do Post',  default=django.utils.timezone.now)
+    tipo_documento = models.ForeignKey(TipoDocumento, on_delete=models.PROTECT, verbose_name='Tipo de Documento')
+    
+    def __str__(self):
+        return f"Documento de {self.user.username} - {self.tipo_documento.nome}"
+    
 class Categoria_publicacao(models.Model):
     name = models.CharField(max_length=100)
  
@@ -435,33 +456,7 @@ class Imagem(models.Model):
     def __str__(self):
         return self.arquivo.name
 
-    @property
-    def url(self):
-        return default_storage.url(self.arquivo.name)
 
-    def delete(self, *args, **kwargs):
-        # Remove os arquivos físicos
-        print('Deletando arquivos...')
-        if self.arquivo:
-            file_path = self.arquivo.path
-            if default_storage.exists(file_path):
-                default_storage.delete(file_path)
-        if self.thumbnail:
-            thumb_path = self.thumbnail.path
-            if default_storage.exists(thumb_path):
-                default_storage.delete(thumb_path)
-        # Chama o método delete original
-        super().delete(*args, **kwargs)
-
-    @property
-    def thumbnail_url(self):
-        if self.arquivo:
-            url_thumb = self.arquivo.name.replace('imagens/', 'thumbnails/').replace('.', '_thumb.')
-            ext_type = url_thumb.split('.')[-1]
-            url_thumb = url_thumb.replace(ext_type, ext_type.lower())
-            return url_thumb
-        
-        return None
 
 @receiver(post_delete, sender=Imagem)
 def delete_imagem_files(sender, instance, **kwargs):
