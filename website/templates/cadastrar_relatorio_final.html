@@ -167,7 +167,7 @@ const exemplo = "01"
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Gerando...';
         const controller = new AbortController();
-        const timeout = 20000; // 10 segundos
+        const timeout = 80000; // 80 segundos
         const timeoutId = setTimeout(() => controller.abort(), timeout);
         try {
             const response = await fetch('/api/gera_texto', {
