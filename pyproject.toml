@@ -12,6 +12,7 @@ dependencies = [
     "djangorestframework>=3.16.0",
     "docxtpl>=0.20.0",
     "html2markdown>=0.1.7",
+    "ipdb>=0.13.13",
     "markdown>=3.8",
     "openai>=1.84.0",
     "pillow>=11.2.1",
@@ -25,7 +26,7 @@ gitpush = "git push origin main"
 deploy = "ssh comais@192.168.105.13 bash -c '\"cd /app/django_comais &&   git pull && sudo /usr/bin/systemctl restart apache2 \"'"
 pushd = "task gitadd && task gitcommit && task gitpush && task deploy"
 
-psh = "task gitadd && task gitcommit && task gitpush "
+psh = "task gitadd && task gitcommit && task gitpush"
 
 [dependency-groups]
 dev = [

@@ -21,9 +21,10 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.dateparse import parse_date
 import datetime
-from rest_framework import generics, permissions, viewsets, status
+from rest_framework import generics, permissions, viewsets, status, authentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
 import os
 from docxtpl import DocxTemplate, RichText
 import html2markdown
@@ -830,18 +831,23 @@ def gerencia_documentos(request):
     })
 
 class GeraCampusView(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
     def post(self, request):
         # Verificar se o texto foi enviado
         texto = request.data.get('texto')
         data = request.data.get('data')
         exemplo = request.data.get('exemplo')
-       
+        projeto_id = request.data.get('projeto')
         
-        if not texto:
-            return Response(
-                {'error': 'Nenhum texto enviado'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        if projeto_id:
+            relatorios = Relatorio.objects.filter(projeto=projeto_id).all()
+            resultados = []
+            texto = "Gere o resumo em texto corrido com os resultados dos relatórios de pesquisa, com base no contexto:"
+            for relatorio in relatorios:
+                resultados.append(relatorio.resultado)
+            texto = texto + '\n' + '\n'.join(resultados) if resultados else texto
+            exemplo = "O curso Exploração de Dados com Pandas, oferecido pela Universidade Federal do Tocantins, alcançou significativos resultados ao capacitar alunos do Mestrado e Doutorado em Governança e Transformação Digital em técnicas avançadas de manipulação e análise de dados usando a biblioteca Pandas do Python. O programa se concentrou em três objetivos principais: o desenvolvimento técnico no uso do Pandas para manipulação de dados, a realização de análises exploratórias para detectar padrões e tendências, e a preparação dos alunos para aplicar esses conhecimentos em análises mais complexas, como modelagem estatística e aprendizado de máquina."
+            data=''
 
         # Configurar o agente de IA
         agent_extract = Agent(
@@ -851,12 +857,14 @@ class GeraCampusView(APIView):
                                 
             Com base no exemplo: {exemplo}
             Siga as instruções: {texto}
+
             Gere um novo texto considerando:
            
             - Data do relatório: {data}
+            - retorne o texto em português, sem formatação adicional.
         
             """),
-            use_json_mode=True,
+            
         )
 
         try:
@@ -864,7 +872,7 @@ class GeraCampusView(APIView):
             resultado = agent_extract.run(texto)
             return Response({
                 'texto_gerado': resultado.content,
-                'status': 'sucesso'
+                'status': status.HTTP_200_OK,
             })
         except Exception as e:
             return Response(

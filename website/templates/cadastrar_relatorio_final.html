@@ -32,11 +32,14 @@
             <a class="btn btn-default dropdown-toggle" data-bs-toggle="collapse" href="#objProjeto" role="button" aria-expanded="true" aria-controls="objProjeto">
                 Objetivos no projeto
             </a>
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#gerarTextoModal">
+            Gerar Texto Automático
+        </button>
             </p>
             <div class="collapse hide" id="objProjeto" style="">
                 <div class="card card-body border-dark " >
-                    <div class= "card-header">
-                        {{projeto.titulo}}
+                    <div class= "card-header" id="cardProjeto">
+                        {{projeto.titulo}} - {{projeto.id}} 
                     </div>
                     <div class="row">
                         <p class="card-text text-break">                           
@@ -88,8 +91,120 @@
                     <input type="submit" value="Salvar" class="btn btn-primary"/>
                     <a class="btn btn-primary" href={% url 'gerencia-relatorios'%}>Volta</a>
                 </form>
-                
+<!-- Modal para gerar texto automático -->
+        
+
+        <!-- Modal -->
+<div class="modal fade" id="gerarTextoModal" tabindex="-1" aria-labelledby="gerarTextoModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="gerarTextoModalLabel">Gerar Texto Automático</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="textoEntrada" class="form-label">Descreva as atividades:</label>
+                            <textarea class="form-control" id="textoEntrada" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="submitGerarTexto" class="btn btn-primary">Gerar Texto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
             </div>
     {% endif%}       
+<script>
+   
+function obterMesAnoAnterior() {
+    const dataAtual = new Date();
+    let mes = dataAtual.getMonth(); // getMonth() retorna de 0 a 11
+    let ano = dataAtual.getFullYear();
+    if (mes === 0) { // Janeiro
+        mes = 12;
+        ano -= 1;
+    }
+    return `${String(mes).padStart(2, '0')}/${ano}`;
+}
+console.log('Script de geracao')
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Script de geracao carregado');
+    const btn = document.getElementById('submitGerarTexto');
+    if (!btn) {
+        console.error('Botão submitGerarTexto não encontrado!');
+        return;
+    }
+    btn.addEventListener('click', async function() {
+        const texto = document.getElementById('textoEntrada').value;
+        const projeto_id = {{projeto.id}}; // Obtém o ID do projeto
+        const mesAno = obterMesAnoAnterior(); // Obtém o mês e ano atual no formato "MM/AAAA"
+        const divConteudo = document.getElementById('ultimoRelatorio');
+        console.log("projeto_id", projeto_id)
 
+// Pega todos os parágrafos dentro dessa <div>
+const paragrafos = divConteudo.querySelectorAll('p');
+
+// Concatena os textos dos parágrafos
+let textoCompleto = '';
+paragrafos.forEach(p => {
+  textoCompleto += p.textContent.trim() + ' ';
+});
+const exemplo = "01"
+        console.log(
+            `Texto: ${texto}, Exemplo: ${exemplo}, Mês/Ano: ${mesAno}`
+        )
+        
+
+        if (!texto.trim()) {
+            alert('Por favor, descreva as atividades realizadas');
+            return;
+        }
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Gerando...';
+        try {
+            const response = await fetch('/api/gera_texto', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    exemplo: exemplo,
+                    data: mesAno,
+                    texto: texto,
+                    projeto: projeto_id,
+                })
+            });
+            if (!response.ok) throw new Error('Erro ao gerar texto');
+            const data = await response.json();
+            if (data.texto_gerado) {
+                // TinyMCE usa um <body> dentro do iframe do editor
+                const iframe = document.querySelector('iframe.tox-edit-area__iframe');
+                if (iframe && iframe.contentDocument && iframe.contentDocument.body) {
+                    iframe.contentDocument.body.innerHTML = `<p>${data.texto_gerado}</p>`;
+                } else {
+                    alert('Editor de resultado não encontrado.');
+                }
+             
+                const modalEl = document.getElementById('gerarTextoModal');
+                if (modalEl) {
+                    const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                    modalInstance.hide();
+                    document.getElementById('gerarBtn').focus();
+                }
+            }
+        } catch (error) {
+            <!-- alert('Ocorreu um erro ao gerar o texto'); -->
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    });
+});
+</script>
     {% endblock %}
