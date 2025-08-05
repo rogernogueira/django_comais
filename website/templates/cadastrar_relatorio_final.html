@@ -166,6 +166,9 @@ const exemplo = "01"
         const originalText = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Gerando...';
+        const controller = new AbortController();
+        const timeout = 20000; // 10 segundos
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
         try {
             const response = await fetch('/api/gera_texto', {
                 method: 'POST',
@@ -179,7 +182,9 @@ const exemplo = "01"
                     texto: texto,
                     projeto: projeto_id,
                 })
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
             if (!response.ok) throw new Error('Erro ao gerar texto');
             const data = await response.json();
             if (data.texto_gerado) {
@@ -199,7 +204,11 @@ const exemplo = "01"
                 }
             }
         } catch (error) {
-         alert('Ocorreu um erro ao gerar o texto'); 
+         if (error.name === 'AbortError') {
+        alert('A requisição demorou muito e foi cancelada (timeout).');
+    } else {
+        alert('Ocorreu um erro ao gerar o texto: ' + error.message);
+    }
         } finally {
             btn.disabled = false;
             btn.innerHTML = originalText;
