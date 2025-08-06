@@ -838,35 +838,33 @@ class GeraCampusView(APIView):
         data = request.data.get('data')
         exemplo = request.data.get('exemplo')
         projeto_id = request.data.get('projeto')
+        instrucoes = dedent(f"""\                    
+            Com base no exemplo: {exemplo}
+            Siga as instruções: {texto}
+            Gere um novo texto considerando:
+            - Data do relatório: {data}
+            - retorne o texto em português, sem formatação adicional.
         
+            """)
         if projeto_id:
             relatorios = Relatorio.objects.filter(projeto=projeto_id).all()
             resultados = []
-            texto = "Gere o resumo em texto corrido com os resultados dos relatórios de pesquisa, com base no contexto:"
             for relatorio in relatorios:
                 resultados.append(relatorio.resultado[:100])
-            texto = texto + '\n' + '\n'.join(resultados) if resultados else texto
-            exemplo = "O curso Exploração de Dados com Pandas, oferecido pela Universidade Federal do Tocantins, alcançou significativos resultados ao capacitar alunos do Mestrado e Doutorado em Governança e Transformação Digital em técnicas avançadas de manipulação e análise de dados usando a biblioteca Pandas do Python. O programa se concentrou em três objetivos principais: o desenvolvimento técnico no uso do Pandas para manipulação de dados, a realização de análises exploratórias para detectar padrões e tendências, e a preparação dos alunos para aplicar esses conhecimentos em análises mais complexas, como modelagem estatística e aprendizado de máquina."
-            data=''
-
+            texto_relatorios =  + '\n' + '\n'.join(resultados) if resultados else texto
+            texto =  + f" Considerando {texto}, Gere o resumo , com base no contexto: {texto_relatorios}"
+            exemplo = ""
+            data=""
+            instrucoes = dedent(f"""\            
+                Siga as instruções: {texto}        
+                - retorne o texto em português, sem formatação adicional.
+            """)
         # Configurar o agente de IA
         agent_extract = Agent(
             model=DeepSeek(),
             description="Você é um assistente de IA que gera textos para projetos de pesquisa e extensão.",
-            instructions=dedent(f"""\
-                                
-            Com base no exemplo: {exemplo}
-            Siga as instruções: {texto}
-
-            Gere um novo texto considerando:
-           
-            - Data do relatório: {data}
-            - retorne o texto em português, sem formatação adicional.
-        
-            """),
-            
+            instructions=instrucoes,
         )
-
         try:
             # Processar o texto com o agente
             resultado = agent_extract.run(texto)
