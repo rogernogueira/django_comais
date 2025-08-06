@@ -844,7 +844,7 @@ class GeraCampusView(APIView):
             resultados = []
             texto = "Gere o resumo em texto corrido com os resultados dos relatórios de pesquisa, com base no contexto:"
             for relatorio in relatorios:
-                resultados.append(relatorio.resultado)
+                resultados.append(relatorio.resultado[:100])
             texto = texto + '\n' + '\n'.join(resultados) if resultados else texto
             exemplo = "O curso Exploração de Dados com Pandas, oferecido pela Universidade Federal do Tocantins, alcançou significativos resultados ao capacitar alunos do Mestrado e Doutorado em Governança e Transformação Digital em técnicas avançadas de manipulação e análise de dados usando a biblioteca Pandas do Python. O programa se concentrou em três objetivos principais: o desenvolvimento técnico no uso do Pandas para manipulação de dados, a realização de análises exploratórias para detectar padrões e tendências, e a preparação dos alunos para aplicar esses conhecimentos em análises mais complexas, como modelagem estatística e aprendizado de máquina."
             data=''
