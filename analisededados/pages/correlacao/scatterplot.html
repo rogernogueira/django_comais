@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scatterplot (Dispersão) - Diagnóstico Visual</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#ef4444',
+                        'corr-red': '#ef4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .scatter-point {
+            transition: all 0.3s ease;
+        }
+
+        .scatter-point:hover {
+            r: 6;
+            fill: #ef4444;
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../correlacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Scatterplot (Gráfico de Dispersão)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">O primeiro passo obrigatório em qualquer análise de
+            correlação</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- O que procurar -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que procurar?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Um scatterplot plota pares de valores (X, Y) como pontos no plano cartesiano. Ele revela
+                        instantaneamente:
+                    </p>
+                    <ul class="text-sm text-text-muted space-y-2 list-disc list-inside">
+                        <li><strong>Forma:</strong> Linear, Curvilínea ou Sem Padrão?</li>
+                        <li><strong>Direção:</strong> Positiva (sobe) ou Negativa (desce)?</li>
+                        <li><strong>Força:</strong> Pontos agrupados (forte) ou dispersos (fraca)?</li>
+                        <li><strong>Outliers:</strong> Pontos isolados que fogem do padrão.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Tipos de Relação</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-bg-surface p-3 rounded text-center">
+                            <!-- SVG Linear Positiva -->
+                            <svg viewBox="0 0 100 80"
+                                class="w-full h-20 bg-bg-base rounded mb-2 border border-bg-muted">
+                                <line x1="10" y1="70" x2="90" y2="70" stroke="#475569" stroke-width="1" />
+                                <line x1="10" y1="70" x2="10" y2="10" stroke="#475569" stroke-width="1" />
+                                <!-- Pontos -->
+                                <circle cx="20" cy="60" r="2" fill="#38bdf8" />
+                                <circle cx="30" cy="55" r="2" fill="#38bdf8" />
+                                <circle cx="40" cy="45" r="2" fill="#38bdf8" />
+                                <circle cx="50" cy="40" r="2" fill="#38bdf8" />
+                                <circle cx="60" cy="30" r="2" fill="#38bdf8" />
+                                <circle cx="70" cy="25" r="2" fill="#38bdf8" />
+                                <circle cx="80" cy="15" r="2" fill="#38bdf8" />
+                                <!-- Linha de tendência -->
+                                <line x1="15" y1="65" x2="85" y2="10" stroke="#ef4444" stroke-width="1"
+                                    stroke-dasharray="2,2" opacity="0.5" />
+                            </svg>
+                            <p class="text-sm font-bold text-white">Linear Positiva</p>
+                            <p class="text-xs text-text-muted">Pearson funciona bem</p>
+                        </div>
+                        <div class="bg-bg-surface p-3 rounded text-center">
+                            <!-- SVG Não Linear (Parábola) -->
+                            <svg viewBox="0 0 100 80"
+                                class="w-full h-20 bg-bg-base rounded mb-2 border border-bg-muted">
+                                <line x1="10" y1="70" x2="90" y2="70" stroke="#475569" stroke-width="1" />
+                                <line x1="10" y1="70" x2="10" y2="10" stroke="#475569" stroke-width="1" />
+                                <!-- Pontos em U -->
+                                <circle cx="20" cy="20" r="2" fill="#38bdf8" />
+                                <circle cx="30" cy="40" r="2" fill="#38bdf8" />
+                                <circle cx="40" cy="55" r="2" fill="#38bdf8" />
+                                <circle cx="50" cy="60" r="2" fill="#38bdf8" />
+                                <circle cx="60" cy="55" r="2" fill="#38bdf8" />
+                                <circle cx="70" cy="40" r="2" fill="#38bdf8" />
+                                <circle cx="80" cy="20" r="2" fill="#38bdf8" />
+                                <!-- Linha reta falha (Pearson veria r~0) -->
+                                <line x1="15" y1="40" x2="85" y2="40" stroke="#ef4444" stroke-width="1"
+                                    stroke-dasharray="2,2" opacity="0.5" />
+                            </svg>
+                            <p class="text-sm font-bold text-white">Não Linear</p>
+                            <p class="text-xs text-text-muted">Pearson FALHA aqui</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exemplo Interativo -->
+            <div class="space-y-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h3 class="text-lg text-white font-bold mb-4 text-center">Exemplo Interativo</h3>
+                    <!-- Simple SVG Scatterplot -->
+                    <svg viewBox="0 0 400 250" class="w-full h-64 bg-bg-base rounded border border-bg-muted">
+                        <!-- Eixos -->
+                        <line x1="40" y1="210" x2="360" y2="210" stroke="#94a3b8" stroke-width="2" />
+                        <line x1="40" y1="210" x2="40" y2="40" stroke="#94a3b8" stroke-width="2" />
+
+                        <!-- Pontos (Linear Positiva com Ruído) -->
+                        <circle cx="60" cy="190" r="4" fill="#38bdf8" class="scatter-point" />
+                        <circle cx="90" cy="170" r="4" fill="#38bdf8" class="scatter-point" />
+                        <circle cx="120" cy="160" r="4" fill="#38bdf8" class="scatter-point" />
+                        <circle cx="150" cy="130" r="4" fill="#38bdf8" class="scatter-point" />
+                        <circle cx="180" cy="120" r="4" fill="#38bdf8" class="scatter-point" />
+                        <circle cx="210" cy="100" r="4" fill="#38bdf8" class="scatter-point" />
+                        <circle cx="240" cy="80" r="4" fill="#38bdf8" class="scatter-point" />
+                        <circle cx="270" cy="70" r="4" fill="#38bdf8" class="scatter-point" />
+
+                        <!-- Outlier -->
+                        <circle cx="300" cy="180" r="4" fill="#ef4444" class="scatter-point">
+                            <title>Outlier! Este ponto pode distorcer a correlação.</title>
+                        </circle>
+                        <text x="310" y="180" fill="#ef4444" font-size="12">Outlier</text>
+                    </svg>
+                    <p class="text-xs text-text-muted text-center mt-2 italic">
+                        Passe o mouse sobre os pontos. Note o ponto vermelho (Outlier) que foge do padrão.
+                    </p>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Por que é crucial?</h4>
+                    <p class="text-sm text-text-secondary">
+                        O coeficiente de correlação (r) é apenas um número. Ele pode ser enganoso.
+                        <br>Um $r = 0$ não significa "sem relação", significa "sem relação <strong>linear</strong>".
+                        Pode haver uma curva perfeita (parábola) que o scatterplot revela imediatamente, mas o número
+                        esconde.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="heatmaps.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Heatmaps &rarr;
+            </a>
+            <a href="anscombe.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Anscombe's Quartet &rarr;
+            </a>
+            <a href="correlograms.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Correlograms &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identificar Outliers - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-red': '#ef4444',
+                        'primary': '#ef4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../regressao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Identificar Outliers</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Detectando pontos que distorcem seu modelo de
+            regressão.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito e Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é um Outlier?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Um outlier é uma observação que se desvia significativamente do padrão geral dos dados.
+                        Em regressão, outliers podem:
+                    </p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">•</span>
+                            <span class="text-text-secondary">Distorcer a linha de regressão</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">•</span>
+                            <span class="text-text-secondary">Inflar o erro padrão</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">•</span>
+                            <span class="text-text-secondary">Violar pressupostos do modelo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Tipos de Outliers</h3>
+                    <div class="space-y-3">
+                        <div class="bg-bg-surface p-3 rounded">
+                            <h4 class="text-white font-bold text-sm mb-1">Outlier em Y</h4>
+                            <p class="text-xs text-text-muted">Valor de Y muito diferente do esperado para aquele X.
+                                Alto resíduo.</p>
+                        </div>
+                        <div class="bg-bg-surface p-3 rounded">
+                            <h4 class="text-white font-bold text-sm mb-1">Outlier em X (Leverage)</h4>
+                            <p class="text-xs text-text-muted">Valor de X muito distante da média. Pode ter alta
+                                influência.</p>
+                        </div>
+                        <div class="bg-bg-surface p-3 rounded">
+                            <h4 class="text-primary font-bold text-sm mb-1">Ponto Influente</h4>
+                            <p class="text-xs text-text-muted">Combina alto leverage + alto resíduo. Muda
+                                significativamente a regressão.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Métodos de Detecção em Regressão -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Métodos de Detecção em Regressão</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-primary">
+                            <h4 class="text-primary font-bold">1. Resíduos Padronizados</h4>
+                            <p class="text-sm text-text-secondary mt-1 mb-2">
+                                Resíduos divididos pelo desvio padrão.
+                            </p>
+                            <div class="bg-primary/10 p-2 rounded text-xs">
+                                <p class="text-primary font-mono">|z| > 3 → Outlier suspeito</p>
+                            </div>
+                        </div>
+
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="text-blue-400 font-bold">2. Distância de Cook</h4>
+                            <p class="text-sm text-text-secondary mt-1 mb-2">
+                                Mede o quanto a regressão muda se removermos aquele ponto.
+                            </p>
+                            <div class="bg-blue-500/10 p-2 rounded text-xs">
+                                <p class="text-blue-400 font-mono">D > 1 → Ponto muito influente</p>
+                                <p class="text-blue-300 text-[10px] mt-1">D > 4/n → Investigar</p>
+                            </div>
+                        </div>
+
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-purple-500">
+                            <h4 class="text-purple-400 font-bold">3. Leverage (h)</h4>
+                            <p class="text-sm text-text-secondary mt-1 mb-2">
+                                Mede o quão extremo é o valor de X.
+                            </p>
+                            <div class="bg-purple-500/10 p-2 rounded text-xs">
+                                <p class="text-purple-400 font-mono">h > 2(k+1)/n → Alto leverage</p>
+                                <p class="text-purple-300 text-[10px] mt-1">k = número de variáveis</p>
+                            </div>
+                        </div>
+
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-orange-500">
+                            <h4 class="text-orange-400 font-bold">4. DFFITS</h4>
+                            <p class="text-sm text-text-secondary mt-1 mb-2">
+                                Mudança na predição ao remover o ponto.
+                            </p>
+                            <div class="bg-orange-500/10 p-2 rounded text-xs">
+                                <p class="text-orange-400 font-mono">|DFFITS| > 2√(k/n) → Influente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Métodos de Detecção Gerais -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Métodos de Detecção Gerais</h3>
+            <p class="text-center text-text-secondary mb-6">Métodos univariados para detectar outliers antes da
+                regressão</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Z-Score -->
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-blue-400 font-bold text-lg">Z</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Z-Score</h4>
+                    </div>
+
+                    <div class="bg-blue-500/10 p-3 rounded mb-3">
+                        <p class="text-blue-400 font-mono text-sm text-center">z = (x - μ) / σ</p>
+                    </div>
+
+                    <p class="text-text-secondary text-sm mb-3">
+                        Mede quantos desvios padrão um ponto está da média.
+                    </p>
+
+                    <div class="space-y-2 text-xs mb-4">
+                        <div class="bg-green-500/10 p-2 rounded">
+                            <p class="text-green-400 font-bold">|z| < 2: Normal</p>
+                        </div>
+                        <div class="bg-yellow-500/10 p-2 rounded">
+                            <p class="text-yellow-400 font-bold">2 < |z| < 3: Suspeito</p>
+                        </div>
+                        <div class="bg-red-500/10 p-2 rounded">
+                            <p class="text-red-400 font-bold">|z| > 3: Outlier</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-bg-muted/30 p-3 rounded">
+                        <p class="text-xs text-text-muted mb-2"><strong class="text-white">Quando usar:</strong></p>
+                        <ul class="text-xs text-text-muted space-y-1">
+                            <li>• Dados normalmente distribuídos</li>
+                            <li>• Amostras grandes (n > 30)</li>
+                            <li>• Análise univariada simples</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- IQR (Interquartile Range) -->
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-purple-400 font-bold text-lg">IQR</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Intervalo Interquartil</h4>
+                    </div>
+
+                    <div class="bg-purple-500/10 p-3 rounded mb-3">
+                        <p class="text-purple-400 font-mono text-xs text-center">IQR = Q3 - Q1</p>
+                        <p class="text-purple-300 text-[10px] text-center mt-1">Outlier se x < Q1 - 1.5×IQR</p>
+                                <p class="text-purple-300 text-[10px] text-center">ou x > Q3 + 1.5×IQR</p>
+                    </div>
+
+                    <p class="text-text-secondary text-sm mb-3">
+                        Baseado em quartis (Q1, Q3). Método robusto que não assume normalidade.
+                    </p>
+
+                    <div class="bg-purple-500/10 p-2 rounded mb-4 text-xs">
+                        <p class="text-purple-400"><strong>Boxplot:</strong> Pontos fora dos "bigodes"</p>
+                    </div>
+
+                    <div class="bg-bg-muted/30 p-3 rounded">
+                        <p class="text-xs text-text-muted mb-2"><strong class="text-white">Quando usar:</strong></p>
+                        <ul class="text-xs text-text-muted space-y-1">
+                            <li>• Dados assimétricos (não-normais)</li>
+                            <li>• Presença de valores extremos</li>
+                            <li>• Visualização com boxplot</li>
+                            <li>• Método robusto e intuitivo</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Testes de Hipótese -->
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-orange-400 font-bold text-lg">H₀</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Testes de Hipótese</h4>
+                    </div>
+
+                    <div class="space-y-2 mb-3">
+                        <div class="bg-orange-500/10 p-2 rounded">
+                            <p class="text-orange-400 font-bold text-xs">Teste de Grubbs</p>
+                            <p class="text-orange-300 text-[10px]">Detecta um outlier por vez</p>
+                        </div>
+                        <div class="bg-orange-500/10 p-2 rounded">
+                            <p class="text-orange-400 font-bold text-xs">Teste de Dixon</p>
+                            <p class="text-orange-300 text-[10px]">Para amostras pequenas (n < 25)</p>
+                        </div>
+                        <div class="bg-orange-500/10 p-2 rounded">
+                            <p class="text-orange-400 font-bold text-xs">Teste de Rosner</p>
+                            <p class="text-orange-300 text-[10px]">Detecta múltiplos outliers</p>
+                        </div>
+                    </div>
+
+                    <p class="text-text-secondary text-sm mb-4">
+                        Testes formais com p-valor para decidir se um ponto é outlier.
+                    </p>
+
+                    <div class="bg-bg-muted/30 p-3 rounded">
+                        <p class="text-xs text-text-muted mb-2"><strong class="text-white">Quando usar:</strong></p>
+                        <ul class="text-xs text-text-muted space-y-1">
+                            <li>• Necessita rigor estatístico</li>
+                            <li>• Dados normalmente distribuídos</li>
+                            <li>• Decisão formal (publicação)</li>
+                            <li>• Amostras pequenas a médias</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparação dos Métodos -->
+            <div class="mt-6 bg-bg-muted/20 p-6 rounded-lg">
+                <h4 class="text-lg font-bold text-white mb-4 text-center">Qual método escolher?</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div class="text-center p-3 bg-blue-500/10 rounded">
+                        <p class="text-blue-400 font-bold mb-1">Z-Score</p>
+                        <p class="text-xs text-text-muted">Rápido e simples. Ideal para dados normais e grandes
+                            amostras.</p>
+                    </div>
+                    <div class="text-center p-3 bg-purple-500/10 rounded">
+                        <p class="text-purple-400 font-bold mb-1">IQR</p>
+                        <p class="text-xs text-text-muted">Robusto e visual. Melhor para dados assimétricos.</p>
+                    </div>
+                    <div class="text-center p-3 bg-orange-500/10 rounded">
+                        <p class="text-orange-400 font-bold mb-1">Testes</p>
+                        <p class="text-xs text-text-muted">Rigoroso e formal. Use quando precisa de p-valor.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráficos de Diagnóstico -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Gráficos para Identificar Outliers</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Resíduos vs Leverage</h4>
+                    <p class="text-text-secondary text-sm mb-4">
+                        Combina resíduos padronizados (eixo Y) com leverage (eixo X).
+                        Pontos no canto superior direito são os mais problemáticos.
+                    </p>
+                    <div class="bg-black/20 rounded p-4 h-32 flex items-center justify-center">
+                        <svg width="100%" height="100%" viewBox="0 0 100 100">
+                            <line x1="10" y1="90" x2="90" y2="90" stroke="#475569" stroke-width="1" />
+                            <line x1="10" y1="90" x2="10" y2="10" stroke="#475569" stroke-width="1" />
+                            <circle cx="20" cy="70" r="2" fill="#10b981" />
+                            <circle cx="30" cy="65" r="2" fill="#10b981" />
+                            <circle cx="40" cy="75" r="2" fill="#10b981" />
+                            <circle cx="75" cy="25" r="3" fill="#ef4444" stroke="#fff" stroke-width="1" />
+                            <text x="50" y="98" font-size="6" fill="#94a3b8" text-anchor="middle">Leverage</text>
+                            <text x="5" y="50" font-size="6" fill="#94a3b8" text-anchor="middle"
+                                transform="rotate(-90 5,50)">Resíduos</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Cook's Distance Plot</h4>
+                    <p class="text-text-secondary text-sm mb-4">
+                        Barras mostrando a influência de cada observação.
+                        Barras altas (D > 1) indicam pontos muito influentes.
+                    </p>
+                    <div class="bg-black/20 rounded p-4 h-32 flex items-end justify-around gap-1">
+                        <div class="w-4 bg-green-500 h-4 rounded-t"></div>
+                        <div class="w-4 bg-green-500 h-6 rounded-t"></div>
+                        <div class="w-4 bg-green-500 h-3 rounded-t"></div>
+                        <div class="w-4 bg-green-500 h-5 rounded-t"></div>
+                        <div class="w-4 bg-red-500 h-24 rounded-t"></div>
+                        <div class="w-4 bg-green-500 h-4 rounded-t"></div>
+                        <div class="w-4 bg-green-500 h-7 rounded-t"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fluxo de Decisão -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Fluxo de Decisão: O que fazer?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border-l-4 border-blue-500">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-blue-400">1</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-2 text-center">Investigar</h4>
+                    <p class="text-sm text-text-secondary text-center">
+                        É um erro de medição? Erro de digitação? Fenômeno real mas raro?
+                    </p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border-l-4 border-purple-500">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-purple-400">2</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-2 text-center">Decidir</h4>
+                    <ul class="text-xs text-text-secondary space-y-1">
+                        <li>• Erro? → Corrigir ou remover</li>
+                        <li>• Real? → Manter ou analisar separadamente</li>
+                        <li>• Influente? → Considerar regressão robusta</li>
+                    </ul>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border-l-4 border-green-500">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-green-400">3</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-2 text-center">Documentar</h4>
+                    <p class="text-sm text-text-secondary text-center">
+                        Sempre documente outliers removidos e justifique a decisão.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Técnicas Robustas -->
+        <div class="mt-8 bg-blue-900/20 p-6 rounded-2xl border border-blue-500/30">
+            <h4 class="text-blue-400 font-bold mb-3 text-lg">💡 Alternativas: Métodos Robustos</h4>
+            <p class="text-blue-200 mb-4">
+                Se você tem muitos outliers ou não pode removê-los, considere métodos robustos que são menos sensíveis:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-blue-900/30 p-3 rounded">
+                    <p class="text-blue-100 font-bold mb-1">Regressão Robusta (M-estimators)</p>
+                    <p class="text-blue-300 text-xs">Dá menos peso a outliers automaticamente.</p>
+                </div>
+                <div class="bg-blue-900/30 p-3 rounded">
+                    <p class="text-blue-100 font-bold mb-1">Regressão Quantílica</p>
+                    <p class="text-blue-300 text-xs">Modela medianas ao invés de médias.</p>
+                </div>
+                <div class="bg-blue-900/30 p-3 rounded">
+                    <p class="text-blue-100 font-bold mb-1">RANSAC</p>
+                    <p class="text-blue-300 text-xs">Ajusta modelo ignorando outliers iterativamente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Avisos Importantes -->
+        <div class="mt-8 bg-yellow-900/20 p-6 rounded-2xl border border-yellow-500/30">
+            <h4 class="text-yellow-400 font-bold mb-3 text-lg">⚠️ Cuidados Importantes</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Nunca remova outliers apenas para melhorar R². Isso é manipulação de
+                        dados!</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Outliers podem conter informação valiosa. Às vezes são os pontos mais
+                        interessantes.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Compare modelos com e sem outliers. A diferença é grande? Isso é
+                        importante saber.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Em estudos científicos, sempre reporte outliers removidos e a
+                        justificativa.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

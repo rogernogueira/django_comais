@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Resíduos - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-red': '#ef4444',
+                        'primary': '#ef4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../regressao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Análise de Resíduos</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">O "Raio-X" da regressão: diagnostique onde seu modelo
+            erra.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Visualização Interativa -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é um Resíduo?</h3>
+                    <p class="text-text-secondary mb-4">
+                        É a diferença vertical entre o valor <strong>observado</strong> (ponto real) e o valor
+                        <strong>predito</strong> pelo modelo (linha).
+                    </p>
+                    <div class="bg-primary/10 p-4 rounded border border-primary/30 text-center">
+                        <p class="text-2xl text-primary font-mono font-bold mb-2">
+                            e = Y - Ŷ
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>e = resíduo</p>
+                            <p>Y = valor observado</p>
+                            <p>Ŷ = valor predito</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Demonstração Interativa</h3>
+                    <div class="bg-black/30 rounded-lg p-4 relative">
+                        <canvas id="residCanvas" class="w-full h-64 cursor-move"></canvas>
+                        <div
+                            class="absolute top-4 right-4 bg-gray-900/80 p-2 rounded text-xs text-right pointer-events-none">
+                            <div class="text-text-muted">SSE (Soma dos Erros²)</div>
+                            <div id="sseVal" class="text-xl font-bold text-reg-red">0.00</div>
+                        </div>
+                        <div class="absolute bottom-2 left-2 text-xs text-gray-500 pointer-events-none">
+                            Arraste os pontos para ver os resíduos mudarem
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explicações -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Por que Analisar Resíduos?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Os resíduos revelam se o modelo está capturando bem os padrões dos dados ou se há problemas
+                        sistemáticos.
+                    </p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary"><strong>Resíduos Aleatórios:</strong> Modelo está
+                                OK</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">✗</span>
+                            <span class="text-text-secondary"><strong>Padrão nos Resíduos:</strong> Modelo tem
+                                problemas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Tipos de Resíduos</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-primary">
+                            <h4 class="text-primary font-bold">Resíduos Brutos (e)</h4>
+                            <p class="text-sm text-text-secondary mt-1">
+                                Diferença simples: Y - Ŷ
+                            </p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="text-blue-400 font-bold">Resíduos Padronizados</h4>
+                            <p class="text-sm text-text-secondary mt-1">
+                                Divididos pelo desvio padrão dos resíduos. Facilita identificar outliers (|z| > 3).
+                            </p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-purple-500">
+                            <h4 class="text-purple-400 font-bold">Resíduos Studentizados</h4>
+                            <p class="text-sm text-text-secondary mt-1">
+                                Ajustados para considerar a influência de cada ponto. Mais preciso para outliers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Padrões de Erro -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Padrões nos Resíduos</h3>
+            <p class="text-center text-text-secondary mb-6">
+                Um bom modelo deve ter resíduos <strong>aleatórios</strong> (ruído branco). Se houver padrão, algo está
+                faltando no modelo.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Padrão Bom -->
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700 text-center">
+                    <div
+                        class="h-24 mb-4 flex items-center justify-center relative overflow-hidden bg-black/20 rounded">
+                        <svg width="100%" height="100%" viewBox="0 0 100 50">
+                            <line x1="0" y1="25" x2="100" y2="25" stroke="#475569" stroke-width="1"
+                                stroke-dasharray="2" />
+                            <circle cx="10" cy="20" r="2" fill="#10b981" />
+                            <circle cx="25" cy="30" r="2" fill="#10b981" />
+                            <circle cx="40" cy="22" r="2" fill="#10b981" />
+                            <circle cx="55" cy="28" r="2" fill="#10b981" />
+                            <circle cx="70" cy="24" r="2" fill="#10b981" />
+                            <circle cx="85" cy="27" r="2" fill="#10b981" />
+                        </svg>
+                    </div>
+                    <h4 class="text-green-400 font-bold mb-2">Aleatório (Ideal)</h4>
+                    <p class="text-xs text-text-muted">Sem padrão visível. Modelo está capturando bem os dados.</p>
+                </div>
+
+                <!-- Padrão Cone -->
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700 text-center">
+                    <div
+                        class="h-24 mb-4 flex items-center justify-center relative overflow-hidden bg-black/20 rounded">
+                        <svg width="100%" height="100%" viewBox="0 0 100 50">
+                            <line x1="0" y1="25" x2="100" y2="25" stroke="#475569" stroke-width="1"
+                                stroke-dasharray="2" />
+                            <circle cx="10" cy="26" r="2" fill="#ef4444" />
+                            <circle cx="25" cy="23" r="2" fill="#ef4444" />
+                            <circle cx="40" cy="30" r="2" fill="#ef4444" />
+                            <circle cx="55" cy="18" r="2" fill="#ef4444" />
+                            <circle cx="70" cy="35" r="2" fill="#ef4444" />
+                            <circle cx="85" cy="10" r="2" fill="#ef4444" />
+                            <circle cx="85" cy="40" r="2" fill="#ef4444" />
+                        </svg>
+                    </div>
+                    <h4 class="text-red-400 font-bold mb-2">Cone (Heterocedasticidade)</h4>
+                    <p class="text-xs text-text-muted">Variância aumenta. Viola pressuposto de elasticidade constante.
+                    </p>
+                </div>
+
+                <!-- Padrão Curva -->
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700 text-center">
+                    <div
+                        class="h-24 mb-4 flex items-center justify-center relative overflow-hidden bg-black/20 rounded">
+                        <svg width="100%" height="100%" viewBox="0 0 100 50">
+                            <line x1="0" y1="25" x2="100" y2="25" stroke="#475569" stroke-width="1"
+                                stroke-dasharray="2" />
+                            <circle cx="10" cy="40" r="2" fill="#ef4444" />
+                            <circle cx="25" cy="30" r="2" fill="#ef4444" />
+                            <circle cx="40" cy="18" r="2" fill="#ef4444" />
+                            <circle cx="55" cy="15" r="2" fill="#ef4444" />
+                            <circle cx="70" cy="20" r="2" fill="#ef4444" />
+                            <circle cx="85" cy="30" r="2" fill="#ef4444" />
+                        </svg>
+                    </div>
+                    <h4 class="text-red-400 font-bold mb-2">Curva (Não-Linearidade)</h4>
+                    <p class="text-xs text-text-muted">Relação não é linear. Considere transformação ou modelo
+                        polinomial.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráficos de Diagnóstico -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Gráficos de Diagnóstico</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">1. Resíduos vs Preditos</h4>
+                    <p class="text-text-secondary text-sm mb-3">
+                        O mais importante! Deve mostrar dispersão aleatória em torno de zero.
+                    </p>
+                    <div class="bg-primary/10 p-3 rounded border border-primary/30">
+                        <p class="text-sm text-primary">
+                            <strong>Detecta:</strong> Não-linearidade, heterocedasticidade
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">2. QQ-Plot dos Resíduos</h4>
+                    <p class="text-text-secondary text-sm mb-3">
+                        Verifica se os resíduos seguem distribuição normal.
+                    </p>
+                    <div class="bg-blue-500/10 p-3 rounded border border-blue-500/30">
+                        <p class="text-sm text-blue-400">
+                            <strong>Detecta:</strong> Violação da normalidade
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">3. Scale-Location Plot</h4>
+                    <p class="text-text-secondary text-sm mb-3">
+                        Raiz quadrada dos resíduos padronizados vs preditos.
+                    </p>
+                    <div class="bg-purple-500/10 p-3 rounded border border-purple-500/30">
+                        <p class="text-sm text-purple-400">
+                            <strong>Detecta:</strong> Heterocedasticidade
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">4. Resíduos vs Leverage</h4>
+                    <p class="text-text-secondary text-sm mb-3">
+                        Identifica pontos influentes (Cook's Distance).
+                    </p>
+                    <div class="bg-orange-500/10 p-3 rounded border border-orange-500/30">
+                        <p class="text-sm text-orange-400">
+                            <strong>Detecta:</strong> Outliers influentes
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- O que fazer -->
+        <div class="mt-8 bg-orange-900/20 p-6 rounded-2xl border border-orange-500/30">
+            <h4 class="text-orange-400 font-bold mb-3 text-lg">🔧 O que fazer se encontrar problemas?</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="bg-orange-900/30 p-3 rounded">
+                    <p class="text-orange-100 font-bold mb-1">Padrão de Curva</p>
+                    <p class="text-orange-300 text-xs">→ Adicione termos polinomiais ou transforme variáveis (log, √)
+                    </p>
+                </div>
+                <div class="bg-orange-900/30 p-3 rounded">
+                    <p class="text-orange-100 font-bold mb-1">Cone (Heterocedasticidade)</p>
+                    <p class="text-orange-300 text-xs">→ Use WLS (Weighted Least Squares) ou transforme Y</p>
+                </div>
+                <div class="bg-orange-900/30 p-3 rounded">
+                    <p class="text-orange-100 font-bold mb-1">Outliers</p>
+                    <p class="text-orange-300 text-xs">→ Investigue e considere remover ou usar regressão robusta</p>
+                </div>
+                <div class="bg-orange-900/30 p-3 rounded">
+                    <p class="text-orange-100 font-bold mb-1">Não-Normalidade</p>
+                    <p class="text-orange-300 text-xs">→ Transforme Y ou use métodos não-paramétricos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('residCanvas');
+        const ctx = canvas.getContext('2d');
+        const sseDisplay = document.getElementById('sseVal');
+
+        let points = [
+            { x: 0.2, y: 0.3 },
+            { x: 0.4, y: 0.6 },
+            { x: 0.6, y: 0.5 },
+            { x: 0.8, y: 0.8 }
+        ];
+
+        let draggingPoint = null;
+
+        function setupCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            draw();
+        }
+        window.addEventListener('resize', setupCanvas);
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mx = (e.clientX - rect.left) / rect.width;
+            const my = (e.clientY - rect.top) / rect.height;
+
+            let minDist = 0.1;
+            draggingPoint = null;
+
+            points.forEach(p => {
+                const dist = Math.sqrt((p.x - mx) ** 2 + (p.y - my) ** 2);
+                if (dist < minDist) {
+                    minDist = dist;
+                    draggingPoint = p;
+                }
+            });
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!draggingPoint) return;
+            const rect = canvas.getBoundingClientRect();
+            draggingPoint.x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+            draggingPoint.y = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+            draw();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            draggingPoint = null;
+        });
+
+        function getModelY(x) {
+            return 1 - x; // Diagonal line
+        }
+
+        function draw() {
+            const rect = canvas.getBoundingClientRect();
+            const w = rect.width;
+            const h = rect.height;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Model Line
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(0, h);
+            ctx.lineTo(w, 0);
+            ctx.stroke();
+
+            let sse = 0;
+
+            // Points and Residuals
+            points.forEach(p => {
+                const px = p.x * w;
+                const py = p.y * h;
+                const modelYNorm = 1 - p.x;
+                const modelY = modelYNorm * h;
+
+                // Residual Line
+                ctx.strokeStyle = '#ef4444';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([4, 4]);
+                ctx.beginPath();
+                ctx.moveTo(px, py);
+                ctx.lineTo(px, modelY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Point
+                ctx.fillStyle = '#f1f5f9';
+                ctx.beginPath();
+                ctx.arc(px, py, 8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#0f172a';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                const error = p.y - modelYNorm;
+                sse += error * error;
+            });
+
+            sseDisplay.textContent = (sse * 10).toFixed(2);
+        }
+
+        setTimeout(setupCanvas, 50);
+    </script>
+</body>
+
+</html>

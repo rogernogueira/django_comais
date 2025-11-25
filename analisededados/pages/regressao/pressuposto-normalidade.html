@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normalidade - Pressupostos LINE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-orange': '#f97316',
+                        'primary': '#f97316',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(249, 115, 22, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(249, 115, 22, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../regressao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Normalidade dos Resíduos</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Os erros do modelo devem seguir uma distribuição
+            normal.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">QQ-Plot (Quantil-Quantil)</h3>
+                    <div class="relative h-48 w-full bg-gray-900 rounded border border-gray-700 p-4 mb-4">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <line x1="10" y1="90" x2="90" y2="90" stroke="#94a3b8" stroke-width="1" />
+                            <line x1="10" y1="90" x2="10" y2="10" stroke="#94a3b8" stroke-width="1" />
+                            <line x1="10" y1="90" x2="90" y2="10" stroke="#f87171" stroke-width="1.5"
+                                stroke-dasharray="4" />
+                            <circle cx="20" cy="80" r="2.5" fill="#38bdf8" />
+                            <circle cx="30" cy="70" r="2.5" fill="#38bdf8" />
+                            <circle cx="40" cy="60" r="2.5" fill="#38bdf8" />
+                            <circle cx="50" cy="50" r="2.5" fill="#38bdf8" />
+                            <circle cx="60" cy="40" r="2.5" fill="#38bdf8" />
+                            <circle cx="70" cy="30" r="2.5" fill="#38bdf8" />
+                            <circle cx="80" cy="20" r="2.5" fill="#38bdf8" />
+                            <text x="50" y="98" font-size="5" fill="#94a3b8" text-anchor="middle">Quantis
+                                Teóricos</text>
+                            <text x="5" y="50" font-size="5" fill="#94a3b8" text-anchor="middle"
+                                transform="rotate(-90 5,50)">Quantis Observados</text>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-text-secondary">Se os pontos seguem a linha diagonal, os resíduos são
+                        normais.</p>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Histograma dos Resíduos</h3>
+                    <div class="flex items-end justify-center space-x-2 h-32 mb-4">
+                        <div class="w-8 bg-gray-600 h-4 rounded-t"></div>
+                        <div class="w-8 bg-gray-500 h-12 rounded-t"></div>
+                        <div class="w-8 bg-green-500 h-24 rounded-t"></div>
+                        <div class="w-8 bg-green-400 h-32 rounded-t"></div>
+                        <div class="w-8 bg-green-500 h-24 rounded-t"></div>
+                        <div class="w-8 bg-gray-500 h-12 rounded-t"></div>
+                        <div class="w-8 bg-gray-600 h-4 rounded-t"></div>
+                    </div>
+                    <p class="text-sm text-text-secondary text-center">Deve ter formato de "sino" (simétrico).</p>
+                </div>
+            </div>
+
+            <!-- Diagnóstico e Soluções -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Testes Estatísticos</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-primary">
+                            <h4 class="text-primary font-bold">Shapiro-Wilk</h4>
+                            <p class="text-sm text-text-secondary mt-1">Recomendado para amostras pequenas (<strong>n <
+                                        50</strong>). É o teste mais poderoso para normalidade.</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-green-500">
+                            <h4 class="text-green-400 font-bold">Kolmogorov-Smirnov</h4>
+                            <p class="text-sm text-text-secondary mt-1">Recomendado para amostras grandes (<strong>n >
+                                    50</strong>). Geralmente usado com a correção de Lilliefors.</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h4 class="text-blue-400 font-bold">Anderson-Darling</h4>
+                            <p class="text-sm text-text-secondary mt-1">Mais sensível nas caudas da distribuição que o
+                                KS.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Interpretação do P-valor</h3>
+                    <div class="bg-bg-muted/20 p-4 rounded-lg">
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="element-clickable bg-red-400/20 p-3 rounded">
+                                <p class="text-lg font-bold text-red-400">p < 0.05</p>
+                                        <p class="text-sm text-text-secondary">NÃO é normal</p>
+                                        <p class="text-xs text-text-muted">(Rejeita H0)</p>
+                            </div>
+                            <div class="element-clickable bg-green-400/20 p-3 rounded">
+                                <p class="text-lg font-bold text-green-400">p ≥ 0.05</p>
+                                <p class="text-sm text-text-secondary">É normal</p>
+                                <p class="text-xs text-text-muted">(Não rejeita H0)</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-center text-text-muted mt-3">
+                            <strong>H0 (Hipótese Nula):</strong> Os resíduos seguem uma distribuição normal.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-blue-900/20 p-4 rounded-lg border border-blue-500/30">
+                    <h4 class="text-blue-400 font-bold mb-2">⚠️ Nota Importante</h4>
+                    <p class="text-sm text-blue-200">
+                        Não é necessário que X ou Y sejam normais, apenas os <strong>resíduos</strong>.
+                        Para amostras grandes (n > 200), a regressão é robusta a violações leves de normalidade (Teorema
+                        Central do Limite).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-lg mb-3 text-primary font-bold">O que fazer se os resíduos não forem normais?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Transformação:</strong> Aplicar Log(Y) ou √Y</p>
+                </div>
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Aumentar n:</strong> Coletar mais dados</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação LINE -->
+        <div class="mt-12 pt-8 border-t border-bg-muted">
+            <h3 class="text-xl mb-4 text-center text-primary font-bold">Outros Pressupostos LINE</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href="pressuposto-linearidade.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        L</div>
+                    <p class="text-white font-bold">Linearidade</p>
+                    <p class="text-xs text-text-muted mt-1">Relação linear X-Y</p>
+                </a>
+                <a href="pressuposto-independencia.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        I</div>
+                    <p class="text-white font-bold">Independência</p>
+                    <p class="text-xs text-text-muted mt-1">Erros não correlacionados</p>
+                </a>
+                <a href="pressuposto-elasticidade.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        E</div>
+                    <p class="text-white font-bold">Elasticidade</p>
+                    <p class="text-xs text-text-muted mt-1">Variância constante</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

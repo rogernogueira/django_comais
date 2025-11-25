@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qui-Quadrado de Independência - Testes de Associação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-pink': '#ec4899',
+                        'primary': '#ec4899',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(236, 72, 153, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(236, 72, 153, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Qui-Quadrado de Independência</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Testando se duas variáveis categóricas são
+            independentes</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O teste Qui-Quadrado de Independência verifica se existe uma <strong>associação</strong>
+                        entre duas variáveis categóricas em uma única população.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-sm text-text-muted mb-2"><strong class="text-white">Hipóteses:</strong></p>
+                        <p class="text-sm text-green-400">H₀: As variáveis são independentes</p>
+                        <p class="text-sm text-red-400">H₁: As variáveis são dependentes (associadas)</p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Exemplo Prático</h3>
+                    <div class="bg-bg-surface p-4 rounded mb-3">
+                        <p class="text-white font-bold mb-2">Pergunta de Pesquisa:</p>
+                        <p class="text-text-secondary text-sm">
+                            Existe associação entre <strong>gênero</strong> e <strong>preferência de produto</strong>?
+                        </p>
+                    </div>
+                    <table class="w-full text-sm border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left py-2 text-text-muted"></th>
+                                <th class="text-center py-2 text-text-muted">Produto A</th>
+                                <th class="text-center py-2 text-text-muted">Produto B</th>
+                                <th class="text-center py-2 text-text-muted">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-text-secondary">
+                            <tr class="border-b border-gray-800">
+                                <td class="py-2 font-bold">Masculino</td>
+                                <td class="text-center">30</td>
+                                <td class="text-center">20</td>
+                                <td class="text-center text-primary">50</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-2 font-bold">Feminino</td>
+                                <td class="text-center">15</td>
+                                <td class="text-center">35</td>
+                                <td class="text-center text-primary">50</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-bold text-primary">Total</td>
+                                <td class="text-center text-primary">45</td>
+                                <td class="text-center text-primary">55</td>
+                                <td class="text-center text-primary font-bold">100</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Fórmula e Cálculo -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Fórmula</h3>
+                    <div class="bg-bg-surface p-4 rounded text-center mb-3">
+                        <p class="text-lg text-text-secondary font-mono mb-3">
+                            χ² = Σ [(Oᵢⱼ - Eᵢⱼ)² / Eᵢⱼ]
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>Oᵢⱼ = Frequência observada na célula (i,j)</p>
+                            <p>Eᵢⱼ = Frequência esperada na célula (i,j)</p>
+                        </div>
+                    </div>
+                    <div class="bg-primary/10 p-3 rounded text-xs">
+                        <p class="text-primary font-bold mb-1">Frequência Esperada:</p>
+                        <p class="text-primary font-mono">Eᵢⱼ = (Total linha i × Total coluna j) / Total geral</p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Graus de Liberdade</h3>
+                    <div class="bg-bg-surface p-4 rounded text-center">
+                        <p class="text-lg text-primary font-mono mb-2">
+                            gl = (r - 1) × (c - 1)
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>r = número de linhas</p>
+                            <p>c = número de colunas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-primary/10 p-4 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Características</h4>
+                    <ul class="text-sm text-text-secondary space-y-1">
+                        <li>✓ Testa <strong>independência</strong> entre variáveis</li>
+                        <li>✓ Uma única <strong>população</strong></li>
+                        <li>✓ Tabela de contingência r × c</li>
+                        <li>✓ Frequências esperadas ≥ 5</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Passo a Passo -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Passo a Passo do Teste</h3>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                    <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mb-3">
+                        <span class="text-primary font-bold">1</span>
+                    </div>
+                    <h4 class="text-white font-bold text-sm mb-2">Tabela</h4>
+                    <p class="text-xs text-text-muted">Construa a tabela de contingência com frequências observadas</p>
+                </div>
+                <div class="bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                    <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mb-3">
+                        <span class="text-primary font-bold">2</span>
+                    </div>
+                    <h4 class="text-white font-bold text-sm mb-2">Esperadas</h4>
+                    <p class="text-xs text-text-muted">Calcule as frequências esperadas para cada célula</p>
+                </div>
+                <div class="bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                    <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mb-3">
+                        <span class="text-primary font-bold">3</span>
+                    </div>
+                    <h4 class="text-white font-bold text-sm mb-2">χ²</h4>
+                    <p class="text-xs text-text-muted">Calcule a estatística qui-quadrado</p>
+                </div>
+                <div class="bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                    <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mb-3">
+                        <span class="text-primary font-bold">4</span>
+                    </div>
+                    <h4 class="text-white font-bold text-sm mb-2">P-valor</h4>
+                    <p class="text-xs text-text-muted">Compare com distribuição χ² com gl graus de liberdade</p>
+                </div>
+                <div class="bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                    <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mb-3">
+                        <span class="text-primary font-bold">5</span>
+                    </div>
+                    <h4 class="text-white font-bold text-sm mb-2">Decisão</h4>
+                    <p class="text-xs text-text-muted">Se p < 0.05, rejeite H₀ (há associação)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pressupostos -->
+        <div class="mt-8 bg-yellow-900/20 p-6 rounded-2xl border border-yellow-500/30">
+            <h4 class="text-yellow-400 font-bold mb-3 text-lg">⚠️ Pressupostos Importantes</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200"><strong>Frequências esperadas ≥ 5:</strong> Em pelo menos 80% das
+                        células. Se não, use Fisher.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200"><strong>Independência:</strong> Cada observação deve pertencer a
+                        apenas uma célula.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200"><strong>Amostra aleatória:</strong> Dados coletados de forma
+                        aleatória.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200"><strong>Variáveis categóricas:</strong> Ambas as variáveis devem ser
+                        categóricas.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interpretação -->
+        <div class="mt-8 bg-bg-muted/20 p-6 rounded-lg">
+            <h3 class="text-xl mb-4 text-primary font-bold text-center">Como Interpretar</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-bg-surface p-4 rounded">
+                    <h4 class="text-green-400 font-bold mb-2">p < 0.05</h4>
+                            <p class="text-sm text-text-secondary">
+                                Rejeitar H₀. Existe <strong>associação significativa</strong> entre as variáveis.
+                            </p>
+                </div>
+                <div class="bg-bg-surface p-4 rounded">
+                    <h4 class="text-red-400 font-bold mb-2">p ≥ 0.05</h4>
+                    <p class="text-sm text-text-secondary">
+                        Não rejeitar H₀. Não há evidência de associação entre as variáveis.
+                    </p>
+                </div>
+                <div class="bg-bg-surface p-4 rounded">
+                    <h4 class="text-primary font-bold mb-2">Força da Associação</h4>
+                    <p class="text-sm text-text-secondary">
+                        Use <strong>V de Cramér</strong> para medir a força da associação (0 a 1).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outros Testes -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-xl mb-4 text-center text-primary font-bold">Outros Testes Qui-Quadrado</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="qui-quadrado-homogeneidade.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 hover:border-primary/50">
+                    <p class="text-white font-bold mb-1">Qui-Quadrado de Homogeneidade</p>
+                    <p class="text-xs text-text-muted">Compara distribuições entre grupos</p>
+                </a>
+                <a href="qui-quadrado-aderencia.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 hover:border-primary/50">
+                    <p class="text-white font-bold mb-1">Qui-Quadrado de Aderência</p>
+                    <p class="text-xs text-text-muted">Testa se dados seguem distribuição esperada</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

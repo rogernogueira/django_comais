@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlação de Pearson - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-green': '#10b981',
+                        'primary': '#10b981',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(16, 185, 129, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(16, 185, 129, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+               onclick="window.history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Correlação de Pearson</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Medindo a força e direção da relação
+            <strong>linear</strong> entre variáveis.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Visualização Interativa -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Scatterplot Interativo</h3>
+                    <div class="bg-black/30 rounded-lg p-4">
+                        <canvas id="corrCanvas" width="500" height="300" class="w-full h-64 mb-4"></canvas>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs text-text-muted flex justify-between mb-1">
+                                    <span>Correlação de Pearson (r)</span>
+                                    <span id="rVal" class="font-mono text-reg-green font-bold">0.00</span>
+                                </label>
+                                <input type="range" id="rSlider" min="-1" max="1" step="0.05" value="0"
+                                    class="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-reg-green">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>-1</span>
+                                    <span>0</span>
+                                    <span>+1</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-center gap-2">
+                                <button onclick="setCorr(-0.9)"
+                                    class="px-3 py-1 bg-gray-700 rounded text-xs hover:bg-gray-600">-0.9</button>
+                                <button onclick="setCorr(0)"
+                                    class="px-3 py-1 bg-gray-700 rounded text-xs hover:bg-gray-600">0.0</button>
+                                <button onclick="setCorr(0.5)"
+                                    class="px-3 py-1 bg-gray-700 rounded text-xs hover:bg-gray-600">0.5</button>
+                                <button onclick="setCorr(0.9)"
+                                    class="px-3 py-1 bg-gray-700 rounded text-xs hover:bg-gray-600">0.9</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Fórmula de Pearson</h3>
+                    <div class="bg-bg-surface p-4 rounded text-center">
+                        <p class="text-lg text-text-secondary font-mono mb-3">
+                            r = Σ[(xᵢ - x̄)(yᵢ - ȳ)] / √[Σ(xᵢ - x̄)² · Σ(yᵢ - ȳ)²]
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>Covariância dividida pelo produto dos desvios padrão</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explicações -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">O que é?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        A correlação de Pearson (r) mede a força e direção da relação <strong>linear</strong> entre duas
+                        variáveis contínuas.
+                        O coeficiente varia de -1 a +1:
+                    </p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 font-bold mr-3">r = +1</span>
+                            <span class="text-text-secondary">Correlação positiva perfeita</span>
+                        </div>
+                        <div class="flex items-center p-2 bg-gray-500/10 rounded">
+                            <span class="text-gray-400 font-bold mr-3">r = 0</span>
+                            <span class="text-text-secondary">Sem correlação linear</span>
+                        </div>
+                        <div class="flex items-center p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 font-bold mr-3">r = -1</span>
+                            <span class="text-text-secondary">Correlação negativa perfeita</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Interpretação da Força</h3>
+                    <div class="bg-bg-muted/20 p-4 rounded-lg">
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between items-center p-2 bg-green-500/10 rounded">
+                                <span class="text-text-secondary">|r| > 0.7</span>
+                                <span class="text-green-400 font-bold">Forte</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-yellow-500/10 rounded">
+                                <span class="text-text-secondary">0.3 < |r| < 0.7</span>
+                                        <span class="text-yellow-400 font-bold">Moderada</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-red-500/10 rounded">
+                                <span class="text-text-secondary">|r| < 0.3</span>
+                                        <span class="text-red-400 font-bold">Fraca</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-900/20 p-4 rounded-lg border border-blue-500/30">
+                    <h4 class="text-blue-400 font-bold mb-2">Características</h4>
+                    <ul class="text-sm text-blue-200 space-y-1">
+                        <li>✓ Mede apenas relações <strong>lineares</strong></li>
+                        <li>✓ Sensível a outliers</li>
+                        <li>✓ Requer dados contínuos</li>
+                        <li>✓ Assume distribuição aproximadamente normal</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quando Usar -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Quando Usar Pearson?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-green-500/10 p-6 rounded-lg border-l-4 border-green-500">
+                    <h4 class="text-green-400 font-bold mb-3">✓ Use quando:</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>• Ambas variáveis são <strong>contínuas</strong></li>
+                        <li>• A relação é <strong>linear</strong></li>
+                        <li>• Dados aproximadamente <strong>normais</strong></li>
+                        <li>• Sem outliers extremos</li>
+                    </ul>
+                </div>
+                <div class="bg-red-500/10 p-6 rounded-lg border-l-4 border-red-500">
+                    <h4 class="text-red-400 font-bold mb-3">✗ Não use quando:</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>• A relação é <strong>não-linear</strong> (curva)</li>
+                        <li>• Dados ordinais (rankings)</li>
+                        <li>• Muitos outliers presentes</li>
+                        <li>• Distribuição muito assimétrica</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aviso Importante -->
+        <div class="mt-8 bg-yellow-900/20 p-6 rounded-2xl border border-yellow-500/30">
+            <h4 class="text-yellow-400 font-bold mb-3 text-lg">⚠️ Correlação ≠ Causalidade</h4>
+            <p class="text-sm text-yellow-200 mb-3">
+                Uma correlação forte <strong>não significa</strong> que uma variável causa a outra!
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="bg-yellow-900/30 p-3 rounded">
+                    <p class="text-yellow-100"><strong>Exemplo:</strong> Vendas de sorvete e afogamentos têm correlação
+                        positiva.</p>
+                    <p class="text-yellow-300 text-xs mt-1">Mas o sorvete não causa afogamentos! Ambos aumentam no verão
+                        (variável confundidora).</p>
+                </div>
+                <div class="bg-yellow-900/30 p-3 rounded">
+                    <p class="text-yellow-100"><strong>Lembre-se:</strong> Correlação é apenas o primeiro passo.</p>
+                    <p class="text-yellow-300 text-xs mt-1">Para estabelecer causalidade, você precisa de experimentos
+                        controlados ou análises mais avançadas.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outras Correlações -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-xl mb-4 text-center text-primary font-bold">Outros Tipos de Correlação</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="correlacao-spearman.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        ρ</div>
+                    <p class="text-white font-bold">Spearman</p>
+                    <p class="text-xs text-text-muted mt-1">Relações monotônicas (rankings)</p>
+                </a>
+                <a href="correlacao-kendall.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        τ</div>
+                    <p class="text-white font-bold">Kendall</p>
+                    <p class="text-xs text-text-muted mt-1">Concordância entre rankings</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('corrCanvas');
+        const ctx = canvas.getContext('2d');
+        const rSlider = document.getElementById('rSlider');
+        const rVal = document.getElementById('rVal');
+
+        let points = [];
+        const numPoints = 200;
+
+        function generateCorrelatedData(r) {
+            points = [];
+            for (let i = 0; i < numPoints; i++) {
+                let u1 = Math.random();
+                let u2 = Math.random();
+                let z1 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+                let z2 = Math.sqrt(-2.0 * Math.log(u1)) * Math.sin(2.0 * Math.PI * u2);
+
+                let x = z1;
+                let y = r * z1 + Math.sqrt(1 - r * r) * z2;
+
+                points.push({ x, y });
+            }
+        }
+
+        function draw() {
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Grid
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(width / 2, 0); ctx.lineTo(width / 2, height);
+            ctx.moveTo(0, height / 2); ctx.lineTo(width, height / 2);
+            ctx.stroke();
+
+            const scale = Math.min(width, height) / 8;
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            ctx.fillStyle = '#10b981';
+
+            points.forEach(p => {
+                const px = centerX + p.x * scale;
+                const py = centerY - p.y * scale;
+
+                ctx.beginPath();
+                ctx.arc(px, py, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Regression line
+            const r = parseFloat(rSlider.value);
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            let x1 = -3; let y1 = r * x1;
+            let x2 = 3; let y2 = r * x2;
+
+            ctx.moveTo(centerX + x1 * scale, centerY - y1 * scale);
+            ctx.lineTo(centerX + x2 * scale, centerY - y2 * scale);
+            ctx.stroke();
+        }
+
+        function update() {
+            const r = parseFloat(rSlider.value);
+            rVal.textContent = r.toFixed(2);
+            generateCorrelatedData(r);
+            draw();
+        }
+
+        function setCorr(val) {
+            rSlider.value = val;
+            update();
+        }
+
+        rSlider.addEventListener('input', update);
+
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+
+        update();
+    </script>
+</body>
+
+</html>

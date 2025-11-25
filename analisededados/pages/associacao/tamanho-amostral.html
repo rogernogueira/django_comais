@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamanho Amostral - Pressupostos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-cyan': '#06b6d4',
+                        'primary': '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(6, 182, 212, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Tamanho Amostral</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">O impacto do N na escolha do teste e na confiabilidade
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Regras Gerais -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Regra Geral</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Para o teste Qui-Quadrado, não existe um número mágico fixo para o tamanho total da amostra (N),
+                        mas ele deve ser grande o suficiente para satisfazer o pressuposto das frequências esperadas.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-sm text-white font-bold mb-2">Diretrizes Comuns:</p>
+                        <ul class="text-sm text-text-muted space-y-1">
+                            <li><strong>N > 40:</strong> Qui-Quadrado é quase sempre seguro.</li>
+                            <li><strong>20 < N < 40:</strong> Qui-Quadrado é aceitável se todas as frequências esperadas
+                                        forem ≥ 5.</li>
+                            <li><strong>N < 20:</strong> Use o Teste Exato de Fisher.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O Paradoxo do N Grande</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        O teste Qui-Quadrado é muito sensível ao tamanho da amostra.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded border border-yellow-500/20">
+                        <p class="text-sm text-yellow-500 font-bold mb-2">Cuidado:</p>
+                        <p class="text-sm text-text-muted">
+                            Com amostras muito grandes (ex: N > 1000), até mesmo associações minúsculas e irrelevantes
+                            se tornarão estatisticamente significativas (p < 0.05). </p>
+                                <p class="text-sm text-text-muted mt-2">
+                                    Por isso, é crucial calcular o <strong>Tamanho do Efeito</strong> (V de Cramér ou
+                                    Phi) para saber se a associação é relevante na prática.
+                                </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Poder Estatístico -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Poder Estatístico</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Amostras muito pequenas podem não ter poder suficiente para detectar uma associação real (Erro
+                        Tipo II - Falso Negativo).
+                    </p>
+                    <p class="text-sm text-text-secondary">
+                        Se você tem uma tabela com muitas células (ex: 4x5) e um N moderado, as observações ficarão
+                        muito "espalhadas", resultando em frequências esperadas baixas e perda de poder.
+                    </p>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Recomendação Prática</h4>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Ao planejar um estudo:
+                    </p>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2">✓</span>
+                            <span>Tente ter pelo menos 5 a 10 observações por célula da tabela.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2">✓</span>
+                            <span>Ex: Para uma tabela 3x3 (9 células), tente um N total de pelo menos 45 a 90.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="frequencias-esperadas.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Frequências Esperadas &rarr;
+            </a>
+            <a href="independencia-observacoes.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Independência &rarr;
+            </a>
+            <a href="correcao-yates.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Correção de Yates &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

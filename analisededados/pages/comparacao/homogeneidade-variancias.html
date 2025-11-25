@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homogeneidade de Variâncias - Estatística</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#38bdf8',
+                        'primary': '#4ade80', // Verde
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(74, 222, 128, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(74, 222, 128, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <!-- Container principal -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Cabeçalho com botão voltar -->
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <div class="flex items-center">
+                <div
+                    class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shadow-lg shadow-primary/20">
+                    <span class="text-bg-base text-xl font-bold">✓</span>
+                </div>
+                <h1 class="text-4xl text-primary font-bold">Homogeneidade de Variâncias</h1>
+            </div>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Também conhecida como
+            <strong>Homocedasticidade</strong>: a dispersão dos dados deve ser similar entre os grupos.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">1. O que é?</h3>
+                    <p class="text-text-secondary mb-4">Para comparar médias de forma justa, a "largura" das
+                        distribuições (variância) deve ser parecida.</p>
+
+                    <div class="space-y-4">
+                        <div class="bg-bg-surface p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-green-400 mb-2">Variâncias Homogêneas (Ideal)</h4>
+                            <div
+                                class="relative h-32 w-full mt-2 bg-bg-base/50 rounded border border-text-muted/20 p-2">
+                                <svg viewBox="0 0 200 100" class="w-full h-full">
+                                    <!-- Grupo A -->
+                                    <path d="M10,90 Q50,10 90,90" fill="none" stroke="#4ade80" stroke-width="2" />
+                                    <text x="50" y="95" fill="#4ade80" font-size="10" text-anchor="middle">Grupo
+                                        A</text>
+
+                                    <!-- Grupo B -->
+                                    <path d="M110,90 Q150,10 190,90" fill="none" stroke="#38bdf8" stroke-width="2" />
+                                    <text x="150" y="95" fill="#38bdf8" font-size="10" text-anchor="middle">Grupo
+                                        B</text>
+                                </svg>
+                            </div>
+                            <p class="text-xs text-center text-text-muted mt-2">Ambas as curvas têm a mesma "largura".
+                            </p>
+                        </div>
+
+                        <div class="bg-bg-surface p-4 rounded-lg border border-red-400/30">
+                            <h4 class="text-lg font-bold text-red-400 mb-2">Variâncias Heterogêneas (Problema)</h4>
+                            <div
+                                class="relative h-32 w-full mt-2 bg-bg-base/50 rounded border border-text-muted/20 p-2">
+                                <svg viewBox="0 0 200 100" class="w-full h-full">
+                                    <!-- Grupo A (Estreito) -->
+                                    <path d="M30,90 Q50,10 70,90" fill="none" stroke="#4ade80" stroke-width="2" />
+                                    <text x="50" y="95" fill="#4ade80" font-size="10" text-anchor="middle">Grupo
+                                        A</text>
+
+                                    <!-- Grupo B (Largo) -->
+                                    <path d="M100,90 Q150,40 200,90" fill="none" stroke="#38bdf8" stroke-width="2" />
+                                    <text x="150" y="95" fill="#38bdf8" font-size="10" text-anchor="middle">Grupo
+                                        B</text>
+                                </svg>
+                            </div>
+                            <p class="text-xs text-center text-text-muted mt-2">Curvas com larguras muito diferentes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testes Estatísticos -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">2. Como Testar?</h3>
+                    <p class="text-text-secondary mb-4">Testes para verificar a igualdade de variâncias.</p>
+
+                    <div class="space-y-4">
+                        <div class="element-clickable bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                            <h4 class="text-lg font-bold text-white">Teste de Levene</h4>
+                            <p class="text-sm text-text-secondary mt-1">Mais robusto e comum.</p>
+                            <p class="text-xs text-text-muted mt-2">Funciona bem mesmo se os dados não forem
+                                perfeitamente normais.</p>
+                        </div>
+
+                        <div class="element-clickable bg-bg-surface p-4 rounded-lg border-l-4 border-blue-400">
+                            <h4 class="text-lg font-bold text-white">Teste de Bartlett</h4>
+                            <p class="text-sm text-text-secondary mt-1">Mais sensível.</p>
+                            <p class="text-xs text-text-muted mt-2">Requer que os dados tenham distribuição normal
+                                rigorosa.</p>
+                        </div>
+
+                        <div class="bg-bg-elevated p-4 rounded-lg mt-6 border border-text-muted/20">
+                            <h4 class="text-lg font-bold text-center text-text-accent mb-2">Interpretação (Levene)</h4>
+                            <div class="grid grid-cols-2 gap-4 text-center">
+                                <div class="bg-red-400/10 p-2 rounded">
+                                    <p class="text-red-400 font-bold">p < 0.05</p>
+                                            <p class="text-xs text-text-secondary">Variâncias Diferentes</p>
+                                            <p class="text-[10px] text-text-muted">(Heterocedasticidade)</p>
+                                </div>
+                                <div class="bg-green-400/10 p-2 rounded">
+                                    <p class="text-green-400 font-bold">p > 0.05</p>
+                                    <p class="text-xs text-text-secondary">Variâncias Iguais</p>
+                                    <p class="text-[10px] text-text-muted">(Homocedasticidade)</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-center text-text-muted mt-3">
+                                <strong>Objetivo:</strong> Queremos p > 0.05 para usar testes paramétricos padrão (como
+                                Teste t).
+                            </p>
+                        </div>
+
+                        <div class="bg-yellow-400/10 p-4 rounded-lg border border-yellow-400/20 mt-4">
+                            <h4 class="text-sm font-bold text-yellow-400 mb-1">E se falhar?</h4>
+                            <p class="text-xs text-text-secondary">Se as variâncias forem diferentes, use o
+                                <strong>Teste t de Welch</strong> (não assume variâncias iguais) ou um teste não
+                                paramétrico.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

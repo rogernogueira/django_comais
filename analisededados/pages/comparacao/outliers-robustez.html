@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outliers e Robustez - Testes Estatísticos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-base': '#0f172a',
+            'bg-elevated': '#020617',
+            'bg-surface': '#1e293b',
+            'bg-muted': '#334155',
+            'text-primary': '#f1f5f9',
+            'text-secondary': '#cbd5e1',
+            'text-muted': '#94a3b8',
+            'text-accent': '#38bdf8',
+            'primary': '#38bdf8',
+            'primary-foreground': '#0f172a',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .element-clickable {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .element-clickable:hover {
+      background-color: rgba(56, 189, 248, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .element-clickable:active {
+      transform: translateY(0);
+    }
+    
+    .back-button {
+      transition: all 0.2s ease;
+    }
+    
+    .back-button:hover {
+      background-color: rgba(56, 189, 248, 0.2);
+      transform: translateX(-2px);
+    }
+  </style>
+</head>
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+  <!-- Container principal -->
+  <div class="max-w-6xl mx-auto">
+    <!-- Cabeçalho com botão voltar -->
+    <div class="flex items-center mb-8">
+      <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+        <span class="text-primary text-lg">←</span>
+      </button>
+      <h1 class="text-4xl text-primary font-bold">Outliers e Robustez</h1>
+    </div>
+    
+    <p class="text-xl text-center mb-12 text-text-secondary">Entenda o que são outliers e por que testes não paramétricos são robustos</p>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Gráfico e Visualização -->
+      <div class="space-y-6">
+        <div class="bg-bg-muted/20 p-4 rounded-lg">
+          <h3 class="text-xl mb-4 text-primary font-bold">Impacto dos Outliers</h3>
+          <svg aria-label="Comparação de dados com e sem outliers" class="w-full" role="img" viewBox="0 0 500 360">
+            <rect fill="#1e293b" height="360" width="500" x="0" y="0"></rect>
+            
+            <!-- Eixo X -->
+            <line stroke="#CBD5E1" stroke-width="2" x1="40" x2="460" y1="300" y2="300"></line>
+            
+            <!-- Distribuição normal sem outliers -->
+            <path d="M 60 300 C 120 200, 200 120, 260 100 C 320 80, 380 120, 440 200 L 440 300 Z" 
+                  fill="#10b981" opacity="0.4"></path>
+            <path d="M 60 300 C 120 200, 200 120, 260 100 C 320 80, 380 120, 440 200" 
+                  fill="none" stroke="#10b981" stroke-width="4"></path>
+            
+            <!-- Média sem outliers -->
+            <line stroke="#10b981" stroke-dasharray="6 6" stroke-width="4" x1="260" x2="260" y1="100" y2="300"></line>
+            <text fill="#10b981" font-family="Source Sans 3, Arial" font-size="14" font-weight="bold" text-anchor="middle" x="260" y="318">
+              Média (sem outliers)
+            </text>
+            
+            <!-- Distribuição com outliers -->
+            <path d="M 60 300 C 120 200, 200 120, 260 100 C 320 80, 380 120, 440 200 L 440 300 Z" 
+                  fill="#ef4444" opacity="0.2"></path>
+            <path d="M 60 300 C 120 200, 200 120, 260 100 C 320 80, 380 120, 440 200" 
+                  fill="none" stroke="#ef4444" stroke-width="3" stroke-dasharray="4 4"></path>
+            
+            <!-- Outliers -->
+            <circle cx="400" cy="50" fill="#fbbf24" r="8"></circle>
+            <circle cx="420" cy="40" fill="#fbbf24" r="8"></circle>
+            <circle cx="380" cy="45" fill="#fbbf24" r="8"></circle>
+            
+            <!-- Média com outliers -->
+            <line stroke="#ef4444" stroke-dasharray="6 6" stroke-width="3" x1="280" x2="280" y1="90" y2="300"></line>
+            <text fill="#ef4444" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle" x="280" y="318">
+              Média (com outliers)
+            </text>
+            
+            <!-- Mediana (robusta) -->
+            <line stroke="#38bdf8" stroke-dasharray="6 6" stroke-width="3" x1="260" x2="260" y1="100" y2="300"></line>
+            <text fill="#38bdf8" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle" x="260" y="335">
+              Mediana (robusta)
+            </text>
+            
+            <!-- Legenda -->
+            <rect fill="#10b981" height="12" rx="2" width="12" x="60" y="24"></rect>
+            <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="13" x="78" y="34">
+              Sem outliers
+            </text>
+            <rect fill="#ef4444" height="12" rx="2" width="12" x="160" y="24"></rect>
+            <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="13" x="178" y="34">
+              Com outliers
+            </text>
+            <rect fill="#fbbf24" height="12" rx="2" width="12" x="260" y="24"></rect>
+            <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="13" x="278" y="34">
+              Outliers
+            </text>
+          </svg>
+          <div class="mt-4 text-center">
+            <p class="text-sm text-text-muted">Observe como a <strong class="text-ef4444">média se move</strong> com outliers, mas a <strong class="text-38bdf8">mediana permanece estável</strong></p>
+          </div>
+        </div>
+        
+        <div class="bg-bg-muted/20 p-4 rounded-lg">
+          <h3 class="text-xl mb-4 text-primary font-bold">O que são Outliers?</h3>
+          <div class="space-y-3">
+            <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+              <p class="text-text-secondary"><span class="text-yellow-400">⚠️</span> <strong>Valores extremos</strong> que se afastam significativamente do padrão geral</p>
+            </div>
+            <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+              <p class="text-text-secondary"><span class="text-yellow-400">⚠️</span> Podem ser <strong>erros de medição</strong> ou <strong>fenômenos reais</strong></p>
+            </div>
+            <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+              <p class="text-text-secondary"><span class="text-yellow-400">⚠️</span> <strong>Distorcem</strong> a média e outros parâmetros</p>
+            </div>
+            <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+              <p class="text-text-secondary"><span class="text-yellow-400">⚠️</span> <strong>Afetam</strong> testes paramétricos que usam médias</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Explicação e Propriedades -->
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-xl mb-3 text-primary font-bold">Por que Outliers são um Problema?</h3>
+          <p class="text-text-secondary leading-relaxed">
+            Outliers podem distorcer completamente os resultados de testes estatísticos que dependem de médias e variâncias. 
+            Eles "puxam" a média para sua direção, tornando as conclusões estatísticas inválidas.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="text-xl mb-3 text-primary font-bold">Exemplo Prático: Renda</h3>
+          <div class="bg-bg-muted/20 p-4 rounded-lg">
+            <div class="grid grid-cols-2 gap-4 text-center">
+              <div class="element-clickable bg-primary/20 p-3 rounded">
+                <p class="text-lg font-bold text-primary">Com Outliers</p>
+                <p class="text-sm text-text-secondary">30k, 35k, 40k, 45k, 50k, <strong class="text-yellow-400">100k, 200k</strong></p>
+                <p class="text-lg mt-2 text-primary">Média: 71k</p>
+                <p class="text-xs text-text-muted">(distorcida)</p>
+              </div>
+              <div class="element-clickable bg-green-400/20 p-3 rounded">
+                <h4 class="text-green-400 font-bold mb-2">Sem Outliers</h4>
+                <p class="text-sm text-text-secondary">30k, 35k, 40k, 45k, 50k</p>
+                <p class="text-lg mt-2 text-green-400">Média: 40k</p>
+                <p class="text-xs text-text-muted">(realista)</p>
+              </div>
+            </div>
+            <p class="text-sm text-text-muted mt-3 text-center">
+              A mediana permanece 45k em ambos os casos - robusta a outliers!
+            </p>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-xl mb-3 text-primary font-bold">Por que Testes NP são Robustos?</h3>
+          <div class="space-y-3">
+            <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+              <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Usam postos (ranks)</strong> em vez de valores absolutos</p>
+            </div>
+            <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+              <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Comparam medianas</strong> que são resistentes a outliers</p>
+            </div>
+            <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+              <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Transformação dos dados</strong> reduz influência de valores extremos</p>
+            </div>
+            <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+              <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Não assumem distribuição normal</strong> que outliers violam</p>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-xl mb-3 text-primary font-bold">Como Identificar Outliers?</h3>
+          <div class="bg-bg-muted/20 p-4 rounded-lg">
+            <div class="grid grid-cols-2 gap-4 text-center">
+              <div class="element-clickable bg-red-400/20 p-3 rounded">
+                <p class="text-lg font-bold text-red-400">Box Plot</p>
+                <p class="text-sm text-text-secondary">Pontos fora dos "bigodes"</p>
+              </div>
+              <div class="element-clickable bg-yellow-400/20 p-3 rounded">
+                <p class="text-lg font-bold text-yellow-400">±3σ</p>
+                <p class="text-sm text-text-secondary">Fora de 3 desvios padrão</p>
+              </div>
+            </div>
+            <p class="text-sm text-text-muted mt-3 text-center">
+              Use gráficos e regras estatísticas para detectar outliers
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-3 text-primary font-bold">Comparação: Média vs Mediana</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="element-clickable bg-primary/20 p-4 rounded-lg">
+          <h4 class="text-primary font-bold mb-3">Média</h4>
+          <div class="space-y-2 text-sm text-text-secondary">
+            <p>✓ Usa todos os valores</p>
+            <p>✓ Boa para dados normais</p>
+            <p>❌ Sensível a outliers</p>
+            <p>❌ Pode ser distorcida</p>
+          </div>
+        </div>
+        <div class="element-clickable bg-green-400/20 p-4 rounded-lg">
+          <h4 class="text-green-400 font-bold mb-3">Mediana</h4>
+          <div class="space-y-2 text-sm text-text-secondary">
+            <p>✓ Usa valor central</p>
+            <p>✓ Robusta a outliers</p>
+            <p>✓ Melhor para dados assimétricos</p>
+            <p>❌ Ignora informação dos extremos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-3 text-primary font-bold">Quando Usar Cada Medida?</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+          <p class="text-sm text-text-secondary"><strong>Média:</strong> Dados normais, sem outliers</p>
+        </div>
+        <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+          <p class="text-sm text-text-secondary"><strong>Mediana:</strong> Com outliers, dados assimétricos</p>
+        </div>
+        <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+          <p class="text-sm text-text-secondary"><strong>Testes NP:</strong> Quando usar mediana</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-3 text-primary font-bold">Resumo Prático</h3>
+      <div class="bg-bg-muted/20 p-4 rounded-lg">
+        <div class="space-y-3">
+          <div class="element-clickable bg-red-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Se há outliers → Use mediana e testes não paramétricos</strong></p>
+          </div>
+          <div class="element-clickable bg-green-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Se dados são normais → Use média e testes paramétricos</strong></p>
+          </div>
+          <div class="element-clickable bg-yellow-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Sempre verifique outliers antes de escolher o teste</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

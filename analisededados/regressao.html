@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Regressão - Guia Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#38bdf8',
+                        'reg-blue': '#3b82f6',
+                        'reg-purple': '#8b5cf6',
+                        'reg-green': '#10b981',
+                        'reg-orange': '#f97316',
+                        'reg-red': '#ef4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .slide {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .slide:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl md:text-5xl text-center mb-8 text-reg-blue font-bold">Análise de Regressão</h1>
+        <p class="text-xl text-center mb-12 text-text-secondary">Guia interativo para construção e diagnóstico de
+            modelos preditivos</p>
+
+        <!-- Grid de slides interativos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Slide 1: Intro/Title Card -->
+            <div
+                class="slide bg-bg-elevated rounded-2xl p-8 flex flex-col justify-center items-center text-center border-2 border-reg-blue/20 hover:border-reg-blue/50">
+                <h2 class="text-3xl mb-4 text-reg-blue font-bold">Escolha seu Modelo</h2>
+                <p class="text-lg text-text-secondary">Qual é o tipo da sua variável resposta (Y)?</p>
+                <a href="index.html"
+                    class="mt-6 text-sm text-text-muted hover:text-white transition-colors border border-bg-muted px-4 py-2 rounded-full">&larr;
+                    Voltar ao Menu Principal</a>
+            </div>
+
+            <!-- Slide 2: Linear Regression -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-reg-blue/20 hover:border-reg-blue/50">
+                <h3 class="text-xl mb-4 text-reg-blue font-bold">Variável Contínua</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="p-3 bg-reg-blue/10 rounded-lg mb-2 border border-reg-blue/20">
+                        <p class="text-sm text-reg-blue font-mono font-bold">Y = Números</p>
+                        <p class="text-xs text-text-muted mt-1">Salário, Altura, Vendas</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/regressao/regressao-linear.html'">
+                        <p class="text-text-secondary">Regressão Linear Simples</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/regressao/regressao-multipla.html'">
+                        <p class="text-text-secondary">Regressão Linear Múltipla</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/regressao/metricas-erro.html'">
+                        <p class="text-text-secondary">Avaliação - Erros</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm text-reg-blue font-semibold">
+                    Explorar Linear &rarr;
+                </div>
+            </div>
+
+            <!-- Slide 3: Logistic Regression -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-reg-purple/20 hover:border-reg-purple/50">
+                <h3 class="text-xl mb-4 text-reg-purple font-bold">Variável Categórica</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="p-3 bg-reg-purple/10 rounded-lg mb-2 border border-reg-purple/20">
+                        <p class="text-sm text-reg-purple font-mono font-bold">Y = Categorias</p>
+                        <p class="text-xs text-text-muted mt-1">Sim/Não, 0/1, Fraude/Normal</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/regressao/regressao-logistica.html'">
+                        <p class="text-text-secondary">Regressão Logística</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative">
+                        <p class="text-text-secondary">Matriz de Confusão</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/regressao/metricas-classificacao.html'">
+                        <p class="text-text-secondary">Avaliação - Classificação</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm text-reg-purple font-semibold">
+                    Explorar Logística &rarr;
+                </div>
+            </div>
+
+            <!-- Slide 4: Fundamentos -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-reg-green/20 hover:border-reg-green/50">
+                <h3 class="text-xl mb-4 text-reg-green font-bold">Fundamentos</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/regressao/correlacao-pearson.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs flex items-center justify-center mr-2 font-bold">r</span>
+                        <span class="text-text-secondary">Correlação de Pearson</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/regressao/correlacao-spearman.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs flex items-center justify-center mr-2 font-bold">ρ</span>
+                        <span class="text-text-secondary">Correlação de Spearman</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/regressao/correlacao-kendall.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs flex items-center justify-center mr-2 font-bold">τ</span>
+                        <span class="text-text-secondary">Correlação de Kendall</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/regressao/coeficiente-determinacao.html'">
+                        <span class="text-text-secondary">Coeficiente R²</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Pressupostos (LINE) -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-reg-red/20 hover:border-reg-red/50">
+                <h3 class="text-xl mb-4 text-reg-orange font-bold">Pressupostos (LINE)</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/regressao/pressuposto-linearidade.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-reg-orange/20 text-reg-orange text-xs flex items-center justify-center mr-2 font-bold">L</span>
+                        <span class="text-text-secondary">Linearidade</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/regressao/pressuposto-independencia.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-reg-orange/20 text-reg-orange text-xs flex items-center justify-center mr-2 font-bold">I</span>
+                        <span class="text-text-secondary">Independência</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/regressao/pressuposto-normalidade.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-reg-orange/20 text-reg-orange text-xs flex items-center justify-center mr-2 font-bold">N</span>
+                        <span class="text-text-secondary">Normalidade</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/regressao/pressuposto-elasticidade.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-reg-orange/20 text-reg-orange text-xs flex items-center justify-center mr-2 font-bold">E</span>
+                        <span class="text-text-secondary">Elasticidade</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Problemas Comuns -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-indigo-400/20 hover:border-indigo-400/50">
+                <h3 class="text-xl mb-4 text-indigo-400 font-bold">Problemas Comuns</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/regressao/multicolinearidade.html'">
+                        <span class="text-text-secondary">Multicolinearidade (VIF)</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/regressao/overfitting.html'">
+                        <span class="text-text-secondary">Overfitting (Sobreajuste)</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/regressao/outliers.html'">
+                        <span class="text-text-secondary">Outliers</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Workflow Guide Section -->
+        <div class="mt-16 pt-8 border-t border-bg-muted">
+            <h2 class="text-3xl text-center mb-8 text-primary font-bold">Fluxo de Trabalho Recomendado</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-reg-blue text-center">
+                    <div class="w-12 h-12 bg-reg-blue/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-reg-blue">1</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Explorar Dados</h3>
+                    <p class="text-sm text-text-muted">Visualize correlações e padrões iniciais</p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-reg-purple text-center">
+                    <div class="w-12 h-12 bg-reg-purple/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-reg-purple">2</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Ajustar Modelo</h3>
+                    <p class="text-sm text-text-muted">Escolha Linear ou Logística</p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-reg-orange text-center">
+                    <div class="w-12 h-12 bg-reg-orange/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-reg-orange">3</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Validar LINE</h3>
+                    <p class="text-sm text-text-muted">Verifique todos os pressupostos</p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-reg-green text-center">
+                    <div class="w-12 h-12 bg-reg-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-reg-green">4</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Diagnosticar</h3>
+                    <p class="text-sm text-text-muted">Analise resíduos e problemas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Reference -->
+        <div class="mt-12 bg-bg-elevated p-8 rounded-2xl border border-primary/20">
+            <h3 class="text-2xl font-bold text-primary mb-6 text-center">Referência Rápida</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-3">Quando usar Regressão Linear?</h4>
+                    <ul class="space-y-2 text-sm text-text-secondary">
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span>Variável resposta é contínua (números)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span>Relação linear entre X e Y</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span>Resíduos normalmente distribuídos</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-3">Quando usar Regressão Logística?</h4>
+                    <ul class="space-y-2 text-sm text-text-secondary">
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">✓</span>
+                            <span>Variável resposta é categórica (Sim/Não)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">✓</span>
+                            <span>Quer estimar probabilidades</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">✓</span>
+                            <span>Classificação binária ou multinomial</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const clickableElements = document.querySelectorAll('.element-clickable, .slide');
+            clickableElements.forEach(element => {
+                element.addEventListener('click', function (e) {
+                    this.style.transform = 'scale(0.98)';
+                    this.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.backgroundColor = '';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

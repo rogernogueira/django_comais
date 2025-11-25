@@ -103,6 +103,7 @@ def gd(request):
 def painel(request):
     return render(request, 'playground/painel.html')
 
+
 def instrucoes(request):
     return render(request, 'instrucoes.html')
 def  contato(request):
@@ -855,7 +856,7 @@ class GeraCampusView(APIView):
             texto =  + f" Considerando {texto}, Gere o resumo , com base no contexto: {texto_relatorios}"
             exemplo = ""
             data=""
-            instrucoes = dedent(f"""\            
+            instrucoes = dedent(f"""            
                 Siga as instruções: {texto}        
                 - retorne o texto em português, sem formatação adicional.
             """)

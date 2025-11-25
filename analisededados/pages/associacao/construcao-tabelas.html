@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construção de Tabelas - Tabelas de Contingência</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-teal': '#14b8a6',
+                        'primary': '#14b8a6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(20, 184, 166, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Construção de Tabelas</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">A base de toda análise de associação categórica</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Estrutura -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é uma Tabela de Contingência?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Também conhecida como tabela cruzada (crosstab), ela exibe a distribuição de frequências de duas
+                        variáveis categóricas simultaneamente.
+                    </p>
+                    <ul class="text-sm text-text-muted space-y-2 list-disc list-inside">
+                        <li><strong>Linhas (r):</strong> Categorias da Variável Independente (geralmente).</li>
+                        <li><strong>Colunas (c):</strong> Categorias da Variável Dependente.</li>
+                        <li><strong>Células:</strong> Interseção que contém a contagem (frequência) de observações.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Exemplo: Tabela 2x2</h3>
+                    <table class="w-full text-sm border-collapse text-center">
+                        <thead>
+                            <tr>
+                                <th class="p-2 border border-gray-700 bg-bg-surface"></th>
+                                <th class="p-2 border border-gray-700 bg-bg-surface text-primary">Doente</th>
+                                <th class="p-2 border border-gray-700 bg-bg-surface text-primary">Saudável</th>
+                                <th class="p-2 border border-gray-700 bg-bg-muted font-bold">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-2 border border-gray-700 bg-bg-surface text-primary font-bold">Exposto</td>
+                                <td class="p-2 border border-gray-700">a (30)</td>
+                                <td class="p-2 border border-gray-700">b (10)</td>
+                                <td class="p-2 border border-gray-700 bg-bg-muted font-bold">40</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 border border-gray-700 bg-bg-surface text-primary font-bold">Não Exposto
+                                </td>
+                                <td class="p-2 border border-gray-700">c (5)</td>
+                                <td class="p-2 border border-gray-700">d (55)</td>
+                                <td class="p-2 border border-gray-700 bg-bg-muted font-bold">60</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 border border-gray-700 bg-bg-muted font-bold">Total</td>
+                                <td class="p-2 border border-gray-700 bg-bg-muted font-bold">35</td>
+                                <td class="p-2 border border-gray-700 bg-bg-muted font-bold">65</td>
+                                <td class="p-2 border border-gray-700 bg-primary/20 font-bold text-primary">100 (N)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-xs text-text-muted mt-2 text-center">Os totais nas bordas são chamados de "Totais
+                        Marginais".</p>
+                </div>
+            </div>
+
+            <!-- Dicas Práticas -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Porcentagens: Linha ou Coluna?</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        A forma como você calcula as porcentagens muda a interpretação:
+                    </p>
+                    <ul class="text-sm text-text-secondary space-y-3">
+                        <li class="bg-bg-surface p-3 rounded">
+                            <strong class="text-primary block">% da Linha:</strong>
+                            "Dos expostos, quantos ficaram doentes?" (Foco no risco/efeito).
+                        </li>
+                        <li class="bg-bg-surface p-3 rounded">
+                            <strong class="text-primary block">% da Coluna:</strong>
+                            "Dos doentes, quantos foram expostos?" (Foco no perfil do grupo).
+                        </li>
+                        <li class="bg-bg-surface p-3 rounded">
+                            <strong class="text-primary block">% do Total:</strong>
+                            "Qual a prevalência de expostos e doentes na população geral?"
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Dica de Ouro</h4>
+                    <p class="text-sm text-text-secondary">
+                        Sempre coloque a <strong>Variável Independente (Causa)</strong> nas linhas e a <strong>Variável
+                            Dependente (Desfecho)</strong> nas colunas. Assim, a leitura da esquerda para a direita (%
+                        da linha) segue a lógica causal natural.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="frequencias-obs-esp.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Obs vs Esperadas &rarr;
+            </a>
+            <a href="residuos-padronizados.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Resíduos &rarr;
+            </a>
+            <a href="visualizacao-mosaicplot.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Mosaicplot &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

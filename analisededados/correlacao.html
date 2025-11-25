@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Correlação - Guia Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#f59e0b', // Amber-500
+                        'corr-green-light': '#f97316', // Orange-500
+                        'corr-blue': '#eab308', // Yellow-500
+                        'corr-red': '#ef4444', // Red-500
+                        'corr-green': '#22c55e', // Green-500
+                        'corr-green-light': '#10b981',
+                        'corr-blue': '#3b82f6',
+                        'corr-purple': '#a855f7',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .slide {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .slide:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(245, 158, 11, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl md:text-5xl text-center mb-8 text-primary font-bold">Análise de Correlação</h1>
+        <p class="text-xl text-center mb-12 text-text-secondary">Medindo a força e a direção das relações entre
+            variáveis</p>
+
+        <!-- Grid de slides interativos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Slide 1: Intro/Title Card -->
+            <div
+                class="slide bg-bg-elevated rounded-2xl p-8 flex flex-col justify-center items-center text-center border-2 border-primary/20 hover:border-primary/50">
+                <h2 class="text-3xl mb-4 text-primary font-bold">Explorar Correlações</h2>
+                <p class="text-lg text-text-secondary">Qual a natureza da sua relação?</p>
+                <a href="index.html"
+                    class="mt-6 text-sm text-text-muted hover:text-white transition-colors border border-bg-muted px-4 py-2 rounded-full">&larr;
+                    Voltar ao Menu Principal</a>
+            </div>
+
+            <!-- Slide 2: Correlação de Pearson -->
+            <div class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-corr-green-light/20 hover:border-corr-green-light/50"
+                onclick="window.location.href='pages/regressao/correlacao-pearson.html'">
+                <h3 class="text-xl mb-4 text-corr-green-light font-bold">Pearson (r)</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="p-3 bg-corr-green-light/10 rounded-lg mb-2 border border-corr-green-light/20">
+                        <p class="text-sm text-corr-green-light font-mono font-bold">Paramétrico</p>
+                        <p class="text-xs text-text-muted mt-1">Relação Linear</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg"
+                        onclick="window.location.href='pages/regressao/correlacao-pearson.html'">
+                        <p class="text-text-secondary">Conceito e Fórmula</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                        <p class="text-text-secondary">Pressupostos (Normalidade)</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                        <p class="text-text-secondary">Interpretação do r</p>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm text-corr-green-light font-semibold">
+                    Explorar Pearson &rarr;
+                </div>
+            </div>
+
+            <!-- Slide 3: Correlação de Spearman -->
+            <div class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-corr-blue/20 hover:border-corr-blue/50"
+                onclick="window.location.href='pages/regressao/correlacao-spearman.html'">
+                <h3 class="text-xl mb-4 text-corr-blue font-bold">Spearman (ρ)</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="p-3 bg-corr-blue/10 rounded-lg mb-2 border border-corr-blue/20">
+                        <p class="text-sm text-corr-blue font-mono font-bold">Não Paramétrico</p>
+                        <p class="text-xs text-text-muted mt-1">Relação Monotônica</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg"
+                        onclick="window.location.href='pages/regressao/correlacao-spearman.html'">
+                        <p class="text-text-secondary">Baseado em Postos (Ranks)</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                        <p class="text-text-secondary">Dados Ordinais</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                        <p class="text-text-secondary">Robustez a Outliers</p>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm text-corr-blue font-semibold">
+                    Explorar Spearman &rarr;
+                </div>
+            </div>
+
+            <!-- Slide 4: Correlação de Kendall -->
+            <div class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-corr-purple/20 hover:border-corr-purple/50"
+                onclick="window.location.href='pages/regressao/correlacao-kendall.html'">
+                <h3 class="text-xl mb-4 text-corr-purple font-bold">Kendall (τ)</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="p-3 bg-corr-purple/10 rounded-lg mb-2 border border-corr-purple/20">
+                        <p class="text-sm text-corr-purple font-mono font-bold">Não Paramétrico</p>
+                        <p class="text-xs text-text-muted mt-1">Amostras Pequenas</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg"
+                        onclick="window.location.href='pages/regressao/correlacao-kendall.html'">
+                        <p class="text-text-secondary">Pares Concordantes</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                        <p class="text-text-secondary">Melhor para Empates</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                        <p class="text-text-secondary">Comparação com Spearman</p>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm text-corr-purple font-semibold">
+                    Explorar Kendall &rarr;
+                </div>
+            </div>
+
+            <!-- Slide 5: Conceitos Fundamentais -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-text-muted/20 hover:border-text-muted/50">
+                <h3 class="text-xl mb-4 text-text-secondary font-bold">Conceitos Chave</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex-col relative"
+                        onclick="window.location.href='pages/correlacao/covariancia-vs-correlacao.html'">
+                        <div class="flex-col">
+                            <div class="text-text-secondary"> Covariância vs Correlação</div>
+                            <div>
+                                <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/correlacao/causalidade-vs-correlacao.html'">
+                        <span class="text-text-secondary">Causalidade ≠ Correlação</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/correlacao/coeficiente-determinacao.html'">
+                        <span class="text-text-secondary">Coeficiente de Determinação (R²)</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/correlacao/matriz-correlacao.html'">
+                        <span class="text-text-secondary">Matriz de Correlação</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Visualização -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-corr-red/20 hover:border-corr-red/50">
+                <h3 class="text-xl mb-4 text-corr-red font-bold">Diagnóstico Visual</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/correlacao/scatterplot.html'">
+                        <span class="text-text-secondary">Scatterplot (Dispersão)</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg  relative"
+                        onclick="window.location.href='pages/correlacao/heatmaps.html'">
+                        <span class="text-text-secondary">Heatmaps</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/correlacao/anscombe.html'">
+                        <span class="text-text-secondary">Anscombe's Quartet</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/correlacao/correlograms.html'">
+                        <span class="text-text-secondary">Correlograms</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-primary/50 group-hover:text-primary transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Workflow Guide Section -->
+        <div class="mt-16 pt-8 border-t border-bg-muted">
+            <h2 class="text-3xl text-center mb-8 text-primary font-bold">Fluxo de Análise</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-corr-green-light text-center">
+                    <div
+                        class="w-12 h-12 bg-corr-green-light/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-corr-green-light">1</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Visualizar</h3>
+                    <p class="text-sm text-text-muted">Faça um scatterplot primeiro</p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-corr-blue text-center">
+                    <div class="w-12 h-12 bg-corr-blue/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-corr-blue">2</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Checar Normalidade</h3>
+                    <p class="text-sm text-text-muted">Shapiro-Wilk ou Histograma</p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-corr-green text-center">
+                    <div class="w-12 h-12 bg-corr-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-corr-green">3</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Escolher Coeficiente</h3>
+                    <p class="text-sm text-text-muted">Pearson (Normal) ou Spearman (Não)</p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-corr-red text-center">
+                    <div class="w-12 h-12 bg-corr-red/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-corr-red">4</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Interpretar</h3>
+                    <p class="text-sm text-text-muted">Força, direção e significância</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Reference -->
+        <div class="mt-12 bg-bg-elevated p-8 rounded-2xl border border-primary/20">
+            <h3 class="text-2xl font-bold text-primary mb-6 text-center">Guia de Interpretação (Regra de Bolso)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="p-4 rounded-lg bg-bg-muted/20 border border-bg-muted">
+                    <h4 class="text-lg font-bold text-white mb-2">Fraca</h4>
+                    <p class="text-2xl text-text-muted font-mono">0.10 - 0.30</p>
+                </div>
+                <div class="p-4 rounded-lg bg-bg-muted/20 border border-bg-muted">
+                    <h4 class="text-lg font-bold text-white mb-2">Moderada</h4>
+                    <p class="text-2xl text-primary font-mono">0.30 - 0.50</p>
+                </div>
+                <div class="p-4 rounded-lg bg-bg-muted/20 border border-bg-muted">
+                    <h4 class="text-lg font-bold text-white mb-2">Forte</h4>
+                    <p class="text-2xl text-corr-green-light font-mono">> 0.50</p>
+                </div>
+            </div>
+            <p class="text-center text-xs text-text-muted mt-4">Nota: Estes valores são diretrizes gerais (Cohen, 1988).
+                O contexto da área de estudo é fundamental.</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const clickableElements = document.querySelectorAll('.element-clickable, .slide');
+            clickableElements.forEach(element => {
+                element.addEventListener('click', function (e) {
+                    this.style.transform = 'scale(0.98)';
+                    this.style.backgroundColor = 'rgba(245, 158, 11, 0.1)';
+
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.backgroundColor = '';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

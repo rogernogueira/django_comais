@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
     'membros',
+    'pdf',
     'rest_framework', 
     'corsheaders', 
     'tinymce',
@@ -103,6 +104,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            "builtins": ["pdf.templates.pdf.markdown_processing"],
         },
     },
 ]

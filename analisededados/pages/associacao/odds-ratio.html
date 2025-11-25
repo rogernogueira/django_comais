@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razão de Chances (Odds Ratio) - Medidas de Associação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-blue': '#3b82f6',
+                        'primary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Razão de Chances (Odds Ratio)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Quantificando o risco e a probabilidade relativa</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O Odds Ratio (OR) compara a chance de um evento ocorrer em um grupo versus a chance de ocorrer
+                        em outro. É fundamental em estudos de caso-controle e regressão logística.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-sm text-white font-bold mb-2">Interpretação Básica:</p>
+                        <ul class="text-sm text-text-muted space-y-1">
+                            <li><strong>OR = 1:</strong> Chances iguais (sem associação).</li>
+                            <li><strong>OR > 1:</strong> Maior chance no primeiro grupo (fator de risco).</li>
+                            <li><strong>OR < 1:</strong> Menor chance no primeiro grupo (fator de proteção).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Fórmula (Tabela 2x2)</h3>
+                    <table class="w-full text-sm border-collapse mb-4 text-center">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th></th>
+                                <th class="py-2 text-text-muted">Evento Sim</th>
+                                <th class="py-2 text-text-muted">Evento Não</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-text-secondary">
+                            <tr class="border-b border-gray-800">
+                                <td class="py-2 font-bold text-left">Grupo Exposto</td>
+                                <td class="bg-primary/10 rounded font-bold text-primary">a</td>
+                                <td class="font-bold">b</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-bold text-left">Grupo Controle</td>
+                                <td class="font-bold">c</td>
+                                <td class="bg-primary/10 rounded font-bold text-primary">d</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="bg-bg-surface p-4 rounded text-center">
+                        <p class="text-lg text-white font-mono">
+                            $$ OR = \frac{a \cdot d}{b \cdot c} $$
+                        </p>
+                        <p class="text-xs text-text-muted mt-2">"Produto cruzado"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exemplo Prático -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Exemplo: Fumar e Doença</h3>
+                    <div class="space-y-4">
+                        <p class="text-sm text-text-secondary">
+                            Imagine um estudo com os seguintes dados:
+                        </p>
+                        <ul class="text-sm text-text-muted list-disc list-inside">
+                            <li>Fumantes doentes (a): 40</li>
+                            <li>Fumantes saudáveis (b): 60</li>
+                            <li>Não-fumantes doentes (c): 10</li>
+                            <li>Não-fumantes saudáveis (d): 90</li>
+                        </ul>
+                        <div class="bg-bg-surface p-4 rounded mt-4">
+                            <p class="text-sm font-mono text-primary mb-2">
+                                $$ OR = \frac{40 \cdot 90}{60 \cdot 10} = \frac{3600}{600} = 6.0 $$
+                            </p>
+                            <p class="text-sm text-white font-bold">Interpretação:</p>
+                            <p class="text-sm text-text-secondary">
+                                A chance de doença entre fumantes é <strong>6 vezes maior</strong> do que entre
+                                não-fumantes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Odds vs Probabilidade</h4>
+                    <p class="text-sm text-text-secondary mb-2">
+                        Cuidado para não confundir!
+                    </p>
+                    <ul class="text-sm text-text-muted space-y-2">
+                        <li><strong>Probabilidade (P):</strong> Eventos / Total (ex: 40/100 = 40%)</li>
+                        <li><strong>Odds (Chance):</strong> Eventos / Não-Eventos (ex: 40/60 = 0.66)</li>
+                    </ul>
+                    <p class="text-xs text-text-secondary mt-2 italic">
+                        O OR compara as Odds, não as probabilidades diretamente, embora para eventos raros eles sejam
+                        similares.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="phi.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Coeficiente Phi &rarr;
+            </a>
+            <a href="v-cramer.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver V de Cramér &rarr;
+            </a>
+            <a href="coeficiente-contingencia.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Coef. Contingência &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

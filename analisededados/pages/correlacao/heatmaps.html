@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heatmaps - Diagnóstico Visual</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#ef4444', // Red-500
+                        'corr-red': '#ef4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .heatmap-cell {
+            transition: transform 0.2s;
+        }
+
+        .heatmap-cell:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../correlacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Heatmaps (Mapas de Calor)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Transformando números complexos em padrões de cores
+            intuitivos</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O Poder da Cor</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Em grandes conjuntos de dados com muitas variáveis, uma tabela numérica de correlações é
+                        ilegível. O Heatmap substitui números por cores.
+                    </p>
+                    <ul class="text-sm text-text-muted space-y-2 list-disc list-inside">
+                        <li><strong>Vermelho/Quente:</strong> Correlação Positiva Forte (+1)</li>
+                        <li><strong>Azul/Frio:</strong> Correlação Negativa Forte (-1)</li>
+                        <li><strong>Branco/Cinza:</strong> Sem Correlação (0)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Detectando Padrões</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Com um Heatmap, você pode identificar instantaneamente:
+                    </p>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li class="flex items-center">
+                            <span class="w-4 h-4 bg-red-500 rounded mr-2"></span>
+                            <span><strong>Clusters:</strong> Grupos de variáveis que se correlacionam entre si
+                                (redundância).</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-4 h-4 bg-blue-500 rounded mr-2"></span>
+                            <span><strong>Opostos:</strong> Variáveis que se movem em direções contrárias.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Exemplo Visual -->
+            <div class="space-y-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700 flex flex-col items-center">
+                    <h3 class="text-lg text-white font-bold mb-4">Exemplo: Matriz 4x4</h3>
+
+                    <div class="grid grid-cols-5 gap-1 w-full max-w-md text-xs">
+                        <!-- Headers -->
+                        <div></div>
+                        <div class="text-center text-text-muted font-bold">A</div>
+                        <div class="text-center text-text-muted font-bold">B</div>
+                        <div class="text-center text-text-muted font-bold">C</div>
+                        <div class="text-center text-text-muted font-bold">D</div>
+
+                        <!-- Row A -->
+                        <div class="flex items-center justify-end pr-2 text-text-muted font-bold">A</div>
+                        <div
+                            class="heatmap-cell h-16 bg-red-600 flex items-center justify-center text-white font-bold rounded">
+                            1.0</div>
+                        <div
+                            class="heatmap-cell h-16 bg-red-400 flex items-center justify-center text-white font-bold rounded">
+                            0.7</div>
+                        <div
+                            class="heatmap-cell h-16 bg-gray-700 flex items-center justify-center text-text-muted rounded">
+                            0.1</div>
+                        <div
+                            class="heatmap-cell h-16 bg-blue-500 flex items-center justify-center text-white font-bold rounded">
+                            -0.6</div>
+
+                        <!-- Row B -->
+                        <div class="flex items-center justify-end pr-2 text-text-muted font-bold">B</div>
+                        <div
+                            class="heatmap-cell h-16 bg-red-400 flex items-center justify-center text-white font-bold rounded">
+                            0.7</div>
+                        <div
+                            class="heatmap-cell h-16 bg-red-600 flex items-center justify-center text-white font-bold rounded">
+                            1.0</div>
+                        <div
+                            class="heatmap-cell h-16 bg-gray-600 flex items-center justify-center text-text-muted rounded">
+                            0.2</div>
+                        <div
+                            class="heatmap-cell h-16 bg-blue-400 flex items-center justify-center text-white font-bold rounded">
+                            -0.5</div>
+
+                        <!-- Row C -->
+                        <div class="flex items-center justify-end pr-2 text-text-muted font-bold">C</div>
+                        <div
+                            class="heatmap-cell h-16 bg-gray-700 flex items-center justify-center text-text-muted rounded">
+                            0.1</div>
+                        <div
+                            class="heatmap-cell h-16 bg-gray-600 flex items-center justify-center text-text-muted rounded">
+                            0.2</div>
+                        <div
+                            class="heatmap-cell h-16 bg-red-600 flex items-center justify-center text-white font-bold rounded">
+                            1.0</div>
+                        <div
+                            class="heatmap-cell h-16 bg-gray-800 flex items-center justify-center text-text-muted rounded">
+                            0.0</div>
+
+                        <!-- Row D -->
+                        <div class="flex items-center justify-end pr-2 text-text-muted font-bold">D</div>
+                        <div
+                            class="heatmap-cell h-16 bg-blue-500 flex items-center justify-center text-white font-bold rounded">
+                            -0.6</div>
+                        <div
+                            class="heatmap-cell h-16 bg-blue-400 flex items-center justify-center text-white font-bold rounded">
+                            -0.5</div>
+                        <div
+                            class="heatmap-cell h-16 bg-gray-800 flex items-center justify-center text-text-muted rounded">
+                            0.0</div>
+                        <div
+                            class="heatmap-cell h-16 bg-red-600 flex items-center justify-center text-white font-bold rounded">
+                            1.0</div>
+                    </div>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Interpretação Rápida</h4>
+                    <p class="text-sm text-text-secondary">
+                        Olhe para o exemplo acima:
+                        <br>- <strong>A e B</strong> são muito parecidos (Vermelho).
+                        <br>- <strong>A e D</strong> são opostos (Azul).
+                        <br>- <strong>C</strong> é uma variável "solitária", não se correlaciona forte com ninguém
+                        (Cinza).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="scatterplot.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Scatterplot &rarr;
+            </a>
+            <a href="anscombe.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Anscombe's Quartet &rarr;
+            </a>
+            <a href="correlograms.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Correlograms &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

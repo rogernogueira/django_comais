@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlograms - Diagnóstico Visual</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#ef4444', // Red-500
+                        'corr-red': '#ef4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../correlacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Correlograms</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">A ferramenta definitiva para Análise Exploratória de
+            Dados (EDA)</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- O que é -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O "Canivete Suíço"</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Um Correlograma (ou "Pairs Plot") combina múltiplas visualizações em uma única matriz triangular
+                        ou quadrada.
+                    </p>
+                    <ul class="text-sm text-text-muted space-y-2 list-disc list-inside">
+                        <li><strong>Diagonal Principal:</strong> Mostra a distribuição de cada variável (Histograma ou
+                            Densidade).</li>
+                        <li><strong>Triângulo Inferior:</strong> Mostra Scatterplots para ver a forma da relação.</li>
+                        <li><strong>Triângulo Superior:</strong> Mostra o valor da correlação (r) e significância
+                            (estrelas ***).</li>
+                    </ul>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Por que usar?</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Em vez de gerar 10 gráficos separados, o Correlograma mostra tudo de uma vez. É perfeito para
+                        responder rapidamente:
+                    </p>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span>Meus dados são normais? (Diagonal)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span>A relação é linear? (Inferior)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span>A relação é forte? (Superior)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Exemplo Visual -->
+            <div class="space-y-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h3 class="text-lg text-white font-bold mb-4 text-center">Estrutura Típica</h3>
+
+                    <div class="grid grid-cols-3 gap-1 w-full max-w-md mx-auto text-xs border border-bg-muted p-1">
+                        <!-- Row 1 -->
+                        <div
+                            class="h-24 bg-bg-muted/30 flex flex-col items-center justify-center border border-bg-muted">
+                            <span class="font-bold text-white">Var A</span>
+                            <div class="w-10 h-6 bg-blue-500/50 mt-1 rounded-t"></div> <!-- Histograma -->
+                        </div>
+                        <div class="h-24 bg-bg-base flex items-center justify-center border border-bg-muted">
+                            <span class="text-red-400 font-bold text-lg">0.85***</span>
+                        </div>
+                        <div class="h-24 bg-bg-base flex items-center justify-center border border-bg-muted">
+                            <span class="text-text-muted font-bold">0.12</span>
+                        </div>
+
+                        <!-- Row 2 -->
+                        <div class="h-24 bg-bg-base flex items-center justify-center border border-bg-muted relative">
+                            <!-- Scatterplot simulado -->
+                            <div class="absolute inset-2 flex items-end">
+                                <div class="w-1 h-1 bg-blue-400 rounded-full m-px" style="bottom: 10%; left: 10%"></div>
+                                <div class="w-1 h-1 bg-blue-400 rounded-full m-px" style="bottom: 30%; left: 30%"></div>
+                                <div class="w-1 h-1 bg-blue-400 rounded-full m-px" style="bottom: 60%; left: 60%"></div>
+                            </div>
+                        </div>
+                        <div
+                            class="h-24 bg-bg-muted/30 flex flex-col items-center justify-center border border-bg-muted">
+                            <span class="font-bold text-white">Var B</span>
+                            <div class="w-10 h-6 bg-blue-500/50 mt-1 rounded-t"></div>
+                        </div>
+                        <div class="h-24 bg-bg-base flex items-center justify-center border border-bg-muted">
+                            <span class="text-text-muted font-bold">0.05</span>
+                        </div>
+
+                        <!-- Row 3 -->
+                        <div class="h-24 bg-bg-base flex items-center justify-center border border-bg-muted relative">
+                            <!-- Scatterplot nuvem -->
+                            <div class="absolute inset-2 flex items-center justify-center">
+                                <div class="w-1 h-1 bg-gray-400 rounded-full m-px"></div>
+                                <div class="w-1 h-1 bg-gray-400 rounded-full m-px translate-x-2"></div>
+                                <div class="w-1 h-1 bg-gray-400 rounded-full m-px -translate-y-2"></div>
+                            </div>
+                        </div>
+                        <div class="h-24 bg-bg-base flex items-center justify-center border border-bg-muted relative">
+                            <!-- Scatterplot nuvem -->
+                            <div class="absolute inset-2 flex items-center justify-center">
+                                <div class="w-1 h-1 bg-gray-400 rounded-full m-px"></div>
+                                <div class="w-1 h-1 bg-gray-400 rounded-full m-px translate-x-2"></div>
+                            </div>
+                        </div>
+                        <div
+                            class="h-24 bg-bg-muted/30 flex flex-col items-center justify-center border border-bg-muted">
+                            <span class="font-bold text-white">Var C</span>
+                            <div class="w-10 h-6 bg-blue-500/50 mt-1 rounded-t"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Bibliotecas Úteis</h4>
+                    <p class="text-sm text-text-secondary">
+                        Em R, use <code>GGally::ggpairs()</code> ou <code>corrplot()</code>.
+                        <br>Em Python, use <code>seaborn.pairplot()</code>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="scatterplot.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Scatterplot &rarr;
+            </a>
+            <a href="heatmaps.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Heatmaps &rarr;
+            </a>
+            <a href="anscombe.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Anscombe's Quartet &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

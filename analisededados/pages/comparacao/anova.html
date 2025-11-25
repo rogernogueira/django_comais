@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANOVA - Análise de Variância</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#38bdf8',
+                        'primary': '#38bdf8',
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(56, 189, 248, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <!-- Container principal -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Cabeçalho com botão voltar -->
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">ANOVA - Análise de Variância</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Comparação de médias entre três ou mais grupos
+            independentes</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Gráfico e Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Comparação de Múltiplos Grupos</h3>
+                    <svg aria-label="Comparação de três ou mais grupos" class="w-full" role="img" viewBox="0 0 500 360">
+                        <rect fill="#1e293b" height="360" width="500" x="0" y="0"></rect>
+
+                        <!-- Eixo X -->
+                        <line stroke="#CBD5E1" stroke-width="2" x1="40" x2="460" y1="300" y2="300"></line>
+
+                        <!-- Grupo A (azul) -->
+                        <path
+                            d="M 60 300 C 80 250, 100 180, 120 140 C 140 100, 160 90, 180 100 C 200 110, 220 150, 240 300"
+                            fill="#38bdf8" opacity="0.3" stroke="#38bdf8" stroke-width="3"></path>
+
+                        <!-- Grupo B (verde) -->
+                        <path
+                            d="M 160 300 C 180 240, 200 160, 220 120 C 240 80, 260 70, 280 80 C 300 90, 320 130, 340 300"
+                            fill="#10b981" opacity="0.3" stroke="#10b981" stroke-width="3"></path>
+
+                        <!-- Grupo C (amarelo) -->
+                        <path
+                            d="M 260 300 C 280 230, 300 150, 320 110 C 340 70, 360 65, 380 75 C 400 85, 420 120, 440 300"
+                            fill="#eab308" opacity="0.3" stroke="#eab308" stroke-width="3"></path>
+
+                        <!-- Médias dos grupos -->
+                        <line stroke="#38bdf8" stroke-dasharray="6 6" stroke-width="3" x1="150" x2="150" y1="90"
+                            y2="300"></line>
+                        <text fill="#38bdf8" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle"
+                            x="150" y="318">
+                            Grupo A
+                        </text>
+
+                        <line stroke="#10b981" stroke-dasharray="6 6" stroke-width="3" x1="250" x2="250" y1="70"
+                            y2="300"></line>
+                        <text fill="#10b981" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle"
+                            x="250" y="318">
+                            Grupo B
+                        </text>
+
+                        <line stroke="#eab308" stroke-dasharray="6 6" stroke-width="3" x1="350" x2="350" y1="65"
+                            y2="300"></line>
+                        <text fill="#eab308" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle"
+                            x="350" y="318">
+                            Grupo C
+                        </text>
+
+                        <!-- Título -->
+                        <text fill="#ef4444" font-family="Source Sans 3, Arial" font-size="16" font-weight="bold"
+                            text-anchor="middle" x="250" y="30">
+                            ANOVA compara as médias
+                        </text>
+                    </svg>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Estatística F</h3>
+                    <div class="bg-bg-surface p-4 rounded text-center">
+                        <p class="text-lg text-text-secondary font-mono">
+                            F = Variância Entre Grupos / Variância Dentro dos Grupos
+                        </p>
+                        <div class="mt-3 text-sm text-text-muted">
+                            <p>Quanto maior o F, maior a diferença entre os grupos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Testes Post-Hoc</h3>
+                    <div class="space-y-2">
+                        <div class="element-clickable bg-bg-surface p-3 rounded">
+                            <p class="text-text-secondary"><strong class="text-primary">Tukey HSD:</strong> Comparações
+                                múltiplas</p>
+                        </div>
+                        <div class="element-clickable bg-bg-surface p-3 rounded">
+                            <p class="text-text-secondary"><strong class="text-primary">Bonferroni:</strong> Controle
+                                conservador</p>
+                        </div>
+                        <div class="element-clickable bg-bg-surface p-3 rounded">
+                            <p class="text-text-secondary"><strong class="text-primary">Scheffé:</strong> Mais flexível
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explicação e Propriedades -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">O que é ANOVA?</h3>
+                    <p class="text-text-secondary leading-relaxed">
+                        ANOVA (Analysis of Variance) é um teste estatístico paramétrico usado para comparar as médias de
+                        três ou mais grupos independentes.
+                        Ela testa se pelo menos uma das médias é diferente das outras, analisando a variabilidade dos
+                        dados.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Quando Usar ANOVA?</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>3+
+                                    grupos:</strong> Comparar três ou mais grupos</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Dados
+                                    normais:</strong> Distribuição normal em todos os grupos</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><span class="text-green-400">✓</span>
+                                <strong>Homogeneidade:</strong> Variâncias semelhantes entre grupos</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><span class="text-green-400">✓</span>
+                                <strong>Independência:</strong> Grupos independentes entre si</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Tipos de ANOVA</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-primary/20 p-4 rounded-lg">
+                            <h4 class="text-primary font-bold mb-2">One-Way ANOVA</h4>
+                            <p class="text-sm text-text-secondary">Um fator independente</p>
+                            <p class="text-sm text-text-muted mt-1">Ex: Efeito de 3 dietas diferentes no peso</p>
+                        </div>
+                        <div class="element-clickable bg-green-400/20 p-4 rounded-lg">
+                            <h4 class="text-green-400 font-bold mb-2">Two-Way ANOVA</h4>
+                            <p class="text-sm text-text-secondary">Dois fatores independentes</p>
+                            <p class="text-sm text-text-muted mt-1">Ex: Efeito de dieta E exercício no peso</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Interpretação do Resultado</h3>
+                    <div class="bg-bg-muted/20 p-4 rounded-lg">
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="element-clickable bg-red-400/20 p-3 rounded">
+                                <p class="text-lg font-bold text-red-400">p < 0.05</p>
+                                        <p class="text-sm text-text-secondary">Pelo menos uma média difere</p>
+                            </div>
+                            <div class="element-clickable bg-green-400/20 p-3 rounded">
+                                <p class="text-lg font-bold text-green-400">p ≥ 0.05</p>
+                                <p class="text-sm text-text-secondary">Médias não diferem</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-text-muted mt-3 text-center">
+                            Se p < 0.05, use testes post-hoc para identificar quais grupos diferem </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-lg mb-3 text-primary font-bold">Exemplos Práticos</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Agricultura:</strong> Comparar rendimento de 4
+                        fertilizantes</p>
+                </div>
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Medicina:</strong> Eficácia de 3 tratamentos</p>
+                </div>
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Educação:</strong> Desempenho de 5 métodos de ensino
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-lg mb-3 text-primary font-bold">Alternativa Não Paramétrica</h3>
+            <div class="element-clickable bg-red-400/20 p-4 rounded-lg">
+                <h4 class="text-red-400 font-bold mb-2">Kruskal-Wallis</h4>
+                <p class="text-text-secondary">Use quando os dados não são normais ou têm outliers</p>
+                <p class="text-sm text-text-muted mt-2">Compara medianas ao invés de médias</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

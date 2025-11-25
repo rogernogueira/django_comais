@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regressão Linear Múltipla - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-blue': '#3b82f6',
+                        'primary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../regressao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Regressão Linear Múltipla</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Modelando Y com múltiplas variáveis preditoras
+            simultaneamente.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é?</h3>
+                    <p class="text-text-secondary mb-4">
+                        A Regressão Linear Múltipla estende a regressão simples para incluir múltiplas variáveis
+                        independentes.
+                        Ao invés de uma linha, ajustamos um <strong>plano</strong> (ou hiperplano em mais dimensões).
+                    </p>
+                    <div class="bg-primary/10 p-4 rounded border border-primary/30 text-center mb-4">
+                        <p class="text-2xl text-primary font-mono font-bold mb-2">
+                            Y = β₀ + β₁X₁ + β₂X₂ + ... + βₖXₖ + ε
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>β₀ = intercepto</p>
+                            <p>β₁, β₂, ..., βₖ = coeficientes de cada variável</p>
+                            <p>k = número de variáveis preditoras</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Interpretação dos Coeficientes</h3>
+                    <p class="text-text-secondary text-sm mb-3">
+                        Cada coeficiente βᵢ representa o efeito de Xᵢ em Y, <strong>mantendo todas as outras variáveis
+                            constantes</strong>.
+                    </p>
+                    <div class="bg-blue-900/20 p-3 rounded border border-blue-500/30">
+                        <p class="text-xs text-blue-400">
+                            <strong>Exemplo:</strong> Preço de Casa = 50 + 2×Quartos + 0.5×Área<br>
+                            • Cada quarto adiciona R$ 2k (área constante)<br>
+                            • Cada m² adiciona R$ 500 (quartos constantes)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Vantagens</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Captura efeitos de múltiplos fatores</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Controla variáveis confundidoras</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Geralmente melhor R² que regressão simples</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualização 3D -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Visualização 3D: Plano de Regressão</h3>
+                    <div class="bg-black/30 rounded-lg p-4">
+                        <div
+                            class="relative w-full h-64 bg-gray-900 rounded border border-gray-700 cursor-move overflow-hidden">
+                            <canvas id="multiCanvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+                            <div
+                                class="absolute bottom-2 right-2 text-xs text-gray-500 pointer-events-none select-none">
+                                Arraste para rotacionar
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <p class="font-mono text-primary text-sm" id="planeEq">Y = 0.50 X₁ - 0.30 X₂</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 grid grid-cols-3 gap-2 text-xs text-center">
+                        <div class="bg-red-500/10 p-2 rounded">
+                            <span class="text-red-400 font-bold">X₁</span> (Vermelho)
+                        </div>
+                        <div class="bg-green-500/10 p-2 rounded">
+                            <span class="text-green-400 font-bold">Y</span> (Verde)
+                        </div>
+                        <div class="bg-blue-500/10 p-2 rounded">
+                            <span class="text-blue-400 font-bold">X₂</span> (Azul)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Desafios</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-yellow-500/10 rounded">
+                            <span class="text-yellow-400 mr-2">⚠</span>
+                            <span class="text-text-secondary">Multicolinearidade (variáveis correlacionadas)</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-yellow-500/10 rounded">
+                            <span class="text-yellow-400 mr-2">⚠</span>
+                            <span class="text-text-secondary">Overfitting com muitas variáveis</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-yellow-500/10 rounded">
+                            <span class="text-yellow-400 mr-2">⚠</span>
+                            <span class="text-text-secondary">Difícil visualizar em mais de 3 dimensões</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seleção de Variáveis -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Seleção de Variáveis</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Forward Selection</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Começa sem variáveis e adiciona uma por vez (a mais significativa).
+                    </p>
+                    <div class="bg-primary/10 p-2 rounded text-xs text-primary">
+                        ∅ → X₁ → X₁,X₂ → ...
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Backward Elimination</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Começa com todas as variáveis e remove uma por vez (a menos significativa).
+                    </p>
+                    <div class="bg-primary/10 p-2 rounded text-xs text-primary">
+                        X₁,X₂,...,Xₖ → ... → X₁,X₂
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Stepwise Selection</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Combinação: adiciona e remove variáveis iterativamente.
+                    </p>
+                    <div class="bg-primary/10 p-2 rounded text-xs text-primary">
+                        Híbrido de Forward + Backward
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Critérios de Avaliação -->
+        <div class="mt-8 bg-purple-900/20 p-6 rounded-2xl border border-purple-500/30">
+            <h4 class="text-purple-400 font-bold mb-3 text-lg">📊 Como Avaliar o Modelo?</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="bg-purple-900/30 p-3 rounded">
+                    <p class="text-purple-100 font-bold mb-1">R² Ajustado</p>
+                    <p class="text-purple-300 text-xs">Penaliza modelos com muitas variáveis. Use ao invés de R² normal.
+                    </p>
+                </div>
+                <div class="bg-purple-900/30 p-3 rounded">
+                    <p class="text-purple-100 font-bold mb-1">VIF (Variance Inflation Factor)</p>
+                    <p class="text-purple-300 text-xs">Detecta multicolinearidade. VIF > 10 é problemático.</p>
+                </div>
+                <div class="bg-purple-900/30 p-3 rounded">
+                    <p class="text-purple-100 font-bold mb-1">AIC / BIC</p>
+                    <p class="text-purple-300 text-xs">Critérios de informação. Quanto menor, melhor o modelo.</p>
+                </div>
+                <div class="bg-purple-900/30 p-3 rounded">
+                    <p class="text-purple-100 font-bold mb-1">Validação Cruzada</p>
+                    <p class="text-purple-300 text-xs">Teste em dados não vistos para evitar overfitting.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-yellow-900/20 p-6 rounded-2xl border border-yellow-500/30 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl font-bold text-yellow-400">Problema: Multicolinearidade</h3>
+                    <p class="text-sm text-yellow-200">Aprenda a detectar e resolver correlação entre variáveis
+                        preditoras.</p>
+                </div>
+                <a href="multicolinearidade.html"
+                    class="mt-4 bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center justify-center">
+                    Ver Multicolinearidade →
+                </a>
+            </div>
+
+            <div class="bg-orange-900/20 p-6 rounded-2xl border border-orange-500/30 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl font-bold text-orange-400">Validar Pressupostos</h3>
+                    <p class="text-sm text-orange-200">Verifique os pressupostos LINE antes de aceitar o modelo.</p>
+                </div>
+                <a href="pressuposto-linearidade.html"
+                    class="mt-4 bg-orange-600 hover:bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center justify-center">
+                    Checar Pressupostos →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas3D = document.getElementById('multiCanvas');
+        const ctx3D = canvas3D.getContext('2d');
+
+        let points3D = [];
+        let angleX = 0.5;
+        let angleY = 0.5;
+        let isDragging = false;
+        let lastMouse = { x: 0, y: 0 };
+
+        function init3D() {
+            // Generate Data: Y = 0.5*X1 - 0.3*X2 + noise
+            for (let i = 0; i < 40; i++) {
+                const x1 = (Math.random() - 0.5) * 2;
+                const x2 = (Math.random() - 0.5) * 2;
+                const y = 0.5 * x1 - 0.3 * x2 + (Math.random() - 0.5) * 0.3;
+                points3D.push({ x: x1, z: x2, y: y });
+            }
+            resize3D();
+        }
+
+        function resize3D() {
+            const rect = canvas3D.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            canvas3D.width = rect.width * dpr;
+            canvas3D.height = rect.height * dpr;
+            ctx3D.scale(dpr, dpr);
+            draw3D();
+        }
+        window.addEventListener('resize', resize3D);
+
+        function project(x, y, z, width, height) {
+            let x1 = x * Math.cos(angleY) - z * Math.sin(angleY);
+            let z1 = x * Math.sin(angleY) + z * Math.cos(angleY);
+
+            let y1 = y * Math.cos(angleX) - z1 * Math.sin(angleX);
+            let z2 = y * Math.sin(angleX) + z1 * Math.cos(angleX);
+
+            const fov = 4;
+            const scale = Math.min(width, height) / 4;
+            const projScale = fov / (fov + z2 + 5);
+
+            const x2D = width / 2 + x1 * scale * projScale * 2;
+            const y2D = height / 2 - y1 * scale * projScale * 2;
+
+            return { x: x2D, y: y2D, d: z2 };
+        }
+
+        function draw3D() {
+            const w = canvas3D.width / (window.devicePixelRatio || 1);
+            const h = canvas3D.height / (window.devicePixelRatio || 1);
+
+            ctx3D.clearRect(0, 0, w, h);
+
+            // Draw Axes
+            const origin = project(0, 0, 0, w, h);
+            const xAxis = project(1.5, 0, 0, w, h);
+            const yAxis = project(0, 1.5, 0, w, h);
+            const zAxis = project(0, 0, 1.5, w, h);
+
+            ctx3D.lineWidth = 2;
+
+            ctx3D.beginPath(); ctx3D.moveTo(origin.x, origin.y); ctx3D.lineTo(xAxis.x, xAxis.y);
+            ctx3D.strokeStyle = '#ef4444'; ctx3D.stroke();
+
+            ctx3D.beginPath(); ctx3D.moveTo(origin.x, origin.y); ctx3D.lineTo(yAxis.x, yAxis.y);
+            ctx3D.strokeStyle = '#10b981'; ctx3D.stroke();
+
+            ctx3D.beginPath(); ctx3D.moveTo(origin.x, origin.y); ctx3D.lineTo(zAxis.x, zAxis.y);
+            ctx3D.strokeStyle = '#3b82f6'; ctx3D.stroke();
+
+            // Draw Plane Grid
+            ctx3D.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+            ctx3D.lineWidth = 1;
+
+            for (let i = -10; i <= 10; i += 2) {
+                const val = i / 10;
+                const p1 = project(-1, 0.5 * (-1) - 0.3 * val, val, w, h);
+                const p2 = project(1, 0.5 * (1) - 0.3 * val, val, w, h);
+                ctx3D.beginPath(); ctx3D.moveTo(p1.x, p1.y); ctx3D.lineTo(p2.x, p2.y); ctx3D.stroke();
+
+                const p3 = project(val, 0.5 * val - 0.3 * (-1), -1, w, h);
+                const p4 = project(val, 0.5 * val - 0.3 * (1), 1, w, h);
+                ctx3D.beginPath(); ctx3D.moveTo(p3.x, p3.y); ctx3D.lineTo(p4.x, p4.y); ctx3D.stroke();
+            }
+
+            // Draw Points
+            ctx3D.fillStyle = '#f1f5f9';
+            for (let p of points3D) {
+                const proj = project(p.x, p.y, p.z, w, h);
+                const alpha = Math.max(0.2, 1 - (proj.d + 2) / 6);
+                ctx3D.globalAlpha = alpha;
+
+                ctx3D.beginPath();
+                ctx3D.arc(proj.x, proj.y, 3, 0, Math.PI * 2);
+                ctx3D.fill();
+            }
+            ctx3D.globalAlpha = 1;
+        }
+
+        // Interaction
+        canvas3D.addEventListener('mousedown', e => { isDragging = true; lastMouse = { x: e.clientX, y: e.clientY }; });
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', e => {
+            if (!isDragging) return;
+            const dx = e.clientX - lastMouse.x;
+            const dy = e.clientY - lastMouse.y;
+            angleY += dx * 0.01;
+            angleX += dy * 0.01;
+            lastMouse = { x: e.clientX, y: e.clientY };
+            draw3D();
+        });
+
+        setTimeout(init3D, 100);
+    </script>
+</body>
+
+</html>

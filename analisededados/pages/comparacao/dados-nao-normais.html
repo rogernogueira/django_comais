@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados Não Normais - Estatística</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#38bdf8',
+                        'primary': '#facc15', // Amarelo (Yellow-400)
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(250, 204, 21, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(250, 204, 21, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <!-- Container principal -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Cabeçalho com botão voltar -->
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <div class="flex items-center">
+                <div
+                    class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shadow-lg shadow-primary/20">
+                    <span class="text-bg-base text-xl font-bold">!</span>
+                </div>
+                <h1 class="text-4xl text-primary font-bold">Dados NÃO Normais</h1>
+            </div>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Quando a curva do sino está "torta" ou achatada, a
+            média mente.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Assimetria (Skewness)</h3>
+                    <p class="text-text-secondary mb-4">A maioria dos dados reais não segue uma normal perfeita.</p>
+
+                    <div class="space-y-4">
+                        <div class="bg-bg-surface p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-yellow-400 mb-2">Distribuição Assimétrica à Direita</h4>
+                            <div
+                                class="relative h-32 w-full mt-2 bg-bg-base/50 rounded border border-text-muted/20 p-2">
+                                <svg viewBox="0 0 200 100" class="w-full h-full">
+                                    <!-- Curva Assimétrica -->
+                                    <path d="M10,90 Q30,10 50,90 L200,90" fill="none" stroke="#facc15"
+                                        stroke-width="2" />
+                                    <path d="M50,90 Q100,60 190,90" fill="none" stroke="#facc15" stroke-width="2" />
+
+                                    <!-- Linhas verticais -->
+                                    <line x1="40" y1="30" x2="40" y2="90" stroke="#38bdf8" stroke-width="1"
+                                        stroke-dasharray="2" />
+                                    <text x="40" y="25" fill="#38bdf8" font-size="8" text-anchor="middle">Moda</text>
+
+                                    <line x1="60" y1="40" x2="60" y2="90" stroke="#4ade80" stroke-width="1"
+                                        stroke-dasharray="2" />
+                                    <text x="60" y="35" fill="#4ade80" font-size="8" text-anchor="middle">Mediana</text>
+
+                                    <line x1="90" y1="50" x2="90" y2="90" stroke="#f87171" stroke-width="1"
+                                        stroke-dasharray="2" />
+                                    <text x="90" y="45" fill="#f87171" font-size="8" text-anchor="middle">Média</text>
+                                </svg>
+                            </div>
+                            <p class="text-xs text-center text-text-muted mt-2">A média é "puxada" pela cauda longa,
+                                distorcendo a realidade.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solução -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Por que usar Não Paramétricos?</h3>
+
+                    <div class="space-y-4">
+                        <div class="element-clickable bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                            <h4 class="text-lg font-bold text-white mb-1">Baseados em Postos (Ranks)</h4>
+                            <p class="text-sm text-text-secondary">
+                                Em vez de usar os valores brutos (ex: 1, 1000), usamos a ordem (1º, 2º).
+                            </p>
+                            <div class="flex space-x-2 mt-2 text-xs font-mono bg-bg-base/50 p-2 rounded">
+                                <span>10, 12, 1000</span>
+                                <span class="text-primary">→</span>
+                                <span>1º, 2º, 3º</span>
+                            </div>
+                        </div>
+
+                        <div class="element-clickable bg-bg-surface p-4 rounded-lg border-l-4 border-green-400">
+                            <h4 class="text-lg font-bold text-white mb-1">Foco na Mediana</h4>
+                            <p class="text-sm text-text-secondary">
+                                A mediana divide os dados ao meio (50% acima, 50% abaixo), independentemente da forma da
+                                curva.
+                            </p>
+                        </div>
+
+                        <div class="bg-bg-elevated p-4 rounded-lg mt-6 border border-text-muted/20">
+                            <h4 class="text-sm font-bold text-center text-text-accent mb-2">Exemplos Comuns</h4>
+                            <ul class="text-xs text-text-secondary space-y-2">
+                                <li class="flex items-center">
+                                    <span class="text-yellow-400 mr-2">⏱️</span>
+                                    <span>Tempo de reação (limite inferior físico, cauda longa).</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-yellow-400 mr-2">💰</span>
+                                    <span>Salários (poucos ganham muito).</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-yellow-400 mr-2">🦠</span>
+                                    <span>Contagem de bactérias (crescimento exponencial).</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testes de Normalidade - Estatística</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#38bdf8',
+                        'primary': '#4ade80',
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(56, 189, 248, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <!-- Container principal -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Cabeçalho com botão voltar -->
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <div class="flex items-center">
+                <div
+                    class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shadow-lg shadow-primary/20">
+                    <span class="text-bg-base text-xl font-bold">✓</span>
+                </div>
+                <h1 class="text-4xl text-primary font-bold">Verificando a Normalidade</h1>
+            </div>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Como saber se seus dados seguem uma distribuição
+            normal?</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Métodos Visuais -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">1. Métodos Visuais</h3>
+                    <p class="text-text-secondary mb-4">A primeira etapa é sempre visualizar os dados.</p>
+
+                    <div class="space-y-4">
+                        <div class="bg-bg-surface p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-text-accent mb-2">Histograma</h4>
+                            <p class="text-sm text-text-secondary mb-2">Deve ter formato de "sino" (simétrico).</p>
+                            <!-- Representação simplificada de histograma -->
+                            <div class="flex items-end justify-center h-24 space-x-1 mt-2">
+                                <div class="w-4 bg-primary/30 h-4 rounded-t"></div>
+                                <div class="w-4 bg-primary/50 h-8 rounded-t"></div>
+                                <div class="w-4 bg-primary/70 h-16 rounded-t"></div>
+                                <div class="w-4 bg-primary h-20 rounded-t"></div>
+                                <div class="w-4 bg-primary/70 h-16 rounded-t"></div>
+                                <div class="w-4 bg-primary/50 h-8 rounded-t"></div>
+                                <div class="w-4 bg-primary/30 h-4 rounded-t"></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-bg-surface p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-text-accent mb-2">Q-Q Plot (Quantil-Quantil)</h4>
+                            <p class="text-sm text-text-secondary mb-2">Os pontos devem seguir a linha diagonal.</p>
+
+                            <!-- Representação SVG de QQ Plot -->
+                            <div
+                                class="relative h-32 w-full mt-2 bg-bg-base/50 rounded border border-text-muted/20 p-2">
+                                <svg viewBox="0 0 100 100" class="w-full h-full overflow-visible">
+                                    <!-- Eixos -->
+                                    <line x1="10" y1="90" x2="90" y2="90" stroke="#94a3b8" stroke-width="1" />
+                                    <line x1="10" y1="90" x2="10" y2="10" stroke="#94a3b8" stroke-width="1" />
+
+                                    <!-- Linha de Referência (Diagonal) -->
+                                    <line x1="10" y1="90" x2="90" y2="10" stroke="#f87171" stroke-width="1"
+                                        stroke-dasharray="4" />
+
+                                    <!-- Pontos (Dados Normais - seguindo a linha) -->
+                                    <circle cx="20" cy="80" r="2" fill="#38bdf8" />
+                                    <circle cx="30" cy="70" r="2" fill="#38bdf8" />
+                                    <circle cx="40" cy="60" r="2" fill="#38bdf8" />
+                                    <circle cx="50" cy="50" r="2" fill="#38bdf8" />
+                                    <circle cx="60" cy="40" r="2" fill="#38bdf8" />
+                                    <circle cx="70" cy="30" r="2" fill="#38bdf8" />
+                                    <circle cx="80" cy="20" r="2" fill="#38bdf8" />
+
+                                    <!-- Labels simplificados -->
+                                    <text x="50" y="98" font-size="4" fill="#94a3b8" text-anchor="middle">Teórico</text>
+                                    <text x="5" y="50" font-size="4" fill="#94a3b8" text-anchor="middle"
+                                        transform="rotate(-90 5,50)">Observado</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testes Estatísticos -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">2. Testes Estatísticos</h3>
+                    <p class="text-text-secondary mb-4">Testes formais para confirmar a normalidade.</p>
+
+                    <div class="space-y-4">
+                        <div class="element-clickable bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                            <h4 class="text-lg font-bold text-white">Shapiro-Wilk</h4>
+                            <p class="text-sm text-text-secondary mt-1">Recomendado para amostras pequenas (<strong>n <
+                                        50</strong>).</p>
+                            <p class="text-xs text-text-muted mt-2">É o teste mais poderoso para normalidade.</p>
+                        </div>
+
+                        <div class="element-clickable bg-bg-surface p-4 rounded-lg border-l-4 border-green-400">
+                            <h4 class="text-lg font-bold text-white">Kolmogorov-Smirnov</h4>
+                            <p class="text-sm text-text-secondary mt-1">Recomendado para amostras grandes (<strong>n >
+                                    50</strong>).</p>
+                            <p class="text-xs text-text-muted mt-2">Geralmente usado com a correção de Lilliefors.</p>
+                        </div>
+
+                        <div class="bg-bg-elevated p-4 rounded-lg mt-6 border border-text-muted/20">
+                            <h4 class="text-lg font-bold text-center text-text-accent mb-2">Como Interpretar o P-valor?
+                            </h4>
+                            <div class="grid grid-cols-2 gap-4 text-center">
+                                <div class="bg-red-400/10 p-2 rounded">
+                                    <p class="text-red-400 font-bold">p < 0.05</p>
+                                            <p class="text-xs text-text-secondary">NÃO é normal</p>
+                                            <p class="text-[10px] text-text-muted">(Rejeita H0)</p>
+                                </div>
+                                <div class="bg-green-400/10 p-2 rounded">
+                                    <p class="text-green-400 font-bold">p > 0.05</p>
+                                    <p class="text-xs text-text-secondary">É normal</p>
+                                    <p class="text-[10px] text-text-muted">(Não rejeita H0)</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-center text-text-muted mt-3">
+                                <strong>H0 (Hipótese Nula):</strong> Os dados seguem uma distribuição normal.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-bg-muted text-center">
+            <p class="text-text-secondary mb-4">Se seus dados não forem normais, considere usar:</p>
+            <div class="flex justify-center space-x-4">
+                <button class="bg-red-400/20 hover:bg-red-400/30 text-red-400 px-4 py-2 rounded-lg transition-colors"
+                    onclick="window.location.href='testes-nao-parametricos.html'">
+                    Testes Não Paramétricos
+                </button>
+                <button
+                    class="bg-green-400/20 hover:bg-green-400/30 text-green-400 px-4 py-2 rounded-lg transition-colors"
+                    onclick="window.location.href='outliers-robustez.html'">
+                    Transformação de Dados
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

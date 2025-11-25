@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qui-Quadrado de Homogeneidade - Testes de Associação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-purple': '#a855f7',
+                        'primary': '#a855f7',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(168, 85, 247, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(168, 85, 247, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Qui-Quadrado de Homogeneidade</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Comparando distribuições entre diferentes populações
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O teste Qui-Quadrado de Homogeneidade verifica se <strong>múltiplas populações</strong>
+                        têm a mesma distribuição para uma variável categórica.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-sm text-text-muted mb-2"><strong class="text-white">Hipóteses:</strong></p>
+                        <p class="text-sm text-green-400">H₀: As distribuições são homogêneas (iguais)</p>
+                        <p class="text-sm text-red-400">H₁: As distribuições são diferentes</p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Diferença do Teste de Independência</h3>
+                    <div class="space-y-3">
+                        <div class="bg-purple-500/10 p-3 rounded">
+                            <p class="text-purple-300 font-bold text-sm mb-1">Homogeneidade:</p>
+                            <p class="text-xs text-text-muted">Compara <strong>múltiplas populações</strong> em uma
+                                variável</p>
+                        </div>
+                        <div class="bg-pink-500/10 p-3 rounded">
+                            <p class="text-pink-300 font-bold text-sm mb-1">Independência:</p>
+                            <p class="text-xs text-text-muted">Testa associação em <strong>uma população</strong> com
+                                duas variáveis</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Exemplo Prático</h3>
+                    <div class="bg-bg-surface p-4 rounded mb-3">
+                        <p class="text-white font-bold mb-2">Pergunta de Pesquisa:</p>
+                        <p class="text-text-secondary text-sm">
+                            A preferência por tipo de transporte é a mesma em <strong>3 cidades diferentes</strong>?
+                        </p>
+                    </div>
+                    <table class="w-full text-sm border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left py-2 text-text-muted">Cidade</th>
+                                <th class="text-center py-2 text-text-muted">Carro</th>
+                                <th class="text-center py-2 text-text-muted">Ônibus</th>
+                                <th class="text-center py-2 text-text-muted">Metrô</th>
+                                <th class="text-center py-2 text-text-muted">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-text-secondary">
+                            <tr class="border-b border-gray-800">
+                                <td class="py-2 font-bold">Cidade A</td>
+                                <td class="text-center">40</td>
+                                <td class="text-center">30</td>
+                                <td class="text-center">30</td>
+                                <td class="text-center text-primary">100</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-2 font-bold">Cidade B</td>
+                                <td class="text-center">25</td>
+                                <td class="text-center">45</td>
+                                <td class="text-center">30</td>
+                                <td class="text-center text-primary">100</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-2 font-bold">Cidade C</td>
+                                <td class="text-center">20</td>
+                                <td class="text-center">30</td>
+                                <td class="text-center">50</td>
+                                <td class="text-center text-primary">100</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-bold text-primary">Total</td>
+                                <td class="text-center text-primary">85</td>
+                                <td class="text-center text-primary">105</td>
+                                <td class="text-center text-primary">110</td>
+                                <td class="text-center text-primary font-bold">300</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Fórmula e Características -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Fórmula</h3>
+                    <div class="bg-bg-surface p-4 rounded text-center mb-3">
+                        <p class="text-lg text-text-secondary font-mono mb-3">
+                            χ² = Σ [(Oᵢⱼ - Eᵢⱼ)² / Eᵢⱼ]
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p class="mb-2">Mesma fórmula do teste de independência!</p>
+                            <p>A diferença está no <strong>design do estudo</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Quando Usar?</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Comparar <strong>2 ou mais grupos</strong>
+                                independentes</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Variável de resposta <strong>categórica</strong></span>
+                        </div>
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Amostras <strong>independentes</strong> de cada
+                                grupo</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Frequências esperadas ≥ 5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-primary/10 p-4 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-3">Design do Estudo</h4>
+                    <div class="space-y-2 text-sm text-text-secondary">
+                        <p><strong>1.</strong> Selecione amostras de cada população</p>
+                        <p><strong>2.</strong> Classifique cada indivíduo na variável categórica</p>
+                        <p><strong>3.</strong> Compare as distribuições entre grupos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exemplo Detalhado -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Exemplo: Preferência Política por Região</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg">
+                    <h4 class="text-white font-bold mb-3">Dados Observados</h4>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left py-2">Região</th>
+                                <th class="text-center py-2">Partido A</th>
+                                <th class="text-center py-2">Partido B</th>
+                                <th class="text-center py-2">Partido C</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-text-secondary">
+                            <tr>
+                                <td class="py-1">Norte</td>
+                                <td class="text-center">45</td>
+                                <td class="text-center">30</td>
+                                <td class="text-center">25</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">Sul</td>
+                                <td class="text-center">30</td>
+                                <td class="text-center">40</td>
+                                <td class="text-center">30</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">Leste</td>
+                                <td class="text-center">25</td>
+                                <td class="text-center">30</td>
+                                <td class="text-center">45</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-bg-surface p-6 rounded-lg">
+                    <h4 class="text-white font-bold mb-3">Interpretação</h4>
+                    <div class="space-y-3 text-sm">
+                        <div class="bg-primary/10 p-3 rounded">
+                            <p class="text-primary font-bold mb-1">Se p < 0.05:</p>
+                                    <p class="text-text-muted">As regiões têm <strong>distribuições diferentes</strong>
+                                        de preferência política</p>
+                        </div>
+                        <div class="bg-gray-500/10 p-3 rounded">
+                            <p class="text-gray-400 font-bold mb-1">Se p ≥ 0.05:</p>
+                            <p class="text-text-muted">As distribuições são <strong>homogêneas</strong> entre regiões
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparação -->
+        <div class="mt-8 bg-bg-muted/20 p-6 rounded-lg">
+            <h3 class="text-xl mb-4 text-primary font-bold text-center">Homogeneidade vs Independência</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-surface p-4 rounded border-l-4 border-primary">
+                    <h4 class="text-primary font-bold mb-3">Homogeneidade</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>• <strong>Múltiplas populações</strong></li>
+                        <li>• Uma variável categórica</li>
+                        <li>• Compara distribuições</li>
+                        <li>• Ex: 3 cidades, preferência de transporte</li>
+                        <li>• Totais de linha fixos (tamanho das amostras)</li>
+                    </ul>
+                </div>
+                <div class="bg-bg-surface p-4 rounded border-l-4 border-pink-500">
+                    <h4 class="text-pink-400 font-bold mb-3">Independência</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>• <strong>Uma população</strong></li>
+                        <li>• Duas variáveis categóricas</li>
+                        <li>• Testa associação</li>
+                        <li>• Ex: Gênero vs Preferência de produto</li>
+                        <li>• Apenas total geral fixo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4 bg-yellow-500/10 p-3 rounded text-center">
+                <p class="text-yellow-300 text-sm">
+                    <strong>Importante:</strong> Matematicamente são idênticos, mas conceitualmente diferentes!
+                </p>
+            </div>
+        </div>
+
+        <!-- Pressupostos -->
+        <div class="mt-8 bg-yellow-900/20 p-6 rounded-2xl border border-yellow-500/30">
+            <h4 class="text-yellow-400 font-bold mb-3 text-lg">⚠️ Pressupostos</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200"><strong>Amostras independentes:</strong> Cada grupo é uma amostra
+                        separada.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200"><strong>Frequências esperadas ≥ 5:</strong> Em pelo menos 80% das
+                        células.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200"><strong>Categorias mutuamente exclusivas:</strong> Cada observação em
+                        uma categoria.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200"><strong>Amostragem aleatória:</strong> De cada população.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outros Testes -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-xl mb-4 text-center text-primary font-bold">Outros Testes Qui-Quadrado</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="qui-quadrado-independencia.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 hover:border-primary/50">
+                    <p class="text-white font-bold mb-1">Qui-Quadrado de Independência</p>
+                    <p class="text-xs text-text-muted">Testa associação entre duas variáveis</p>
+                </a>
+                <a href="qui-quadrado-aderencia.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 hover:border-primary/50">
+                    <p class="text-white font-bold mb-1">Qui-Quadrado de Aderência</p>
+                    <p class="text-xs text-text-muted">Testa se dados seguem distribuição esperada</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

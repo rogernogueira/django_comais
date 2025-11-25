@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de p-valor Exato - Testes de Associação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-purple': '#a855f7',
+                        'primary': '#a855f7',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(168, 85, 247, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(168, 85, 247, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Cálculo do P-valor Exato</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">A matemática combinatória por trás do Teste de Fisher
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- A Lógica -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">A Ideia Central</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Ao contrário do Qui-Quadrado que usa uma aproximação, o Teste de Fisher calcula a probabilidade
+                        <strong>exata</strong> de obter a tabela de dados observada (ou uma mais extrema), assumindo que
+                        os totais marginais são fixos.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded border-l-4 border-primary">
+                        <p class="text-sm text-white font-bold mb-2">Distribuição Hipergeométrica</p>
+                        <p class="text-sm text-text-muted">
+                            O teste baseia-se na distribuição hipergeométrica, que modela a probabilidade de k sucessos
+                            em n extrações, sem reposição, de uma população finita.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">A Tabela Genérica 2x2</h3>
+                    <table class="w-full text-sm border-collapse mb-4 text-center">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th></th>
+                                <th class="py-2 text-text-muted">Sim</th>
+                                <th class="py-2 text-text-muted">Não</th>
+                                <th class="py-2 text-primary font-bold">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-text-secondary">
+                            <tr class="border-b border-gray-800">
+                                <td class="py-2 font-bold text-left">Grupo 1</td>
+                                <td class="bg-primary/10 rounded">a</td>
+                                <td>b</td>
+                                <td class="font-bold">a + b</td>
+                            </tr>
+                            <tr class="border-b border-gray-800">
+                                <td class="py-2 font-bold text-left">Grupo 2</td>
+                                <td>c</td>
+                                <td>d</td>
+                                <td class="font-bold">c + d</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-bold text-primary text-left">Total</td>
+                                <td class="font-bold">a + c</td>
+                                <td class="font-bold">b + d</td>
+                                <td class="font-bold text-primary text-lg">n</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- A Fórmula -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">A Fórmula dos Fatoriais</h3>
+                    <div class="bg-bg-surface p-6 rounded text-center mb-4 overflow-x-auto">
+                        <p class="text-lg text-white font-mono">
+                            $$ p = \frac{(a+b)! (c+d)! (a+c)! (b+d)!}{a! b! c! d! n!} $$
+                        </p>
+                    </div>
+                    <div class="text-sm text-text-muted space-y-2">
+                        <p><strong>Numerador:</strong> Produto dos fatoriais dos totais marginais (linhas e colunas).
+                        </p>
+                        <p><strong>Denominador:</strong> Produto dos fatoriais das células individuais (a, b, c, d) e do
+                            total geral (n).</p>
+                    </div>
+                </div>
+
+                <div class="bg-primary/10 p-4 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">O Processo de Cálculo</h4>
+                    <ol class="list-decimal list-inside text-sm text-text-secondary space-y-2">
+                        <li>Calcule a probabilidade (p) da tabela observada usando a fórmula.</li>
+                        <li>Gere todas as outras tabelas possíveis mantendo os mesmos totais marginais.</li>
+                        <li>Calcule o p para cada uma dessas tabelas hipotéticas.</li>
+                        <li><strong>P-valor final:</strong> Soma das probabilidades de todas as tabelas que são tão ou
+                            mais extremas (menos prováveis) que a observada.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exemplo Numérico -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Exemplo Simplificado</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-surface p-4 rounded-lg">
+                    <h4 class="text-white font-bold mb-2 text-center">Tabela Observada</h4>
+                    <table class="w-full text-xs text-center">
+                        <tr>
+                            <td>4</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>5</td>
+                        </tr>
+                    </table>
+                    <p class="text-center text-primary mt-2 font-mono">p = 0.08</p>
+                </div>
+                <div class="bg-bg-surface p-4 rounded-lg opacity-75">
+                    <h4 class="text-white font-bold mb-2 text-center">Tabela Mais Extrema 1</h4>
+                    <table class="w-full text-xs text-center">
+                        <tr>
+                            <td>5</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>0</td>
+                            <td>6</td>
+                        </tr>
+                    </table>
+                    <p class="text-center text-primary mt-2 font-mono">p = 0.01</p>
+                </div>
+                <div class="bg-bg-surface p-4 rounded-lg border border-primary">
+                    <h4 class="text-primary font-bold mb-2 text-center">P-valor (Unicaudal)</h4>
+                    <div class="flex items-center justify-center h-16">
+                        <p class="text-2xl font-bold text-white">0.08 + 0.01 = 0.09</p>
+                    </div>
+                    <p class="text-xs text-center text-text-muted">Soma das probabilidades das tabelas extremas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação -->
+        <div class="mt-12 pt-6 border-t border-bg-muted">
+            <h3 class="text-xl mb-6 text-center text-primary font-bold">Continue Explorando</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="quando-usar-fisher.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 hover:border-primary/50 text-center">
+                    <p class="text-white font-bold mb-1">Quando Usar?</p>
+                    <p class="text-xs text-text-muted">Cenários ideais e limitações</p>
+                </a>
+                <a href="comparacao-qui-quadrado.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 hover:border-primary/50 text-center">
+                    <p class="text-white font-bold mb-1">Fisher vs Qui-Quadrado</p>
+                    <p class="text-xs text-text-muted">Comparativo detalhado</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

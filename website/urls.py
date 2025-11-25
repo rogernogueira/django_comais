@@ -71,7 +71,7 @@ urlpatterns = [
     path('gerencia_tipo_documentos', views.gerencia_tipo_documentos, name='gerencia_tipo_documentos'), 
     path('tipo_documentos/deletar/<int:id>', views.deletar_tipo_documentos, name='deletar_tipo_documentos'), 
     path('api/gerar_documento/<int:id>', views.gerar_documento, name='gerar_documento'), 
-
+    
     path('', include(router.urls)),
     path('api/gera_texto', views.GeraCampusView.as_view(), name='gera-texto'),
     path('api/tipo-documento/<int:id>/', views.tipo_documento, name='tipo-documento')

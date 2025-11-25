@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplos Práticos - Testes Paramétricos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-base': '#0f172a',
+            'bg-elevated': '#020617',
+            'bg-surface': '#1e293b',
+            'bg-muted': '#334155',
+            'text-primary': '#f1f5f9',
+            'text-secondary': '#cbd5e1',
+            'text-muted': '#94a3b8',
+            'text-accent': '#38bdf8',
+            'primary': '#38bdf8',
+            'primary-foreground': '#0f172a',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .element-clickable {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .element-clickable:hover {
+      background-color: rgba(56, 189, 248, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .element-clickable:active {
+      transform: translateY(0);
+    }
+    
+    .back-button {
+      transition: all 0.2s ease;
+    }
+    
+    .back-button:hover {
+      background-color: rgba(56, 189, 248, 0.2);
+      transform: translateX(-2px);
+    }
+    
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background-color: #38bdf8;
+      color: #0f172a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+  <!-- Container principal -->
+  <div class="max-w-6xl mx-auto">
+    <!-- Cabeçalho com botão voltar -->
+    <div class="flex items-center mb-8">
+      <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+        <span class="text-primary text-lg">←</span>
+      </button>
+      <h1 class="text-4xl text-primary font-bold">Exemplos Práticos - Testes Paramétricos</h1>
+    </div>
+    
+    <p class="text-xl text-center mb-12 text-text-secondary">Passo a passo para aplicar Teste t e ANOVA</p>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Teste t de Student -->
+      <div class="space-y-6">
+        <div class="bg-bg-muted/20 p-6 rounded-lg">
+          <h3 class="text-2xl mb-6 text-primary font-bold text-center">Teste t de Student</h3>
+          <p class="text-text-secondary mb-6 text-center">Comparando eficácia de dois medicamentos</p>
+          
+          <div class="space-y-6">
+            <!-- Passo 1 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">1</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Definir Hipóteses</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>H₀:</strong> Não há diferença na eficácia entre os medicamentos<br>
+                    <strong>H₁:</strong> Há diferença na eficácia entre os medicamentos
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 2 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">2</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Coletar Dados</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Medicamento A:</strong> 85, 78, 92, 88, 76, 90, 84, 79, 87, 82<br>
+                    <strong>Medicamento B:</strong> 72, 68, 75, 80, 65, 78, 70, 74, 69, 77<br>
+                    <em>Pontuação de eficácia (0-100)</em>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 3 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">3</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Verificar Pressupostos</h4>
+                  <div class="space-y-2 text-sm text-text-secondary">
+                    <p>✓ <strong>Normalidade:</strong> Teste de Shapiro-Wilk (p > 0.05)</p>
+                    <p>✓ <strong>Homogeneidade:</strong> Teste F (p > 0.05)</p>
+                    <p>✓ <strong>Independência:</strong> Amostras independentes</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 4 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">4</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Calcular Estatística</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Fórmula:</strong> t = (Média_A - Média_B) / √(s²/n_A + s²/n_B)<br>
+                    <strong>Resultado:</strong> t(18) = 4.32, p = 0.0004
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 5 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">5</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Interpretar Resultado</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Conclusão:</strong> Rejeitar H₀ (p < 0.05)<br>
+                    <strong>Significado:</strong> Medicamento A é significativamente mais eficaz
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-primary/20 rounded-lg">
+            <h4 class="text-primary font-bold mb-2">Resumo do Exemplo</h4>
+            <div class="grid grid-cols-2 gap-4 text-center">
+              <div class="bg-bg-muted/30 p-3 rounded">
+                <p class="text-lg font-bold text-primary">Medicamento A</p>
+                <p class="text-sm text-text-secondary">Média: 84.1</p>
+              </div>
+              <div class="bg-bg-muted/30 p-3 rounded">
+                <p class="text-lg font-bold text-primary">Medicamento B</p>
+                <p class="text-sm text-text-secondary">Média: 72.8</p>
+              </div>
+            </div>
+            <p class="text-sm text-text-muted mt-3 text-center">
+              Diferença significativa: p = 0.0004
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ANOVA -->
+      <div class="space-y-6">
+        <div class="bg-bg-muted/20 p-6 rounded-lg">
+          <h3 class="text-2xl mb-6 text-primary font-bold text-center">ANOVA</h3>
+          <p class="text-text-secondary mb-6 text-center">Comparando três métodos de ensino</p>
+          
+          <div class="space-y-6">
+            <!-- Passo 1 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">1</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Definir Hipóteses</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>H₀:</strong> Todos os métodos têm a mesma eficácia<br>
+                    <strong>H₁:</strong> Pelo menos um método é diferente
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 2 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">2</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Coletar Dados</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Método Tradicional:</strong> 65, 70, 68, 72, 75<br>
+                    <strong>Método Digital:</strong> 78, 82, 85, 80, 88<br>
+                    <strong>Método Híbrido:</strong> 90, 88, 92, 85, 95<br>
+                    <em>Notas finais (0-100)</em>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 3 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">3</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Verificar Pressupostos</h4>
+                  <div class="space-y-2 text-sm text-text-secondary">
+                    <p>✓ <strong>Normalidade:</strong> Teste de Shapiro-Wilk em cada grupo</p>
+                    <p>✓ <strong>Homogeneidade:</strong> Teste de Levene (p > 0.05)</p>
+                    <p>✓ <strong>Independência:</strong> Amostras independentes</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 4 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">4</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Calcular ANOVA</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Fórmula:</strong> F = Variância entre grupos / Variância dentro dos grupos<br>
+                    <strong>Resultado:</strong> F(2,12) = 15.67, p = 0.0005
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 5 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">5</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Teste Post-Hoc</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Tukey HSD:</strong><br>
+                    • Tradicional vs Digital: p = 0.008<br>
+                    • Tradicional vs Híbrido: p = 0.0001<br>
+                    • Digital vs Híbrido: p = 0.045
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 6 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">6</div>
+                <div>
+                  <h4 class="text-primary font-bold mb-2">Interpretar Resultado</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Conclusão:</strong> Rejeitar H₀ (p < 0.05)<br>
+                    <strong>Significado:</strong> Métodos têm eficácias diferentes<br>
+                    <strong>Ranking:</strong> Híbrido > Digital > Tradicional
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-primary/20 rounded-lg">
+            <h4 class="text-primary font-bold mb-2">Resumo do Exemplo</h4>
+            <div class="grid grid-cols-3 gap-4 text-center">
+              <div class="bg-bg-muted/30 p-3 rounded">
+                <p class="text-lg font-bold text-primary">Tradicional</p>
+                <p class="text-sm text-text-secondary">Média: 70.0</p>
+              </div>
+              <div class="bg-bg-muted/30 p-3 rounded">
+                <p class="text-lg font-bold text-primary">Digital</p>
+                <p class="text-sm text-text-secondary">Média: 82.6</p>
+              </div>
+              <div class="bg-bg-muted/30 p-3 rounded">
+                <p class="text-lg font-bold text-primary">Híbrido</p>
+                <p class="text-sm text-text-secondary">Média: 90.0</p>
+              </div>
+            </div>
+            <p class="text-sm text-text-muted mt-3 text-center">
+              Diferença significativa: p = 0.0005
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-4 text-primary font-bold">Comparação: Teste t vs ANOVA</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="element-clickable bg-primary/20 p-4 rounded-lg">
+          <h4 class="text-primary font-bold mb-3">Teste t</h4>
+          <div class="space-y-2 text-sm text-text-secondary">
+            <p>✓ Compara 2 grupos</p>
+            <p>✓ Testa diferença entre médias</p>
+            <p>✓ Mais simples de calcular</p>
+            <p>❌ Limitado a 2 grupos</p>
+          </div>
+        </div>
+        <div class="element-clickable bg-green-400/20 p-4 rounded-lg">
+          <h4 class="text-green-400 font-bold mb-3">ANOVA</h4>
+          <div class="space-y-2 text-sm text-text-secondary">
+            <p>✓ Compara 3+ grupos</p>
+            <p>✓ Testa diferença geral primeiro</p>
+            <p>✓ Requer teste post-hoc</p>
+            <p>❌ Mais complexo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-3 text-primary font-bold">Quando Usar Cada Teste?</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+          <p class="text-sm text-text-secondary"><strong>Teste t:</strong> Comparar 2 grupos (ex: tratamento vs controle)</p>
+        </div>
+        <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+          <p class="text-sm text-text-secondary"><strong>ANOVA:</strong> Comparar 3+ grupos (ex: diferentes métodos)</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-3 text-primary font-bold">Pressupostos dos Testes Paramétricos</h3>
+      <div class="bg-bg-muted/20 p-4 rounded-lg">
+        <div class="space-y-3">
+          <div class="element-clickable bg-primary/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Normalidade:</strong> Dados devem seguir distribuição normal</p>
+          </div>
+          <div class="element-clickable bg-primary/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Homogeneidade:</strong> Variâncias devem ser semelhantes</p>
+          </div>
+          <div class="element-clickable bg-primary/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Independência:</strong> Observações devem ser independentes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

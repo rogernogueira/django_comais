@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Independência - Pressupostos LINE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-orange': '#f97316',
+                        'primary': '#f97316',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(249, 115, 22, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(249, 115, 22, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../regressao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Independência dos Erros</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Os erros não devem estar correlacionados entre si.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Teste de Durbin-Watson</h3>
+                    <div class="bg-bg-surface p-4 rounded text-center mb-4">
+                        <p class="text-lg text-text-secondary font-mono mb-4">
+                            d = Σ(eᵢ - eᵢ₋₁)² / Σeᵢ²
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>d = estatística Durbin-Watson</p>
+                            <p>e = resíduos</p>
+                        </div>
+                    </div>
+
+                    <div class="relative h-6 bg-gray-700 rounded-full mb-6">
+                        <div class="absolute left-0 top-0 h-full w-1/4 bg-red-500/50 rounded-l-full"></div>
+                        <div class="absolute left-1/4 top-0 h-full w-2/4 bg-green-500/50"></div>
+                        <div class="absolute right-0 top-0 h-full w-1/4 bg-red-500/50 rounded-r-full"></div>
+
+                        <div class="absolute -bottom-6 left-0 text-xs text-gray-400">0</div>
+                        <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-green-400 font-bold">2
+                            (Ideal)</div>
+                        <div class="absolute -bottom-6 right-0 text-xs text-gray-400">4</div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é Autocorrelação?</h3>
+                    <p class="text-text-secondary mb-4">
+                        Quando o erro de hoje está correlacionado com o erro de ontem.
+                        Comum em dados de séries temporais (vendas mensais, temperatura diária, etc).
+                    </p>
+                    <div class="bg-yellow-500/10 border border-yellow-500/30 p-3 rounded">
+                        <p class="text-sm text-yellow-400">
+                            ⚠️ Se houver autocorrelação, seus intervalos de confiança serão muito estreitos (otimistas
+                            demais).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnóstico e Soluções -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Interpretação do Durbin-Watson</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-green-500/20 p-4 rounded-lg border-l-4 border-green-500">
+                            <h4 class="text-green-400 font-bold">d ≈ 2</h4>
+                            <p class="text-sm text-text-secondary mt-1">Sem autocorrelação. Tudo OK!</p>
+                        </div>
+                        <div class="element-clickable bg-red-500/20 p-4 rounded-lg border-l-4 border-red-500">
+                            <h4 class="text-red-400 font-bold">d < 1.5</h4>
+                                    <p class="text-sm text-text-secondary mt-1">Autocorrelação Positiva. Erros
+                                        consecutivos tendem a ter o mesmo sinal.</p>
+                        </div>
+                        <div class="element-clickable bg-orange-500/20 p-4 rounded-lg border-l-4 border-orange-500">
+                            <h4 class="text-orange-400 font-bold">d > 2.5</h4>
+                            <p class="text-sm text-text-secondary mt-1">Autocorrelação Negativa. Erros consecutivos
+                                tendem a alternar de sinal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Soluções</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-bg-surface p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-bold mb-2">Modelos de Séries Temporais</h4>
+                            <p class="text-sm text-text-muted">Use ARIMA ou modelos autorregressivos que modelam
+                                explicitamente a dependência temporal.</p>
+                        </div>
+                        <div class="bg-bg-surface p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-bold mb-2">Adicionar Variáveis de Lag</h4>
+                            <p class="text-sm text-text-muted">Inclua valores defasados (t-1, t-2) como preditores.</p>
+                        </div>
+                        <div class="bg-bg-surface p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-white font-bold mb-2">Verificar Variáveis Omitidas</h4>
+                            <p class="text-sm text-text-muted">Pode haver uma variável importante faltando que explica o
+                                padrão temporal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-lg mb-3 text-primary font-bold">Quando este pressuposto é mais crítico?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Séries Temporais:</strong> Dados coletados ao longo
+                        do tempo</p>
+                </div>
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Dados Espaciais:</strong> Observações geograficamente
+                        próximas</p>
+                </div>
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Medidas Repetidas:</strong> Múltiplas observações do
+                        mesmo indivíduo</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação LINE -->
+        <div class="mt-12 pt-8 border-t border-bg-muted">
+            <h3 class="text-xl mb-4 text-center text-primary font-bold">Outros Pressupostos LINE</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href="pressuposto-linearidade.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        L</div>
+                    <p class="text-white font-bold">Linearidade</p>
+                    <p class="text-xs text-text-muted mt-1">Relação linear X-Y</p>
+                </a>
+                <a href="pressuposto-normalidade.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        N</div>
+                    <p class="text-white font-bold">Normalidade</p>
+                    <p class="text-xs text-text-muted mt-1">Resíduos normais</p>
+                </a>
+                <a href="pressuposto-elasticidade.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        E</div>
+                    <p class="text-white font-bold">Elasticidade</p>
+                    <p class="text-xs text-text-muted mt-1">Variância constante</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

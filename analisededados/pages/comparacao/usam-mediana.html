@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usam Mediana - Estatística</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#f87171',
+                        'primary': '#f87171', // Red-400
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(248, 113, 113, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(248, 113, 113, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <!-- Container principal -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Cabeçalho com botão voltar -->
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <div class="flex items-center">
+                <div
+                    class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shadow-lg shadow-primary/20">
+                    <span class="text-bg-base text-xl font-bold">M</span>
+                </div>
+                <h1 class="text-4xl text-primary font-bold">Usam Mediana, não Média</h1>
+            </div>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">A medida central que não se deixa enganar por exageros.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- O Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Por que Mediana?</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-bg-surface p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-white mb-2">Resistência</h4>
+                            <p class="text-sm text-text-secondary">
+                                A mediana é o valor que divide os dados ao meio (50% para cada lado). Ela não liga se o
+                                maior valor é 100 ou 1.000.000.
+                            </p>
+                        </div>
+
+                        <div class="bg-bg-surface p-4 rounded-lg border border-primary/20">
+                            <h4 class="text-lg font-bold text-primary mb-2">Testes de Postos</h4>
+                            <p class="text-sm text-text-secondary">
+                                Testes como Mann-Whitney tecnicamente comparam "postos médios", mas isso é
+                                frequentemente interpretado como uma comparação de medianas (especialmente se as
+                                distribuições tiverem formatos similares).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O Cabo de Guerra</h3>
+
+                    <div
+                        class="relative h-40 w-full mt-2 bg-bg-base/50 rounded border border-text-muted/20 p-2 flex items-center justify-center flex-col">
+                        <!-- Linha de dados -->
+                        <div class="w-full h-1 bg-text-muted/30 relative mt-8">
+                            <!-- Pontos normais -->
+                            <div
+                                class="absolute top-1/2 -translate-y-1/2 left-[20%] w-3 h-3 bg-text-secondary rounded-full">
+                            </div>
+                            <div
+                                class="absolute top-1/2 -translate-y-1/2 left-[30%] w-3 h-3 bg-text-secondary rounded-full">
+                            </div>
+                            <div
+                                class="absolute top-1/2 -translate-y-1/2 left-[40%] w-3 h-3 bg-text-secondary rounded-full">
+                            </div>
+
+                            <!-- Mediana (Firme) -->
+                            <div
+                                class="absolute top-1/2 -translate-y-1/2 left-[45%] w-4 h-4 bg-primary rounded-full z-10 shadow-[0_0_10px_rgba(248,113,113,0.5)]">
+                            </div>
+                            <div class="absolute -top-6 left-[45%] -translate-x-1/2 text-primary text-xs font-bold">
+                                Mediana</div>
+
+                            <!-- Média (Sendo puxada) -->
+                            <div
+                                class="absolute top-1/2 -translate-y-1/2 left-[70%] w-4 h-4 bg-blue-400 rounded-full opacity-50 border border-blue-400 border-dashed">
+                            </div>
+                            <div class="absolute -top-6 left-[70%] -translate-x-1/2 text-blue-400 text-xs">Média</div>
+
+                            <!-- Outlier -->
+                            <div
+                                class="absolute top-1/2 -translate-y-1/2 right-[5%] w-5 h-5 bg-red-600 rounded-full animate-pulse">
+                            </div>
+                            <div class="absolute -bottom-6 right-[5%] -translate-x-1/2 text-red-600 text-xs font-bold">
+                                Outlier!</div>
+                        </div>
+
+                        <p class="text-xs text-center text-text-muted mt-12">
+                            O outlier puxa a média para longe, mas a mediana fica firme no centro dos dados reais.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

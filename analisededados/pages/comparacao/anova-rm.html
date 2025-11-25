@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANOVA de Medidas Repetidas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#38bdf8',
+                        'primary': '#38bdf8',
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(56, 189, 248, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <!-- Container principal -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Cabeçalho com botão voltar -->
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">ANOVA de Medidas Repetidas</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Comparação de médias do mesmo grupo em diferentes
+            momentos ou condições</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Gráfico e Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Medidas ao Longo do Tempo</h3>
+                    <svg aria-label="Evolução de medidas repetidas" class="w-full" role="img" viewBox="0 0 500 360">
+                        <rect fill="#1e293b" height="360" width="500" x="0" y="0"></rect>
+
+                        <!-- Eixos -->
+                        <line stroke="#CBD5E1" stroke-width="2" x1="60" x2="60" y1="40" y2="300"></line>
+                        <line stroke="#CBD5E1" stroke-width="2" x1="60" x2="460" y1="300" y2="300"></line>
+
+                        <!-- Labels dos eixos -->
+                        <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle"
+                            x="260" y="330">
+                            Tempo / Condição
+                        </text>
+                        <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle"
+                            transform="rotate(-90 30 170)" x="30" y="170">
+                            Medida
+                        </text>
+
+                        <!-- Linha de tendência -->
+                        <path d="M 100 250 L 180 200 L 260 180 L 340 160 L 420 140" fill="none" stroke="#38bdf8"
+                            stroke-width="4"></path>
+
+                        <!-- Pontos de medida -->
+                        <circle cx="100" cy="250" r="8" fill="#38bdf8"></circle>
+                        <circle cx="180" cy="200" r="8" fill="#10b981"></circle>
+                        <circle cx="260" cy="180" r="8" fill="#eab308"></circle>
+                        <circle cx="340" cy="160" r="8" fill="#f59e0b"></circle>
+                        <circle cx="420" cy="140" r="8" fill="#ef4444"></circle>
+
+                        <!-- Labels dos pontos -->
+                        <text fill="#38bdf8" font-family="Source Sans 3, Arial" font-size="11" text-anchor="middle"
+                            x="100" y="320">
+                            T1
+                        </text>
+                        <text fill="#10b981" font-family="Source Sans 3, Arial" font-size="11" text-anchor="middle"
+                            x="180" y="320">
+                            T2
+                        </text>
+                        <text fill="#eab308" font-family="Source Sans 3, Arial" font-size="11" text-anchor="middle"
+                            x="260" y="320">
+                            T3
+                        </text>
+                        <text fill="#f59e0b" font-family="Source Sans 3, Arial" font-size="11" text-anchor="middle"
+                            x="340" y="320">
+                            T4
+                        </text>
+                        <text fill="#ef4444" font-family="Source Sans 3, Arial" font-size="11" text-anchor="middle"
+                            x="420" y="320">
+                            T5
+                        </text>
+
+                        <!-- Título -->
+                        <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="14" font-weight="bold"
+                            text-anchor="middle" x="260" y="25">
+                            Mesmo grupo avaliado múltiplas vezes
+                        </text>
+                    </svg>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Conceito Chave</h3>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-text-secondary leading-relaxed">
+                            <strong class="text-primary">Medidas Repetidas:</strong> Os mesmos participantes são
+                            avaliados em diferentes momentos ou sob diferentes condições.
+                        </p>
+                        <div class="mt-3 p-3 bg-primary/10 rounded">
+                            <p class="text-sm text-text-secondary">
+                                <strong class="text-primary">Vantagem:</strong> Controla variabilidade individual,
+                                aumentando o poder estatístico
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Esfericidade</h3>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-text-secondary text-sm leading-relaxed">
+                            <strong class="text-primary">Pressuposto importante:</strong> As variâncias das diferenças
+                            entre todos os pares de condições devem ser iguais.
+                        </p>
+                        <div class="mt-3 space-y-2">
+                            <div class="element-clickable bg-bg-muted/30 p-2 rounded">
+                                <p class="text-xs text-text-secondary"><strong class="text-primary">Teste de
+                                        Mauchly:</strong> Verifica esfericidade</p>
+                            </div>
+                            <div class="element-clickable bg-bg-muted/30 p-2 rounded">
+                                <p class="text-xs text-text-secondary"><strong
+                                        class="text-green-400">Correções:</strong> Greenhouse-Geisser, Huynh-Feldt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explicação e Propriedades -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">O que é ANOVA RM?</h3>
+                    <p class="text-text-secondary leading-relaxed">
+                        ANOVA de Medidas Repetidas (Repeated Measures) é usada quando o mesmo grupo de participantes é
+                        medido em três ou mais ocasiões diferentes ou sob diferentes condições.
+                        É uma extensão do teste t pareado para múltiplas medidas.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Quando Usar ANOVA RM?</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Mesmo
+                                    grupo:</strong> Mesmos participantes em todas as medidas</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>3+
+                                    medidas:</strong> Três ou mais momentos/condições</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Dados
+                                    normais:</strong> Distribuição normal das diferenças</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><span class="text-green-400">✓</span>
+                                <strong>Esfericidade:</strong> Variâncias das diferenças iguais</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Designs Comuns</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-primary/20 p-4 rounded-lg">
+                            <h4 class="text-primary font-bold mb-2">Within-Subjects</h4>
+                            <p class="text-sm text-text-secondary">Todos os participantes em todas as condições</p>
+                            <p class="text-sm text-text-muted mt-1">Ex: Antes, durante e após tratamento</p>
+                        </div>
+                        <div class="element-clickable bg-green-400/20 p-4 rounded-lg">
+                            <h4 class="text-green-400 font-bold mb-2">Mixed Design</h4>
+                            <p class="text-sm text-text-secondary">Combina fatores within e between</p>
+                            <p class="text-sm text-text-muted mt-1">Ex: Tempo (within) × Grupo (between)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Interpretação do Resultado</h3>
+                    <div class="bg-bg-muted/20 p-4 rounded-lg">
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="element-clickable bg-red-400/20 p-3 rounded">
+                                <p class="text-lg font-bold text-red-400">p < 0.05</p>
+                                        <p class="text-sm text-text-secondary">Mudança significativa</p>
+                            </div>
+                            <div class="element-clickable bg-green-400/20 p-3 rounded">
+                                <p class="text-lg font-bold text-green-400">p ≥ 0.05</p>
+                                <p class="text-sm text-text-secondary">Sem mudança significativa</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-text-muted mt-3 text-center">
+                            Use testes post-hoc para comparações par a par
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Vantagens</h3>
+                    <div class="space-y-2">
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-sm text-text-secondary">📊 <strong>Maior poder:</strong> Controla diferenças
+                                individuais</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-sm text-text-secondary">👥 <strong>Menos participantes:</strong> Cada um é
+                                seu próprio controle</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-sm text-text-secondary">💰 <strong>Econômico:</strong> Reduz custos de
+                                recrutamento</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-lg mb-3 text-primary font-bold">Exemplos Práticos</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Medicina:</strong> Evolução de sintomas ao longo de 6
+                        meses</p>
+                </div>
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Psicologia:</strong> Desempenho em 4 tarefas
+                        diferentes</p>
+                </div>
+                <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong>Esportes:</strong> Performance antes, durante e após
+                        treino</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-lg mb-3 text-primary font-bold">Alternativa Não Paramétrica</h3>
+            <div class="element-clickable bg-red-400/20 p-4 rounded-lg">
+                <h4 class="text-red-400 font-bold mb-2">Teste de Friedman</h4>
+                <p class="text-text-secondary">Use quando os dados não são normais ou violam pressupostos</p>
+                <p class="text-sm text-text-muted mt-2">Compara rankings ao invés de médias</p>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-lg mb-3 text-primary font-bold">Cuidados Importantes</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="element-clickable bg-yellow-400/20 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong class="text-yellow-400">⚠️ Efeito de ordem:</strong>
+                        Contrabalancear condições quando possível</p>
+                </div>
+                <div class="element-clickable bg-yellow-400/20 p-3 rounded">
+                    <p class="text-sm text-text-secondary"><strong class="text-yellow-400">⚠️ Dados faltantes:</strong>
+                        Podem ser problemáticos, use métodos apropriados</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

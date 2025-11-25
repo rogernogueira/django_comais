@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas de Erro - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-blue': '#3b82f6',
+                        'primary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../regressao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Métricas de Erro</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Medindo a qualidade das previsões do seu modelo.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- MSE e RMSE -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">MSE - Mean Squared Error</h3>
+                    <p class="text-text-secondary mb-4">
+                        Média dos quadrados dos erros. Penaliza erros grandes mais fortemente.
+                    </p>
+                    <div class="bg-primary/10 p-4 rounded border border-primary/30 text-center mb-4">
+                        <p class="text-2xl text-primary font-mono font-bold mb-2">
+                            MSE = (1/n) Σ(yᵢ - ŷᵢ)²
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>n = número de observações</p>
+                            <p>yᵢ = valor real</p>
+                            <p>ŷᵢ = valor predito</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Sempre positivo (0 = perfeito)</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-yellow-500/10 rounded">
+                            <span class="text-yellow-400 mr-2">⚠</span>
+                            <span class="text-text-secondary">Sensível a outliers (quadrado amplifica)</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">✗</span>
+                            <span class="text-text-secondary">Unidade é Y² (difícil interpretar)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">RMSE - Root Mean Squared Error</h3>
+                    <p class="text-text-secondary mb-4">
+                        Raiz quadrada do MSE. Retorna à escala original de Y.
+                    </p>
+                    <div class="bg-primary/10 p-4 rounded border border-primary/30 text-center mb-4">
+                        <p class="text-2xl text-primary font-mono font-bold mb-2">
+                            RMSE = √MSE = √[(1/n) Σ(yᵢ - ŷᵢ)²]
+                        </p>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Mesma unidade de Y (interpretável)</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Mais popular que MSE</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-yellow-500/10 rounded">
+                            <span class="text-yellow-400 mr-2">⚠</span>
+                            <span class="text-text-secondary">Ainda sensível a outliers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAE e MAPE -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-green-400 font-bold">MAE - Mean Absolute Error</h3>
+                    <p class="text-text-secondary mb-4">
+                        Média dos valores absolutos dos erros. Mais robusto a outliers.
+                    </p>
+                    <div class="bg-green-500/10 p-4 rounded border border-green-500/30 text-center mb-4">
+                        <p class="text-2xl text-green-400 font-mono font-bold mb-2">
+                            MAE = (1/n) Σ|yᵢ - ŷᵢ|
+                        </p>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Mesma unidade de Y</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Menos sensível a outliers</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Interpretação direta: erro médio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-purple-400 font-bold">MAPE - Mean Absolute Percentage Error</h3>
+                    <p class="text-text-secondary mb-4">
+                        Erro percentual médio. Útil para comparar modelos de diferentes escalas.
+                    </p>
+                    <div class="bg-purple-500/10 p-4 rounded border border-purple-500/30 text-center mb-4">
+                        <p class="text-2xl text-purple-400 font-mono font-bold mb-2">
+                            MAPE = (100/n) Σ|yᵢ - ŷᵢ| / |yᵢ|
+                        </p>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-green-500/10 rounded">
+                            <span class="text-green-400 mr-2">✓</span>
+                            <span class="text-text-secondary">Fácil interpretar (percentual)</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">✗</span>
+                            <span class="text-text-secondary">Indefinido se yᵢ = 0</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-yellow-500/10 rounded">
+                            <span class="text-yellow-400 mr-2">⚠</span>
+                            <span class="text-text-secondary">Penaliza mais erros em valores pequenos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparação Visual -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Comparação: MSE vs MAE</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Quando usar MSE/RMSE?</h4>
+                    <ul class="space-y-2 text-sm text-text-secondary">
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2">•</span>
+                            <span>Quando erros grandes são muito indesejáveis</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2">•</span>
+                            <span>Otimização matemática (derivável)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2">•</span>
+                            <span>Dados sem outliers extremos</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4 bg-primary/10 p-3 rounded">
+                        <p class="text-xs text-primary">
+                            <strong>Exemplo:</strong> Previsão de temperatura. Errar 10°C é muito pior que errar 5°C
+                            duas vezes.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Quando usar MAE?</h4>
+                    <ul class="space-y-2 text-sm text-text-secondary">
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-2">•</span>
+                            <span>Quando todos os erros têm peso igual</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-2">•</span>
+                            <span>Dados com outliers</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-2">•</span>
+                            <span>Interpretação mais intuitiva</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4 bg-green-500/10 p-3 rounded">
+                        <p class="text-xs text-green-400">
+                            <strong>Exemplo:</strong> Previsão de vendas. Errar 100 unidades tem impacto linear.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outras Métricas -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Outras Métricas Importantes</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">R² (Coeficiente de Determinação)</h4>
+                    <div class="bg-bg-elevated p-3 rounded text-center mb-3">
+                        <p class="text-lg text-primary font-mono">R² = 1 - (SSE/SST)</p>
+                    </div>
+                    <p class="text-sm text-text-secondary">
+                        Proporção da variância explicada (0 a 1). Quanto maior, melhor.
+                    </p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">R² Ajustado</h4>
+                    <div class="bg-bg-elevated p-3 rounded text-center mb-3">
+                        <p class="text-sm text-primary font-mono">R²ₐⱼ = 1 - [(1-R²)(n-1)/(n-k-1)]</p>
+                    </div>
+                    <p class="text-sm text-text-secondary">
+                        Penaliza modelos complexos. Use para comparar modelos com diferentes números de variáveis.
+                    </p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">AIC / BIC</h4>
+                    <div class="bg-bg-elevated p-3 rounded text-center mb-3">
+                        <p class="text-xs text-primary font-mono">AIC = 2k - 2ln(L)</p>
+                        <p class="text-xs text-primary font-mono mt-1">BIC = k·ln(n) - 2ln(L)</p>
+                    </div>
+                    <p class="text-sm text-text-secondary">
+                        Critérios de informação. Quanto menor, melhor. BIC penaliza mais a complexidade.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exemplo Prático -->
+        <div class="mt-8 bg-blue-900/20 p-6 rounded-2xl border border-blue-500/30">
+            <h4 class="text-blue-400 font-bold mb-3 text-lg">📊 Exemplo Prático</h4>
+            <p class="text-blue-200 mb-4">
+                Suponha que você está prevendo o preço de casas (em R$ 1.000):
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-blue-900/30 p-4 rounded">
+                    <h5 class="text-white font-bold mb-2">Dados</h5>
+                    <table class="w-full text-sm text-blue-200">
+                        <thead>
+                            <tr class="border-b border-blue-500/30">
+                                <th class="text-left py-1">Real (Y)</th>
+                                <th class="text-left py-1">Predito (Ŷ)</th>
+                                <th class="text-left py-1">Erro</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-mono text-xs">
+                            <tr>
+                                <td>300</td>
+                                <td>290</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>450</td>
+                                <td>470</td>
+                                <td>-20</td>
+                            </tr>
+                            <tr>
+                                <td>200</td>
+                                <td>210</td>
+                                <td>-10</td>
+                            </tr>
+                            <tr>
+                                <td>600</td>
+                                <td>580</td>
+                                <td>20</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-blue-900/30 p-4 rounded">
+                    <h5 class="text-white font-bold mb-2">Métricas Calculadas</h5>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-blue-300">MSE:</span>
+                            <span class="text-white font-mono">250</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-blue-300">RMSE:</span>
+                            <span class="text-white font-mono">15.8 mil</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-blue-300">MAE:</span>
+                            <span class="text-white font-mono">15 mil</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-blue-300">MAPE:</span>
+                            <span class="text-white font-mono">4.6%</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-blue-300 mt-3">
+                        Interpretação: Em média, erramos R$ 15 mil (~4.6%).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dicas Importantes -->
+        <div class="mt-8 bg-yellow-900/20 p-6 rounded-2xl border border-yellow-500/30">
+            <h4 class="text-yellow-400 font-bold mb-3 text-lg">💡 Dicas Importantes</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Use múltiplas métricas. Nenhuma conta toda a história sozinha.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Compare sempre com um baseline (modelo simples, como a média).</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Avalie em dados de teste, não de treino (evita overfitting).</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Contexto importa: RMSE = 10 pode ser ótimo ou péssimo dependendo da
+                        escala de Y.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

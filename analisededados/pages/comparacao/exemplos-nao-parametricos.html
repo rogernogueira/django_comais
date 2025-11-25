@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplos Práticos - Testes Não Paramétricos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-base': '#0f172a',
+            'bg-elevated': '#020617',
+            'bg-surface': '#1e293b',
+            'bg-muted': '#334155',
+            'text-primary': '#f1f5f9',
+            'text-secondary': '#cbd5e1',
+            'text-muted': '#94a3b8',
+            'text-accent': '#38bdf8',
+            'primary': '#38bdf8',
+            'primary-foreground': '#0f172a',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .element-clickable {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .element-clickable:hover {
+      background-color: rgba(56, 189, 248, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .element-clickable:active {
+      transform: translateY(0);
+    }
+    
+    .back-button {
+      transition: all 0.2s ease;
+    }
+    
+    .back-button:hover {
+      background-color: rgba(56, 189, 248, 0.2);
+      transform: translateX(-2px);
+    }
+    
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background-color: #ef4444;
+      color: #0f172a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+  <!-- Container principal -->
+  <div class="max-w-6xl mx-auto">
+    <!-- Cabeçalho com botão voltar -->
+    <div class="flex items-center mb-8">
+      <button class="back-button bg-red-400/20 p-3 rounded-lg mr-4" onclick="history.back()">
+        <span class="text-red-400 text-lg">←</span>
+      </button>
+      <h1 class="text-4xl text-red-400 font-bold">Exemplos Práticos - Testes Não Paramétricos</h1>
+    </div>
+    
+    <p class="text-xl text-center mb-12 text-text-secondary">Passo a passo para aplicar Mann-Whitney e Wilcoxon</p>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Teste de Mann-Whitney -->
+      <div class="space-y-6">
+        <div class="bg-bg-muted/20 p-6 rounded-lg">
+          <h3 class="text-2xl mb-6 text-red-400 font-bold text-center">Teste de Mann-Whitney</h3>
+          <p class="text-text-secondary mb-6 text-center">Comparando satisfação de clientes (dados ordinais)</p>
+          
+          <div class="space-y-6">
+            <!-- Passo 1 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">1</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Definir Hipóteses</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>H₀:</strong> As medianas são iguais nos dois grupos<br>
+                    <strong>H₁:</strong> As medianas são diferentes nos dois grupos
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 2 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">2</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Coletar Dados</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Loja A:</strong> 4, 3, 5, 2, 4, 3, 5, 4, 3, 2<br>
+                    <strong>Loja B:</strong> 2, 1, 3, 2, 1, 2, 3, 2, 1, 2<br>
+                    <em>Escala Likert (1-5): 1=Insatisfeito, 5=Muito Satisfeito</em>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 3 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">3</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Atribuir Postos (Ranks)</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Dados combinados:</strong> 1,1,1,2,2,2,2,2,3,3,3,3,4,4,4,4,5,5<br>
+                    <strong>Postos:</strong> 1-3: 2.0, 4-8: 6.0, 9-12: 10.5, 13-16: 14.5, 17-18: 17.5
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 4 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">4</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Calcular Estatística U</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Fórmula:</strong> U = n₁n₂ + n₁(n₁+1)/2 - R₁<br>
+                    <strong>Resultado:</strong> U = 15, p = 0.008
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 5 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">5</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Interpretar Resultado</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Conclusão:</strong> Rejeitar H₀ (p < 0.05)<br>
+                    <strong>Significado:</strong> Loja A tem satisfação significativamente maior
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-red-400/20 rounded-lg">
+            <h4 class="text-red-400 font-bold mb-2">Resumo do Exemplo</h4>
+            <div class="grid grid-cols-2 gap-4 text-center">
+              <div class="bg-bg-muted/30 p-3 rounded">
+                <p class="text-lg font-bold text-red-400">Loja A</p>
+                <p class="text-sm text-text-secondary">Mediana: 4</p>
+                <p class="text-sm text-text-secondary">(Boa satisfação)</p>
+              </div>
+              <div class="bg-bg-muted/30 p-3 rounded">
+                <p class="text-lg font-bold text-red-400">Loja B</p>
+                <p class="text-sm text-text-secondary">Mediana: 2</p>
+                <p class="text-sm text-text-secondary">(Baixa satisfação)</p>
+              </div>
+            </div>
+            <p class="text-sm text-text-muted mt-3 text-center">
+              Diferença significativa: p = 0.008
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Teste de Wilcoxon -->
+      <div class="space-y-6">
+        <div class="bg-bg-muted/20 p-6 rounded-lg">
+          <h3 class="text-2xl mb-6 text-red-400 font-bold text-center">Teste de Wilcoxon</h3>
+          <p class="text-text-secondary mb-6 text-center">Comparando antes e depois (dados pareados)</p>
+          
+          <div class="space-y-6">
+            <!-- Passo 1 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">1</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Definir Hipóteses</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>H₀:</strong> Não há diferença entre antes e depois<br>
+                    <strong>H₁:</strong> Há diferença entre antes e depois
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 2 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">2</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Coletar Dados</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Antes:</strong> 45, 52, 38, 60, 48, 55, 42, 58, 50, 47<br>
+                    <strong>Depois:</strong> 52, 58, 45, 65, 55, 60, 50, 62, 56, 54<br>
+                    <em>Nível de estresse (0-100)</em>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 3 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">3</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Calcular Diferenças</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Diferenças:</strong> +7, +6, +7, +5, +7, +5, +8, +4, +6, +7<br>
+                    <strong>Ignorar zeros:</strong> Todas as diferenças são positivas
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 4 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">4</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Atribuir Postos</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Valores absolutos:</strong> 4,5,5,6,6,7,7,7,7,8<br>
+                    <strong>Postos:</strong> 4:1, 5:3.5, 6:5.5, 7:8.5, 8:10
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 5 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">5</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Calcular Estatística W</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Fórmula:</strong> W = soma dos postos dos sinais positivos<br>
+                    <strong>Resultado:</strong> W = 55, p = 0.002
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Passo 6 -->
+            <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+              <div class="flex items-start">
+                <div class="step-number">6</div>
+                <div>
+                  <h4 class="text-red-400 font-bold mb-2">Interpretar Resultado</h4>
+                  <p class="text-text-secondary text-sm">
+                    <strong>Conclusão:</strong> Rejeitar H₀ (p < 0.05)<br>
+                    <strong>Significado:</strong> Estresse aumentou significativamente
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-red-400/20 rounded-lg">
+            <h4 class="text-red-400 font-bold mb-2">Resumo do Exemplo</h4>
+            <div class="grid grid-cols-2 gap-4 text-center">
+              <div class="bg-bg-muted/30 p-3 rounded">
+                <p class="text-lg font-bold text-red-400">Antes</p>
+                <p class="text-sm text-text-secondary">Mediana: 49.5</p>
+              </div>
+              <div class="bg-bg-muted/30 p-3 rounded">
+                <p class="text-lg font-bold text-red-400">Depois</p>
+                <p class="text-sm text-text-secondary">Mediana: 56.5</p>
+              </div>
+            </div>
+            <p class="text-sm text-text-muted mt-3 text-center">
+              Aumento significativo: p = 0.002
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-4 text-red-400 font-bold">Comparação: Mann-Whitney vs Wilcoxon</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="element-clickable bg-red-400/20 p-4 rounded-lg">
+          <h4 class="text-red-400 font-bold mb-3">Mann-Whitney</h4>
+          <div class="space-y-2 text-sm text-text-secondary">
+            <p>✓ Para grupos independentes</p>
+            <p>✓ Compara medianas</p>
+            <p>✓ Usa postos (ranks)</p>
+            <p>❌ Não para dados pareados</p>
+          </div>
+        </div>
+        <div class="element-clickable bg-yellow-400/20 p-4 rounded-lg">
+          <h4 class="text-yellow-400 font-bold mb-3">Wilcoxon</h4>
+          <div class="space-y-2 text-sm text-text-secondary">
+            <p>✓ Para dados pareados</p>
+            <p>✓ Compara antes/depois</p>
+            <p>✓ Usa diferenças e postos</p>
+            <p>❌ Apenas para 2 momentos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-3 text-red-400 font-bold">Quando Usar Cada Teste?</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+          <p class="text-sm text-text-secondary"><strong>Mann-Whitney:</strong> Grupos independentes (ex: tratamento vs controle)</p>
+        </div>
+        <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+          <p class="text-sm text-text-secondary"><strong>Wilcoxon:</strong> Dados pareados (ex: antes/depois)</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-3 text-red-400 font-bold">Vantagens dos Testes Não Paramétricos</h3>
+      <div class="bg-bg-muted/20 p-4 rounded-lg">
+        <div class="space-y-3">
+          <div class="element-clickable bg-red-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Robustos:</strong> Não precisam de normalidade</p>
+          </div>
+          <div class="element-clickable bg-red-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Resistentes:</strong> Não são afetados por outliers</p>
+          </div>
+          <div class="element-clickable bg-red-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Versáteis:</strong> Funcionam com dados ordinais</p>
+          </div>
+          <div class="element-clickable bg-red-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Simples:</strong> Fáceis de calcular e interpretar</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 pt-6 border-t border-bg-muted">
+      <h3 class="text-lg mb-3 text-red-400 font-bold">Resumo Prático</h3>
+      <div class="bg-bg-muted/20 p-4 rounded-lg">
+        <div class="space-y-3">
+          <div class="element-clickable bg-red-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Use Mann-Whitney:</strong> Para comparar dois grupos independentes</p>
+          </div>
+          <div class="element-clickable bg-yellow-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Use Wilcoxon:</strong> Para comparar antes/depois (dados pareados)</p>
+          </div>
+          <div class="element-clickable bg-green-400/20 p-3 rounded">
+            <p class="text-text-secondary"><strong>Escolha NP quando:</strong> Dados não normais, com outliers ou ordinais</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

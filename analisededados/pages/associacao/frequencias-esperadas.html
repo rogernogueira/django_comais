@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequências Esperadas - Pressupostos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-cyan': '#06b6d4',
+                        'primary': '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(6, 182, 212, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Frequências Esperadas</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">O pressuposto mais crítico do teste Qui-Quadrado</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">A Regra dos "5"</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Para que a aproximação da distribuição Qui-Quadrado seja válida, as frequências
+                        <strong>esperadas</strong> (não as observadas!) em cada célula da tabela de contingência devem
+                        ser suficientemente grandes.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-sm text-white font-bold mb-2">Critério Padrão:</p>
+                        <ul class="text-sm text-text-muted space-y-1 list-disc list-inside">
+                            <li>Nenhuma célula deve ter frequência esperada < 1.</li>
+                            <li>Não mais que 20% das células devem ter frequência esperada < 5.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Como Calcular?</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        A frequência esperada ($E_{ij}$) para uma célula na linha $i$ e coluna $j$ é calculada assumindo
+                        que as variáveis são independentes:
+                    </p>
+                    <div class="bg-bg-surface p-6 rounded text-center mb-4">
+                        <p class="text-lg text-white font-mono">
+                            $$ E_{ij} = \frac{\text{Total da Linha } i \times \text{Total da Coluna } j}{\text{Total
+                            Geral}} $$
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problemas e Soluções -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Por que isso importa?</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Se as frequências esperadas forem muito baixas, a estatística de teste $\chi^2$ não seguirá a
+                        distribuição teórica Qui-Quadrado, levando a valores-p incorretos (geralmente aumentando o erro
+                        Tipo I - falsos positivos).
+                    </p>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">O que fazer se violado?</h4>
+                    <ul class="text-sm text-text-secondary space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2 font-bold">1.</span>
+                            <span><strong>Usar Teste Exato de Fisher:</strong> Ideal para tabelas 2x2 ou tabelas maiores
+                                com amostras pequenas. Ele calcula a probabilidade exata sem depender de
+                                aproximações.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2 font-bold">2.</span>
+                            <span><strong>Agrupar Categorias:</strong> Combinar categorias adjacentes ou similares para
+                                aumentar as contagens esperadas (ex: juntar "Discordo Totalmente" e "Discordo").</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2 font-bold">3.</span>
+                            <span><strong>Aumentar a Amostra:</strong> Coletar mais dados para preencher as células
+                                esparsas.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="independencia-observacoes.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Independência &rarr;
+            </a>
+            <a href="tamanho-amostral.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Tamanho Amostral &rarr;
+            </a>
+            <a href="correcao-yates.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Correção de Yates &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

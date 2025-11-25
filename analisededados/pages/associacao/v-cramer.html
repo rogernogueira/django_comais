@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V de Cramér - Medidas de Associação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-blue': '#3b82f6',
+                        'primary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">V de Cramér</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">A medida universal de associação para tabelas de
+            qualquer tamanho</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O V de Cramér é uma medida de tamanho de efeito para o teste Qui-Quadrado. Ao contrário do Phi,
+                        ele pode ser usado para tabelas maiores que 2x2 (ex: 3x4, 5x5).
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-sm text-white font-bold mb-2">Intervalo:</p>
+                        <p class="text-sm text-text-muted">
+                            Varia sempre de <strong>0 a 1</strong>.
+                            <br>0 = Nenhuma associação.
+                            <br>1 = Associação perfeita.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Fórmula</h3>
+                    <div class="bg-bg-surface p-6 rounded text-center mb-4">
+                        <p class="text-lg text-white font-mono">
+                            $$ V = \sqrt{\frac{\chi^2}{n \cdot (k - 1)}} $$
+                        </p>
+                        <p class="text-xs text-text-muted mt-2">
+                            Onde:<br>
+                            χ² = Estatística Qui-Quadrado<br>
+                            n = Tamanho total da amostra<br>
+                            k = min(linhas, colunas) - O menor número de categorias entre as duas variáveis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interpretação -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Interpretando (Cohen, 1988)</h3>
+                    <p class="text-xs text-text-muted mb-4">Os pontos de corte dependem dos graus de liberdade (gl* =
+                        k-1).</p>
+
+                    <table class="w-full text-sm text-left text-text-secondary">
+                        <thead class="text-xs text-text-muted uppercase bg-bg-surface">
+                            <tr>
+                                <th class="px-4 py-2">Efeito</th>
+                                <th class="px-4 py-2">gl*=1 (2x2)</th>
+                                <th class="px-4 py-2">gl*=2 (3 col)</th>
+                                <th class="px-4 py-2">gl*=3 (4 col)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <tr>
+                                <td class="px-4 py-2 font-bold text-primary">Pequeno</td>
+                                <td class="px-4 py-2">0.10</td>
+                                <td class="px-4 py-2">0.07</td>
+                                <td class="px-4 py-2">0.06</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2 font-bold text-primary">Médio</td>
+                                <td class="px-4 py-2">0.30</td>
+                                <td class="px-4 py-2">0.21</td>
+                                <td class="px-4 py-2">0.17</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2 font-bold text-primary">Grande</td>
+                                <td class="px-4 py-2">0.50</td>
+                                <td class="px-4 py-2">0.35</td>
+                                <td class="px-4 py-2">0.29</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Vantagem Principal</h4>
+                    <p class="text-sm text-text-secondary">
+                        O Qui-Quadrado (χ²) aumenta com o tamanho da amostra, tornando difícil comparar estudos com N
+                        diferentes. O V de Cramér corrige isso, permitindo comparar a força da associação entre estudos
+                        diferentes.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="phi.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Coeficiente Phi &rarr;
+            </a>
+            <a href="coeficiente-contingencia.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Coef. Contingência &rarr;
+            </a>
+            <a href="odds-ratio.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Odds Ratio &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

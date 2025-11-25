@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Causalidade ≠ Correlação - Conceitos Chave</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#f97316', // Orange-500
+                        'corr-orange': '#f97316',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(249, 115, 22, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../correlacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Causalidade ≠ Correlação</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">A regra de ouro da estatística: Associação não prova
+            causa</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- O Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que isso significa?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Só porque duas variáveis se movem juntas (alta correlação), não significa que uma <em>causa</em>
+                        a outra.
+                    </p>
+                    <p class="text-sm text-text-muted">
+                        Pode haver uma terceira variável desconhecida influenciando ambas, ou a relação pode ser pura
+                        coincidência (correlação espúria).
+                    </p>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Exemplo Clássico: Sorvetes e Afogamentos</h3>
+                    <div class="bg-bg-surface p-4 rounded mb-4">
+                        <p class="text-sm text-text-secondary">
+                            Existe uma forte correlação positiva entre <strong>Vendas de Sorvete</strong> e
+                            <strong>Número de Afogamentos</strong>.
+                        </p>
+                        <p class="text-lg text-center font-bold text-white my-2">r ≈ 0.80</p>
+                        <p class="text-sm text-text-muted italic">
+                            Isso significa que comer sorvete faz você se afogar?
+                        </p>
+                    </div>
+                    <div class="bg-primary/10 p-4 rounded border border-primary/30">
+                        <p class="text-sm text-primary font-bold">Não!</p>
+                        <p class="text-sm text-text-secondary">
+                            A variável de confusão é o <strong>CALOR (Verão)</strong>.
+                            <br>No verão, as pessoas tomam mais sorvete E nadam mais (aumentando o risco de afogamento).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Como estabelecer causalidade? -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Critérios para Causalidade</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Para afirmar que X causa Y, você precisa de mais do que correlação. Os critérios de Bradford
+                        Hill ajudam:
+                    </p>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2 font-bold">1.</span>
+                            <span><strong>Temporalidade:</strong> A causa deve preceder o efeito.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2 font-bold">2.</span>
+                            <span><strong>Plausibilidade:</strong> Deve haver um mecanismo biológico ou lógico que
+                                explique a relação.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2 font-bold">3.</span>
+                            <span><strong>Consistência:</strong> O resultado se repete em diferentes estudos e
+                                populações.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2 font-bold">4.</span>
+                            <span><strong>Experimento:</strong> Se removermos a causa, o efeito desaparece? (Idealmente
+                                testado em ensaios controlados).</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-red-500/10 p-6 rounded-lg border border-red-500/30">
+                    <h4 class="text-red-400 font-bold mb-2">Correlações Espúrias</h4>
+                    <p class="text-sm text-text-secondary mb-2">
+                        Às vezes, correlações surgem por puro acaso em grandes conjuntos de dados.
+                    </p>
+                    <p class="text-xs text-text-muted italic">
+                        Ex: O número de filmes em que Nicolas Cage apareceu correlaciona-se com o número de pessoas que
+                        se afogaram em piscinas (r = 0.66).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="covariancia-vs-correlacao.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Covariância vs Correlação &rarr;
+            </a>
+            <a href="coeficiente-determinacao.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver R² &rarr;
+            </a>
+            <a href="matriz-correlacao.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Matriz de Correlação &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

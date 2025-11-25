@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Independência das Observações - Pressupostos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-cyan': '#06b6d4',
+                        'primary': '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(6, 182, 212, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Independência das Observações</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Cada observação deve ser única e não relacionada</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O Princípio Básico</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O teste Qui-Quadrado de Independência assume que cada entrada na tabela de contingência vem de
+                        um sujeito ou item diferente.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-sm text-white font-bold mb-2">Regra de Ouro:</p>
+                        <p class="text-sm text-text-muted">
+                            A soma de todas as frequências na tabela deve ser igual ao número total de participantes
+                            (N). Ninguém pode ser contado duas vezes.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Exemplos de Violação</h3>
+                    <ul class="space-y-4 text-sm text-text-secondary">
+                        <li class="bg-bg-surface p-3 rounded border border-red-500/20">
+                            <strong class="text-red-400 block mb-1">Medidas Repetidas (Antes e Depois)</strong>
+                            Medir a opinião da <em>mesma pessoa</em> antes e depois de um tratamento.
+                            <br><span class="text-xs text-text-muted italic">Solução: Usar Teste de McNemar.</span>
+                        </li>
+                        <li class="bg-bg-surface p-3 rounded border border-red-500/20">
+                            <strong class="text-red-400 block mb-1">Respostas Múltiplas</strong>
+                            Uma pesquisa onde o usuário pode marcar "todas as opções que se aplicam".
+                            <br><span class="text-xs text-text-muted italic">Solução: Analisar cada opção como uma
+                                variável binária separada.</span>
+                        </li>
+                        <li class="bg-bg-surface p-3 rounded border border-red-500/20">
+                            <strong class="text-red-400 block mb-1">Grupos Agrupados (Clustered Data)</strong>
+                            Alunos dentro de salas de aula, onde as respostas podem ser correlacionadas pelo ambiente.
+                            <br><span class="text-xs text-text-muted italic">Solução: Modelos Multiníveis ou GEE.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Consequências e Verificação -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Consequências da Violação</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Violar a independência infla artificialmente o tamanho da amostra (se contarmos a mesma pessoa
+                        várias vezes) ou ignora a correlação intra-sujeito.
+                    </p>
+                    <p class="text-sm text-text-secondary">
+                        Isso resulta em valores de p <strong>muito pequenos</strong> (falsos positivos), levando você a
+                        acreditar que existe uma associação significativa onde talvez não exista.
+                    </p>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Checklist de Verificação</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li class="flex items-center">
+                            <span class="text-primary mr-2">✓</span>
+                            <span>Os dados são de uma amostra aleatória simples?</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-primary mr-2">✓</span>
+                            <span>Cada sujeito contribui para apenas UMA célula da tabela?</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-primary mr-2">✓</span>
+                            <span>As observações não influenciam umas às outras?</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="frequencias-esperadas.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Frequências Esperadas &rarr;
+            </a>
+            <a href="tamanho-amostral.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Tamanho Amostral &rarr;
+            </a>
+            <a href="correcao-yates.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Correção de Yates &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

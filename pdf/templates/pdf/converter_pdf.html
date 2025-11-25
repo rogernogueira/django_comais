@@ -1,0 +1,197 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}Converter PDF - COMAIS{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-file-pdf me-2"></i>Converter PDF
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form id="pdf-converter-form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Arquivo PDF -->
+                        <div class="mb-3">
+                            <label for="pdf_file" class="form-label">Arquivo PDF *</label>
+                            <input type="file" class="form-control" id="pdf_file" name="file" accept=".pdf" required>
+                            <div class="form-text">Selecione o arquivo PDF que deseja converter</div>
+                        </div>
+
+                        <!-- Faixa de páginas -->
+                        <div class="mb-3">
+                            <label for="page_range" class="form-label">Faixa de Páginas</label>
+                            <input type="text" class="form-control" id="page_range" name="page_range" 
+                                   placeholder="Ex: 1-5, 7, 10-12 (deixe vazio para todas)">
+                            <div class="form-text">Especifique as páginas que deseja converter</div>
+                        </div>
+
+                        <!-- Formato de saída -->
+                        <div class="mb-3">
+                            <label for="output_format" class="form-label">Formato de Saída</label>
+                            <select class="form-select" id="output_format" name="output_format">
+                                <option value="markdown">markdown</option>
+                                <option value="html">HTML (Word)</option>
+                                <option value="json">json</option>
+                                <option value="chunks">chunks</option>
+                            </select>
+                        </div>
+
+                        <!-- Opções avançadas -->
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="force_ocr" name="force_ocr" value="true">
+                                <label class="form-check-label" for="force_ocr">
+                                    Forçar OCR (Reconhecimento de Texto)
+                                </label>
+                                <div class="form-text">Use OCR mesmo se o PDF já tiver texto selecionável</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="paginate_output" name="paginate_output" value="true">
+                                <label class="form-check-label" for="paginate_output">
+                                    Paginar Saída
+                                </label>
+                                <div class="form-text">Adicionar numeração de páginas no arquivo convertido</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="extract_images" name="extract_images" value="true" checked>
+                                <label class="form-check-label" for="extract_images">
+                                    Extrair Imagens
+                                </label>
+                                <div class="form-text">Incluir imagens do PDF no arquivo convertido (Markdown)</div>
+                            </div>
+                        </div>
+
+                        <!-- Botão de envio -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" id="convert-btn">
+                                <i class="fas fa-sync-alt me-2"></i>Converter PDF
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Área de resultados -->
+                    <div id="result-area" class="mt-4" style="display: none;">
+                        <div class="alert alert-success" id="success-message" style="display: none;">
+                            <h5><i class="fas fa-check-circle me-2"></i>Conversão Concluída!</h5>
+                            <p id="result-message"></p>
+                            <div id="download-info" class="mt-3" style="display: none;">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <strong>Formato:</strong> <span id="format-info"></span><br>
+                                        <small class="text-muted" id="filename-info"></small>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <a href="#" class="btn btn-info btn-lg" id="view-btn" target="_blank">
+                                            <i class="fas fa-eye me-2"></i>Visualizar
+                                        </a>
+                                        <a href="#" class="btn btn-success btn-lg" id="download-btn" target="_blank">
+                                            <i class="fas fa-download me-2"></i>Baixar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" id="error-message" style="display: none;">
+                            <h5><i class="fas fa-exclamation-triangle me-2"></i>Erro na Conversão</h5>
+                            <p id="error-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('#pdf-converter-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        const form = $(this);
+        const convertBtn = $('#convert-btn');
+        const resultArea = $('#result-area');
+        const successMessage = $('#success-message');
+        const errorMessage = $('#error-message');
+        
+        // Resetar mensagens
+        successMessage.hide();
+        errorMessage.hide();
+        resultArea.show();
+        
+        // Mostrar loading
+        convertBtn.prop('disabled', true);
+        convertBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Convertendo...');
+        
+        // Criar FormData
+        const formData = new FormData(this);
+        
+        // Fazer requisição AJAX
+        $.ajax({
+            url: '{% url "pdf:upload_pdf" %}',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success) {
+                    $('#result-message').text(response.message);
+                    
+                    if (response.file_url) {
+                        $('#download-btn').attr('href', response.file_url);
+                        $('#view-btn').attr('href', response.view_url || response.file_url);
+                        $('#format-info').text(response.format ? response.format.toUpperCase() : '');
+                        $('#filename-info').text(response.filename || '');
+                        $('#download-info').show();
+                    }
+                    
+                    successMessage.show();
+                    form[0].reset();
+                } else {
+                    $('#error-text').text(response.message);
+                    errorMessage.show();
+                }
+            },
+            error: function(xhr, status, error) {
+                let errorMsg = 'Erro na requisição: ' + error;
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMsg = xhr.responseJSON.message;
+                }
+                $('#error-text').text(errorMsg);
+                errorMessage.show();
+            },
+            complete: function() {
+                convertBtn.prop('disabled', false);
+                convertBtn.html('<i class="fas fa-sync-alt me-2"></i>Converter PDF');
+            }
+        });
+    });
+    
+    // Validar tamanho do arquivo
+    $('#pdf_file').on('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const fileSize = file.size / 1024 / 1024; // MB
+            if (fileSize > 50) { // Limite de 50MB
+                alert('O arquivo é muito grande. Por favor, selecione um arquivo menor que 50MB.');
+                $(this).val('');
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coeficiente de Determinação (R²) - Conceitos Chave</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#f97316', // Orange-500
+                        'corr-orange': '#f97316',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(249, 115, 22, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../correlacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Coeficiente de Determinação (R²)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Quanto da variação de Y é explicada por X?</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Definição -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é R²?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O Coeficiente de Determinação ($R^2$) representa a proporção da variância na variável dependente
+                        que é previsível a partir da(s) variável(is) independente(s).
+                    </p>
+                    <p class="text-sm text-text-muted">
+                        Em termos simples: É uma medida de quão bem o modelo se ajusta aos dados.
+                    </p>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Relação com r</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Na regressão linear simples (uma variável X e uma Y), o $R^2$ é simplesmente o quadrado do
+                        coeficiente de correlação de Pearson ($r$).
+                    </p>
+                    <div class="bg-bg-surface p-6 rounded text-center mb-4">
+                        <p class="text-lg text-white font-mono">
+                            $$ R^2 = (r)^2 $$
+                        </p>
+                    </div>
+                    <p class="text-xs text-text-muted italic text-center">
+                        Exemplo: Se $r = 0.8$, então $R^2 = 0.64$.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interpretação -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Como Interpretar?</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        O $R^2$ varia de 0 a 1 (ou 0% a 100%).
+                    </p>
+                    <ul class="text-sm text-text-secondary space-y-3">
+                        <li class="bg-bg-surface p-3 rounded">
+                            <strong class="text-primary block">R² = 0.64 (64%)</strong>
+                            "64% da variação na variável Y pode ser explicada pela variação na variável X."
+                        </li>
+                        <li class="bg-bg-surface p-3 rounded">
+                            <strong class="text-text-muted block">O Restante (36%)</strong>
+                            É a variância não explicada (erro, ruído ou outros fatores não medidos).
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Atenção!</h4>
+                    <p class="text-sm text-text-secondary mb-2">
+                        Um $R^2$ alto não significa necessariamente que o modelo é bom ou que existe causalidade.
+                    </p>
+                    <p class="text-sm text-text-secondary">
+                        Um $R^2$ baixo não significa necessariamente que não há relação (pode haver uma relação não
+                        linear que o modelo linear não capturou).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="covariancia-vs-correlacao.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Covariância vs Correlação &rarr;
+            </a>
+            <a href="causalidade-vs-correlacao.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Causalidade ≠ Correlação &rarr;
+            </a>
+            <a href="matriz-correlacao.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Matriz de Correlação &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

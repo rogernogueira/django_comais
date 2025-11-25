@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisher vs Qui-Quadrado - Testes de Associação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-purple': '#a855f7',
+                        'assoc-pink': '#ec4899',
+                        'primary': '#a855f7',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(168, 85, 247, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(168, 85, 247, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Fisher vs Qui-Quadrado</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Qual teste escolher para sua análise?</p>
+
+        <!-- Tabela Comparativa Principal -->
+        <div class="overflow-hidden rounded-xl border border-gray-700 mb-12">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-bg-elevated text-white">
+                        <th class="p-4 border-b border-gray-700 w-1/3">Característica</th>
+                        <th class="p-4 border-b border-gray-700 w-1/3 text-assoc-pink">Qui-Quadrado (χ²)</th>
+                        <th class="p-4 border-b border-gray-700 w-1/3 text-assoc-purple">Teste Exato de Fisher</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm text-text-secondary divide-y divide-gray-800 bg-bg-surface">
+                    <tr>
+                        <td class="p-4 font-bold text-white">Natureza do Teste</td>
+                        <td class="p-4">Aproximação Assintótica</td>
+                        <td class="p-4">Probabilidade Exata</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-bold text-white">Tamanho da Amostra</td>
+                        <td class="p-4">Ideal para amostras grandes (n > 40)</td>
+                        <td class="p-4">Ideal para amostras pequenas</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-bold text-white">Frequências Esperadas</td>
+                        <td class="p-4">Exige E ≥ 5 em 80% das células</td>
+                        <td class="p-4">Sem restrições mínimas</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-bold text-white">Dimensão da Tabela</td>
+                        <td class="p-4">Qualquer tamanho (r x c)</td>
+                        <td class="p-4">Tipicamente 2x2 (extensões são complexas)</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-bold text-white">Custo Computacional</td>
+                        <td class="p-4">Baixo (fórmula simples)</td>
+                        <td class="p-4">Alto para amostras grandes (fatoriais)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Quando o Qui-Quadrado Falha -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-assoc-pink">
+                    <h3 class="text-xl mb-4 text-assoc-pink font-bold">Limitações do Qui-Quadrado</h3>
+                    <p class="text-text-secondary mb-4">
+                        O teste Qui-Quadrado assume que a estatística de teste segue uma distribuição contínua
+                        (distribuição χ²). Essa aproximação quebra quando:
+                    </p>
+                    <ul class="space-y-2 text-sm text-text-muted list-disc list-inside">
+                        <li>O tamanho total da amostra é muito pequeno (n < 20).</li>
+                        <li>Existem células com frequência esperada < 5 (especialmente em tabelas 2x2).</li>
+                        <li>Os dados são muito desbalanceados.</li>
+                    </ul>
+                    <p class="mt-4 text-sm text-white">
+                        <strong>Consequência:</strong> O p-valor calculado será impreciso, podendo levar a falsos
+                        positivos ou negativos.
+                    </p>
+                </div>
+            </div>
+
+            <!-- A Vantagem do Fisher -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-assoc-purple">
+                    <h3 class="text-xl mb-4 text-assoc-purple font-bold">A Precisão do Fisher</h3>
+                    <p class="text-text-secondary mb-4">
+                        O Teste de Fisher não depende de aproximações para o infinito. Ele calcula todas as permutações
+                        possíveis dos dados.
+                    </p>
+                    <ul class="space-y-2 text-sm text-text-muted list-disc list-inside">
+                        <li>Funciona perfeitamente com n = 10 ou n = 1000 (embora lento).</li>
+                        <li>Lida bem com zeros na tabela.</li>
+                        <li>Fornece o p-valor "verdadeiro" para aquele conjunto de dados discreto.</li>
+                    </ul>
+                    <p class="mt-4 text-sm text-white">
+                        <strong>Nota:</strong> Para amostras muito grandes, os resultados do Fisher e do Qui-Quadrado
+                        convergem (ficam quase idênticos).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Árvore de Decisão -->
+        <div class="mt-12 bg-bg-elevated p-8 rounded-2xl border border-gray-700">
+            <h3 class="text-2xl font-bold text-white mb-8 text-center">Árvore de Decisão Simplificada</h3>
+            <div
+                class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 text-center">
+
+                <div class="bg-bg-surface p-4 rounded-lg w-full md:w-1/4">
+                    <p class="text-text-secondary font-bold">Variáveis Categóricas?</p>
+                </div>
+                <span class="text-2xl text-gray-500">→</span>
+
+                <div class="bg-bg-surface p-4 rounded-lg w-full md:w-1/4">
+                    <p class="text-text-secondary font-bold">Tabela 2x2?</p>
+                </div>
+                <span class="text-2xl text-gray-500">→</span>
+
+                <div class="flex flex-col space-y-4 w-full md:w-1/3">
+                    <div class="bg-assoc-purple/20 p-4 rounded-lg border border-assoc-purple">
+                        <p class="text-assoc-purple font-bold text-sm">Alguma Esperada < 5?</p>
+                                <p class="text-white font-bold mt-1">USE FISHER</p>
+                    </div>
+                    <div class="bg-assoc-pink/20 p-4 rounded-lg border border-assoc-pink">
+                        <p class="text-assoc-pink font-bold text-sm">Todas Esperadas ≥ 5?</p>
+                        <p class="text-white font-bold mt-1">USE QUI-QUADRADO</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Navegação -->
+        <div class="mt-12 pt-6 border-t border-bg-muted">
+            <h3 class="text-xl mb-6 text-center text-primary font-bold">Continue Explorando</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="quando-usar-fisher.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 hover:border-primary/50 text-center">
+                    <p class="text-white font-bold mb-1">Quando Usar Fisher?</p>
+                    <p class="text-xs text-text-muted">Detalhes sobre as condições de uso</p>
+                </a>
+                <a href="calculo-p-valor-exato.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 hover:border-primary/50 text-center">
+                    <p class="text-white font-bold mb-1">Cálculo Exato</p>
+                    <p class="text-xs text-text-muted">Entenda a matemática por trás</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coeficiente de Determinação (R²) - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-green': '#10b981',
+                        'primary': '#10b981',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(16, 185, 129, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(16, 185, 129, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../regressao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Coeficiente de Determinação (R²)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Medindo a qualidade do ajuste do modelo de regressão.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito e Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é R²?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O Coeficiente de Determinação (R²) mede a <strong>proporção da variabilidade</strong> da
+                        variável dependente (Y)
+                        que é explicada pelas variáveis independentes (X) no modelo.
+                    </p>
+                    <div class="bg-primary/10 p-4 rounded border border-primary/30">
+                        <p class="text-sm text-primary font-mono mb-2">
+                            R² = SSR / SST = 1 - (SSE / SST)
+                        </p>
+                        <div class="text-xs text-text-muted space-y-1">
+                            <p>SST = Soma Total dos Quadrados</p>
+                            <p>SSR = Soma dos Quadrados da Regressão</p>
+                            <p>SSE = Soma dos Quadrados dos Erros</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Relação com Correlação</h3>
+                    <p class="text-text-secondary mb-3">
+                        Para regressão linear simples:
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded text-center">
+                        <p class="text-2xl text-primary font-mono font-bold mb-2">
+                            R² = r²
+                        </p>
+                        <p class="text-sm text-text-muted">
+                            (Quadrado da correlação de Pearson)
+                        </p>
+                    </div>
+                    <div class="mt-4 space-y-2 text-sm">
+                        <div class="flex items-center p-2 bg-blue-500/10 rounded">
+                            <span class="text-blue-400 mr-2">→</span>
+                            <span class="text-text-secondary">Se r = 0.8, então R² = 0.64</span>
+                        </div>
+                        <div class="flex items-center p-2 bg-blue-500/10 rounded">
+                            <span class="text-blue-400 mr-2">→</span>
+                            <span class="text-text-secondary">Se r = -0.9, então R² = 0.81</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interpretação -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Como Interpretar?</h3>
+                    <p class="text-text-secondary mb-4">
+                        R² varia de 0 a 1 (ou 0% a 100%). Quanto maior, melhor o modelo explica os dados.
+                    </p>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-green-500/20 p-4 rounded-lg border-l-4 border-green-500">
+                            <h4 class="text-green-400 font-bold">R² = 0.81 (81%)</h4>
+                            <p class="text-sm text-text-secondary mt-1">
+                                81% da variação em Y é explicada pelo modelo.
+                                <br>
+                                <span class="text-xs text-text-muted">19% é devido a outros fatores ou erro
+                                    aleatório.</span>
+                            </p>
+                        </div>
+                        <div class="element-clickable bg-yellow-500/20 p-4 rounded-lg border-l-4 border-yellow-500">
+                            <h4 class="text-yellow-400 font-bold">R² = 0.50 (50%)</h4>
+                            <p class="text-sm text-text-secondary mt-1">
+                                Metade da variação é explicada. Modelo moderado.
+                                <br>
+                                <span class="text-xs text-text-muted">Pode haver outras variáveis importantes não
+                                    incluídas.</span>
+                            </p>
+                        </div>
+                        <div class="element-clickable bg-red-500/20 p-4 rounded-lg border-l-4 border-red-500">
+                            <h4 class="text-red-400 font-bold">R² = 0.15 (15%)</h4>
+                            <p class="text-sm text-text-secondary mt-1">
+                                Modelo fraco. Apenas 15% da variação é explicada.
+                                <br>
+                                <span class="text-xs text-text-muted">Considere adicionar mais variáveis ou usar outro
+                                    modelo.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Escala de Qualidade</h3>
+                    <div class="bg-bg-muted/20 p-4 rounded-lg">
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between items-center p-2 bg-green-500/10 rounded">
+                                <span class="text-text-secondary">R² > 0.7</span>
+                                <span class="text-green-400 font-bold">Bom Ajuste</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-yellow-500/10 rounded">
+                                <span class="text-text-secondary">0.4 < R² < 0.7</span>
+                                        <span class="text-yellow-400 font-bold">Ajuste Moderado</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-red-500/10 rounded">
+                                <span class="text-text-secondary">R² < 0.4</span>
+                                        <span class="text-red-400 font-bold">Ajuste Fraco</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- R² Ajustado -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">R² Ajustado</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Por que Ajustar?</h4>
+                    <p class="text-text-secondary mb-4">
+                        O R² sempre aumenta quando você adiciona mais variáveis ao modelo, mesmo que elas sejam
+                        irrelevantes!
+                        Isso pode levar a <strong>overfitting</strong>.
+                    </p>
+                    <div class="bg-yellow-500/10 p-3 rounded border border-yellow-500/30">
+                        <p class="text-sm text-yellow-400">
+                            ⚠️ R² não penaliza a complexidade do modelo.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Fórmula do R² Ajustado</h4>
+                    <div class="bg-bg-elevated p-4 rounded text-center mb-3">
+                        <p class="text-lg text-primary font-mono">
+                            R²ₐⱼ = 1 - [(1 - R²)(n - 1) / (n - k - 1)]
+                        </p>
+                    </div>
+                    <div class="text-xs text-text-muted space-y-1">
+                        <p>n = número de observações</p>
+                        <p>k = número de variáveis independentes</p>
+                    </div>
+                    <div class="bg-green-500/10 p-3 rounded border border-green-500/30 mt-3">
+                        <p class="text-sm text-green-400">
+                            ✓ Penaliza a adição de variáveis irrelevantes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Limitações -->
+        <div class="mt-8 bg-red-900/20 p-6 rounded-2xl border border-red-500/30">
+            <h4 class="text-red-400 font-bold mb-3 text-lg">⚠️ Limitações do R²</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="bg-red-900/30 p-3 rounded">
+                    <p class="text-red-100 font-bold mb-1">Não indica causalidade</p>
+                    <p class="text-red-300 text-xs">R² alto não significa que X causa Y. Pode ser correlação espúria.
+                    </p>
+                </div>
+                <div class="bg-red-900/30 p-3 rounded">
+                    <p class="text-red-100 font-bold mb-1">Depende do contexto</p>
+                    <p class="text-red-300 text-xs">R² = 0.5 pode ser excelente em ciências sociais, mas fraco em
+                        física.</p>
+                </div>
+                <div class="bg-red-900/30 p-3 rounded">
+                    <p class="text-red-100 font-bold mb-1">Não detecta viés</p>
+                    <p class="text-red-300 text-xs">R² alto não garante que o modelo está correto. Sempre verifique os
+                        resíduos!</p>
+                </div>
+                <div class="bg-red-900/30 p-3 rounded">
+                    <p class="text-red-100 font-bold mb-1">Sensível a outliers</p>
+                    <p class="text-red-300 text-xs">Valores extremos podem inflar ou deflar artificialmente o R².</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exemplos Práticos -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-lg mb-3 text-primary font-bold">Exemplos por Área</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="element-clickable bg-bg-muted/30 p-4 rounded">
+                    <p class="text-sm text-green-400 font-bold mb-1">Física/Engenharia</p>
+                    <p class="text-sm text-text-secondary">R² > 0.9 esperado</p>
+                    <p class="text-xs text-text-muted mt-1">Relações bem definidas</p>
+                </div>
+                <div class="element-clickable bg-bg-muted/30 p-4 rounded">
+                    <p class="text-sm text-yellow-400 font-bold mb-1">Economia</p>
+                    <p class="text-sm text-text-secondary">R² = 0.5-0.7 aceitável</p>
+                    <p class="text-xs text-text-muted mt-1">Muitos fatores externos</p>
+                </div>
+                <div class="element-clickable bg-bg-muted/30 p-4 rounded">
+                    <p class="text-sm text-blue-400 font-bold mb-1">Ciências Sociais</p>
+                    <p class="text-sm text-text-secondary">R² = 0.3-0.5 comum</p>
+                    <p class="text-xs text-text-muted mt-1">Comportamento humano complexo</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Link de volta para Correlação -->
+        <div
+            class="mt-8 bg-blue-900/20 p-6 rounded-2xl border border-blue-500/30 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h3 class="text-xl font-bold text-blue-400">Voltar: Correlação</h3>
+                <p class="text-sm text-blue-200">Revise como a correlação (r) se relaciona com R².</p>
+            </div>
+            <a href="correlacao.html"
+                class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center">
+                ← Ver Correlação
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualização (Mosaicplot) - Tabelas de Contingência</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-teal': '#14b8a6',
+                        'primary': '#14b8a6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(20, 184, 166, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .mosaic-demo {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            grid-template-rows: 60% 40%;
+            gap: 4px;
+            width: 100%;
+            height: 200px;
+        }
+
+        .mosaic-rect {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .mosaic-rect:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Visualização (Mosaicplot)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">A melhor forma de ver dados categóricos</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é um Mosaicplot?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O gráfico de mosaico é uma visualização de área proporcional para tabelas de contingência.
+                    </p>
+                    <ul class="text-sm text-text-muted space-y-2 list-disc list-inside">
+                        <li>A <strong>largura</strong> das colunas representa a proporção da primeira variável.</li>
+                        <li>A <strong>altura</strong> dos segmentos dentro de cada coluna representa a proporção da
+                            segunda variável.</li>
+                        <li>A <strong>área</strong> total de cada retângulo é proporcional à frequência daquela célula.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Interpretação Visual</h3>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Em um Mosaicplot, procuramos por <strong>desalinhamentos</strong>.
+                    </p>
+                    <p class="text-sm text-text-secondary">
+                        Se as linhas horizontais que dividem os segmentos estiverem todas alinhadas (retas), as
+                        variáveis são independentes. Se houver "degraus" ou desalinhamentos grandes, há associação.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Exemplo Interativo -->
+            <div class="space-y-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h3 class="text-lg text-white font-bold mb-4 text-center">Exemplo: Sobrevivência no Titanic (Classe
+                        x Sobreviveu)</h3>
+
+                    <div class="mosaic-demo mb-4">
+                        <!-- Coluna 1: 1ª Classe (30% da largura) -->
+                        <!-- Sobreviveu (Alto % - Azul) -->
+                        <div class="mosaic-rect bg-blue-500" style="grid-column: 1; grid-row: 1;">
+                            Vivo (62%)
+                        </div>
+                        <!-- Morreu (Baixo % - Vermelho) -->
+                        <div class="mosaic-rect bg-red-500" style="grid-column: 1; grid-row: 2;">
+                            Morto (38%)
+                        </div>
+
+                        <!-- Coluna 2: 3ª Classe (70% da largura) -->
+                        <!-- Sobreviveu (Baixo % - Azul) -->
+                        <div class="mosaic-rect bg-blue-500" style="grid-column: 2; grid-row: 2 / span 1;">
+                            Vivo (25%)
+                        </div>
+                        <!-- Morreu (Alto % - Vermelho) -->
+                        <div class="mosaic-rect bg-red-500" style="grid-column: 2; grid-row: 1;">
+                            Morto (75%)
+                        </div>
+                    </div>
+                    <p class="text-xs text-text-muted text-center italic">
+                        Nota: Este é um esquema simplificado. No gráfico real, a altura do retângulo azul na 1ª coluna
+                        seria muito maior que na 2ª coluna, mostrando a associação entre Classe Alta e Sobrevivência.
+                    </p>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Colorindo por Resíduos</h4>
+                    <p class="text-sm text-text-secondary">
+                        A forma mais poderosa do Mosaicplot usa cores baseadas nos <strong>Resíduos
+                            Padronizados</strong>:
+                    </p>
+                    <ul class="text-sm text-text-secondary mt-2 space-y-1">
+                        <li><span class="text-blue-400 font-bold">Azul:</span> O > E (Associação Positiva Significativa)
+                        </li>
+                        <li><span class="text-red-400 font-bold">Vermelho:</span> O < E (Associação Negativa
+                                Significativa)</li>
+                        <li><span class="text-gray-400 font-bold">Cinza:</span> Não significativo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="construcao-tabelas.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Construção &rarr;
+            </a>
+            <a href="frequencias-obs-esp.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Obs vs Esperadas &rarr;
+            </a>
+            <a href="residuos-padronizados.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Resíduos &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

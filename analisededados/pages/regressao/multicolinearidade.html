@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multicolinearidade - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-blue': '#3b82f6',
+                        'primary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../regressao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Multicolinearidade</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Quando variáveis preditoras são altamente
+            correlacionadas entre si.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito e Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é?</h3>
+                    <p class="text-text-secondary mb-4">
+                        Multicolinearidade ocorre quando duas ou mais variáveis independentes (X₁, X₂, ...) estão
+                        <strong>altamente correlacionadas</strong> entre si. Isso significa que elas fornecem informação
+                        redundante.
+                    </p>
+                    <div class="bg-yellow-900/20 p-3 rounded border border-yellow-500/30">
+                        <p class="text-sm text-yellow-400">
+                            <strong>Exemplo:</strong> Usar "Peso em kg" e "Peso em libras" no mesmo modelo.
+                            Elas são perfeitamente correlacionadas (r = 1)!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Visualização: Diagrama de Venn</h3>
+                    <div class="bg-black/30 rounded-lg p-4">
+                        <canvas id="vifCanvas" class="w-full h-48 mb-4"></canvas>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs text-text-muted flex justify-between mb-1">
+                                    <span>Correlação entre X₁ e X₂ (r)</span>
+                                    <span id="corrVal" class="font-mono text-primary font-bold">0.00</span>
+                                </label>
+                                <input type="range" id="corrSlider" min="0" max="0.99" step="0.01" value="0"
+                                    class="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-reg-blue">
+                            </div>
+
+                            <div class="flex justify-between items-center bg-gray-900/50 p-3 rounded">
+                                <span class="text-sm text-gray-400">VIF Resultante:</span>
+                                <span id="vifVal" class="text-2xl font-bold text-green-400">1.00</span>
+                            </div>
+                            <p id="vifStatus" class="text-xs text-center text-green-400">Sem Multicolinearidade</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-text-muted mt-3">
+                        A área sobreposta representa informação compartilhada (redundância).
+                    </p>
+                </div>
+            </div>
+
+            <!-- VIF e Problemas -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">VIF (Variance Inflation Factor)</h3>
+                    <p class="text-text-secondary mb-4">
+                        Mede o quanto a variância de um coeficiente é <strong>inflada</strong> devido à correlação com
+                        outras variáveis.
+                    </p>
+                    <div class="bg-primary/10 p-4 rounded border border-primary/30 text-center mb-4">
+                        <p class="text-2xl text-primary font-mono font-bold mb-2">
+                            VIF = 1 / (1 - R²ⱼ)
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>R²ⱼ = R² da regressão de Xⱼ contra todas as outras variáveis</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between items-center p-2 bg-green-500/10 rounded">
+                            <span class="text-text-secondary">VIF = 1</span>
+                            <span class="text-green-400 font-bold">Sem correlação (Ideal)</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-yellow-500/10 rounded">
+                            <span class="text-text-secondary">VIF = 5-10</span>
+                            <span class="text-yellow-400 font-bold">Moderado (Atenção)</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-red-500/10 rounded">
+                            <span class="text-text-secondary">VIF > 10</span>
+                            <span class="text-red-400 font-bold">Severo (Problema!)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-red-400 font-bold">Problemas Causados</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">•</span>
+                            <span class="text-text-secondary">Coeficientes instáveis (mudam muito com pequenas
+                                alterações nos dados)</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">•</span>
+                            <span class="text-text-secondary">Erros padrão inflados (intervalos de confiança muito
+                                largos)</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">•</span>
+                            <span class="text-text-secondary">Sinais dos coeficientes podem ser contraintuitivos</span>
+                        </div>
+                        <div class="flex items-start p-2 bg-red-500/10 rounded">
+                            <span class="text-red-400 mr-2">•</span>
+                            <span class="text-text-secondary">Dificulta interpretar o efeito individual de cada
+                                variável</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Como Detectar -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Como Detectar?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">1. Matriz de Correlação</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Calcule a correlação entre todos os pares de variáveis preditoras.
+                    </p>
+                    <div class="bg-primary/10 p-2 rounded text-xs text-primary text-center">
+                        |r| > 0.8 → Suspeito
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">2. VIF</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Calcule o VIF para cada variável preditora.
+                    </p>
+                    <div class="bg-primary/10 p-2 rounded text-xs text-primary text-center">
+                        VIF > 10 → Problema
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">3. Condition Number</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Baseado em autovalores da matriz X'X.
+                    </p>
+                    <div class="bg-primary/10 p-2 rounded text-xs text-primary text-center">
+                        CN > 30 → Problema
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Soluções -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Soluções</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">1. Remover Variáveis</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Remova uma das variáveis correlacionadas. Escolha a menos importante teoricamente ou com menor
+                        VIF.
+                    </p>
+                    <div class="bg-green-500/10 p-3 rounded border border-green-500/30">
+                        <p class="text-xs text-green-400">
+                            ✓ Simples e efetivo
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">2. Combinar Variáveis</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Crie uma nova variável combinando as correlacionadas (ex: média, PCA).
+                    </p>
+                    <div class="bg-green-500/10 p-3 rounded border border-green-500/30">
+                        <p class="text-xs text-green-400">
+                            ✓ Preserva informação
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">3. Regularização</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Use Ridge Regression (L2) ou Lasso (L1) que penalizam coeficientes grandes.
+                    </p>
+                    <div class="bg-blue-500/10 p-3 rounded border border-blue-500/30">
+                        <p class="text-xs text-blue-400">
+                            ✓ Mantém todas as variáveis
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">4. Coletar Mais Dados</h4>
+                    <p class="text-sm text-text-secondary mb-3">
+                        Aumentar o tamanho da amostra pode reduzir a instabilidade dos coeficientes.
+                    </p>
+                    <div class="bg-yellow-500/10 p-3 rounded border border-yellow-500/30">
+                        <p class="text-xs text-yellow-400">
+                            ⚠ Nem sempre possível
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exemplo Prático -->
+        <div class="mt-8 bg-purple-900/20 p-6 rounded-2xl border border-purple-500/30">
+            <h4 class="text-purple-400 font-bold mb-3 text-lg">📊 Exemplo: Preço de Imóveis</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-purple-900/30 p-4 rounded">
+                    <h5 class="text-white font-bold mb-2">Variáveis Problemáticas</h5>
+                    <ul class="text-sm text-purple-200 space-y-1">
+                        <li>• Área total (m²)</li>
+                        <li>• Área construída (m²)</li>
+                        <li>• Número de cômodos</li>
+                    </ul>
+                    <p class="text-xs text-purple-300 mt-3">
+                        Essas variáveis são altamente correlacionadas (r > 0.9). Casas maiores têm mais cômodos!
+                    </p>
+                </div>
+                <div class="bg-purple-900/30 p-4 rounded">
+                    <h5 class="text-white font-bold mb-2">Solução Aplicada</h5>
+                    <p class="text-sm text-purple-200 mb-2">
+                        Remover "Número de cômodos" (VIF = 15.3) e manter apenas "Área total" (VIF = 2.1).
+                    </p>
+                    <div class="bg-green-500/10 p-2 rounded mt-3">
+                        <p class="text-xs text-green-400">
+                            Resultado: R² caiu de 0.92 para 0.91, mas coeficientes ficaram estáveis e interpretáveis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aviso -->
+        <div class="mt-8 bg-yellow-900/20 p-6 rounded-2xl border border-yellow-500/30">
+            <h4 class="text-yellow-400 font-bold mb-3 text-lg">⚠️ Importante</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Multicolinearidade NÃO afeta a capacidade preditiva do modelo (R²
+                        permanece bom).</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">O problema é na INTERPRETAÇÃO dos coeficientes individuais.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Se você só quer prever (não interpretar), multicolinearidade é menos
+                        crítica.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-yellow-400 mr-2">•</span>
+                    <span class="text-yellow-200">Sempre verifique VIF antes de interpretar coeficientes!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('vifCanvas');
+        const ctx = canvas.getContext('2d');
+        const slider = document.getElementById('corrSlider');
+        const corrVal = document.getElementById('corrVal');
+        const vifVal = document.getElementById('vifVal');
+        const vifStatus = document.getElementById('vifStatus');
+
+        function draw() {
+            const r = parseFloat(slider.value);
+            const vif = 1 / (1 - r * r);
+
+            corrVal.textContent = r.toFixed(2);
+            vifVal.textContent = vif.toFixed(2);
+
+            if (vif < 5) {
+                vifVal.className = "text-2xl font-bold text-green-400";
+                vifStatus.textContent = "Sem Multicolinearidade (Seguro)";
+                vifStatus.className = "text-xs text-center text-green-400";
+            } else if (vif < 10) {
+                vifVal.className = "text-2xl font-bold text-yellow-400";
+                vifStatus.textContent = "Multicolinearidade Moderada (Atenção)";
+                vifStatus.className = "text-xs text-center text-yellow-400";
+            } else {
+                vifVal.className = "text-2xl font-bold text-red-400";
+                vifStatus.textContent = "Multicolinearidade Severa (Perigo!)";
+                vifStatus.className = "text-xs text-center text-red-400";
+            }
+
+            const rect = canvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const radius = 60;
+            const centerY = height / 2;
+            const centerX = width / 2;
+            const maxDist = 2.5 * radius;
+            const dist = maxDist * (1 - r);
+
+            const x1 = centerX - dist / 2;
+            const x2 = centerX + dist / 2;
+
+            // Circle 1 (X1)
+            ctx.beginPath();
+            ctx.arc(x1, centerY, radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.5)';
+            ctx.fill();
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = 'white';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText("X₁", x1, centerY - radius - 10);
+
+            // Circle 2 (X2)
+            ctx.beginPath();
+            ctx.arc(x2, centerY, radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(249, 115, 22, 0.5)';
+            ctx.fill();
+            ctx.strokeStyle = '#f97316';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = 'white';
+            ctx.fillText("X₂", x2, centerY - radius - 10);
+        }
+
+        function setupCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            draw();
+        }
+
+        slider.addEventListener('input', draw);
+        window.addEventListener('resize', setupCanvas);
+        setTimeout(setupCanvas, 50);
+    </script>
+</body>
+
+</html>

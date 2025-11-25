@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matriz de Correlação - Conceitos Chave</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#f97316', // Orange-500
+                        'corr-orange': '#f97316',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(249, 115, 22, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../correlacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Matriz de Correlação</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Visualizando relações entre múltiplas variáveis
+            simultaneamente</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- O que é -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Uma tabela quadrada que mostra os coeficientes de correlação entre todas as combinações
+                        possíveis de variáveis em um conjunto de dados.
+                    </p>
+                    <ul class="text-sm text-text-muted space-y-2 list-disc list-inside">
+                        <li><strong>Diagonal Principal:</strong> Sempre 1.0 (cada variável correlaciona perfeitamente
+                            consigo mesma).</li>
+                        <li><strong>Simetria:</strong> A correlação entre A e B é igual à correlação entre B e A.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Exemplo Visual (Heatmap)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-center border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="p-2"></th>
+                                    <th class="p-2 text-text-secondary">Idade</th>
+                                    <th class="p-2 text-text-secondary">Renda</th>
+                                    <th class="p-2 text-text-secondary">Gastos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-2 font-bold text-text-secondary">Idade</td>
+                                    <td class="p-2 bg-primary/20 text-white">1.00</td>
+                                    <td class="p-2 bg-primary/80 text-white">0.85</td>
+                                    <td class="p-2 bg-primary/10 text-white">0.12</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-text-secondary">Renda</td>
+                                    <td class="p-2 bg-primary/80 text-white">0.85</td>
+                                    <td class="p-2 bg-primary/20 text-white">1.00</td>
+                                    <td class="p-2 bg-primary/60 text-white">0.65</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-text-secondary">Gastos</td>
+                                    <td class="p-2 bg-primary/10 text-white">0.12</td>
+                                    <td class="p-2 bg-primary/60 text-white">0.65</td>
+                                    <td class="p-2 bg-primary/20 text-white">1.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-xs text-text-muted mt-2 text-center">Cores mais fortes indicam correlações mais
+                        fortes.</p>
+                </div>
+            </div>
+
+            <!-- Aplicações -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Para que serve?</h3>
+                    <ul class="text-sm text-text-secondary space-y-3">
+                        <li class="bg-bg-surface p-3 rounded">
+                            <strong class="text-primary block">Seleção de Variáveis:</strong>
+                            Identificar quais variáveis independentes estão fortemente relacionadas com a variável
+                            dependente.
+                        </li>
+                        <li class="bg-bg-surface p-3 rounded">
+                            <strong class="text-red-400 block">Detectar Multicolinearidade:</strong>
+                            Se duas variáveis independentes (ex: Renda e Patrimônio) têm correlação muito alta (ex: >
+                            0.9), elas trazem a mesma informação para o modelo de regressão, o que pode causar
+                            problemas.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Dica de Análise</h4>
+                    <p class="text-sm text-text-secondary">
+                        Ao analisar uma matriz grande, procure por "clusters" ou blocos de variáveis que se
+                        correlacionam entre si. Isso pode sugerir fatores latentes subjacentes (base para Análise
+                        Fatorial ou PCA).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="covariancia-vs-correlacao.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Covariância vs Correlação &rarr;
+            </a>
+            <a href="causalidade-vs-correlacao.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Causalidade ≠ Correlação &rarr;
+            </a>
+            <a href="coeficiente-determinacao.html"
+                class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver R² &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

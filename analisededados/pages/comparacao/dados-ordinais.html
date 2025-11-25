@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados Ordinais - Estatística</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#38bdf8',
+                        'primary': '#facc15', // Amarelo
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(250, 204, 21, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(250, 204, 21, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <!-- Container principal -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Cabeçalho com botão voltar -->
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <div class="flex items-center">
+                <div
+                    class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shadow-lg shadow-primary/20">
+                    <span class="text-bg-base text-xl font-bold">!</span>
+                </div>
+                <h1 class="text-4xl text-primary font-bold">Dados Ordinais</h1>
+            </div>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Quando a ordem importa, mas a distância não.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- O Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que são?</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-bg-surface p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-white mb-2">Escalas de Likert</h4>
+                            <div class="flex justify-between items-center bg-bg-base/50 p-3 rounded">
+                                <div class="text-center">
+                                    <span class="block text-2xl">😡</span>
+                                    <span class="text-[10px] text-text-muted">1</span>
+                                </div>
+                                <div class="text-center">
+                                    <span class="block text-2xl">😐</span>
+                                    <span class="text-[10px] text-text-muted">2</span>
+                                </div>
+                                <div class="text-center">
+                                    <span class="block text-2xl">😃</span>
+                                    <span class="text-[10px] text-text-muted">3</span>
+                                </div>
+                                <div class="text-center">
+                                    <span class="block text-2xl">😍</span>
+                                    <span class="text-[10px] text-text-muted">4</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-muted mt-2">
+                                A diferença entre "Neutro" e "Feliz" não é matematicamente igual à diferença entre
+                                "Feliz" e "Muito Feliz".
+                            </p>
+                        </div>
+
+                        <div class="bg-bg-surface p-4 rounded-lg border border-red-400/20">
+                            <h4 class="text-lg font-bold text-red-400 mb-2">Por que a Média falha?</h4>
+                            <p class="text-sm text-text-secondary">
+                                Qual é a média entre "Concordo" e "Discordo Totalmente"?
+                            </p>
+                            <p class="text-sm text-text-secondary mt-2">
+                                Calcular a média (ex: 2.5) assume que existe um valor numérico contínuo entre as
+                                categorias, o que não faz sentido real.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- A Solução -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Use Não Paramétricos</h3>
+
+                    <div class="space-y-4">
+                        <div class="element-clickable bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                            <h4 class="text-lg font-bold text-white mb-1">Testes de Postos</h4>
+                            <p class="text-sm text-text-secondary">
+                                Testes como <strong>Mann-Whitney</strong> e <strong>Kruskal-Wallis</strong> foram feitos
+                                exatamente para isso. Eles analisam se um grupo tende a ter valores (postos) maiores que
+                                o outro.
+                            </p>
+                        </div>
+
+                        <div class="bg-bg-elevated p-4 rounded-lg mt-6">
+                            <h4 class="text-sm font-bold text-center text-text-accent mb-2">Exemplos Clínicos</h4>
+                            <ul class="text-xs text-text-secondary space-y-2">
+                                <li class="flex items-center">
+                                    <span class="text-yellow-400 mr-2">🏥</span>
+                                    <span>Estágios de Câncer (I, II, III, IV).</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-yellow-400 mr-2">🤕</span>
+                                    <span>Escala de Dor (0 a 10).</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-yellow-400 mr-2">⭐</span>
+                                    <span>Avaliação de Satisfação (1 a 5 estrelas).</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlação de Spearman - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-blue': '#3b82f6',
+                        'primary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+               onclick="window.history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Correlação de Spearman (ρ)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Medindo relações <strong>monotônicas</strong> usando
+            rankings.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito e Visualização -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é Relação Monotônica?</h3>
+                    <p class="text-text-secondary mb-4">
+                        Uma relação é monotônica quando, à medida que X aumenta, Y sempre aumenta (ou sempre diminui),
+                        mas não necessariamente de forma linear.
+                    </p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-green-500/10 p-3 rounded text-center">
+                            <p class="text-green-400 font-bold text-sm mb-1">Linear</p>
+                            <p class="text-xs text-text-muted">y = 2x + 1</p>
+                            <p class="text-xs text-green-300 mt-1">✓ Monotônica</p>
+                        </div>
+                        <div class="bg-green-500/10 p-3 rounded text-center">
+                            <p class="text-green-400 font-bold text-sm mb-1">Exponencial</p>
+                            <p class="text-xs text-text-muted">y = e^x</p>
+                            <p class="text-xs text-green-300 mt-1">✓ Monotônica</p>
+                        </div>
+                        <div class="bg-green-500/10 p-3 rounded text-center">
+                            <p class="text-green-400 font-bold text-sm mb-1">Logarítmica</p>
+                            <p class="text-xs text-text-muted">y = log(x)</p>
+                            <p class="text-xs text-green-300 mt-1">✓ Monotônica</p>
+                        </div>
+                        <div class="bg-red-500/10 p-3 rounded text-center">
+                            <p class="text-red-400 font-bold text-sm mb-1">Quadrática</p>
+                            <p class="text-xs text-text-muted">y = x²</p>
+                            <p class="text-xs text-red-300 mt-1">✗ Não monotônica</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Como Funciona?</h3>
+                    <div class="bg-bg-surface p-4 rounded mb-3">
+                        <p class="text-sm text-text-secondary mb-3">
+                            <strong>Passo 1:</strong> Converta os valores em rankings (posições)
+                        </p>
+                        <div class="bg-black/20 p-3 rounded text-xs font-mono">
+                            <p class="text-blue-300">X: [10, 20, 30, 40] → Rank: [1, 2, 3, 4]</p>
+                            <p class="text-blue-300">Y: [5, 15, 25, 35] → Rank: [1, 2, 3, 4]</p>
+                        </div>
+                    </div>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-sm text-text-secondary mb-2">
+                            <strong>Passo 2:</strong> Calcule Pearson nos rankings
+                        </p>
+                        <p class="text-xs text-text-muted">
+                            ρ = correlação de Pearson entre os rankings
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fórmula e Características -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Fórmula de Spearman</h3>
+                    <div class="bg-bg-surface p-4 rounded text-center mb-3">
+                        <p class="text-lg text-text-secondary font-mono mb-2">
+                            ρ = 1 - (6Σdᵢ²) / (n(n² - 1))
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>dᵢ = diferença entre os rankings</p>
+                            <p>n = número de pares</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-text-muted">
+                        Esta é a fórmula simplificada. Quando há empates, usa-se a correlação de Pearson nos rankings.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Interpretação</h3>
+                    <div class="bg-bg-muted/20 p-4 rounded-lg">
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between items-center p-2 bg-green-500/10 rounded">
+                                <span class="text-text-secondary">ρ ≈ +1</span>
+                                <span class="text-green-400 font-bold">Monotônica crescente perfeita</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-gray-500/10 rounded">
+                                <span class="text-text-secondary">ρ ≈ 0</span>
+                                <span class="text-gray-400 font-bold">Sem relação monotônica</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-red-500/10 rounded">
+                                <span class="text-text-secondary">ρ ≈ -1</span>
+                                <span class="text-red-400 font-bold">Monotônica decrescente perfeita</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-900/20 p-4 rounded-lg border border-blue-500/30">
+                    <h4 class="text-blue-400 font-bold mb-2">Vantagens</h4>
+                    <ul class="text-sm text-blue-200 space-y-1">
+                        <li>✓ Detecta relações <strong>não-lineares</strong> monotônicas</li>
+                        <li>✓ Robusto a <strong>outliers</strong></li>
+                        <li>✓ Funciona com dados <strong>ordinais</strong></li>
+                        <li>✓ Não assume normalidade</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quando Usar -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Quando Usar Spearman?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-green-500/10 p-6 rounded-lg border-l-4 border-green-500">
+                    <h4 class="text-green-400 font-bold mb-3">✓ Use quando:</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>• A relação é <strong>monotônica mas não-linear</strong></li>
+                        <li>• Dados <strong>ordinais</strong> (rankings, escalas Likert)</li>
+                        <li>• Presença de <strong>outliers</strong></li>
+                        <li>• Distribuição não-normal</li>
+                        <li>• Dados com valores extremos</li>
+                    </ul>
+                </div>
+                <div class="bg-yellow-500/10 p-6 rounded-lg border-l-4 border-yellow-500">
+                    <h4 class="text-yellow-400 font-bold mb-3">⚠️ Limitações:</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>• Não detecta relações <strong>não-monotônicas</strong> (ex: U invertido)</li>
+                        <li>• Perde informação ao converter para rankings</li>
+                        <li>• Menos poderoso que Pearson para dados lineares</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exemplo Prático -->
+        <div class="mt-8 bg-bg-muted/20 p-6 rounded-lg">
+            <h3 class="text-xl mb-4 text-primary font-bold text-center">Exemplo Prático</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-surface p-4 rounded">
+                    <h4 class="text-white font-bold mb-3">Dados Originais</h4>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left py-2 text-text-muted">Horas Estudo</th>
+                                <th class="text-left py-2 text-text-muted">Nota</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-text-secondary">
+                            <tr>
+                                <td class="py-1">2</td>
+                                <td>60</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">5</td>
+                                <td>75</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">8</td>
+                                <td>85</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">10</td>
+                                <td>90</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-bg-surface p-4 rounded">
+                    <h4 class="text-white font-bold mb-3">Rankings</h4>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left py-2 text-text-muted">Rank Estudo</th>
+                                <th class="text-left py-2 text-text-muted">Rank Nota</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-blue-300 font-mono">
+                            <tr>
+                                <td class="py-1">1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">2</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">3</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">4</td>
+                                <td>4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-xs text-primary mt-3 font-bold">ρ = 1.0 (correlação perfeita!)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outras Correlações -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-xl mb-4 text-center text-primary font-bold">Outros Tipos de Correlação</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="correlacao-pearson.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-green-500/20 text-green-400 text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        r</div>
+                    <p class="text-white font-bold">Pearson</p>
+                    <p class="text-xs text-text-muted mt-1">Relações lineares</p>
+                </a>
+                <a href="correlacao-kendall.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        τ</div>
+                    <p class="text-white font-bold">Kendall</p>
+                    <p class="text-xs text-text-muted mt-1">Concordância entre rankings</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

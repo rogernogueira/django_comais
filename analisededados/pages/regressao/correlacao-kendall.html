@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlação de Kendall - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'reg-purple': '#a855f7',
+                        'primary': '#a855f7',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(168, 85, 247, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(168, 85, 247, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+               onclick="window.history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Correlação de Kendall (τ)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Medindo <strong>concordância</strong> entre rankings.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é Tau de Kendall?</h3>
+                    <p class="text-text-secondary mb-4">
+                        O coeficiente Tau de Kendall (τ) mede a <strong>concordância</strong> entre dois rankings,
+                        contando pares concordantes e discordantes.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <h4 class="text-white font-bold text-sm mb-2">Pares Concordantes vs Discordantes</h4>
+                        <div class="space-y-2 text-xs">
+                            <div class="bg-green-500/10 p-2 rounded">
+                                <p class="text-green-400 font-bold">Concordante:</p>
+                                <p class="text-text-muted">Se X₁ > X₂, então Y₁ > Y₂</p>
+                            </div>
+                            <div class="bg-red-500/10 p-2 rounded">
+                                <p class="text-red-400 font-bold">Discordante:</p>
+                                <p class="text-text-muted">Se X₁ > X₂, mas Y₁ < Y₂</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Exemplo Visual</h3>
+                    <div class="bg-bg-surface p-4 rounded">
+                        <p class="text-sm text-text-secondary mb-3">Dados: (1,1), (2,2), (3,4), (4,3)</p>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex items-center justify-between p-2 bg-green-500/10 rounded">
+                                <span class="text-text-muted">(1,1) vs (2,2)</span>
+                                <span class="text-green-400 font-bold">✓ Concordante</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-green-500/10 rounded">
+                                <span class="text-text-muted">(1,1) vs (3,4)</span>
+                                <span class="text-green-400 font-bold">✓ Concordante</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-red-500/10 rounded">
+                                <span class="text-text-muted">(3,4) vs (4,3)</span>
+                                <span class="text-red-400 font-bold">✗ Discordante</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-primary mt-3 font-bold">
+                            Total: 5 concordantes, 1 discordante
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fórmula e Características -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Fórmula de Kendall</h3>
+                    <div class="bg-bg-surface p-4 rounded text-center mb-3">
+                        <p class="text-lg text-text-secondary font-mono mb-2">
+                            τ = (C - D) / (C + D)
+                        </p>
+                        <div class="text-sm text-text-muted">
+                            <p>C = número de pares concordantes</p>
+                            <p>D = número de pares discordantes</p>
+                        </div>
+                    </div>
+                    <div class="bg-purple-500/10 p-3 rounded text-xs">
+                        <p class="text-purple-300">
+                            <strong>Nota:</strong> Existem variantes (τ-a, τ-b, τ-c) para lidar com empates.
+                            τ-b é a mais comum.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Interpretação</h3>
+                    <div class="bg-bg-muted/20 p-4 rounded-lg">
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between items-center p-2 bg-green-500/10 rounded">
+                                <span class="text-text-secondary">τ = +1</span>
+                                <span class="text-green-400 font-bold">Concordância perfeita</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-gray-500/10 rounded">
+                                <span class="text-text-secondary">τ = 0</span>
+                                <span class="text-gray-400 font-bold">Sem associação</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-red-500/10 rounded">
+                                <span class="text-text-secondary">τ = -1</span>
+                                <span class="text-red-400 font-bold">Discordância perfeita</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
+                    <h4 class="text-purple-400 font-bold mb-2">Características</h4>
+                    <ul class="text-sm text-purple-200 space-y-1">
+                        <li>✓ Mais <strong>robusto</strong> que Spearman</li>
+                        <li>✓ Melhor para <strong>amostras pequenas</strong></li>
+                        <li>✓ Interpretação direta (probabilidade de concordância)</li>
+                        <li>✓ Funciona bem com <strong>empates</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kendall vs Spearman -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Kendall vs Spearman</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-purple-500/10 p-6 rounded-lg border-l-4 border-purple-500">
+                    <h4 class="text-purple-400 font-bold mb-3">Kendall (τ)</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>✓ Mais <strong>robusto</strong> estatisticamente</li>
+                        <li>✓ Melhor para <strong>amostras pequenas</strong> (n < 30)</li>
+                        <li>✓ Interpretação mais <strong>intuitiva</strong></li>
+                        <li>✓ Valores geralmente <strong>menores</strong> que Spearman</li>
+                        <li>✗ Mais <strong>lento</strong> de calcular (O(n²))</li>
+                    </ul>
+                </div>
+                <div class="bg-blue-500/10 p-6 rounded-lg border-l-4 border-blue-500">
+                    <h4 class="text-blue-400 font-bold mb-3">Spearman (ρ)</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>✓ Mais <strong>rápido</strong> de calcular</li>
+                        <li>✓ Melhor para <strong>amostras grandes</strong></li>
+                        <li>✓ Valores mais <strong>próximos</strong> de Pearson</li>
+                        <li>✓ Mais <strong>conhecido</strong> e usado</li>
+                        <li>✗ Menos robusto que Kendall</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quando Usar -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Quando Usar Kendall?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-green-500/10 p-6 rounded-lg border-l-4 border-green-500">
+                    <h4 class="text-green-400 font-bold mb-3">✓ Use quando:</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>• <strong>Amostras pequenas</strong> (n < 30)</li>
+                        <li>• Muitos <strong>empates</strong> nos dados</li>
+                        <li>• Precisa de <strong>interpretação intuitiva</strong></li>
+                        <li>• Quer máxima <strong>robustez</strong></li>
+                        <li>• Dados ordinais</li>
+                    </ul>
+                </div>
+                <div class="bg-yellow-500/10 p-6 rounded-lg border-l-4 border-yellow-500">
+                    <h4 class="text-yellow-400 font-bold mb-3">⚠️ Considere Spearman se:</h4>
+                    <ul class="text-sm text-text-secondary space-y-2">
+                        <li>• Amostras <strong>grandes</strong> (n > 100)</li>
+                        <li>• Velocidade de cálculo é importante</li>
+                        <li>• Quer valores comparáveis a Pearson</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exemplo Prático -->
+        <div class="mt-8 bg-bg-muted/20 p-6 rounded-lg">
+            <h3 class="text-xl mb-4 text-primary font-bold text-center">Cálculo Passo a Passo</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-bg-surface p-4 rounded">
+                    <h4 class="text-white font-bold mb-3 text-sm">1. Dados</h4>
+                    <table class="w-full text-xs">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left py-1 text-text-muted">X</th>
+                                <th class="text-left py-1 text-text-muted">Y</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-text-secondary">
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-bg-surface p-4 rounded">
+                    <h4 class="text-white font-bold mb-3 text-sm">2. Contar Pares</h4>
+                    <div class="text-xs space-y-1">
+                        <p class="text-green-400">Concordantes (C): 5</p>
+                        <p class="text-red-400">Discordantes (D): 1</p>
+                        <p class="text-text-muted mt-2">Total de pares: 6</p>
+                    </div>
+                </div>
+                <div class="bg-bg-surface p-4 rounded">
+                    <h4 class="text-white font-bold mb-3 text-sm">3. Calcular τ</h4>
+                    <div class="text-xs space-y-1">
+                        <p class="text-text-secondary">τ = (C - D) / (C + D)</p>
+                        <p class="text-text-secondary">τ = (5 - 1) / (5 + 1)</p>
+                        <p class="text-text-secondary">τ = 4 / 6</p>
+                        <p class="text-primary font-bold text-lg mt-2">τ = 0.67</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outras Correlações -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-xl mb-4 text-center text-primary font-bold">Outros Tipos de Correlação</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="correlacao-pearson.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-green-500/20 text-green-400 text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        r</div>
+                    <p class="text-white font-bold">Pearson</p>
+                    <p class="text-xs text-text-muted mt-1">Relações lineares</p>
+                </a>
+                <a href="correlacao-spearman.html"
+                    class="element-clickable bg-bg-surface p-4 rounded-lg border border-gray-700 text-center hover:border-primary/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 text-sm flex items-center justify-center mx-auto mb-2 font-bold">
+                        ρ</div>
+                    <p class="text-white font-bold">Spearman</p>
+                    <p class="text-xs text-text-muted mt-1">Relações monotônicas (rankings)</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

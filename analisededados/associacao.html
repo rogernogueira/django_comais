@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testes de Associação - Guia Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#38bdf8',
+                        'assoc-pink': '#ec4899',
+                        'assoc-purple': '#a855f7',
+                        'assoc-blue': '#3b82f6',
+                        'assoc-cyan': '#06b6d4',
+                        'assoc-teal': '#14b8a6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .slide {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .slide:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(236, 72, 153, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl md:text-5xl text-center mb-8 text-assoc-pink font-bold">Testes de Associação</h1>
+        <p class="text-xl text-center mb-12 text-text-secondary">Analisando relações entre variáveis categóricas</p>
+
+        <!-- Grid de slides interativos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Slide 1: Intro/Title Card -->
+            <div
+                class="slide bg-bg-elevated rounded-2xl p-8 flex flex-col justify-center items-center text-center border-2 border-assoc-pink/20 hover:border-assoc-pink/50">
+                <h2 class="text-3xl mb-4 text-assoc-pink font-bold">Escolha seu Teste</h2>
+                <p class="text-lg text-text-secondary">Qual é o tipo das suas variáveis?</p>
+                <a href="index.html"
+                    class="mt-6 text-sm text-text-muted hover:text-white transition-colors border border-bg-muted px-4 py-2 rounded-full">&larr;
+                    Voltar ao Menu Principal</a>
+            </div>
+
+            <!-- Slide 2: Qui-Quadrado -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-assoc-pink/20 hover:border-assoc-pink/50">
+                <h3 class="text-xl mb-4 text-assoc-pink font-bold">Qui-Quadrado (χ²)</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="p-3 bg-assoc-pink/10 rounded-lg mb-2 border border-assoc-pink/20">
+                        <p class="text-sm text-assoc-pink font-mono font-bold">2 Variáveis Categóricas</p>
+                        <p class="text-xs text-text-muted mt-1">Teste mais comum</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/qui-quadrado-independencia.html'">
+                        <p class="text-text-secondary">Qui-Quadrado de Independência</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-pink/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/qui-quadrado-homogeneidade.html'">
+                        <p class="text-text-secondary">Qui-Quadrado de Homogeneidade</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-pink/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/qui-quadrado-aderencia.html'">
+                        <p class="text-text-secondary">Qui-Quadrado de Aderência</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-pink/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm text-assoc-pink font-semibold">
+                    Explorar χ² &rarr;
+                </div>
+            </div>
+
+            <!-- Slide 3: Teste Exato de Fisher -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-assoc-purple/20 hover:border-assoc-purple/50">
+                <h3 class="text-xl mb-4 text-assoc-purple font-bold">Teste Exato de Fisher</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="p-3 bg-assoc-purple/10 rounded-lg mb-2 border border-assoc-purple/20">
+                        <p class="text-sm text-assoc-purple font-mono font-bold">Tabelas 2×2</p>
+                        <p class="text-xs text-text-muted mt-1">Amostras pequenas</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/quando-usar-fisher.html'">
+                        <p class="text-text-secondary">Quando Usar Fisher</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-purple/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/calculo-p-valor-exato.html'">
+                        <p class="text-text-secondary">Cálculo de p-valor Exato</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-purple/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/comparacao-qui-quadrado.html'">
+                        <p class="text-text-secondary">Comparação com χ²</p>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-purple/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm text-assoc-purple font-semibold">
+                    Explorar Fisher &rarr;
+                </div>
+            </div>
+
+            <!-- Slide 4: Medidas de Associação -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-assoc-blue/20 hover:border-assoc-blue/50">
+                <h3 class="text-xl mb-4 text-assoc-blue font-bold">Medidas de Associação</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/associacao/phi.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-assoc-blue/20 text-assoc-blue text-xs flex items-center justify-center mr-2 font-bold">φ</span>
+                        <span class="text-text-secondary">Phi (Φ) - Tabelas 2×2</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/associacao/v-cramer.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-assoc-blue/20 text-assoc-blue text-xs flex items-center justify-center mr-2 font-bold">V</span>
+                        <span class="text-text-secondary">V de Cramér</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg flex items-center relative"
+                        onclick="window.location.href='pages/associacao/coeficiente-contingencia.html'">
+                        <span
+                            class="w-6 h-6 rounded-full bg-assoc-blue/20 text-assoc-blue text-xs flex items-center justify-center mr-2 font-bold">C</span>
+                        <span class="text-text-secondary">Coeficiente de Contingência</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/odds-ratio.html'">
+                        <span class="text-text-secondary">Razão de Chances (Odds Ratio)</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Pressupostos e Validação -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-assoc-cyan/20 hover:border-assoc-cyan/50">
+                <h3 class="text-xl mb-4 text-assoc-cyan font-bold">Pressupostos</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/frequencias-esperadas.html'">
+                        <span class="text-text-secondary">Frequências Esperadas</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/independencia-observacoes.html'">
+                        <span class="text-text-secondary">Independência das Observações</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/tamanho-amostral.html'">
+                        <span class="text-text-secondary">Tamanho Amostral</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/correcao-yates.html'">
+                        <span class="text-text-secondary">Correção de Yates</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Tabelas de Contingência -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-assoc-teal/20 hover:border-assoc-teal/50">
+                <h3 class="text-xl mb-4 text-assoc-teal font-bold">Tabelas de Contingência</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/construcao-tabelas.html'">
+                        <span class="text-text-secondary">Construção de Tabelas</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/frequencias-obs-esp.html'">
+                        <span class="text-text-secondary">Frequências Observadas vs Esperadas</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/residuos-padronizados.html'">
+                        <span class="text-text-secondary">Resíduos Padronizados</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative"
+                        onclick="window.location.href='pages/associacao/visualizacao-mosaicplot.html'">
+                        <span class="text-text-secondary">Visualização (Mosaicplot)</span>
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-assoc-blue/50 group-hover:text-primary transition-colors"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Workflow Guide Section -->
+        <div class="mt-16 pt-8 border-t border-bg-muted">
+            <h2 class="text-3xl text-center mb-8 text-primary font-bold">Fluxo de Trabalho Recomendado</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-assoc-pink text-center">
+                    <div class="w-12 h-12 bg-assoc-pink/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-assoc-pink">1</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Tabela de Contingência</h3>
+                    <p class="text-sm text-text-muted">Organize os dados em tabela cruzada</p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-assoc-purple text-center">
+                    <div
+                        class="w-12 h-12 bg-assoc-purple/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-assoc-purple">2</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Escolher Teste</h3>
+                    <p class="text-sm text-text-muted">χ² ou Fisher conforme amostra</p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-assoc-blue text-center">
+                    <div class="w-12 h-12 bg-assoc-blue/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-assoc-blue">3</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Verificar Pressupostos</h3>
+                    <p class="text-sm text-text-muted">Frequências esperadas ≥ 5</p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-assoc-cyan text-center">
+                    <div class="w-12 h-12 bg-assoc-cyan/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-assoc-cyan">4</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Medir Associação</h3>
+                    <p class="text-sm text-text-muted">Calcule V de Cramér ou Phi</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Reference -->
+        <div class="mt-12 bg-bg-elevated p-8 rounded-2xl border border-primary/20">
+            <h3 class="text-2xl font-bold text-primary mb-6 text-center">Referência Rápida</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-3">Quando usar Qui-Quadrado?</h4>
+                    <ul class="space-y-2 text-sm text-text-secondary">
+                        <li class="flex items-start">
+                            <span class="text-assoc-pink mr-2">✓</span>
+                            <span>Variáveis categóricas (nominais ou ordinais)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-assoc-pink mr-2">✓</span>
+                            <span>Frequências esperadas ≥ 5 em todas as células</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-assoc-pink mr-2">✓</span>
+                            <span>Amostras grandes (n > 40)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-assoc-pink mr-2">✓</span>
+                            <span>Observações independentes</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-3">Quando usar Teste de Fisher?</h4>
+                    <ul class="space-y-2 text-sm text-text-secondary">
+                        <li class="flex items-start">
+                            <span class="text-assoc-purple mr-2">✓</span>
+                            <span>Tabelas 2×2 (duas variáveis dicotômicas)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-assoc-purple mr-2">✓</span>
+                            <span>Amostras pequenas (n < 40)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-assoc-purple mr-2">✓</span>
+                            <span>Frequências esperadas < 5</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-assoc-purple mr-2">✓</span>
+                            <span>Quando χ² não é apropriado</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interpretation Guide -->
+        <div class="mt-8 bg-bg-surface p-8 rounded-2xl border border-assoc-pink/20">
+            <h3 class="text-2xl font-bold text-assoc-pink mb-6 text-center">Interpretando os Resultados</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h4 class="text-white font-bold mb-2">P-valor</h4>
+                    <p class="text-sm text-text-secondary mb-2">Probabilidade de observar os dados se H₀ for verdadeira
+                    </p>
+                    <div class="space-y-1 text-xs">
+                        <p class="text-green-400">p < 0.05: Rejeitar H₀ (há associação)</p>
+                                <p class="text-red-400">p ≥ 0.05: Não rejeitar H₀</p>
+                    </div>
+                </div>
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h4 class="text-white font-bold mb-2">V de Cramér</h4>
+                    <p class="text-sm text-text-secondary mb-2">Força da associação (0 a 1)</p>
+                    <div class="space-y-1 text-xs">
+                        <p class="text-text-muted">0.0 - 0.1: Muito fraca</p>
+                        <p class="text-text-muted">0.1 - 0.3: Fraca</p>
+                        <p class="text-text-muted">0.3 - 0.5: Moderada</p>
+                        <p class="text-text-muted">0.5+: Forte</p>
+                    </div>
+                </div>
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h4 class="text-white font-bold mb-2">Resíduos</h4>
+                    <p class="text-sm text-text-secondary mb-2">Identificam células que contribuem para χ²</p>
+                    <div class="space-y-1 text-xs">
+                        <p class="text-text-muted">|resíduo| > 2: Célula significativa</p>
+                        <p class="text-text-muted">|resíduo| > 3: Muito significativa</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const clickableElements = document.querySelectorAll('.element-clickable, .slide');
+            clickableElements.forEach(element => {
+                element.addEventListener('click', function (e) {
+                    this.style.transform = 'scale(0.98)';
+                    this.style.backgroundColor = 'rgba(236, 72, 153, 0.1)';
+
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.backgroundColor = '';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

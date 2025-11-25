@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamanho da Amostra - Estatística</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#38bdf8',
+                        'primary': '#4ade80', // Verde
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(74, 222, 128, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(74, 222, 128, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <!-- Container principal -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Cabeçalho com botão voltar -->
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <div class="flex items-center">
+                <div
+                    class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shadow-lg shadow-primary/20">
+                    <span class="text-bg-base text-xl font-bold">✓</span>
+                </div>
+                <h1 class="text-4xl text-primary font-bold">Amostras Grandes (n > 30)</h1>
+            </div>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Por que o número 30 é tão importante na estatística?
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Teorema do Limite Central -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Teorema do Limite Central (TLC)</h3>
+                    <p class="text-text-secondary mb-4">O superpoder da estatística paramétrica.</p>
+
+                    <div class="bg-bg-surface p-4 rounded-lg">
+                        <p class="text-sm text-text-secondary mb-4">
+                            Mesmo que seus dados originais <strong>NÃO</strong> sejam normais, a distribuição das
+                            <strong>MÉDIAS</strong> amostrais tende a ser normal se a amostra for grande o suficiente.
+                        </p>
+
+                        <!-- Visualização TLC -->
+                        <div class="relative h-40 w-full mt-2 bg-bg-base/50 rounded border border-text-muted/20 p-2">
+                            <svg viewBox="0 0 200 100" class="w-full h-full">
+                                <!-- População Original (Assimétrica) -->
+                                <path d="M10,90 Q30,10 50,90 L10,90" fill="none" stroke="#f87171" stroke-width="1"
+                                    stroke-dasharray="2" opacity="0.5" />
+                                <text x="30" y="80" fill="#f87171" font-size="6" opacity="0.7">Dados Originais</text>
+
+                                <!-- n = 5 -->
+                                <path d="M60,90 Q80,60 100,90" fill="none" stroke="#fbbf24" stroke-width="1" />
+                                <text x="80" y="55" fill="#fbbf24" font-size="6">n=5</text>
+
+                                <!-- n = 30 (Normal) -->
+                                <path d="M110,90 Q150,10 190,90" fill="none" stroke="#4ade80" stroke-width="2" />
+                                <text x="150" y="20" fill="#4ade80" font-size="8" font-weight="bold">n=30</text>
+                            </svg>
+                        </div>
+                        <p class="text-xs text-center text-text-muted mt-2">À medida que 'n' aumenta, a distribuição das
+                            médias vira um sino perfeito.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Poder e Robustez -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg h-full">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Poder e Robustez</h3>
+
+                    <div class="space-y-4">
+                        <div class="element-clickable bg-bg-surface p-4 rounded-lg border-l-4 border-primary">
+                            <h4 class="text-lg font-bold text-white mb-1">A Regra de Bolso (n > 30)</h4>
+                            <p class="text-sm text-text-secondary">
+                                Para n > 30, os testes paramétricos (como o Teste t) tornam-se <strong>robustos</strong>
+                                a violações da normalidade.
+                            </p>
+                        </div>
+
+                        <div class="element-clickable bg-bg-surface p-4 rounded-lg border-l-4 border-blue-400">
+                            <h4 class="text-lg font-bold text-white mb-1">Poder Estatístico</h4>
+                            <p class="text-sm text-text-secondary">
+                                Amostras maiores aumentam a chance de detectar uma diferença real, se ela existir (menor
+                                erro Tipo II).
+                            </p>
+                        </div>
+
+                        <div class="bg-bg-elevated p-4 rounded-lg mt-4 border border-text-muted/20">
+                            <h4 class="text-sm font-bold text-center text-text-accent mb-2">Resumo Prático</h4>
+                            <ul class="text-xs text-text-secondary space-y-2">
+                                <li class="flex items-center">
+                                    <span class="text-green-400 mr-2">✓</span>
+                                    <span><strong>n < 30:</strong> Normalidade é CRUCIAL. Teste Shapiro-Wilk
+                                                obrigatório.</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-green-400 mr-2">✓</span>
+                                    <span><strong>n > 30:</strong> Normalidade é menos crítica (graças ao TLC).</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-green-400 mr-2">✓</span>
+                                    <span><strong>n muito grande:</strong> Testes de normalidade podem falhar com
+                                        desvios irrelevantes. Confie no histograma.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

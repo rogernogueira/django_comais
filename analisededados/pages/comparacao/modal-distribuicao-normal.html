@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Distribuição Normal - Testes Estatísticos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-base': '#0f172a',
+            'bg-elevated': '#020617',
+            'bg-surface': '#1e293b',
+            'bg-muted': '#334155',
+            'text-primary': '#f1f5f9',
+            'text-secondary': '#cbd5e1',
+            'text-muted': '#94a3b8',
+            'text-accent': '#38bdf8',
+            'primary': '#38bdf8',
+            'primary-foreground': '#0f172a',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .element-clickable {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .element-clickable:hover {
+      background-color: rgba(56, 189, 248, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .element-clickable:active {
+      transform: translateY(0);
+    }
+    
+    .back-button {
+      transition: all 0.2s ease;
+    }
+    
+    .back-button:hover {
+      background-color: rgba(56, 189, 248, 0.2);
+      transform: translateX(-2px);
+    }
+  </style>
+</head>
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+  <!-- Container principal -->
+  <div class="max-w-6xl mx-auto">
+    <!-- Cabeçalho com botão voltar -->
+    <div class="flex items-center mb-8">
+      <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+        <span class="text-primary text-lg">←</span>
+      </button>
+      <h1 class="text-4xl text-primary font-bold">Distribuição Normal</h1>
+    </div>
+    
+    <p class="text-xl text-center mb-12 text-text-secondary">Entenda a distribuição normal e sua importância nos testes estatísticos</p>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Gráfico da Distribuição Normal -->
+        <div class="bg-bg-muted/20 p-4 rounded-lg">
+          <h3 class="text-xl mb-4 text-primary font-bold">Representação Gráfica</h3>
+          <svg aria-label="Curva normal com pontos distribuídos e linha da média" class="w-full" role="img" viewBox="0 0 500 360">
+            <rect fill="#1e293b" height="360" width="500" x="0" y="0"></rect>
+            <!-- Eixo X -->
+            <line stroke="#CBD5E1" stroke-width="2" x1="40" x2="460" y1="300" y2="300"></line>
+            <!-- Área sob a curva (normal) -->
+            <path d="
+              M 60 300
+              C 120 140, 200 60, 260 60
+              C 320 60, 400 140, 460 300
+              L 60 300 Z" fill="#1e40af" opacity="0.3"></path>
+            <!-- Curva normal -->
+            <path d="M 60 300 C 120 140, 200 60, 260 60 C 320 60, 400 140, 460 300" fill="none" stroke="#38bdf8" stroke-width="4"></path>
+            <!-- Linha da média (centro) -->
+            <line stroke="#10b981" stroke-dasharray="6 6" stroke-width="3" x1="260" x2="260" y1="60" y2="300"></line>
+            <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle" x="260" y="318">
+              média (μ)
+            </text>
+            
+            <!-- Linhas dos desvios padrão -->
+            <line stroke="#ef4444" stroke-dasharray="4 4" stroke-width="2" x1="200" x2="200" y1="60" y2="300"></line>
+            <text fill="#ef4444" font-family="Source Sans 3, Arial" font-size="10" text-anchor="middle" x="200" y="318">
+              -1σ
+            </text>
+            
+            <line stroke="#ef4444" stroke-dasharray="4 4" stroke-width="2" x1="320" x2="320" y1="60" y2="300"></line>
+            <text fill="#ef4444" font-family="Source Sans 3, Arial" font-size="10" text-anchor="middle" x="320" y="318">
+              +1σ
+            </text>
+            
+            <line stroke="#fbbf24" stroke-dasharray="4 4" stroke-width="2" x1="140" x2="140" y1="60" y2="300"></line>
+            <text fill="#fbbf24" font-family="Source Sans 3, Arial" font-size="10" text-anchor="middle" x="140" y="318">
+              -2σ
+            </text>
+            
+            <line stroke="#fbbf24" stroke-dasharray="4 4" stroke-width="2" x1="380" x2="380" y1="60" y2="300"></line>
+            <text fill="#fbbf24" font-family="Source Sans 3, Arial" font-size="10" text-anchor="middle" x="380" y="318">
+              +2σ
+            </text>
+            
+            <line stroke="#10b981" stroke-dasharray="4 4" stroke-width="2" x1="80" x2="80" y1="60" y2="300"></line>
+            <text fill="#10b981" font-family="Source Sans 3, Arial" font-size="10" text-anchor="middle" x="80" y="318">
+              -3σ
+            </text>
+            
+            <line stroke="#10b981" stroke-dasharray="4 4" stroke-width="2" x1="440" x2="440" y1="60" y2="300"></line>
+            <text fill="#10b981" font-family="Source Sans 3, Arial" font-size="10" text-anchor="middle" x="440" y="318">
+              +3σ
+            </text>
+            
+            <!-- Pontos distribuídos em torno da curva -->
+            <circle cx="100" cy="240" fill="#38bdf8" r="4"></circle>
+            <circle cx="130" cy="210" fill="#38bdf8" r="4"></circle>
+            <circle cx="160" cy="170" fill="#38bdf8" r="4"></circle>
+            <circle cx="200" cy="110" fill="#38bdf8" r="4"></circle>
+            <circle cx="230" cy="85" fill="#38bdf8" r="4"></circle>
+            <circle cx="260" cy="78" fill="#38bdf8" r="4"></circle>
+            <circle cx="290" cy="85" fill="#38bdf8" r="4"></circle>
+            <circle cx="320" cy="110" fill="#38bdf8" r="4"></circle>
+            <circle cx="360" cy="160" fill="#38bdf8" r="4"></circle>
+            <circle cx="390" cy="210" fill="#38bdf8" r="4"></circle>
+            <circle cx="420" cy="250" fill="#38bdf8" r="4"></circle>
+            
+            <!-- Legenda -->
+            <rect fill="#38bdf8" height="12" rx="2" width="12" x="60" y="24"></rect>
+            <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="13" x="78" y="34">
+              Curva normal
+            </text>
+            <rect fill="#38bdf8" height="12" rx="2" width="12" x="170" y="24"></rect>
+            <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="13" x="188" y="34">
+              Pontos/observações
+            </text>
+          </svg>
+        </div>
+        
+        <!-- Propriedades e Explicação -->
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl mb-3 text-primary font-bold">O que é a Distribuição Normal?</h3>
+            <p class="text-text-secondary leading-relaxed">
+              A distribuição normal, também conhecida como distribuição gaussiana, é uma das distribuições mais importantes na estatística. 
+              Ela descreve muitos fenômenos naturais e é fundamental para testes estatísticos paramétricos.
+            </p>
+          </div>
+          
+          <div>
+            <h3 class="text-xl mb-3 text-primary font-bold">Propriedades Principais</h3>
+            <div class="space-y-3">
+              <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Simetria:</strong> A curva é perfeitamente simétrica em torno da média</p>
+              </div>
+              <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Centralidade:</strong> Média = Mediana = Moda</p>
+              </div>
+              <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Forma de sino:</strong> A curva tem formato característico de sino</p>
+              </div>
+              <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                <p class="text-text-secondary"><span class="text-green-400">✓</span> <strong>Assintótica:</strong> A curva se aproxima, mas nunca toca o eixo X</p>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-xl mb-3 text-primary font-bold">Regra Empírica (68-95-99.7)</h3>
+            <div class="bg-bg-muted/20 p-4 rounded-lg">
+              <div class="grid grid-cols-3 gap-4 text-center">
+                <div class="element-clickable bg-red-400/20 p-3 rounded">
+                  <p class="text-lg font-bold text-red-400">68%</p>
+                  <p class="text-sm text-text-secondary">±1 desvio padrão</p>
+                </div>
+                <div class="element-clickable bg-yellow-400/20 p-3 rounded">
+                  <p class="text-lg font-bold text-yellow-400">95%</p>
+                  <p class="text-sm text-text-secondary">±2 desvios padrão</p>
+                </div>
+                <div class="element-clickable bg-green-400/20 p-3 rounded">
+                  <p class="text-lg font-bold text-green-400">99.7%</p>
+                  <p class="text-sm text-text-secondary">±3 desvios padrão</p>
+                </div>
+              </div>
+              <p class="text-sm text-text-muted mt-3 text-center">
+                Esta regra mostra a porcentagem de dados que caem dentro de cada intervalo de desvios padrão da média
+              </p>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-xl mb-3 text-primary font-bold">Importância nos Testes Paramétricos</h3>
+            <p class="text-text-secondary leading-relaxed">
+              Os testes paramétricos <strong class="text-primary">assumem</strong> que os dados seguem uma distribuição normal. 
+              Quando esta suposição é violada, os resultados podem ser inválidos, tornando necessário o uso de testes não paramétricos.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-8 pt-6 border-t border-bg-muted">
+        <h3 class="text-lg mb-3 text-primary font-bold">Exemplos Práticos</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+            <p class="text-sm text-text-secondary"><strong>Altura:</strong> Segue distribuição normal</p>
+          </div>
+          <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+            <p class="text-sm text-text-secondary"><strong>QI:</strong> Distribuição normal</p>
+          </div>
+          <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+            <p class="text-sm text-text-secondary"><strong>Erros de medição:</strong> Normalmente distribuídos</p>
+          </div>
+          <div class="element-clickable bg-bg-muted/30 p-3 rounded">
+            <p class="text-sm text-text-secondary"><strong>Renda:</strong> Geralmente NÃO é normal</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coeficiente de Contingência - Medidas de Associação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'assoc-blue': '#3b82f6',
+                        'primary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../associacao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Coeficiente de Contingência (C)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Uma medida clássica baseada no Qui-Quadrado</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Conceito -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que é?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O Coeficiente de Contingência de Pearson (C) é uma medida de associação para variáveis nominais.
+                        Ele tenta ajustar o valor do Qui-Quadrado para o tamanho da amostra.
+                    </p>
+                    <div class="bg-bg-surface p-4 rounded border border-red-500/30">
+                        <p class="text-sm text-red-400 font-bold mb-2">Limitação Importante:</p>
+                        <p class="text-sm text-text-muted">
+                            O valor máximo de C <strong>nunca atinge 1</strong>, mesmo com associação perfeita. O valor
+                            máximo possível depende do número de linhas e colunas da tabela.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Fórmula</h3>
+                    <div class="bg-bg-surface p-6 rounded text-center mb-4">
+                        <p class="text-lg text-white font-mono">
+                            $$ C = \sqrt{\frac{\chi^2}{\chi^2 + n}} $$
+                        </p>
+                        <p class="text-xs text-text-muted mt-2">
+                            Onde χ² é a estatística Qui-Quadrado e n é o tamanho total da amostra.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparação e Uso -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Quando Usar?</h3>
+                    <ul class="space-y-3 text-sm text-text-secondary">
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2">✓</span>
+                            <span>Para tabelas maiores que 2x2 onde se deseja uma medida simples.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-primary mr-2">✓</span>
+                            <span>Apenas para comparar tabelas de <strong>mesma dimensão</strong> (ex: comparar duas
+                                tabelas 3x3).</span>
+                        </li>
+                    </ul>
+                    <p class="mt-4 text-sm text-text-muted">
+                        Devido à sua limitação de não atingir 1, o <strong>V de Cramér</strong> é geralmente preferido
+                        na estatística moderna.
+                    </p>
+                </div>
+
+                <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
+                    <h4 class="text-primary font-bold mb-2">Exemplo de Limitação</h4>
+                    <p class="text-sm text-text-secondary mb-2">
+                        Em uma tabela 2x2, o valor máximo possível para C é aproximadamente <strong>0.71</strong>.
+                    </p>
+                    <p class="text-sm text-text-secondary">
+                        Isso significa que um C = 0.71 em uma tabela 2x2 indica uma associação perfeita, o que pode ser
+                        confuso se interpretado como uma correlação normal (onde 0.71 seria apenas "forte").
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação Rodapé -->
+        <div class="mt-12 pt-6 border-t border-bg-muted grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <a href="phi.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Coeficiente Phi &rarr;
+            </a>
+            <a href="v-cramer.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver V de Cramér &rarr;
+            </a>
+            <a href="odds-ratio.html" class="text-sm text-text-muted hover:text-primary transition-colors">
+                Ver Odds Ratio &rarr;
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

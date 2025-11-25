@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overfitting - Análise de Regressão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#8b5cf6',
+                        'reg-purple': '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(139, 92, 246, 0.2);
+            transform: translateX(-2px);
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4"
+                onclick="window.location.href='../../regressao.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Overfitting (Sobreajuste)</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">O perigo de modelos complexos demais: memorizar ao
+            invés de aprender.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Visualização Interativa -->
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Demonstração Interativa</h3>
+                    <div class="bg-black/30 rounded-lg p-4">
+                        <canvas id="overfitCanvas" width="500" height="300" class="w-full h-64 mb-4"></canvas>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs text-text-muted flex justify-between mb-1">
+                                    <span>Grau do Polinômio</span>
+                                    <span id="degreeVal" class="font-mono text-reg-purple font-bold">1</span>
+                                </label>
+                                <input type="range" id="degreeSlider" min="1" max="12" step="1" value="1"
+                                    class="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-reg-purple">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>1 (Linear)</span>
+                                    <span>12 (Muito Complexo)</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div class="bg-bg-surface p-3 rounded">
+                                    <p class="text-text-muted text-xs">Erro de Treino (MSE)</p>
+                                    <p id="mseVal" class="text-white font-mono text-lg">0.00</p>
+                                </div>
+                                <div class="bg-bg-surface p-3 rounded">
+                                    <p class="text-text-muted text-xs">Status</p>
+                                    <p id="statusVal" class="font-bold text-lg">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que está acontecendo?</h3>
+                    <p class="text-text-secondary text-sm leading-relaxed">
+                        O gráfico mostra pontos de dados (azul) gerados a partir de uma função seno com ruído.
+                        À medida que você aumenta o grau do polinômio, o modelo se torna mais complexo e tenta
+                        se ajustar cada vez mais aos dados de treino, incluindo o ruído.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Explicações -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">O que é Overfitting?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Overfitting ocorre quando um modelo é <strong>complexo demais</strong> e "memoriza" os dados de
+                        treino,
+                        incluindo o ruído e as peculiaridades, ao invés de aprender o padrão geral.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Três Cenários</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-yellow-500/20 p-4 rounded-lg border-l-4 border-yellow-500">
+                            <h4 class="text-yellow-400 font-bold">Underfitting (Alto Viés)</h4>
+                            <p class="text-sm text-text-secondary mt-1">
+                                Modelo muito simples. Não captura o padrão dos dados.
+                            </p>
+                            <div class="mt-2 text-xs text-text-muted">
+                                <p>Exemplo: Grau 1-2 (linha reta para dados curvos)</p>
+                            </div>
+                        </div>
+
+                        <div class="element-clickable bg-green-500/20 p-4 rounded-lg border-l-4 border-green-500">
+                            <h4 class="text-green-400 font-bold">Bom Ajuste (Ideal)</h4>
+                            <p class="text-sm text-text-secondary mt-1">
+                                Modelo captura o padrão geral sem memorizar o ruído.
+                            </p>
+                            <div class="mt-2 text-xs text-text-muted">
+                                <p>Exemplo: Grau 3-5 (curva suave)</p>
+                            </div>
+                        </div>
+
+                        <div class="element-clickable bg-red-500/20 p-4 rounded-lg border-l-4 border-red-500">
+                            <h4 class="text-red-400 font-bold">Overfitting (Alta Variância)</h4>
+                            <p class="text-sm text-text-secondary mt-1">
+                                Modelo muito complexo. Memoriza ruído e peculiaridades.
+                            </p>
+                            <div class="mt-2 text-xs text-text-muted">
+                                <p>Exemplo: Grau 8+ (curva muito irregular)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-red-900/20 p-4 rounded-lg border border-red-500/30">
+                    <h4 class="text-red-400 font-bold mb-2">⚠️ Problema do Overfitting</h4>
+                    <p class="text-sm text-red-200">
+                        Um modelo com overfitting tem <strong>excelente desempenho nos dados de treino</strong>,
+                        mas <strong>péssimo desempenho em dados novos</strong> (generalização fraca).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bias-Variance Tradeoff -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Bias-Variance Tradeoff</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Viés (Bias)</h4>
+                    <p class="text-text-secondary mb-4">
+                        Erro devido a suposições simplificadas no modelo.
+                        Modelos com <strong>alto viés</strong> são muito simples e têm underfitting.
+                    </p>
+                    <div class="bg-yellow-500/10 p-3 rounded border border-yellow-500/30">
+                        <p class="text-sm text-yellow-400">
+                            📉 Alto Viés = Modelo não aprende o suficiente
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">Variância (Variance)</h4>
+                    <p class="text-text-secondary mb-4">
+                        Sensibilidade do modelo a pequenas flutuações nos dados de treino.
+                        Modelos com <strong>alta variância</strong> são muito complexos e têm overfitting.
+                    </p>
+                    <div class="bg-red-500/10 p-3 rounded border border-red-500/30">
+                        <p class="text-sm text-red-400">
+                            📈 Alta Variância = Modelo aprende demais (incluindo ruído)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-primary/10 p-4 rounded-lg border border-primary/30 text-center">
+                <p class="text-primary font-bold">
+                    O objetivo é encontrar o equilíbrio: <strong>Baixo Viés + Baixa Variância</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Soluções -->
+        <div class="mt-8 pt-6 border-t border-bg-muted">
+            <h3 class="text-2xl mb-6 text-primary font-bold text-center">Como Evitar Overfitting?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">1. Mais Dados</h4>
+                    <p class="text-text-secondary text-sm">
+                        Coletar mais dados de treino dificulta que o modelo memorize peculiaridades.
+                    </p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">2. Regularização</h4>
+                    <p class="text-text-secondary text-sm mb-2">
+                        Adiciona penalidade para modelos complexos.
+                    </p>
+                    <ul class="text-xs text-text-muted space-y-1">
+                        <li>• <strong>Lasso (L1):</strong> Força coeficientes a zero</li>
+                        <li>• <strong>Ridge (L2):</strong> Reduz magnitude dos coeficientes</li>
+                    </ul>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">3. Validação Cruzada</h4>
+                    <p class="text-text-secondary text-sm">
+                        Divide dados em treino/validação/teste para avaliar generalização.
+                    </p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">4. Feature Selection</h4>
+                    <p class="text-text-secondary text-sm">
+                        Remover variáveis irrelevantes ou redundantes reduz complexidade.
+                    </p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">5. Early Stopping</h4>
+                    <p class="text-text-secondary text-sm">
+                        Parar o treinamento quando o erro de validação começa a aumentar.
+                    </p>
+                </div>
+
+                <div class="bg-bg-surface p-6 rounded-lg border border-gray-700">
+                    <h4 class="text-lg font-bold text-white mb-3">6. Ensemble Methods</h4>
+                    <p class="text-text-secondary text-sm">
+                        Combinar múltiplos modelos simples (ex: Random Forest, Bagging).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sinais de Alerta -->
+        <div class="mt-8 bg-orange-900/20 p-6 rounded-2xl border border-orange-500/30">
+            <h4 class="text-orange-400 font-bold mb-3 text-lg">🚨 Sinais de Overfitting</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="flex items-start">
+                    <span class="text-orange-400 mr-2">•</span>
+                    <span class="text-orange-200">Erro de treino muito baixo, mas erro de teste alto</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-orange-400 mr-2">•</span>
+                    <span class="text-orange-200">Modelo muito complexo (muitos parâmetros)</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-orange-400 mr-2">•</span>
+                    <span class="text-orange-200">Curva de ajuste muito irregular/oscilante</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-orange-400 mr-2">•</span>
+                    <span class="text-orange-200">Desempenho piora ao adicionar mais variáveis</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('overfitCanvas');
+        const ctx = canvas.getContext('2d');
+        const degreeSlider = document.getElementById('degreeSlider');
+        const degreeVal = document.getElementById('degreeVal');
+        const mseVal = document.getElementById('mseVal');
+        const statusVal = document.getElementById('statusVal');
+
+        let trainData = [];
+        const numPoints = 30;
+
+        function generateData() {
+            trainData = [];
+            for (let i = 0; i < numPoints; i++) {
+                const x = (i / numPoints) * 2 * Math.PI;
+                const y = Math.sin(x) + (Math.random() - 0.5) * 0.5;
+                trainData.push({ x, y });
+            }
+        }
+
+        function fitPolynomial(degree) {
+            const X = trainData.map(p => {
+                const row = [];
+                for (let d = 0; d <= degree; d++) {
+                    row.push(Math.pow(p.x, d));
+                }
+                return row;
+            });
+            const Y = trainData.map(p => [p.y]);
+
+            try {
+                const XT = math.transpose(X);
+                const XTX = math.multiply(XT, X);
+                const XTY = math.multiply(XT, Y);
+                const coeffs = math.multiply(math.inv(XTX), XTY);
+                return coeffs.flat();
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function predict(x, coeffs) {
+            let y = 0;
+            for (let d = 0; d < coeffs.length; d++) {
+                y += coeffs[d] * Math.pow(x, d);
+            }
+            return y;
+        }
+
+        function calculateMSE(coeffs) {
+            let mse = 0;
+            trainData.forEach(p => {
+                const pred = predict(p.x, coeffs);
+                mse += Math.pow(p.y - pred, 2);
+            });
+            return mse / trainData.length;
+        }
+
+        function draw() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const degree = parseInt(degreeSlider.value);
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Grid
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            for (let i = 0; i < width; i += 40) { ctx.moveTo(i, 0); ctx.lineTo(i, height); }
+            for (let i = 0; i < height; i += 40) { ctx.moveTo(0, i); ctx.lineTo(width, i); }
+            ctx.stroke();
+
+            const scaleX = width / (2 * Math.PI);
+            const scaleY = height / 3;
+            const centerY = height / 2;
+
+            // Train points
+            ctx.fillStyle = '#38bdf8';
+            trainData.forEach(p => {
+                const px = p.x * scaleX;
+                const py = centerY - p.y * scaleY;
+                ctx.beginPath();
+                ctx.arc(px, py, 4, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Fit polynomial
+            const coeffs = fitPolynomial(degree);
+            if (coeffs) {
+                ctx.strokeStyle = '#8b5cf6';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+
+                for (let i = 0; i <= 200; i++) {
+                    const x = (i / 200) * 2 * Math.PI;
+                    const y = predict(x, coeffs);
+                    const px = x * scaleX;
+                    const py = centerY - y * scaleY;
+
+                    if (i === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+
+                // Update metrics
+                const mse = calculateMSE(coeffs);
+                mseVal.textContent = mse.toFixed(4);
+
+                // Status
+                if (degree <= 2) {
+                    statusVal.textContent = 'Underfitting';
+                    statusVal.className = 'font-bold text-lg text-yellow-400';
+                } else if (degree <= 5) {
+                    statusVal.textContent = 'Bom Ajuste';
+                    statusVal.className = 'font-bold text-lg text-green-400';
+                } else {
+                    statusVal.textContent = 'Overfitting';
+                    statusVal.className = 'font-bold text-lg text-red-400';
+                }
+            }
+
+            degreeVal.textContent = degree;
+        }
+
+        degreeSlider.addEventListener('input', draw);
+
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+
+        generateData();
+        draw();
+    </script>
+</body>
+
+</html>
