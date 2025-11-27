@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizador Interativo de DBSCAN (2D)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="\static\website\js\script_dbscan.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-4 flex flex-col">
+  <header class="mb-4 text-center space-y-1">
+    <h1 class="text-2xl font-bold">Visualizador Interativo de DBSCAN (2D)</h1>
+    <p class="text-sm text-gray-600">Adicione pontos, ajuste &epsilon; e MinPts e visualize pontos núcleo, borda e ruído.</p>
+  </header>
+
+  <div class="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-4">
+    <aside class="col-span-1 p-4 bg-white rounded shadow space-y-5">
+      <section>
+        <h2 class="font-semibold">Parâmetros</h2>
+        <div class="mt-3 space-y-3">
+          <div>
+            <label class="flex items-center justify-between text-sm font-medium">&epsilon; (raio)
+              <span id="label-eps">1.0</span>
+            </label>
+            <input id="input-eps" type="range" min="0.3" max="3" step="0.1" value="1.0" class="w-full" />
+          </div>
+          <div>
+            <label class="flex items-center justify-between text-sm font-medium">MinPts
+              <span id="label-minpts">4</span>
+            </label>
+            <input id="input-minpts" type="range" min="2" max="12" step="1" value="4" class="w-full" />
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="font-semibold">Dados de Exemplo</h2>
+        <div class="mt-3 space-y-2">
+          <button id="btn-linear" class="w-full px-2 py-1 bg-green-200 rounded hover:bg-green-300">Linearmente Separável</button>
+          <button id="btn-circle" class="w-full px-2 py-1 bg-yellow-200 rounded hover:bg-yellow-300">Círculos Concentricos</button>
+          <button id="btn-noise" class="w-full px-2 py-1 bg-purple-200 rounded hover:bg-purple-300">Ruído</button>
+        </div>
+        <div class="flex space-x-2 mt-3">
+          <button id="btn-clear" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Limpar</button>
+          <button id="btn-undo" class="flex-1 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Desfazer</button>
+        </div>
+      </section>
+
+      <section class="space-y-2">
+        <button id="btn-run" class="w-full px-3 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600">Executar DBSCAN</button>
+        <p class="text-xs text-gray-600">Clique no gráfico para adicionar novos pontos manualmente.</p>
+      </section>
+
+      <section class="border-t pt-4 space-y-2">
+        <h2 class="font-semibold">Resumo</h2>
+        <div class="text-sm text-gray-700 space-y-1">
+          <p><span class="font-semibold">Clusters:</span> <span id="cluster-count">0</span></p>
+          <p><span class="font-semibold">Core points:</span> <span id="core-count">0</span></p>
+          <p><span class="font-semibold">Border points:</span> <span id="border-count">0</span></p>
+          <p><span class="font-semibold">Ruído:</span> <span id="noise-count">0</span></p>
+        </div>
+      </section>
+    </aside>
+
+    <main class="col-span-3 bg-white rounded shadow p-3">
+      <canvas id="chart" class="w-full h-[620px]"></canvas>
+    </main>
+  </div>
+</body>
+</html>

@@ -100,6 +100,8 @@ def nn(request):
     return render(request, 'playground/nn.html')
 def gd(request):
     return render(request, 'playground/gd.html')
+def dbscan(request):
+    return render(request, 'playground/dbscan.html')
 def painel(request):
     return render(request, 'playground/painel.html')
 

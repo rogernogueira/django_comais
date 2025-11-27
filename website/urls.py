@@ -62,6 +62,8 @@ urlpatterns = [
     path('playground/', views.painel, name='painel'),
     path('playground/kmeans', views.kmeans, name='kmeans'),
     path('playground/gd', views.gd, name='gd'),
+    path('playground/dbscan', views.dbscan, name='dbscan'),
+
     path('instrucoes', views.instrucoes, name='instrucoes'),
     path('cadastrar_termo', views.cadastrar_termo, name='cadastrar-termo'),    
     path('cadastrar_documento', views.cadastrar_documento, name='cadastrar_documento'),    

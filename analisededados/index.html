@@ -21,7 +21,8 @@
             'assoc': '#ec4899',      // Associação
             'corr': '#f59e0b',       // Correlação
             'reg': '#8b5cf6',        // Regressão
-            'uft': '#1fad53'    // Sucesso
+            'uft': '#1fad53',    // Sucesso
+            'central': '#e2e5e9'      // Vermelho
           }
         }
       }
@@ -221,7 +222,14 @@
 
     <!-- Quebra-cabeça -->
     <div class="flex justify-center">
-      <div class="puzzle-wrapper">
+      <div class="puzzle-wrapper relative">
+
+        <!-- Círculo central -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+          <div class="w-20 h-20  bg-gradient-to-br from-primary to-central rounded-full flex items-center justify-center shadow-2xl border-4 border-bg-base overflow-hidden">
+            <img src="/static/website/img/logo_comais.svg" alt="COMAIS Labs" class="w-16 h-16 object-contain  transform -translate-y-2">
+          </div>
+        </div>
 
         <div class="puzzle-grid ">
 
@@ -378,7 +386,7 @@
         <p class="text-text-secondary">Desenvolvido pelo</p>
         <a href="https://comais.uft.edu.br" target="_blank" rel="noopener noreferrer"
           class="inline-block transition-transform hover:scale-105">
-          <img src="/static/website/img/ComaisLab.png" alt="COMAIS Labs"
+          <img src="/static/website/img/logo_comais.svg" alt="COMAIS Labs"
             class="h-16 w-auto opacity-90 hover:opacity-100 transition-opacity">
         </a>
         <p class="text-text-secondary text-lg">
