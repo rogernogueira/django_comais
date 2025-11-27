@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isolation Forest - Inteligência & Segurança Pública</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'intel-bg': '#0f172a',       // Fundo principal (Slate 900)
+                        'intel-card': '#1e293b',     // Cartões (Slate 800)
+                        'intel-accent': '#facc15',   // Amarelo Policial/Alerta (Amber 500)
+                        'intel-danger': '#ef4444',   // Vermelho (Red 500)
+                        'intel-success': '#10b981',  // Verde (Emerald 500)
+                        'text-primary': '#f8fafc',   // Branco Gelo
+                        'text-muted': '#94a3b8',     // Cinza
+                    },
+                    fontFamily: {
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos para simulação de Fórmulas Matemáticas */
+        .math-block {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 0.9em;
+        }
+        .fraction > span {
+            display: block;
+            padding: 0 0.2em;
+        }
+        .fraction span.bottom {
+            border-top: 1px solid #94a3b8;
+        }
+        
+        .security-card:hover {
+            border-color: #f59e0b;
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-intel-bg text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto space-y-12">
+        
+        <header class="border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4 mb-2">
+<button class="back-button bg-intel-accent/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-intel-accent text-lg">←</span>
+            </button>
+                <h1 class="text-4xl font-bold text-intel-accent  tracking-tight">Isolation Forest</h1>
+            </div>
+            <p class="text-xl text-text-muted">Detecção de Fraudes</p>
+        </header>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-intel-accent border-l-4 border-intel-accent pl-4">Como Funciona ?</h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Imagine um investigador interrogando suspeitos. Indivíduos com álibis sólidos e rotinas comuns (cidadãos honestos) exigem <strong>muitas perguntas</strong> para serem diferenciados uns dos outros.
+                </p>
+                <p class="text-gray-300 leading-relaxed">
+                    Já um criminoso com um comportamento atípico (ex: gastou 1 milhão sem renda declarada) é <strong>"isolado" rapidamente</strong> com poucas perguntas.
+                </p>
+                <div class="bg-intel-card p-4 rounded border border-gray-700">
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <span class="text-intel-success text-lg">✓</span>
+                            <span class="text-sm text-gray-300"><strong>Normal (Inlier):</strong> Requer muitos "cortes" (perguntas) para ser isolado. Está escondido na multidão.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-intel-danger text-lg">⚠</span>
+                            <span class="text-sm text-gray-300"><strong>Anomalia (Outlier):</strong> É isolado com poucos cortes. Destaque imediato.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-intel-card rounded-lg p-6 flex flex-col justify-center items-center border border-gray-700 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-intel-accent text-black text-xs font-bold px-2 py-1 rounded-bl">ALGORITMO</div>
+                <div class="w-full h-48 relative border border-gray-600 bg-slate-900 rounded opacity-80">
+                    <div class="absolute h-full w-px bg-gray-500 left-1/3 top-0"></div>
+                    <div class="absolute w-full h-px bg-gray-500 top-1/2 left-0"></div>
+                    <div class="absolute w-1/3 h-px bg-gray-500 top-1/4 left-0"></div>
+                    
+                    <div class="absolute top-10 left-10 w-4 h-4 bg-intel-danger rounded-full animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.6)]"></div>
+                    <div class="absolute top-6 left-10 text-xs text-intel-danger font-mono">Suspeito</div>
+
+                    <div class="absolute bottom-10 right-10 w-3 h-3 bg-intel-success rounded-full opacity-50"></div>
+                    <div class="absolute bottom-12 right-14 w-3 h-3 bg-intel-success rounded-full opacity-50"></div>
+                    <div class="absolute bottom-8 right-12 w-3 h-3 bg-intel-success rounded-full opacity-50"></div>
+                    <div class="absolute bottom-14 right-8 w-3 h-3 bg-intel-success rounded-full opacity-50"></div>
+                </div>
+                <p class="text-xs text-center mt-3 text-gray-500">Visualização: O ponto vermelho é isolado com apenas 2 cortes. O cluster verde exige muitos.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-white mb-6">Passo a Passo do Algoritmo</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-intel-card p-5 rounded-lg border-t-2 border-intel-accent">
+                    <span class="text-3xl font-bold text-gray-600 mb-2 block">01</span>
+                    <h3 class="font-bold text-intel-accent mb-2">Subamostragem</h3>
+                    <p class="text-sm text-gray-400">Seleciona aleatoriamente uma amostra dos dados (ex: 256 transações financeiras do dataset total).</p>
+                </div>
+                <div class="bg-intel-card p-5 rounded-lg border-t-2 border-intel-accent">
+                    <span class="text-3xl font-bold text-gray-600 mb-2 block">02</span>
+                    <h3 class="font-bold text-intel-accent mb-2">Seleção de Feature</h3>
+                    <p class="text-sm text-gray-400">Escolhe aleatoriamente uma feature (ex: "Valor da Transferência" ou "Horário").</p>
+                </div>
+                <div class="bg-intel-card p-5 rounded-lg border-t-2 border-intel-accent">
+                    <span class="text-3xl font-bold text-gray-600 mb-2 block">03</span>
+                    <h3 class="font-bold text-intel-accent mb-2">Corte Aleatório</h3>
+                    <p class="text-sm text-gray-400">Seleciona um valor aleatório entre o mín e máx da feature para "cortar" os dados.</p>
+                </div>
+                <div class="bg-intel-card p-5 rounded-lg border-t-2 border-intel-accent">
+                    <span class="text-3xl font-bold text-gray-600 mb-2 block">04</span>
+                    <h3 class="font-bold text-intel-accent mb-2">Cálculo do Score</h3>
+                    <p class="text-sm text-gray-400">Repete até isolar o ponto. Caminhos curtos = Alta probabilidade de crime/anomalia.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-intel-card p-8 rounded-xl border border-gray-700 shadow-lg">
+            <h2 class="text-2xl font-bold text-white mb-6">Matemática do Score de Anomalia</h2>
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+                
+                <div class="bg-slate-900 p-6 rounded border border-gray-600 w-full lg:w-1/2 overflow-x-auto">
+                    <div class="text-2xl text-center math-block text-white">
+                        s(x, n) = 2 <sup class="text-sm">-</sup>
+                        <div class="fraction">
+                            <span class="top">E(h(x))</span>
+                            <span class="bottom">c(n)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 space-y-4">
+                    <div class="space-y-2">
+                        <p class="text-gray-300"><strong class="text-intel-accent">s(x, n):</strong> O Score de Anomalia (entre 0 e 1). Se > 0.6, alerta vermelho.</p>
+                        <p class="text-gray-300"><strong class="text-intel-accent">h(x):</strong> Altura do caminho (quantos cortes foram necessários para isolar a ocorrência x).</p>
+                        <p class="text-gray-300"><strong class="text-intel-accent">E(h(x)):</strong> Média da altura em todas as árvores da floresta.</p>
+                        <p class="text-gray-300"><strong class="text-intel-accent">c(n):</strong> Fator de normalização (Custo médio de busca em Árvore Binária). Serve para comparar amostras de tamanhos diferentes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-white mb-6">Parâmetros Críticos (Scikit-Learn)</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="bg-slate-900 text-xs uppercase text-gray-200">
+                        <tr>
+                            <th class="px-6 py-3">Parâmetro</th>
+                            <th class="px-6 py-3">Função Técnica</th>
+                            <th class="px-6 py-3 text-intel-accent">Dica Operacional </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700 bg-intel-card">
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-white">n_estimators</td>
+                            <td class="px-6 py-4">Número de árvores na floresta.</td>
+                            <td class="px-6 py-4"><strong>Use 100.</strong> Aumentar raramente melhora a detecção de fraudes e deixa o sistema lento em tempo real.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-white">contamination</td>
+                            <td class="px-6 py-4">Proporção esperada de anomalias no dataset.</td>
+                            <td class="px-6 py-4"><strong>Cuidado!</strong> Crimes são raros. Use valores baixos (ex: 0.001 a 0.05). Se muito alto, vai gerar falsos positivos (cidadãos honestos marcados como suspeitos).</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-white">max_samples</td>
+                            <td class="px-6 py-4">Número de amostras para treinar cada árvore.</td>
+                            <td class="px-6 py-4"><strong>Use 256.</strong> É suficiente para isolar anomalias. Usar o banco de dados inteiro causa "Masking" (anomalias se aglomeram e escondem umas as outras).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-intel-card p-6 rounded-lg border-l-4 border-intel-success">
+                <h3 class="text-xl font-bold text-white mb-4">Vantagens Táticas</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li>✓ <strong>Velocidade (O(n)):</strong> Processa milhões de placas (LPR) ou logs de firewall em segundos.</li>
+                    <li>✓ <strong>Sem Distância:</strong> Não precisa calcular distâncias complexas, ideal para dados mistos (financeiro + geográfico).</li>
+                    <li>✓ <strong>Baixa Memória:</strong> O modelo treinado é leve, podendo rodar em viaturas ou dispositivos de borda.</li>
+                </ul>
+            </div>
+            
+            <div class="bg-intel-card p-6 rounded-lg border-l-4 border-intel-danger">
+                <h3 class="text-xl font-bold text-white mb-4">Problemas e Riscos</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li>⚠ <strong>Cortes Ortogonais:</strong> Tem dificuldade em detectar padrões criminais diagonais complexos sem engenharia de dados prévia.</li>
+                    <li>⚠ <strong>Viés de Dados:</strong> Se o B.O. for preenchido errado (ruído), a detecção falha.</li>
+                    <li>⚠ <strong>Explicabilidade:</strong> Difícil explicar para um Juiz "por que" a árvore decidiu que aquilo é suspeito (Caixa Preta).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="bg-slate-900 p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-white mb-6">Exemplo Real: Detecção de Lavagem de Dinheiro</h2>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-center">
+                    <thead class="bg-gray-800 text-gray-200">
+                        <tr>
+                            <th class="p-3">ID Conta</th>
+                            <th class="p-3">Valor Transação</th>
+                            <th class="p-3">Horário</th>
+                            <th class="p-3">Destino</th>
+                            <th class="p-3">Score (IF)</th>
+                            <th class="p-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300">
+                        <tr class="border-b border-gray-700 hover:bg-gray-800/50 transition">
+                            <td class="p-3">PF-9921</td>
+                            <td class="p-3">R$ 150,00</td>
+                            <td class="p-3">14:30</td>
+                            <td class="p-3">Nacional</td>
+                            <td class="p-3 text-intel-success font-bold">0.32</td>
+                            <td class="p-3"><span class="bg-intel-success/20 text-intel-success px-2 py-1 rounded text-xs">Normal</span></td>
+                        </tr>
+                        <tr class="border-b border-gray-700 hover:bg-gray-800/50 transition">
+                            <td class="p-3">PF-4412</td>
+                            <td class="p-3">R$ 2.400,00</td>
+                            <td class="p-3">10:15</td>
+                            <td class="p-3">Nacional</td>
+                            <td class="p-3 text-intel-success font-bold">0.41</td>
+                            <td class="p-3"><span class="bg-intel-success/20 text-intel-success px-2 py-1 rounded text-xs">Normal</span></td>
+                        </tr>
+                        <tr class="bg-intel-danger/10 border-b border-intel-danger animate-pulse">
+                            <td class="p-3 font-bold text-white">LARANJA-X</td>
+                            <td class="p-3 font-bold text-white">R$ 49.900,00</td>
+                            <td class="p-3 font-bold text-white">03:45</td>
+                            <td class="p-3 font-bold text-white">Offshore</td>
+                            <td class="p-3 text-intel-danger font-bold text-lg">0.89</td>
+                            <td class="p-3"><span class="bg-intel-danger text-white px-2 py-1 rounded text-xs font-bold">ALERTA</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-4 text-sm text-gray-400">
+                *O caso "LARANJA-X" foi isolado rapidamente porque combinou alto valor + horário atípico + destino incomum. Isso gerou um caminho curto na árvore e Score próximo de 1.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-white mb-6">Casos de Uso </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="security-card bg-intel-card p-6 rounded border border-gray-700 cursor-default">
+                    <div class="text-intel-accent mb-4 text-3xl">🚔</div>
+                    <h3 class="font-bold text-lg text-white mb-2">Fraude em Licitações</h3>
+                    <p class="text-sm text-gray-400">Identificação de propostas de preço que desviam matematicamente do padrão de mercado ou conluio entre CNPJs participantes.</p>
+                </div>
+
+                <div class="security-card bg-intel-card p-6 rounded border border-gray-700 cursor-default">
+                    <div class="text-intel-accent mb-4 text-3xl">💻</div>
+                    <h3 class="font-bold text-lg text-white mb-2">Crimes Cibernéticos</h3>
+                    <p class="text-sm text-gray-400">Detecção de intrusão em redes da polícia. Login de usuários em horários impossíveis ou volumes de download de dados anômalos.</p>
+                </div>
+
+                <div class="security-card bg-intel-card p-6 rounded border border-gray-700 cursor-default">
+                    <div class="text-intel-accent mb-4 text-3xl">🌐</div>
+                    <h3 class="font-bold text-lg text-white mb-2">Tráfico & Fronteiras</h3>
+                    <p class="text-sm text-gray-400">Análise de padrões de travessia. Identificar veículos que cruzam a fronteira com frequência/horários que não condizem com turismo ou comércio.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-t border-gray-800 pt-8 pb-12 text-center">
+            <p class="text-gray-500">Desenvolvido para Auxílio à Análise Criminal e Ciência de Dados Forense.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

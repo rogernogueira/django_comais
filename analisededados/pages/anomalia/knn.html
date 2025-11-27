@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNN - Inteligência Policial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-blue': '#3b82f6',    // Blue 500 (Police Tech)
+                        'intel-light': '#5da0f1',   // Blue 400
+                        'primary': '#5da0f1',   // Blue 400
+                        'intel-danger': '#ef4444',  // Red 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-blue/10 hover:bg-intel-blue/20 text-intel-light p-3 rounded-lg transition-all" onclick="history.back()">
+                    ← 
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-primary tracking-tight">K-Nearest Neighbors (KNN)</h1>
+                    <p class="text-text-muted mt-1">Detecção de Anomalias baseada em Vizinhança e Distância</p>
+                </div>
+            </div>
+            <div class="hidden md:block text-right">
+                <div class="text-xs font-mono text-gray-500">APLICAÇÃO:</div>
+                <div class="text-sm font-bold text-intel-light">GEOPROCESSAMENTO & PERFILAMENTO</div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                <div class="absolute top-4 left-4 text-xs font-mono text-intel-light">ANÁLISE DE VIZINHANÇA</div>
+                <svg aria-label="KNN Concept Diagram" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <circle cx="150" cy="150" r="4" fill="#3b82f6" opacity="0.4"></circle>
+                    <circle cx="160" cy="140" r="4" fill="#3b82f6" opacity="0.4"></circle>
+                    <circle cx="140" cy="160" r="4" fill="#3b82f6" opacity="0.4"></circle>
+                    <circle cx="155" cy="165" r="4" fill="#3b82f6" opacity="0.4"></circle>
+                    <circle cx="145" cy="135" r="4" fill="#3b82f6" opacity="0.4"></circle>
+                    <text x="100" y="110" fill="#3b82f6" font-size="10">Padrão de Rotina</text>
+
+                    <circle cx="400" cy="100" r="6" fill="#ef4444" class="animate-pulse"></circle>
+                    <text x="415" y="105" fill="#ef4444" font-size="12" font-weight="bold">Suspeito (Isolado)</text>
+
+                    <line x1="400" y1="100" x2="160" y2="140" stroke="#94a3b8" stroke-dasharray="2 2" stroke-width="1"></line>
+                    <line x1="400" y1="100" x2="155" y2="165" stroke="#94a3b8" stroke-dasharray="2 2" stroke-width="1"></line>
+                    <line x1="400" y1="100" x2="150" y2="150" stroke="#94a3b8" stroke-dasharray="2 2" stroke-width="1"></line>
+
+                    <text x="250" y="80" fill="#94a3b8" font-size="10" text-anchor="middle">Distância Média Elevada = Anomalia</text>
+                </svg>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-intel-light mb-3">Conceito: "Diga-me com quem andas..."</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O KNN baseia-se na premissa de que dados normais tendem a se agrupar. Na segurança, usamos isso para dizer: <strong>"Se este evento está longe de todos os eventos conhecidos, ele é suspeito."</strong>
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-blue pl-4">
+                        Pode ser <strong>distância física</strong> (um crime ocorrendo onde nunca ocorre) ou <strong>distância comportamental</strong> (um policial usando força letal 5x mais que seus colegas de batalhão).
+                    </p>
+                </div>
+                
+                <div class="bg-bg-surface p-4 rounded border border-gray-700">
+                    <h4 class="text-sm font-bold text-primary mb-2">Passo a Passo do Algoritmo:</h4>
+                    <ol class="list-decimal list-inside text-sm text-gray-400 space-y-1">
+                        <li>Define-se um número <strong>K</strong> (ex: 5 vizinhos).</li>
+                        <li>Para cada ponto suspeito, mede-se a distância até os 5 vizinhos mais próximos.</li>
+                        <li>Calcula-se a média dessas distâncias.</li>
+                        <li>Se a média for alta > Limiar, é um <strong>Outlier</strong>.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-primary mb-4">A Matemática da Distância</h3>
+                <p class="text-gray-400 mb-4 text-sm">O coração do KNN é como medimos "proximidade". A fórmula muda conforme o cenário:</p>
+                
+                <div class="space-y-4">
+                    <div class="bg-black/40 p-3 rounded border border-gray-600">
+                        <p class="text-intel-light font-bold text-sm mb-1">1. Distância Euclidiana (Padrão)</p>
+                        <p class="text-white math-font text-center text-lg">d(p, q) = √ ( Σ (qᵢ - pᵢ)² )</p>
+                        <p class="text-xs text-gray-500 mt-1">Use para: Perfilamento estatístico ou coordenadas GPS em áreas abertas (zona rural).</p>
+                    </div>
+
+                    <div class="bg-black/40 p-3 rounded border border-gray-600">
+                        <p class="text-intel-light font-bold text-sm mb-1">2. Distância de Manhattan (City Block)</p>
+                        <p class="text-white math-font text-center text-lg">d(p, q) = Σ |qᵢ - pᵢ|</p>
+                        <p class="text-xs text-gray-500 mt-1">Use para: <strong>Crimes Urbanos</strong>. Viaturas não atravessam prédios na diagonal; elas seguem quarteirões.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-primary mb-4">Parâmetros Críticos (Ajuste Fino)</h3>
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="text-xs uppercase text-gray-500 border-b border-gray-700">
+                        <tr>
+                            <th class="pb-2">Parâmetro</th>
+                            <th class="pb-2">Regra de Bolso (Policial)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <tr>
+                            <td class="py-3 font-mono text-intel-light">n_neighbors (K)</td>
+                            <td class="py-3">
+                                Geralmente <strong>K=5 a 20</strong>. <br>
+                                <span class="text-xs text-gray-500">K muito pequeno (1) = Sensível a ruído (BO preenchido errado). K muito grande = Suaviza demais e perde crimes isolados.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 font-mono text-intel-light">metric</td>
+                            <td class="py-3">
+                                <strong>'manhattan'</strong> para cidades com grid definido. <br>
+                                <strong>'haversine'</strong> para cálculo real de lat/long (curvatura da terra).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 font-mono text-intel-light">contamination</td>
+                            <td class="py-3">Ajuste conforme a criminalidade da área. Em áreas seguras, use 0.01 (1%).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-green-900/10 border border-green-500/20 p-5 rounded-lg">
+                <h3 class="text-green-400 font-bold mb-3 flex items-center gap-2">✓ Vantagens Operacionais</h3>
+                <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                    <li><strong>Explicabilidade:</strong> Fácil mostrar ao juiz: "Este suspeito é anômalo porque está longe de qualquer padrão normal conhecido."</li>
+                    <li><strong>Sem Treino:</strong> É um algoritmo "Lazy". Não precisa treinar modelo pesado, apenas consulta o banco de dados.</li>
+                </ul>
+            </div>
+
+            <div class="bg-red-900/10 border border-red-500/20 p-5 rounded-lg">
+                <h3 class="text-red-400 font-bold mb-3 flex items-center gap-2">⚠ O Problema da Escala</h3>
+                <p class="text-sm text-gray-300 mb-2">
+                    O KNN é viciado em escalas maiores.
+                </p>
+                <p class="text-xs text-gray-400 italic">
+                    Exemplo: Se você usa "Idade" (0-100) e "Salário" (0-10.000), a distância será dominada pelo salário.
+                    <strong>Solução:</strong> Obrigatório usar <code>StandardScaler</code> ou <code>MinMaxScaler</code> antes de rodar.
+                </p>
+            </div>
+
+            <div class="bg-orange-900/10 border border-orange-500/20 p-5 rounded-lg">
+                <h3 class="text-orange-400 font-bold mb-3 flex items-center gap-2">☠ Maldição da Dimensionalidade</h3>
+                <p class="text-sm text-gray-300">
+                    Se você criar um perfil criminal com 50+ variáveis (features), todos os suspeitos parecerão distantes uns dos outros.
+                </p>
+                <p class="text-xs text-gray-400 mt-2 font-bold">
+                    Dica: Use apenas as features essenciais (ex: Hora, Local, Modus Operandi). Menos é mais.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 rounded-xl border-l-4 border-intel-blue">
+            <h2 class="text-2xl font-bold text-primary mb-4">Exemplo Real: Manchas Criminais vs. Crimes Isolados</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <p class="text-text-secondary mb-4">
+                        Analistas querem diferenciar crimes de oportunidade em "Hotspots" (centro da cidade) de ações de um Serial Killer (locais isolados).
+                    </p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs text-left">
+                            <thead class="bg-gray-800 text-gray-400">
+                                <tr>
+                                    <th class="p-2">Ocorrência</th>
+                                    <th class="p-2">Bairro</th>
+                                    <th class="p-2">Dist. Média (Vizinhos)</th>
+                                    <th class="p-2">Classificação</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="p-2">Roubo Celular #101</td>
+                                    <td class="p-2">Centro</td>
+                                    <td class="p-2">50 metros</td>
+                                    <td class="p-2"><span class="bg-gray-700 px-2 py-1 rounded">Normal (Hotspot)</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="p-2">Roubo Celular #102</td>
+                                    <td class="p-2">Centro</td>
+                                    <td class="p-2">55 metros</td>
+                                    <td class="p-2"><span class="bg-gray-700 px-2 py-1 rounded">Normal (Hotspot)</span></td>
+                                </tr>
+                                <tr class="bg-intel-danger/10 border-l-2 border-intel-danger">
+                                    <td class="p-2 font-bold text-white">Homicídio #055</td>
+                                    <td class="p-2">Zona Rural Norte</td>
+                                    <td class="p-2 font-bold">5.200 metros</td>
+                                    <td class="p-2"><span class="bg-intel-danger text-white px-2 py-1 rounded font-bold">ANOMALIA</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center bg-gray-900/50 p-4 rounded text-sm text-gray-400 italic">
+                    <p>"A ocorrência #055 tem uma distância média enorme para os seus vizinhos mais próximos (outros crimes). Isso indica que é um evento espacialmente isolado, merecendo investigação dedicada, pois não será coberto pelo patrulhamento de rotina do Centro."</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-primary mb-6">3 Casos de Uso em </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-pointer">
+                    <div class="text-3xl mb-2">🚓</div>
+                    <h3 class="font-bold text-white">Desvio de Rota de Viatura</h3>
+                    <p class="text-sm text-gray-400 mt-2">Monitorar GPS. Se uma viatura está em uma coordenada onde a distância média para as rotas normais é alta, gera alerta de desvio não autorizado.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-pointer">
+                    <div class="text-3xl mb-2">👮‍♂️</div>
+                    <h3 class="font-bold text-white">Corregedoria (Uso da Força)</h3>
+                    <p class="text-sm text-gray-400 mt-2">Comparar um policial com seus "vizinhos" (colegas da mesma patente e área). Se ele tem 10x mais reclamações que os vizinhos, é uma anomalia.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-pointer">
+                    <div class="text-3xl mb-2">💳</div>
+                    <h3 class="font-bold text-white">Fraude em Cartões Corporativos</h3>
+                    <p class="text-sm text-gray-400 mt-2">Um gasto é anômalo se a distância (valor + estabelecimento) for muito grande em relação aos gastos históricos dos vizinhos (outros funcionários do setor).</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

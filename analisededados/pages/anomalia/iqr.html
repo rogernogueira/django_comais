@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQR & Boxplots - Estatística Robusta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-green': '#10b981',   // Emerald 500
+                        'intel-light': '#6ee7b7',   // Emerald 300
+                        'intel-danger': '#ef4444',  // Red 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-green/10 hover:bg-intel-green/20 text-intel-green p-3 rounded-lg transition-all" onclick="history.back()">
+                    ← 
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-intel-green tracking-tight">Método IQR (Boxplot)</h1>
+                    <p class="text-text-muted  mt-1">Estatística Robusta para Dados Assimétricos</p>
+                </div>
+            </div>
+         
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                <div class="absolute top-4 left-4 text-xs font-mono text-intel-light">ANATOMIA DA DISTRIBUIÇÃO</div>
+                
+                <svg aria-label="Boxplot Anatomy" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <line x1="250" y1="50" x2="250" y2="250" stroke="#334155" stroke-width="2"></line>
+
+                    <rect x="200" y="100" width="100" height="100" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="2"></rect>
+                    
+                    <line x1="200" y1="140" x2="300" y2="140" stroke="#10b981" stroke-width="3"></line>
+                    <text x="310" y="145" fill="#10b981" font-size="12" font-weight="bold">Mediana (Q2)</text>
+
+                    <line x1="220" y1="50" x2="280" y2="50" stroke="#10b981" stroke-width="2"></line> <line x1="220" y1="250" x2="280" y2="250" stroke="#10b981" stroke-width="2"></line> <text x="310" y="110" fill="#64748b" font-size="11">Q3 (75%)</text>
+                    <text x="310" y="210" fill="#64748b" font-size="11">Q1 (25%)</text>
+                    <text x="310" y="55" fill="#cbd5e1" font-size="11">Limite Superior (Q3 + 1.5*IQR)</text>
+
+                    
+<svg fill="#ef4444" height="20px" class="animate-pulse" width="20px" version="1.1" x="220" y="24"  id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489.746 489.746" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M483.9,15.473c-6.5-9.7-17.1-15.4-28.5-15.4c-4.5,0-8.9,0.9-13.2,2.7l-311.6,128.1c-13.4,5.5-21.7,18.4-21.3,32.9 c0.4,14.5,9.6,26.8,23.3,31.5l120.7,41.2l41.3,120.7c4.8,14.1,17.6,23.3,32.6,23.3c14.2,0,26.4-8.2,31.8-21.3l128.1-311.6 C491.5,36.773,490.4,25.073,483.9,15.473z M464.4,38.273l-128.2,311.6c-2.3,5.5-7.1,6.1-9.1,6.1c-1.7,0-7.3-0.5-9.4-6.7 l-43.2-126.4c-1.2-3.6-4-6.4-7.6-7.6l-126.4-43.2c-6-2.1-6.6-7.5-6.7-9.1c0-1.6,0.2-7,6.1-9.5l311.6-128.1 c1.3-0.5,2.6-0.8,3.9-0.8c3.2,0,6.3,1.7,8.2,4.6C464.9,31.073,466.1,34.173,464.4,38.273z"></path>  </g> </g> </g></svg>
+                    
+                    <circle cx="250" cy="20" r="5" fill="#ef4444" class=""></circle>
+
+                    <text x="265" y="25" fill="#ef4444" font-size="12" font-weight="bold">Anomalia</text>
+                </svg>
+            </div>
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-intel-green mb-3">Por que não usar a Média?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Em segurança pública, <strong>um único dia violento</strong> (chacina ou arrastão) pode distorcer a Média para cima, fazendo parecer que os dias normais são "calmos demais".
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-green pl-4">
+                        O IQR usa a <strong>Mediana</strong> (o valor central). Ele ignora os extremos para definir o que é "Normalidade". Isso cria um alarme muito mais confiável e menos sensível a pânicos momentâneos.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-bg-surface p-3 rounded border border-gray-700">
+                        <strong class="text-white text-sm block mb-1">Q1 (25%)</strong>
+                        <p class="text-xs text-gray-400">Dias excepcionalmente calmos (abaixo disso é estranho).</p>
+                    </div>
+                    <div class="bg-bg-surface p-3 rounded border border-gray-700">
+                        <strong class="text-white text-sm block mb-1">Q3 (75%)</strong>
+                        <p class="text-xs text-gray-400">Dias movimentados, mas dentro da rotina policial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-intel-green mb-4">A Matemática (Passo a Passo)</h3>
+                <ol class="list-decimal list-inside text-sm text-gray-400 space-y-3">
+                    <li>
+                        <strong class="text-intel-light">Ordenar os Dados:</strong> Coloque o número de ocorrências diárias em ordem crescente.
+                    </li>
+                    <li>
+                        <strong class="text-intel-light">Calcular o IQR:</strong> Subtraia o quartil inferior do superior.
+                        <div class="bg-black/30 p-2 mt-1 rounded text-center font-mono text-white">IQR = Q3 - Q1</div>
+                    </li>
+                    <li>
+                        <strong class="text-intel-light">Definir o Teto (Threshold):</strong>
+                        <div class="bg-black/30 p-2 mt-1 rounded text-center font-mono text-white">Limite = Q3 + (k × IQR)</div>
+                        <p class="text-xs mt-1">Qualquer valor acima desse limite é um surto criminal.</p>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-intel-green mb-4">Parâmetros Críticos (O Fator 'k')</h3>
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="text-xs uppercase text-gray-500 border-b border-gray-700">
+                        <tr>
+                            <th class="pb-2">Multiplicador (k)</th>
+                            <th class="pb-2">Interpretação Tática</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <tr>
+                            <td class="py-3 font-mono text-intel-light">k = 1.5</td>
+                            <td class="py-3">
+                                <strong>Padrão da Indústria.</strong> <br>
+                                Captura anomalias moderadas. Use para crimes de alto volume (Furtos, Roubos).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 font-mono text-intel-danger">k = 3.0</td>
+                            <td class="py-3">
+                                <strong>Extremo.</strong> <br>
+                                Só alerta em casos gravíssimos. Use para evitar "fadiga de alerta" em dashboards de comandantes ou para dados muito ruidosos.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-green-900/10 border border-green-500/20 p-5 rounded-lg">
+                <h3 class="text-green-400 font-bold mb-3 flex items-center gap-2">✓ Robustez Operacional</h3>
+                <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                    <li><strong>Não exige Curva Normal:</strong> Funciona perfeitamente com dados assimétricos (ex: apreensão de drogas, onde a maioria é pequena quantidade e poucas são toneladas).</li>
+                    <li><strong>Simplicidade Visual:</strong> O Boxplot é fácil de explicar em relatórios de inteligência.</li>
+                </ul>
+            </div>
+
+            <div class="bg-bg-muted/30 border border-gray-600 p-5 rounded-lg">
+                <h3 class="text-gray-200 font-bold mb-3 flex items-center gap-2">⚠ Limitações</h3>
+                <ul class="text-sm text-gray-400 space-y-2 list-disc list-inside">
+                    <li><strong>Univariado:</strong> Analisa uma variável por vez (ex: só Roubos). Não cruza com "Horário" ou "Local" automaticamente (diferente do Isolation Forest).</li>
+                    <li><strong>Sensibilidade:</strong> Em dados muito escassos (ex: 0, 0, 0, 1, 0), o IQR pode ser zero, marcando o "1" como anomalia indevidamente.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 rounded-xl border-l-4 border-intel-green">
+            <h2 class="text-2xl font-bold text-intel-green mb-4">Exemplo Real: Consumo de Combustível (Viaturas)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <p class="text-text-secondary mb-4">
+                        A Corregedoria analisa o consumo semanal (litros) das viaturas do mesmo modelo.
+                    </p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs text-left">
+                            <thead class="bg-gray-800 text-gray-400">
+                                <tr>
+                                    <th class="p-2">Viatura</th>
+                                    <th class="p-2">Consumo (L)</th>
+                                    <th class="p-2">Status Boxplot</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="p-2">V-101</td>
+                                    <td class="p-2">45</td>
+                                    <td class="p-2"><span class="text-intel-green">Dentro da Caixa</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="p-2">V-102</td>
+                                    <td class="p-2">52</td>
+                                    <td class="p-2"><span class="text-intel-green">Dentro da Caixa</span></td>
+                                </tr>
+                                <tr class="bg-intel-danger/10 border-l-2 border-intel-danger">
+                                    <td class="p-2 font-bold text-white">V-099</td>
+                                    <td class="p-2 font-bold">120</td>
+                                    <td class="p-2"><span class="bg-intel-danger text-white px-2 py-1 rounded font-bold">OUTLIER (> Q3+1.5*IQR)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center bg-gray-900/50 p-4 rounded text-sm text-gray-400 italic">
+                    <p>"A Viatura V-099 consumiu 120L. O limite calculado pelo IQR para a frota foi de 85L. Isso indica possível furto de combustível, vazamento ou uso indevido (patrulhamento fora da área)."</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-intel-green mb-6">Casos de Uso </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-default">
+                    <div class="text-3xl mb-2">⏱️</div>
+                    <h3 class="font-bold text-white">Tempo de Flagrante</h3>
+                    <p class="text-sm text-gray-400 mt-2">Identificar delegacias que demoram tempo excessivo para processar prisões (outliers superiores), indicando ineficiência ou falta de efetivo.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-default">
+                    <div class="text-3xl mb-2">💊</div>
+                    <h3 class="font-bold text-white">Apreensão de Drogas</h3>
+                    <p class="text-sm text-gray-400 mt-2">Diferenciar o usuário/pequeno traficante (dentro do boxplot) do grande carregamento (outlier extremo) para priorizar a investigação de inteligência.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-default">
+                    <div class="text-3xl mb-2">📞</div>
+                    <h3 class="font-bold text-white">Chamadas 190 (Trote)</h3>
+                    <p class="text-sm text-gray-400 mt-2">Identificar números de telefone que ligam uma quantidade de vezes absurdamente maior que a mediana da população, sugerindo trote ou perturbação.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

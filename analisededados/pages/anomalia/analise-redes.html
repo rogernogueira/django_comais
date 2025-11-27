@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Vínculos (Grafos) - Inteligência Policial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-pink': '#f472b6',    // Pink 400 (Network/Link Analysis)
+                        'intel-rose': '#fb7185',    // Rose 400
+                        'intel-danger': '#ef4444',  // Red 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(244, 114, 182, 0.2);
+        }
+        .node-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); opacity: 1; }
+            80%, 100% { transform: scale(2); opacity: 0; }
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-pink/10 hover:bg-intel-pink/20 text-intel-pink p-3 rounded-lg transition-all" onclick="history.back()">
+                    ←
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-intel-pink tracking-tight">Análise de Redes (SNA)</h1>
+                    <p class="text-text-muted mt-1">Detecção de Estruturas de Organizações Criminosas e Lavagem de Dinheiro</p>
+                </div>
+         
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                <div class="absolute top-4 left-4 text-xs font-mono text-intel-pink">TOPOLOGIA DE FRAUDE</div>
+                
+                <svg aria-label="Graph Anomaly Concept" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <g opacity="0.4">
+                        <circle cx="100" cy="150" r="4" fill="#f472b6"></circle>
+                        <circle cx="150" cy="100" r="4" fill="#f472b6"></circle>
+                        <circle cx="150" cy="200" r="4" fill="#f472b6"></circle>
+                        <circle cx="200" cy="150" r="4" fill="#f472b6"></circle>
+                        <line x1="100" y1="150" x2="150" y2="100" stroke="#cbd5e1" stroke-width="0.5"></line>
+                        <line x1="100" y1="150" x2="150" y2="200" stroke="#cbd5e1" stroke-width="0.5"></line>
+                        <line x1="150" y1="100" x2="200" y2="150" stroke="#cbd5e1" stroke-width="0.5"></line>
+                        <line x1="150" y1="200" x2="200" y2="150" stroke="#cbd5e1" stroke-width="0.5"></line>
+                        <text x="150" y="230" fill="#f472b6" font-size="10" text-anchor="middle">Rede Social Comum</text>
+                    </g>
+
+                    <g transform="translate(20,0)">
+                        <circle cx="400" cy="150" r="20" fill="#ef4444" opacity="0.2" class="animate-pulse"></circle>
+                        <circle cx="400" cy="150" r="6" fill="#ef4444"></circle> <circle cx="350" cy="100" r="3" fill="#cbd5e1"></circle>
+                        <circle cx="450" cy="100" r="3" fill="#cbd5e1"></circle>
+                        <circle cx="350" cy="200" r="3" fill="#cbd5e1"></circle>
+                        <circle cx="450" cy="200" r="3" fill="#cbd5e1"></circle>
+                        <circle cx="330" cy="150" r="3" fill="#cbd5e1"></circle>
+                        <circle cx="470" cy="150" r="3" fill="#cbd5e1"></circle>
+
+                        <line x1="400" y1="150" x2="350" y2="100" stroke="#ef4444" stroke-width="1"></line>
+                        <line x1="400" y1="150" x2="450" y2="100" stroke="#ef4444" stroke-width="1"></line>
+                        <line x1="400" y1="150" x2="350" y2="200" stroke="#ef4444" stroke-width="1"></line>
+                        <line x1="400" y1="150" x2="450" y2="200" stroke="#ef4444" stroke-width="1"></line>
+                        <line x1="400" y1="150" x2="330" y2="150" stroke="#ef4444" stroke-width="1"></line>
+                        <line x1="400" y1="150" x2="470" y2="150" stroke="#ef4444" stroke-width="1"></line>
+                        
+                        <text x="400" y="180" fill="#ef4444" font-size="10" text-anchor="middle" font-weight="bold">HUB ANÔMALO</text>
+                        <text x="400" y="195" fill="#ef4444" font-size="8" text-anchor="middle">Alto Grau de Entrada</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-intel-pink mb-3">Conceito: "Siga o Dinheiro (e os Contatos)"</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Criminosos não agem no vácuo. Eles precisam transferir dinheiro, ligar para comparsas e usar veículos compartilhados.
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-pink pl-4">
+                        A Detecção de Anomalias em Grafos não busca comportamento individual, mas <strong>estrutural</strong>. Procuramos o "Laranja" (recebe de muitos, passa para um), o "Líder" (influência indireta) ou a "Ponte" (advogado que conecta duas facções).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-intel-pink mb-4">Métricas de Centralidade (Quem é quem na ORCRIM)</h3>
+                <div class="space-y-4">
+                    
+                    <div class="flex items-start gap-4 p-3 hover:bg-white/5 rounded transition">
+                        <div class="bg-intel-pink/20 text-intel-pink p-2 rounded font-bold">01</div>
+                        <div>
+                            <h4 class="text-white font-bold">Grau (Degree Centrality)</h4>
+                            <p class="text-sm text-gray-400">Contagem simples de conexões.</p>
+                            <p class="text-xs text-intel-pink mt-1">Uso: Identificar "Laranjas" (In-Degree alto) ou Spam/Golpistas (Out-Degree alto).</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-3 hover:bg-white/5 rounded transition">
+                        <div class="bg-intel-pink/20 text-intel-pink p-2 rounded font-bold">02</div>
+                        <div>
+                            <h4 class="text-white font-bold">Intermediação (Betweenness Centrality)</h4>
+                            <p class="text-sm text-gray-400">Quantas vezes um nó serve de "ponte" no caminho mais curto entre outros dois.</p>
+                            <p class="text-xs text-intel-pink mt-1">Uso: Identificar o fornecedor de armas ou o contador que conecta células isoladas da facção.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-3 hover:bg-white/5 rounded transition">
+                        <div class="bg-intel-pink/20 text-intel-pink p-2 rounded font-bold">03</div>
+                        <div>
+                            <h4 class="text-white font-bold">PageRank</h4>
+                            <p class="text-sm text-gray-400">Mede a influência. Você é importante se pessoas importantes se conectam a você.</p>
+                            <p class="text-xs text-intel-pink mt-1">Uso: Identificar o Chefe (Líder). Ele pode ter poucas ligações, mas recebe ligações dos tenentes que controlam a rede.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700 flex flex-col justify-center">
+                <h3 class="text-lg font-bold text-intel-pink mb-4">Detecção de Comunidades</h3>
+                <p class="text-sm text-gray-400 mb-4">Algoritmos como <strong>Louvain</strong> ou <strong>Girvan-Newman</strong>.</p>
+                <div class="bg-black/30 p-4 rounded border border-gray-600">
+                    <p class="text-xs text-gray-300">
+                        Detectam grupos densamente conectados.
+                        <br><br>
+                        <strong>Aplicação:</strong> Separar a "Família" do "Esquema Criminoso". Se um telefone fala com dois grupos distintos que não se falam entre si, isso é um padrão de interesse.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-bg-muted/20 p-6 rounded-xl border border-gray-700">
+            <h2 class="text-xl font-bold text-white mb-4">Fluxo de Análise Investigativa</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                <div class="p-4 bg-bg-base rounded border border-gray-700">
+                    <div class="text-intel-pink font-bold mb-2">1. Extração de Entidades</div>
+                    <p class="text-xs text-gray-400">CPF, CNPJ, Telefone, Placa, Endereço (Nós).</p>
+                </div>
+                <div class="p-4 bg-bg-base rounded border border-gray-700">
+                    <div class="text-intel-pink font-bold mb-2">2. Definição de Vínculos</div>
+                    <p class="text-xs text-gray-400">Societário, Transferência PIX, Ligação, Multa no mesmo carro (Arestas).</p>
+                </div>
+                <div class="p-4 bg-bg-base rounded border border-gray-700">
+                    <div class="text-intel-pink font-bold mb-2">3. Projeção do Grafo</div>
+                    <p class="text-xs text-gray-400">Construir a rede usando bibliotecas como NetworkX ou Neo4j.</p>
+                </div>
+                <div class="p-4 bg-bg-base rounded border border-gray-700">
+                    <div class="text-intel-pink font-bold mb-2">4. Cálculo de Métricas</div>
+                    <p class="text-xs text-gray-400">Rodar PageRank e Betweenness para rankear os alvos.</p>
+                </div>
+            </div>
+        </section>
+        
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-green-900/10 border border-green-500/20 p-5 rounded-lg">
+                <h3 class="text-green-400 font-bold mb-3">✓ Poder Investigativo</h3>
+                <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                    <li><strong>Vínculos Indiretos:</strong> Revela que o Suspeito A está conectado ao Suspeito B através de um "laranja" C, algo impossível de ver no Excel.</li>
+                    <li><strong>Visualização:</strong> Ótimo para relatórios de inteligência e apresentações judiciais.</li>
+                </ul>
+            </div>
+
+            <div class="bg-red-900/10 border border-red-500/20 p-5 rounded-lg">
+                <h3 class="text-red-400 font-bold mb-3">⚠ Desafios Técnicos</h3>
+                <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                    <li><strong>Dados Faltantes:</strong> Se o criminoso usa um celular "frio" (não cadastrado), o link se quebra.</li>
+                    <li><strong>Explosão Combinatória:</strong> Redes financeiras muito grandes tornam-se "bolas de pelo" (Hairballs) visualmente ilegíveis sem filtragem rigorosa.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-intel-pink mb-6">Casos de Uso em Segurança</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-surface p-5 rounded hover:border-intel-pink border border-transparent transition cursor-default">
+                    <div class="text-3xl mb-2">💸</div>
+                    <h3 class="font-bold text-white">Lavagem de Dinheiro (Smurfing)</h3>
+                    <p class="text-sm text-gray-400 mt-2">Detecção de topologia "Estrela": Uma conta central (Hub) recebe centenas de pequenos depósitos de contas periféricas e transfere o montante para uma conta "Offshore".</p>
+                </div>
+                <div class="bg-bg-surface p-5 rounded hover:border-intel-pink border border-transparent transition cursor-default">
+                    <div class="text-3xl mb-2">📞</div>
+                    <h3 class="font-bold text-white">Análise de RDR (Telefonia)</h3>
+                    <p class="text-sm text-gray-400 mt-2">Identificar "Telefones Operacionais". Se um número se conecta apenas a membros conhecidos de uma quadrilha e "morre" (para de ser usado) após um crime, é um nó crítico.</p>
+                </div>
+                <div class="bg-bg-surface p-5 rounded hover:border-intel-pink border border-transparent transition cursor-default">
+                    <div class="text-3xl mb-2">🕸️</div>
+                    <h3 class="font-bold text-white">Combate à Corrupção (Licitações)</h3>
+                    <p class="text-sm text-gray-400 mt-2">Grafo Bipartido (Empresas + Sócios). Detectar anéis onde sócios se alternam em empresas diferentes para simular concorrência em licitações públicas.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

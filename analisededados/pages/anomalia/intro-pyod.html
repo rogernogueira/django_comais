@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyOD - Arsenal de Detecção</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-purple': '#a855f7',  // Purple 500 (Integration/Tech)
+                        'intel-light': '#d8b4fe',   // Purple 300
+                        'code-bg': '#0f172a',
+                        'primary': '#c084fc',
+                    },
+                    fontFamily: {
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        .code-syntax-def { color: #f472b6; } /* Pink */
+        .code-syntax-func { color: #60a5fa; } /* Blue */
+        .code-syntax-str { color: #a3e635; }  /* Lime */
+        .code-syntax-comment { color: #64748b; font-style: italic; } /* Gray */
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-purple/10 hover:bg-intel-purple/20 text-intel-purple p-3 rounded-lg transition-all" onclick="history.back()">
+                    ← 
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-primary tracking-tight">PyOD (Python Outlier Detection)</h1>
+                    <p class="text-text-muted mt-1">O "Canivete Suíço" para Análise e Detecção de Anomalias</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative flex flex-col justify-center items-center">
+                <div class="absolute top-4 left-4 text-xs font-mono text-intel-light">ARQUITETURA UNIFICADA</div>
+                
+                <svg aria-label="PyOD Architecture" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect x="50" y="130" width="80" height="40" rx="5" fill="#334155"></rect>
+                    <text x="90" y="155" text-anchor="middle" fill="#fff" font-size="12">Dados (BOs)</text>
+
+                    <line x1="130" y1="150" x2="170" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"></line>
+
+                    <rect x="170" y="50" width="160" height="200" rx="10" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="5 5"></rect>
+                    <text x="250" y="40" text-anchor="middle" fill="#a855f7" font-weight="bold">Interface PyOD</text>
+
+                    <rect x="190" y="70" width="120" height="30" rx="3" fill="#1e293b"></rect>
+                    <text x="250" y="90" text-anchor="middle" fill="#d8b4fe" font-size="10">Isolation Forest</text>
+                    
+                    <rect x="190" y="110" width="120" height="30" rx="3" fill="#1e293b"></rect>
+                    <text x="250" y="130" text-anchor="middle" fill="#d8b4fe" font-size="10">ECOD / COPOD</text>
+
+                    <rect x="190" y="150" width="120" height="30" rx="3" fill="#1e293b"></rect>
+                    <text x="250" y="170" text-anchor="middle" fill="#d8b4fe" font-size="10">KNN / LOF</text>
+
+                    <rect x="190" y="190" width="120" height="30" rx="3" fill="#1e293b"></rect>
+                    <text x="250" y="210" text-anchor="middle" fill="#d8b4fe" font-size="10">Deep Learning</text>
+
+                    <line x1="330" y1="150" x2="380" y2="150" stroke="#64748b" stroke-width="2"></line>
+
+                    <circle cx="420" cy="150" r="30" fill="#a855f7" opacity="0.2"></circle>
+                    <text x="420" y="155" text-anchor="middle" fill="#a855f7" font-weight="bold" font-size="12">Alertas</text>
+                </svg>
+                <p class="text-sm text-gray-400 mt-4 text-center">Uma interface única para controlar +40 algoritmos diferentes.</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-intel-light mb-3">Por que usar PyOD ?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Na análise de dados, o tempo é crítico. Você não pode perder dias reescrevendo código só para testar se o <em>KNN</em> funciona melhor que o <em>Isolation Forest</em> para um caso de lavagem de dinheiro.
+                    </p>
+                    <ul class="space-y-3 text-text-secondary border-l-4 border-intel-purple pl-4">
+                        <li><strong>Agilidade:</strong> Troque de algoritmo mudando apenas 1 linha.</li>
+                        <li><strong>Padronização:</strong> Todos os modelos devolvem o resultado no mesmo formato (0 ou 1).</li>
+                        <li><strong>Robustez:</strong> Implementações otimizadas que aguentam bases de dados reais (milhões de linhas).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <section class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+            <h2 class="text-xl font-bold text-primary mb-4">Implementação Padrão </h2>
+            <div class="bg-code-bg p-6 rounded-lg font-mono text-sm overflow-x-auto shadow-inner border border-gray-800">
+                <p><span class="code-syntax-def">from</span> pyod.models.ecod <span class="code-syntax-def">import</span> ECOD</p>
+                <p><span class="code-syntax-def">from</span> pyod.utils.data <span class="code-syntax-def">import</span> evaluate_print</p>
+                <br>
+                <p class="code-syntax-comment"># 1. Definir "Contaminação": Estimativa da taxa de criminalidade nos dados</p>
+                <p class="code-syntax-comment"># Se você não sabe, use uma estimativa conservadora (ex: 1%)</p>
+                <p>taxa_crime = <span class="code-syntax-func">0.01</span></p>
+                <br>
+                <p class="code-syntax-comment"># 2. Inicializar o Modelo (Ex: ECOD - Rápido e sem hiperparâmetros)</p>
+                <p>modelo = ECOD(contamination=taxa_crime)</p>
+                <br>
+                <p class="code-syntax-comment"># 3. Treinar (Aprender o padrão da população honesta)</p>
+                <p>modelo.fit(dados_financeiros)</p>
+                <br>
+                <p class="code-syntax-comment"># 4. Obter as Decisões (0 = Cidadão, 1 = Suspeito)</p>
+                <p>labels_risco = modelo.labels_  <span class="code-syntax-comment"># Binário</span></p>
+                <p>score_risco = modelo.decision_scores_ <span class="code-syntax-comment"># Probabilidade Bruta</span></p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-primary mb-6">Qual algoritmo escolher ?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-bg-muted/30 p-5 rounded-lg border-t-2 border-intel-purple hover:bg-bg-muted/50 transition">
+                    <h3 class="font-bold text-white text-lg">ECOD / COPOD</h3>
+                    <p class="text-xs text-intel-purple font-bold mb-2 uppercase">Probabilístico</p>
+                    <p class="text-sm text-gray-300">
+                        <strong>Uso:</strong> Fraudes Financeiras em Tempo Real.
+                        <br><span class="text-gray-500 text-xs">Vantagem: Extremamente rápido, sem parâmetros para ajustar.</span>
+                    </p>
+                </div>
+
+                <div class="bg-bg-muted/30 p-5 rounded-lg border-t-2 border-intel-purple hover:bg-bg-muted/50 transition">
+                    <h3 class="font-bold text-white text-lg">Isolation Forest</h3>
+                    <p class="text-xs text-intel-purple font-bold mb-2 uppercase">Árvore de Decisão</p>
+                    <p class="text-sm text-gray-300">
+                        <strong>Uso:</strong> Bases de dados "sujas" e grandes volumes.
+                        <br><span class="text-gray-500 text-xs">Vantagem: Robusto contra ruído e eficiente.</span>
+                    </p>
+                </div>
+
+                <div class="bg-bg-muted/30 p-5 rounded-lg border-t-2 border-intel-purple hover:bg-bg-muted/50 transition">
+                    <h3 class="font-bold text-white text-lg">AutoEncoder</h3>
+                    <p class="text-xs text-intel-purple font-bold mb-2 uppercase">Deep Learning</p>
+                    <p class="text-sm text-gray-300">
+                        <strong>Uso:</strong> Crimes Cibernéticos e Padrões Complexos.
+                        <br><span class="text-gray-500 text-xs">Vantagem: Detecta relações não-lineares complexas.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 rounded-xl border-l-4 border-green-500 mt-6">
+            <h2 class="text-xl font-bold text-primary mb-3">💡 Dica de Ouro: Combinação de Modelos (Ensembles)</h2>
+            <p class="text-text-secondary mb-4">
+                Na análise de dados, acusar um inocente é grave (Falso Positivo). Nunca confie em apenas um algoritmo. O PyOD permite combinar a opinião de vários modelos.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-code-bg p-4 rounded border border-gray-700 font-mono text-xs text-gray-300">
+                    <p class="text-gray-500"># Treina 3 modelos diferentes</p>
+                    <p>classifiers = [KNN(), IForest(), ECOD()]</p>
+                    <p class="mt-2"># Combina os resultados (Média ou Máximo)</p>
+                    <p><span class="code-syntax-def">from</span> pyod.models.combination <span class="code-syntax-def">import</span> average</p>
+                    <p>score_final = average(scores_de_todos)</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-300">
+                        Se o KNN diz que é fraude, mas o IForest diz que é normal, o risco é médio.
+                        <br>
+                        Se <strong>todos</strong> dizem que é fraude, a certeza é alta para emitir um mandado.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-t border-gray-800 pt-8 mt-12 text-center">
+            <p class="text-gray-500 text-sm">Documentação Oficial: <a href="#" class="text-intel-purple hover:underline">pyod.readthedocs.io</a></p>
+        </footer>
+
+    </div>
+</body>
+</html>

@@ -21,8 +21,7 @@
             'assoc': '#ec4899',      // Associação
             'corr': '#f59e0b',       // Correlação
             'reg': '#8b5cf6',        // Regressão
-            'uft': '#1fad53',    // Sucesso
-            'central': '#e2e5e9'      // Vermelho
+            'anom': '#10b981',       // Anomalia (Emerald)
           }
         }
       }
@@ -208,11 +207,11 @@
     <!-- Cabeçalho -->
     <div class="text-center mb-16">
       <h1
-        class="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-uft to-primary">
+        class="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-assoc to-primary">
         Análise de Dados
       </h1>
       <h3
-        class="text-2xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-uft to-primary">
+        class="text-2xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-assoc to-primary">
         Painel Interativo
       </h3>
       <p class="text-xl text-text-secondary max-w-2xl mx-auto">
@@ -222,14 +221,7 @@
 
     <!-- Quebra-cabeça -->
     <div class="flex justify-center">
-      <div class="puzzle-wrapper relative">
-
-        <!-- Círculo central -->
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-          <div class="w-20 h-20  bg-gradient-to-br from-primary to-central rounded-full flex items-center justify-center shadow-2xl border-4 border-bg-base overflow-hidden">
-            <img src="/static/website/img/logo_comais.svg" alt="COMAIS Labs" class="w-16 h-16 object-contain  transform -translate-y-2">
-          </div>
-        </div>
+      <div class="puzzle-wrapper">
 
         <div class="puzzle-grid ">
 
@@ -303,13 +295,14 @@
             </div>
           </div>
 
-          <!-- BOTTOM-LEFT – Comparação (aba direita + encaixe em cima) -->
+          <!-- MIDDLE-LEFT – Comparação (aba direita + encaixe em cima + aba embaixo) -->
           <div onclick="window.location.href='comparacao.html'"
-            class="module-card puzzle-piece piece-bl bg-bg-surface p-8 group ">
+            class="module-card puzzle-piece bg-bg-surface p-8 group ">
 
             <!-- tabs -->
             <div class="puzzle-tab out right"></div>
             <div class="puzzle-tab in top"></div>
+            <div class="puzzle-tab out bottom"></div>
 
             <div class="module-inner ml-4">
               <div class="flex items-start justify-between mb-6">
@@ -338,13 +331,13 @@
             </div>
           </div>
 
-          <!-- BOTTOM-RIGHT – Regressão (encaixe esquerda + encaixe em cima) -->
-          <div onclick="window.location.href='regressao.html'"
-            class="module-card puzzle-piece piece-br bg-bg-surface p-8 group">
+          <!-- MIDDLE-RIGHT – Regressão (encaixe esquerda + encaixe em cima + aba embaixo) -->
+          <div onclick="window.location.href='regressao.html'" class="module-card puzzle-piece bg-bg-surface p-8 group">
 
             <!-- tabs -->
             <div class="puzzle-tab in left"></div>
             <div class="puzzle-tab in top"></div>
+            <div class="puzzle-tab out bottom"></div>
 
             <div class="module-inner ml-4">
               <div class="flex items-start justify-between mb-6">
@@ -373,6 +366,67 @@
             </div>
           </div>
 
+          <!-- BOTTOM-LEFT – Anomalia (aba direita + encaixe em cima) -->
+          <div onclick="window.location.href='anomalia.html'"
+            class="module-card puzzle-piece piece-bl bg-bg-surface p-8 group">
+
+            <!-- tabs -->
+            <div class="puzzle-tab out right"></div>
+            <div class="puzzle-tab in top"></div>
+
+            <div class="module-inner ml-4">
+              <div class="flex items-start justify-between mb-6">
+                <div class="p-4 bg-anom/10 rounded-2xl group-hover:bg-anom/20 transition-colors">
+                  <svg class="w-8 h-8 text-anom" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                    </path>
+                  </svg>
+                </div>
+                <span
+                  class="text-xs font-bold tracking-wider text-anom uppercase bg-anom/10 px-3 py-1 rounded-full">Anomaly</span>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-anom transition-colors">Anomalias</h2>
+              <p class="text-text-secondary mb-6">
+                Detecção de Outliers, Fraudes e Padrões Atípicos. Métodos supervisionados e não supervisionados.
+              </p>
+              <div class="flex items-center text-anom font-semibold">
+                <span>Acessar Painel</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                  </path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOTTOM-RIGHT – Future (encaixe esquerda + encaixe em cima) -->
+          <div class="module-card puzzle-piece piece-br bg-bg-surface/50 p-8 group cursor-default">
+
+            <!-- tabs -->
+            <div class="puzzle-tab in left"></div>
+            <div class="puzzle-tab in top"></div>
+
+            <div class="module-inner ml-4 opacity-50">
+              <div class="flex items-start justify-between mb-6">
+                <div class="p-4 bg-gray-700/30 rounded-2xl">
+                  <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                </div>
+                <span
+                  class="text-xs font-bold tracking-wider text-gray-500 uppercase bg-gray-700/30 px-3 py-1 rounded-full">Em
+                  Breve</span>
+              </div>
+              <h2 class="text-3xl font-bold text-gray-500 mb-3">Novos Módulos</h2>
+              <p class="text-gray-600 mb-6">
+                Mais ferramentas estatísticas e de machine learning estão sendo desenvolvidas.
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -386,7 +440,7 @@
         <p class="text-text-secondary">Desenvolvido pelo</p>
         <a href="https://comais.uft.edu.br" target="_blank" rel="noopener noreferrer"
           class="inline-block transition-transform hover:scale-105">
-          <img src="/static/website/img/logo_comais.svg" alt="COMAIS Labs"
+          <img src="logo_comais.svg" alt="COMAIS Labs"
             class="h-16 w-auto opacity-90 hover:opacity-100 transition-opacity">
         </a>
         <p class="text-text-secondary text-lg">

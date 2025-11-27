@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação & Métricas - Inteligência Policial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-purple': '#c084fc',  // Purple 400 (Auditoria)
+                        'intel-dark': '#7e22ce',    // Purple 700
+                        'intel-success': '#10b981', // Green
+                        'intel-danger': '#ef4444',  // Red
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+        .matrix-cell {
+            transition: all 0.3s ease;
+        }
+        .matrix-cell:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-purple/10 hover:bg-intel-purple/20 text-intel-purple p-3 rounded-lg transition-all" onclick="history.back()">
+                    ← 
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-intel-purple tracking-tight">Avaliação de Modelos</h1>
+                    <p class="text-text-muted mt-1">Métricas de Performance e Custo Operacional</p>
+                </div>
+            </div>
+            
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                <div class="absolute top-4 left-4 text-xs font-mono text-intel-purple">MATRIZ DE CUSTO TÁTICO</div>
+                
+                <div class="grid grid-cols-2 gap-4 mt-8 h-64">
+                    <div class="matrix-cell bg-intel-success/10 border border-intel-success/30 p-4 rounded flex flex-col justify-center items-center text-center">
+                        <span class="text-2xl">🎯</span>
+                        <strong class="text-intel-success">True Positive</strong>
+                        <p class="text-xs text-gray-400 mt-1">Prendeu o criminoso correto.</p>
+                        <span class="text-xs font-bold text-intel-success mt-2">Sucesso</span>
+                    </div>
+                    <div class="matrix-cell bg-intel-danger/10 border border-intel-danger/30 p-4 rounded flex flex-col justify-center items-center text-center">
+                        <span class="text-2xl">💸</span>
+                        <strong class="text-intel-danger">False Positive</strong>
+                        <p class="text-xs text-gray-400 mt-1">Abordou cidadão inocente.</p>
+                        <span class="text-xs font-bold text-intel-danger mt-2">Desperdício / Risco PR</span>
+                    </div>
+                    <div class="matrix-cell bg-gray-800 border border-gray-600 p-4 rounded flex flex-col justify-center items-center text-center">
+                        <span class="text-2xl">💀</span>
+                        <strong class="text-gray-200">False Negative</strong>
+                        <p class="text-xs text-gray-400 mt-1">Crime ocorreu e não vimos.</p>
+                        <span class="text-xs font-bold text-gray-400 mt-2">Falha de Segurança</span>
+                    </div>
+                    <div class="matrix-cell bg-intel-purple/10 border border-intel-purple/30 p-4 rounded flex flex-col justify-center items-center text-center">
+                        <span class="text-2xl">✅</span>
+                        <strong class="text-intel-purple">True Negative</strong>
+                        <p class="text-xs text-gray-400 mt-1">Ignorou rotina normal.</p>
+                        <span class="text-xs font-bold text-intel-purple mt-2">Eficiência</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-intel-purple mb-3">O Problema dos Rótulos (Labels)</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Em Segurança Pública, raramente temos um dataset perfeitamente rotulado ("Isso foi fraude", "Isso foi normal"). Na maioria das vezes, temos apenas <strong>ocorrências registradas</strong> (que são apenas uma fração da realidade).
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-purple pl-4">
+                        Como validar se o modelo funciona? Não podemos esperar o crime acontecer. Usamos técnicas de <strong>Backtesting</strong> e <strong>Auditoria Humana (Human-in-the-loop)</strong>.
+                    </p>
+                </div>
+
+                <div class="bg-bg-surface p-4 rounded border border-gray-700">
+                    <h4 class="text-sm font-bold text-white mb-2">Estratégias de Validação:</h4>
+                    <ul class="list-disc list-inside text-sm text-gray-400 space-y-2">
+                        <li><strong>Precision @ K:</strong> Se o modelo gerar 10 alertas hoje, quantos são úteis? (Métrica de Manpower).</li>
+                        <li><strong>Injeção de Ataques (Red Teaming):</strong> Simular transações fraudulentas ou padrões criminais sintéticos e ver se o modelo pega.</li>
+                        <li><strong>Time-Split:</strong> Treinar com dados de Jan-Jun e testar se ele prevê os crimes que ocorreram em Julho.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-lg font-bold text-intel-purple mb-2">Precision (Precisão)</h3>
+                <div class="text-center text-2xl text-intel-purple math-font my-4">TP / (TP + FP)</div>
+                <p class="text-sm text-gray-400">
+                    <strong>Pergunta Policial:</strong> "De todas as abordagens que o sistema sugeriu, quantas resultaram em prisão/apreensão?"
+                </p>
+                <p class="text-xs text-gray-500 mt-2">Alta Precisão = Pouco desperdício de viatura.</p>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-lg font-bold text-intel-purple mb-2">Recall (Revocação)</h3>
+                <div class="text-center text-2xl text-intel-purple math-font my-4">TP / (TP + FN)</div>
+                <p class="text-sm text-gray-400">
+                    <strong>Pergunta Policial:</strong> "De todos os crimes que aconteceram na cidade, quantos o sistema previu?"
+                </p>
+                <p class="text-xs text-gray-500 mt-2">Alto Recall = Segurança máxima (mas gera muitos alarmes falsos).</p>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-lg font-bold text-intel-purple mb-2">Precision @ K</h3>
+                <div class="text-center text-2xl text-intel-purple math-font my-4">Top K Alertas</div>
+                <p class="text-sm text-gray-400">
+                    <strong>A Mais Importante:</strong> Se você só tem 5 investigadores, não adianta o modelo dar 10.000 alertas. 
+                </p>
+                <p class="text-xs text-gray-500 mt-2">Mede a qualidade apenas dos Top K alertas prioritários.</p>
+            </div>
+        </section>
+
+        <section class="bg-black/20 p-6 rounded-xl border border-gray-800">
+            <h3 class="text-xl font-bold text-intel-purple mb-4">ROC vs. Precision-Recall Curve</h3>
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1 space-y-4">
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Em segurança pública, os dados são <strong>altamente desbalanceados</strong> (99.9% cidadãos honestos, 0.1% criminosos).
+                    </p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        <strong class="text-intel-danger">NÃO USE A CURVA ROC (AUC):</strong> Ela é enganosa para dados desbalanceados. Ela pode mostrar 99% de acerto só porque o modelo disse que "ninguém é criminoso".
+                    </p>
+                    <p class="text-intel-purple text-sm font-bold">
+                        ✅ USE PR-CURVE (Precision-Recall): Ela foca na classe minoritária (o crime) e ignora a massa de verdadeiros negativos (cidadãos normais).
+                    </p> 
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 md:p-8 rounded-xl border-l-4 border-intel-purple">
+            <h2 class="text-2xl font-bold text-intel-purple mb-6">Exemplo Real: Detecção de Fraude em Combustível</h2>
+            <p class="text-gray-400 text-sm mb-4">Modelo não-supervisionado (Isolation Forest) rodou em 50.000 transações de abastecimento de viaturas. O gestor auditou os Top 5 alertas.</p>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs text-left">
+                    <thead class="bg-gray-800 text-gray-400">
+                        <tr>
+                            <th class="p-3">Rank</th>
+                            <th class="p-3">Viatura</th>
+                            <th class="p-3">Anomalia Detectada</th>
+                            <th class="p-3">Auditoria Humana</th>
+                            <th class="p-3">Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300">
+                        <tr class="border-b border-gray-700 bg-intel-purple/10">
+                            <td class="p-3 font-bold">#1</td>
+                            <td class="p-3">VTR-9901</td>
+                            <td class="p-3">3 abastecimentos em 2 horas</td>
+                            <td class="p-3">Confirmado desvio de cartão.</td>
+                            <td class="p-3 text-intel-success font-bold">True Positive</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 bg-intel-purple/10">
+                            <td class="p-3 font-bold">#2</td>
+                            <td class="p-3">VTR-3022</td>
+                            <td class="p-3">Abastecimento 300km fora da área</td>
+                            <td class="p-3">Missão especial autorizada.</td>
+                            <td class="p-3 text-intel-danger font-bold">False Positive</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 bg-intel-purple/10">
+                            <td class="p-3 font-bold">#3</td>
+                            <td class="p-3">VTR-1011</td>
+                            <td class="p-3">Tanque excede capacidade (70L em tanque de 60L)</td>
+                            <td class="p-3">Erro na bomba/fraude posto.</td>
+                            <td class="p-3 text-intel-success font-bold">True Positive</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-4 bg-gray-900 p-4 rounded border border-gray-700 text-center">
+                <p class="text-sm text-gray-400">Precision @ 3 calculada:</p>
+                <p class="text-2xl text-white font-mono">66.6% <span class="text-xs text-gray-500">(2 acertos em 3 verificações)</span></p>
+                <p class="text-xs text-gray-500 mt-1">Este modelo é operacionalmente viável.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-intel-purple mb-6">Critérios de "Go / No-Go"</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-bg-muted/20 p-5 rounded border border-intel-success/20">
+                    <h3 class="text-intel-success font-bold mb-2">✅ APROVAR MODELO SE:</h3>
+                    <ul class="text-sm text-gray-300 list-disc list-inside space-y-1">
+                        <li>A Precision @ K é superior à intuição aleatória dos analistas.</li>
+                        <li>O modelo explica o "porquê" da anomalia (Interpretability).</li>
+                        <li>O tempo de processamento permite ação em tempo real.</li>
+                    </ul>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded border border-intel-danger/20">
+                    <h3 class="text-intel-danger font-bold mb-2">❌ REJEITAR MODELO SE:</h3>
+                    <ul class="text-sm text-gray-300 list-disc list-inside space-y-1">
+                        <li>Gera muitos falsos positivos (Fadiga de Alerta).</li>
+                        <li>Tem viés contra bairros específicos (Auditoria de Fairness falhou).</li>
+                        <li>Overfitting: Só detecta crimes que já aconteceram e não novos padrões.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnicas de Amostragem - Detecção de Anomalias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#ef4444',
+                        'primary': '#ef4444',
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Técnicas de Amostragem</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Equilibrando a balança para treinar modelos justos</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">SMOTE (Synthetic Minority Over-sampling Technique)
+                    </h3>
+                    <svg aria-label="SMOTE Concept" class="w-full" role="img" viewBox="0 0 500 300">
+                        <rect fill="#1e293b" height="300" width="500" x="0" y="0"></rect>
+
+                        <!-- Classe Majoritária -->
+                        <circle cx="50" cy="50" r="3" fill="#334155"></circle>
+                        <circle cx="60" cy="60" r="3" fill="#334155"></circle>
+                        <circle cx="40" cy="70" r="3" fill="#334155"></circle>
+                        <!-- ... muitos pontos ... -->
+                        <rect x="20" y="20" width="100" height="260" fill="none" stroke="#334155"
+                            stroke-dasharray="2 2"></rect>
+
+                        <!-- Classe Minoritária (Original) -->
+                        <circle cx="300" cy="150" r="5" fill="#ef4444"></circle> <!-- A -->
+                        <circle cx="350" cy="200" r="5" fill="#ef4444"></circle> <!-- B -->
+
+                        <!-- SMOTE (Sintético) -->
+                        <line x1="300" y1="150" x2="350" y2="200" stroke="#ef4444" stroke-width="1"
+                            stroke-dasharray="4 4"></line>
+                        <circle cx="325" cy="175" r="5" fill="#ef4444" opacity="0.5" stroke="#fff"></circle>
+                        <!-- Novo Ponto -->
+
+                        <text x="325" y="165" fill="#ef4444" font-size="12" text-anchor="middle">Sintético</text>
+                    </svg>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Principais Técnicas</h3>
+                    <div class="space-y-4">
+                        <div class="bg-bg-surface p-4 rounded">
+                            <h4 class="text-primary font-bold">Undersampling</h4>
+                            <p class="text-text-secondary text-sm">Remover aleatoriamente exemplos da classe majoritária
+                                (normal).</p>
+                            <p class="text-text-muted text-xs mt-1">Risco: Perder informações importantes.</p>
+                        </div>
+                        <div class="bg-bg-surface p-4 rounded">
+                            <h4 class="text-primary font-bold">Oversampling</h4>
+                            <p class="text-text-secondary text-sm">Duplicar exemplos da classe minoritária (fraude).</p>
+                            <p class="text-text-muted text-xs mt-1">Risco: Overfitting (modelo decora as fraudes).</p>
+                        </div>
+                        <div class="bg-bg-surface p-4 rounded">
+                            <h4 class="text-primary font-bold">SMOTE</h4>
+                            <p class="text-text-secondary text-sm">Criar novos exemplos sintéticos interpolando fraudes
+                                existentes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Quando usar qual?</h3>
+                    <div class="space-y-3">
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><strong>Muitos dados (>1M):</strong> Undersampling é
+                                eficiente e rápido.</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg">
+                            <p class="text-text-secondary"><strong>Poucos dados:</strong> Oversampling ou SMOTE para não
+                                perder informação.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

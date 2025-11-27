@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árvores de Decisão & Ensemble - Inteligência Policial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-amber': '#f59e0b',   // Amber 500 (Intelligence)
+                        'intel-gold': '#fbbf24',    // Amber 400
+                        'intel-wood': '#78350f',    // Brown (Roots/Trees)
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        /* Efeito de conexão entre árvores */
+        .tree-line {
+            stroke-dasharray: 5;
+            animation: dash 20s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 1000;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-amber/10 hover:bg-intel-amber/20 text-intel-amber p-3 rounded-lg transition-all" onclick="history.back()">
+                    ← 
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-intel-amber tracking-tight">Algoritmos de Árvore (Ensemble)</h1>
+                    <p class="text-text-muted mt-1">Random Forest, XGBoost & LightGBM para Classificação Criminal</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                <div class="absolute top-4 left-4 text-xs font-mono text-intel-gold">ENSEMBLE LEARNING (O CONSELHO)</div>
+                
+
+[Image of Random Forest structure]
+
+                <svg aria-label="Ensemble Tree Concept" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <g transform="translate(80, 50)">
+                        <path d="M 0 0 L -30 60 M 0 0 L 30 60" stroke="#f59e0b" stroke-width="2"></path>
+                        <circle cx="0" cy="0" r="5" fill="#f59e0b"></circle>
+                        <text x="0" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Investigador A</text>
+                        <text x="0" y="95" fill="#f59e0b" font-size="10" text-anchor="middle" font-weight="bold">"FRAUDE"</text>
+                    </g>
+
+                    <g transform="translate(250, 50)">
+                        <path d="M 0 0 L -30 60 M 0 0 L 30 60" stroke="#f59e0b" stroke-width="2"></path>
+                        <circle cx="0" cy="0" r="5" fill="#f59e0b"></circle>
+                        <text x="0" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Investigador B</text>
+                        <text x="0" y="95" fill="#f59e0b" font-size="10" text-anchor="middle" font-weight="bold">"FRAUDE"</text>
+                    </g>
+
+                    <g transform="translate(420, 50)">
+                        <path d="M 0 0 L -30 60 M 0 0 L 30 60" stroke="#94a3b8" stroke-width="2"></path>
+                        <circle cx="0" cy="0" r="5" fill="#94a3b8"></circle>
+                        <text x="0" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Investigador C</text>
+                        <text x="0" y="95" fill="#94a3b8" font-size="10" text-anchor="middle" font-weight="bold">"NORMAL"</text>
+                    </g>
+
+                    <rect x="100" y="200" width="300" height="60" rx="10" fill="#1e293b" stroke="#475569"></rect>
+                    <text x="250" y="225" fill="#fff" text-anchor="middle" font-weight="bold">CONSELHO DE SENTENÇA (VOTAÇÃO)</text>
+                    <text x="250" y="245" fill="#f59e0b" text-anchor="middle" font-size="14">Resultado Final: FRAUDE (2 vs 1)</text>
+
+                    <line x1="80" y1="100" x2="150" y2="200" stroke="#475569" stroke-dasharray="4 4"></line>
+                    <line x1="250" y1="100" x2="250" y2="200" stroke="#475569" stroke-dasharray="4 4"></line>
+                    <line x1="420" y1="100" x2="350" y2="200" stroke="#475569" stroke-dasharray="4 4"></line>
+                </svg>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-intel-amber mb-3">A Sabedoria das Multidões (Ensemble)</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Uma única Árvore de Decisão comete erros (é como um policial júnior que pode ser tendencioso). 
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-amber pl-4">
+                        <strong>Random Forest:</strong> Cria um batalhão de 100 "policiais" (árvores), onde cada um analisa uma parte diferente das evidências. Eles votam. A maioria vence. Isso reduz drasticamente erros e alarmes falsos.
+                    </p>
+                    <p class="text-text-secondary mt-3">
+                        <strong>Boosting (XGBoost):</strong> É sequencial. O Policial B analisa onde o Policial A errou e foca apenas em corrigir esse erro. É extremamente preciso para detectar padrões sutis de crime organizado.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-intel-amber mb-4">Random Forest (A Democracia)</h3>
+                <ul class="space-y-3 text-sm text-gray-300">
+                    <li class="flex gap-3">
+                        <span class="text-intel-amber font-bold">✓</span>
+                        <span><strong>Paralelismo:</strong> Treina todas as árvores ao mesmo tempo (Rápido).</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-intel-amber font-bold">✓</span>
+                        <span><strong>Robusto:</strong> Dificilmente sofre de Overfitting (decorar os dados).</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-intel-amber font-bold">✓</span>
+                        <span><strong>Uso Ideal:</strong> Quando temos dados ruidosos (B.O.s mal preenchidos) e precisamos de uma resposta estável.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-intel-amber mb-4">Gradient Boosting / XGBoost (O Especialista)</h3>
+                
+                <ul class="space-y-3 text-sm text-gray-300">
+                    <li class="flex gap-3">
+                        <span class="text-intel-amber font-bold">✓</span>
+                        <span><strong>Precisão Cirúrgica:</strong> Geralmente vence o Random Forest em competições.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-intel-amber font-bold">✓</span>
+                        <span><strong>Correção de Erro:</strong> Aprende com os próprios erros a cada iteração.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-red-400 font-bold">⚠</span>
+                        <span><strong>Sensível:</strong> Pode "decorar" o ruído se não for bem ajustado (Overfitting).</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="bg-black/20 p-6 rounded-lg border border-gray-800">
+            <h2 class="text-xl font-bold text-intel-amber mb-4">Como a Árvore "Pensa" (Ganho de Informação)</h2>
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1 text-center">
+                    <p class="text-gray-400 text-sm mb-2">Índice Gini (Impureza):</p>
+                    <div class="text-2xl text-white math-font">
+                        Gini = 1 - ∑ (pᵢ)²
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">
+                        O algoritmo testa todas as perguntas possíveis ("O valor é > 10 mil?", "É de madrugada?").
+                        Ele escolhe a pergunta que melhor <strong>separa</strong> criminosos de inocentes, reduzindo a "impureza" (mistura) dos grupos.
+                    </p>
+                </div>
+                <div class="flex-1 border-l border-gray-700 pl-8">
+                    <h4 class="text-intel-gold font-bold text-sm mb-2">Feature Importance (O "X-9" do Modelo)</h4>
+                    <p class="text-sm text-gray-300">
+                        Uma das maiores vantagens táticas. O modelo nos diz <strong>quais variáveis</strong> foram decisivas para condenar o suspeito.
+                    </p>
+                    <div class="mt-3 space-y-1">
+                        <div class="w-full bg-gray-700 rounded h-4 overflow-hidden">
+                            <div class="bg-intel-amber h-full" style="width: 80%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-400">
+                            <span>Valor da Transação</span>
+                            <span>80% Importância</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-intel-amber mb-6">Ajuste Fino (Scikit-Learn / XGBoost)</h2>
+            <div class="overflow-x-auto rounded-xl border border-gray-700">
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="bg-bg-elevated text-xs uppercase text-gray-200">
+                        <tr>
+                            <th class="px-6 py-4">Parâmetro</th>
+                            <th class="px-6 py-4">Função</th>
+                            <th class="px-6 py-4 text-intel-gold">Regra de Bolso (Policial)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800 bg-bg-surface">
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-white">n_estimators</td>
+                            <td class="px-6 py-4">Número de árvores (agentes) no conselho.</td>
+                            <td class="px-6 py-4">Mais é melhor, mas mais lento. <strong>100 a 500</strong> é o padrão ouro.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-white">max_depth</td>
+                            <td class="px-6 py-4">Profundidade máxima da árvore (complexidade da pergunta).</td>
+                            <td class="px-6 py-4"><strong>Limite entre 5 e 10.</strong> Árvores muito profundas decoram casos específicos (como um investigador obcecado) e falham em casos novos.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-white">learning_rate</td>
+                            <td class="px-6 py-4">Velocidade de aprendizado (apenas Boosting).</td>
+                            <td class="px-6 py-4">Use valores baixos <strong>(0.01 a 0.1)</strong>. É melhor aprender devagar e com precisão do que rápido e errado.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition border-t-4 border-intel-amber">
+                <h3 class="font-bold text-white mb-2">Classificação de B.O.s (NLP)</h3>
+                <p class="text-sm text-gray-400">
+                    Usar Random Forest para ler a narrativa do Boletim de Ocorrência e classificar automaticamente a natureza do crime (ex: diferenciar "Furto Mediante Fraude" de "Estelionato") com base nas palavras usadas.
+                </p>
+            </div>
+            <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition border-t-4 border-intel-amber">
+                <h3 class="font-bold text-white mb-2">Risco de Reincidência</h3>
+                <p class="text-sm text-gray-400">
+                    XGBoost prevendo a probabilidade de um apenado voltar a cometer crimes (Score de Risco) baseado em idade, tipo de crime anterior e endereço.
+                </p>
+            </div>
+            <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition border-t-4 border-intel-amber">
+                <h3 class="font-bold text-white mb-2">Detecção de Fraude em Seguros/Auxílios</h3>
+                <p class="text-sm text-gray-400">
+                    Identificar quadrilhas que solicitam auxílios governamentais em massa. O modelo aprende o padrão de preenchimento de formulários de fraudadores conhecidos.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 rounded-xl border border-gray-700 mt-4">
+            <h2 class="text-xl font-bold text-intel-amber mb-4">Exemplo: Classificação de Risco de Suspeito</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs text-left">
+                    <thead class="bg-gray-800 text-gray-400">
+                        <tr>
+                            <th class="p-3">Suspeito</th>
+                            <th class="p-3">Antecedentes</th>
+                            <th class="p-3">Idade</th>
+                            <th class="p-3">Bairro de Risco</th>
+                            <th class="p-3">Predição (XGBoost)</th>
+                            <th class="p-3">Probabilidade</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300">
+                        <tr class="border-b border-gray-700">
+                            <td class="p-3">Indivíduo A</td>
+                            <td class="p-3">0</td>
+                            <td class="p-3">45</td>
+                            <td class="p-3">Não</td>
+                            <td class="p-3"><span class="text-green-400 font-bold">BAIXO RISCO</span></td>
+                            <td class="p-3">12%</td>
+                        </tr>
+                        <tr class="bg-intel-amber/10 border-l-2 border-intel-amber">
+                            <td class="p-3 font-bold text-white">Indivíduo B</td>
+                            <td class="p-3 font-bold">3 (Roubo)</td>
+                            <td class="p-3">22</td>
+                            <td class="p-3">Sim</td>
+                            <td class="p-3"><span class="text-intel-amber font-bold">ALTO RISCO</span></td>
+                            <td class="p-3 font-bold">89%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

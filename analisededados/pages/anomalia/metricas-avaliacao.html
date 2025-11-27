@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas de Avaliação - Detecção de Anomalias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#ef4444',
+                        'primary': '#ef4444',
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+            transform: translateX(-2px);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Métricas de Avaliação</h1>
+        </div>
+
+        <p class="text-xl text-center mb-12 text-text-secondary">Além da Acurácia: Precision, Recall e F1-Score</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">Matriz de Confusão</h3>
+                    <div class="grid grid-cols-2 gap-2 text-center">
+                        <div class="bg-bg-surface p-4 rounded border border-green-500/30">
+                            <p class="text-green-400 font-bold">Verdadeiro Negativo (VN)</p>
+                            <p class="text-xs text-text-muted">Normal classificado como Normal</p>
+                        </div>
+                        <div class="bg-bg-surface p-4 rounded border border-red-500/30">
+                            <p class="text-red-400 font-bold">Falso Positivo (FP)</p>
+                            <p class="text-xs text-text-muted">Alarme Falso (Normal como Fraude)</p>
+                        </div>
+                        <div class="bg-bg-surface p-4 rounded border border-red-500/30">
+                            <p class="text-red-400 font-bold">Falso Negativo (FN)</p>
+                            <p class="text-xs text-text-muted">Fraude Perdida (Fraude como Normal)</p>
+                        </div>
+                        <div class="bg-bg-surface p-4 rounded border border-green-500/30">
+                            <p class="text-green-400 font-bold">Verdadeiro Positivo (VP)</p>
+                            <p class="text-xs text-text-muted">Fraude classificada como Fraude</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h3 class="text-xl mb-4 text-primary font-bold">As Métricas Reais</h3>
+                    <div class="space-y-4">
+                        <div class="bg-bg-surface p-4 rounded">
+                            <h4 class="text-primary font-bold">Precision (Precisão)</h4>
+                            <p class="text-text-secondary text-sm">De todos que chamei de fraude, quantos eram realmente
+                                fraude?</p>
+                            <p class="text-text-muted font-mono text-xs mt-1">VP / (VP + FP)</p>
+                        </div>
+                        <div class="bg-bg-surface p-4 rounded">
+                            <h4 class="text-primary font-bold">Recall (Sensibilidade)</h4>
+                            <p class="text-text-secondary text-sm">De todas as fraudes que existem, quantas eu peguei?
+                            </p>
+                            <p class="text-text-muted font-mono text-xs mt-1">VP / (VP + FN)</p>
+                        </div>
+                        <div class="bg-bg-surface p-4 rounded">
+                            <h4 class="text-primary font-bold">F1-Score</h4>
+                            <p class="text-text-secondary text-sm">Média harmônica entre Precision e Recall.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Trade-off Precision vs Recall</h3>
+                    <p class="text-text-secondary leading-relaxed">
+                        Em detecção de fraudes, geralmente preferimos <strong>Alto Recall</strong> (pegar todas as
+                        fraudes), mesmo que isso gere alguns Falsos Positivos (bloquear cartão de cliente legítimo
+                        temporariamente).
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl mb-3 text-primary font-bold">Curvas de Avaliação</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+                            <h4 class="text-primary font-bold mb-2">ROC Curve</h4>
+                            <p class="text-sm text-text-secondary">Taxa de VP vs Taxa de FP.</p>
+                        </div>
+                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
+                            <h4 class="text-primary font-bold mb-2">PR Curve</h4>
+                            <p class="text-sm text-text-secondary">Precision vs Recall (Melhor para dados
+                                desbalanceados).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detecção de Anomalias - Métodos Estatísticos e Não Supervisionados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#38bdf8',
+                        'primary': '#38bdf8',
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .slide {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .slide:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);
+        }
+
+        .slide.active {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(56, 189, 248, 0.5);
+            border: 2px solid #38bdf8;
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+
+    <!-- Container principal com grid responsivo -->
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl md:text-5xl text-center mb-8 text-primary font-bold">Detecção de Anomalias</h1>
+        <p class="text-xl text-center mb-12 text-text-secondary">Métodos Estatísticos e Não Supervisionados para
+            Identificação de Padrões Atípicos</p>
+
+        <!-- Grid de slides interativos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Slide 1: Título Principal -->
+            <div
+                class="slide bg-bg-elevated rounded-2xl p-8 flex flex-col justify-center items-center text-center border-2 border-primary/20 hover:border-primary/50">
+                <h2 class="text-3xl mb-4 text-primary font-bold">Detecção de Anomalias</h2>
+                <p class="text-lg text-text-secondary">Estatística e Machine Learning</p>
+                <p class="text-sm mt-4 text-text-muted">Do Z-Score ao Deep Learning</p>
+                <a href="index.html"
+                    class="mt-6 text-sm text-text-muted hover:text-white transition-colors border border-bg-muted px-4 py-2 rounded-full">←
+                    Voltar ao Menu Principal</a>
+            </div>
+
+            <!-- Slide 2: Básico que Funciona -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-green-400/20 hover:border-green-400/50">
+                <h3 class="text-xl mb-4 text-green-400 font-bold">Básico que Funciona</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirDefinicaoOutliers()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-green-400/50 group-hover:text-green-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-text-secondary">Definição de Outliers</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group" onclick="abrirZScore()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-green-400/50 group-hover:text-green-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Método Z-Score (Desvio Padrão)</p>
+                    </div>
+
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group" onclick="abrirIQR()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-green-400/50 group-hover:text-green-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                        <p class="text-text-secondary">Método IQR e Boxplots</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirMediaMovel()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-green-400/50 group-hover:text-green-400 transition-colors"
+                            fill="none" height="64px" width="64px" version="1.1" id="Capa_1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="-49.01 -49.01 588.12 588.12" xml:space="preserve" stroke="currentColor"
+                            transform="rotate(-45)matrix(1, 0, 0, -1, 0, 0)" stroke-width="37.737700000000004">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"
+                                transform="translate(61.26249999999999,61.26249999999999), scale(0.75)"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"
+                                stroke="currentColor" stroke-width="5.8812"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M194.5,324.35l15-24.2c3.6-5.8,1.8-13.3-4-16.9c-5.7-3.6-13.3-1.8-16.9,4l-15,24.2c-27.2,43.9-66,69.1-106.6,69.1H12.2 c-6.8,0-12.2,5.5-12.2,12.3s5.5,12.3,12.2,12.3h54.9C116.4,404.95,162.8,375.55,194.5,324.35z">
+                                        </path>
+                                        <path
+                                            d="M486.4,88.75L427,29.25c-4.8-4.8-12.5-4.8-17.3,0s-4.8,12.5,0,17.3l38.6,38.6c-0.1,0-0.1,0-0.2,0h-56.7 c-49.2,0-95.7,29.4-127.4,80.6l-9.2,14.9c-3.6,5.8-1.8,13.3,4,16.9c2,1.2,4.2,1.8,6.4,1.8c4.1,0,8.1-2.1,10.4-5.8l9.2-14.9 c27.2-43.9,66-69,106.6-69H448c0.1,0,0.1,0,0.2,0l-38.6,38.6c-4.8,4.8-4.8,12.5,0,17.3c2.4,2.4,5.5,3.6,8.7,3.6s6.3-1.2,8.7-3.6 l59.5-59.5C491.2,101.25,491.2,93.45,486.4,88.75z M460.3,97.55c0-0.1,0-0.1,0-0.2s0-0.1,0-0.2l0.2,0.2L460.3,97.55z">
+                                        </path>
+                                        <path
+                                            d="M409.6,460.85c2.4,2.4,5.5,3.6,8.7,3.6s6.3-1.2,8.7-3.6l59.5-59.5c4.8-4.8,4.8-12.5,0-17.3l-59.5-59.4 c-4.8-4.8-12.5-4.8-17.3,0s-4.8,12.5,0,17.3l38.6,38.6c-0.1,0-0.1,0-0.2,0h-54.9c-40.5,0-79.4-25.2-106.6-69.1l-90.2-145.7 c-31.7-51.3-78.2-80.6-127.4-80.6H12.2c-6.8,0-12.2,5.5-12.2,12.3s5.5,12.3,12.2,12.3h56.7c40.5,0,79.4,25.2,106.6,69l90.2,145.7 c31.7,51.3,78.2,80.7,127.4,80.7H448c0.1,0,0.1,0,0.2,0l-38.6,38.6C404.9,448.35,404.9,456.05,409.6,460.85z M460.3,392.55 l0.2,0.2l-0.2,0.2c0-0.1,0-0.1,0-0.2S460.3,392.65,460.3,392.55z">
+                                        </path>
+                                        <path
+                                            d="M476.25,464.7H13.05c-6.8,0-12.3,5.5-12.3,12.3s5.5,12.3,12.3,12.3h463.2c6.8,0,12.3-5.5,12.3-12.3 S483.05,464.7,476.25,464.7z">
+                                        </path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                        <p class="text-text-secondary">Método Média Movel</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirPoisson()">
+
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-green-400/50 group-hover:text-green-400 transition-colors"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="61px"
+                            zoomAndPan="magnify" viewBox="0 0 45.75 30.750001" height="41px"
+                            preserveAspectRatio="xMidYMid meet" version="1.0">
+                            <defs>
+                                <clipPath id="c11ba9081f">
+                                    <path
+                                        d="M 0.0585938 0 L 45.441406 0 L 45.441406 30.503906 L 0.0585938 30.503906 Z M 0.0585938 0 "
+                                        clip-rule="nonzero" />
+                                </clipPath>
+                                <clipPath id="4cba0f44fa">
+                                    <path d="M 0.0585938 28 L 45 28 L 45 30 L 0.0585938 30 Z M 0.0585938 28 "
+                                        clip-rule="nonzero" />
+                                </clipPath>
+                                <clipPath id="f8aaf45dd2">
+                                    <path d="M 43 28 L 45.441406 28 L 45.441406 30 L 43 30 Z M 43 28 "
+                                        clip-rule="nonzero" />
+                                </clipPath>
+                                <clipPath id="42b1dac62f">
+                                    <path d="M 0.0585938 1 L 2 1 L 2 30 L 0.0585938 30 Z M 0.0585938 1 "
+                                        clip-rule="nonzero" />
+                                </clipPath>
+                                <clipPath id="58f5856dd4">
+                                    <path d="M 0.0585938 1 L 2 1 L 2 2 L 0.0585938 2 Z M 0.0585938 1 "
+                                        clip-rule="nonzero" />
+                                </clipPath>
+                                <clipPath id="a5bb7e78e9">
+                                    <path d="M 0.0585938 0 L 2 0 L 2 3 L 0.0585938 3 Z M 0.0585938 0 "
+                                        clip-rule="nonzero" />
+                                </clipPath>
+                                <clipPath id="ed75d60274">
+                                    <rect x="0" width="46" y="0" height="31" />
+                                </clipPath>
+                            </defs>
+                            <g clip-path="url(#c11ba9081f)">
+                                <g transform="matrix(1, 0, 0, 1, 0.000000000000000007, 0.000000000000002089)">
+                                    <g clip-path="url(#ed75d60274)"fill="#325304" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                        <path 
+                                            d="M 1.609375 14.273438 L 1.925781 13.4375 L 2.75 13.746094 L 2.433594 14.585938 Z M 2.242188 12.617188 L 2.578125 11.789062 L 3.394531 12.117188 L 3.0625 12.949219 Z M 2.917969 10.972656 L 3.269531 10.15625 L 4.078125 10.507812 L 3.726562 11.324219 Z M 3.636719 9.34375 L 4.011719 8.546875 L 4.808594 8.925781 L 4.433594 9.71875 Z M 4.414062 7.742188 C 4.550781 7.46875 4.6875 7.207031 4.824219 6.957031 L 5.601562 7.375 C 5.464844 7.621094 5.332031 7.878906 5.199219 8.140625 Z M 5.261719 6.179688 C 5.417969 5.910156 5.574219 5.652344 5.730469 5.40625 L 6.472656 5.875 C 6.324219 6.113281 6.175781 6.363281 6.023438 6.621094 Z M 6.226562 4.652344 C 6.410156 4.394531 6.589844 4.152344 6.769531 3.925781 L 7.460938 4.472656 C 7.292969 4.683594 7.121094 4.914062 6.949219 5.15625 Z M 7.363281 3.226562 C 7.589844 2.988281 7.8125 2.773438 8.035156 2.582031 L 8.605469 3.253906 C 8.410156 3.421875 8.210938 3.613281 8.007812 3.828125 Z M 8.804688 2.027344 C 9.109375 1.847656 9.414062 1.714844 9.71875 1.628906 L 9.953125 2.476562 C 9.726562 2.539062 9.492188 2.644531 9.253906 2.785156 Z M 10.742188 1.523438 C 11.078125 1.550781 11.40625 1.636719 11.734375 1.785156 L 11.367188 2.589844 C 11.136719 2.484375 10.902344 2.421875 10.671875 2.402344 Z M 12.570312 2.3125 C 12.804688 2.5 13.03125 2.722656 13.253906 2.972656 L 12.59375 3.558594 C 12.402344 3.339844 12.210938 3.15625 12.015625 3 Z M 13.828125 3.703125 C 13.992188 3.941406 14.160156 4.199219 14.324219 4.472656 L 13.5625 4.921875 C 13.414062 4.667969 13.261719 4.429688 13.105469 4.210938 Z M 14.761719 5.269531 C 14.894531 5.523438 15.023438 5.796875 15.15625 6.082031 L 14.355469 6.449219 C 14.230469 6.175781 14.101562 5.917969 13.976562 5.671875 Z M 15.515625 6.910156 C 15.625 7.175781 15.734375 7.449219 15.84375 7.734375 L 15.019531 8.050781 C 14.914062 7.773438 14.808594 7.503906 14.703125 7.246094 Z M 16.152344 8.570312 C 16.246094 8.84375 16.34375 9.128906 16.441406 9.417969 L 15.601562 9.695312 C 15.507812 9.410156 15.414062 9.132812 15.320312 8.863281 Z M 16.710938 10.261719 C 16.792969 10.539062 16.878906 10.820312 16.964844 11.113281 L 16.117188 11.359375 C 16.035156 11.074219 15.953125 10.792969 15.867188 10.523438 Z M 17.210938 11.972656 L 17.4375 12.816406 L 16.585938 13.046875 L 16.359375 12.203125 Z M 17.660156 13.691406 L 17.867188 14.535156 L 17.011719 14.746094 L 16.804688 13.902344 Z M 18.074219 15.414062 L 18.265625 16.261719 L 17.40625 16.457031 L 17.214844 15.605469 Z M 18.457031 17.136719 L 18.636719 17.992188 L 17.773438 18.175781 L 17.59375 17.316406 Z M 18.8125 18.863281 L 18.898438 19.3125 L 18.035156 19.484375 L 17.949219 19.035156 Z M 18.8125 18.863281 "
+                                             />
+                                        <g clip-path="url(#4cba0f44fa)">
+                                            <path 
+                                                transform="matrix(0.0979202, -0.000000000000000036, 0.000000000000000036, 0.0979202, 0.843845, 28.645791)"
+                                               
+                                                d="M -0.000968051 1.981739 L 440.927213 1.981739 " 
+                                                />
+                                        </g>
+                                        <path 
+                                            d="M 44.117188 28.253906 L 44.902344 28.839844 L 44.117188 29.429688 Z M 44.117188 28.253906 "
+                                             />
+                                        <g clip-path="url(#f8aaf45dd2)">
+                                            <path 
+                                                transform="matrix(0.0979202, -0.000000000000000036, 0.000000000000000036, 0.0979202, 0.843845, 28.645791)"
+                                                
+                                                d="M 441.924517 -4.002087 L 449.942844 1.981739 L 441.924517 8.005457 Z M 441.924517 -4.002087 "
+                                                 
+                                               />
+                                        </g>
+                                        <g clip-path="url(#42b1dac62f)">
+                                            <path 
+                                               
+                                                 transform="matrix(0, -0.0979202, 0.0979202, 0, 0.647523, 28.841151)"
+                                                d="M 0.0133525 2.003946 L 274.232145 2.003946 " 
+                                                 />
+                                        </g>
+                                        <g clip-path="url(#58f5856dd4)">
+                                            
+                                                d="M 0.253906 1.890625 L 0.84375 1.105469 L 1.429688 1.890625 Z M 0.253906 1.890625 "
+                                                 />
+                                        </g>
+                                        <g clip-path="url(#a5bb7e78e9)">
+                                            <path s
+                                                transform="matrix(0, -0.0979202, 0.0979202, 0, 0.647523, 28.841151)"
+                                                 
+                                                d="M 275.22945 -4.019772 L 283.247776 2.003946 L 275.22945 7.987771 Z M 275.22945 -4.019772 "
+                                                 stroke-width="8" 
+                                                stroke-miterlimit="8" />
+                                        </g>
+                                        <path 
+                                            d="M 18.890625 19.128906 C 18.96875 19.386719 19.066406 19.636719 19.1875 19.878906 L 18.394531 20.269531 C 18.253906 19.980469 18.136719 19.6875 18.046875 19.382812 Z M 19.601562 20.574219 C 19.753906 20.792969 19.925781 21.003906 20.117188 21.207031 L 19.476562 21.808594 C 19.253906 21.574219 19.058594 21.332031 18.878906 21.082031 Z M 20.71875 21.773438 C 20.925781 21.945312 21.148438 22.117188 21.386719 22.28125 L 20.886719 23.007812 C 20.625 22.828125 20.378906 22.640625 20.152344 22.449219 Z M 22.113281 22.734375 C 22.347656 22.867188 22.59375 23 22.855469 23.125 L 22.46875 23.917969 C 22.191406 23.78125 21.925781 23.644531 21.675781 23.5 Z M 23.632812 23.476562 C 23.894531 23.585938 24.164062 23.691406 24.445312 23.796875 L 24.144531 24.625 C 23.847656 24.515625 23.566406 24.40625 23.292969 24.289062 Z M 25.25 24.070312 C 25.523438 24.15625 25.804688 24.242188 26.09375 24.324219 L 25.851562 25.171875 C 25.554688 25.085938 25.261719 25 24.980469 24.910156 Z M 26.917969 24.542969 C 27.195312 24.613281 27.484375 24.679688 27.777344 24.746094 L 27.585938 25.605469 C 27.285156 25.539062 26.992188 25.46875 26.703125 25.398438 Z M 28.617188 24.921875 C 28.902344 24.976562 29.191406 25.03125 29.488281 25.082031 L 29.339844 25.949219 C 29.035156 25.898438 28.738281 25.84375 28.445312 25.785156 Z M 30.332031 25.222656 L 31.214844 25.351562 L 31.085938 26.222656 L 30.203125 26.09375 Z M 32.066406 25.460938 L 32.941406 25.5625 L 32.839844 26.4375 L 31.964844 26.335938 Z M 33.8125 25.648438 L 34.679688 25.726562 L 34.605469 26.601562 L 33.738281 26.527344 Z M 35.5625 25.792969 L 36.433594 25.847656 L 36.375 26.726562 L 35.503906 26.671875 Z M 37.300781 25.898438 L 38.195312 25.9375 L 38.15625 26.816406 L 37.261719 26.777344 Z M 39.058594 25.96875 L 39.9375 25.996094 L 39.910156 26.875 L 39.03125 26.851562 Z M 40.824219 26.011719 L 41.695312 26.023438 L 41.683594 26.90625 L 40.8125 26.894531 Z M 42.566406 26.03125 L 43.460938 26.03125 L 43.460938 26.914062 L 42.566406 26.914062 Z M 42.566406 26.03125 "
+                                            />
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                        <p class="text-text-secondary">Método Poisson</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Distância e Densidade -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-blue-400/20 hover:border-blue-400/50">
+                <h3 class="text-xl mb-4 text-blue-400 font-bold">Distância e Densidade</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group" onclick="abrirKNN()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-blue-400/50 group-hover:text-blue-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <p class="text-text-secondary">K-Nearest Neighbors (KNN)</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group" onclick="abrirDBSCAN()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-blue-400/50 group-hover:text-blue-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">DBSCAN (Clustering)</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group" onclick="abrirLOF()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-blue-400/50 group-hover:text-blue-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <p class="text-text-secondary">Local Outlier Factor (LOF)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Ensemble e Árvores -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-yellow-400/20 hover:border-yellow-400/50">
+                <h3 class="text-xl mb-2 text-yellow-400 font-bold">Ensemble e Árvores</h3>
+                <p class="text-xs text-yellow-200/70 mb-4 uppercase tracking-wider">O "Padrão Ouro" para Big Data</p>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirIsolationForest()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-yellow-400/50 group-hover:text-yellow-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                        <p class="text-text-secondary">Isolation Forest</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirOneClassSVM()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-yellow-400/50 group-hover:text-yellow-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-text-secondary">One-Class SVM</p>
+                    </div>
+                </div>
+                <div class="mt-4 p-3 bg-yellow-400/10 rounded-lg">
+                    <p class="text-xs text-yellow-200 text-center">Robustez para grandes volumes de dados</p>
+                </div>
+            </div>
+
+            <!-- Slide 5: PyOD e Engenharia -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-purple-400/20 hover:border-purple-400/50">
+                <h3 class="text-xl mb-4 text-purple-400 font-bold">Biblioteca PyOD</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirIntroPyOD()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-purple-400/50 group-hover:text-purple-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                        <p class="text-text-secondary">Introdução ao PyOD</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirFeatureEngineering()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-purple-400/50 group-hover:text-purple-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Feature Engineering</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirAvaliacaoModelos()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-purple-400/50 group-hover:text-purple-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-text-secondary">Avaliação de Modelos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Padrões Atípicos -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-pink-400/20 hover:border-pink-400/50">
+                <h3 class="text-xl mb-4 text-pink-400 font-bold">Padrões Atípicos</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirLeiBenford()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-pink-400/50 group-hover:text-pink-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Lei de Benford</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirAnaliseRedes()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-pink-400/50 group-hover:text-pink-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Análise de Redes (Grafos)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Detecção de Fraudes -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-red-500/20 hover:border-red-500/50">
+                <h3 class="text-xl mb-4 text-red-500 font-bold">Detecção de Fraudes</h3>
+                <p class="text-xs text-red-300/70 mb-4 uppercase tracking-wider">Aprendizado Supervisionado</p>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirDadosDesbalanceados()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-red-500/50 group-hover:text-red-500 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Dados Desbalanceados</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirTecnicasAmostragem()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-red-500/50 group-hover:text-red-500 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Técnicas de Amostragem</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirAlgoritmosArvore()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-red-500/50 group-hover:text-red-500 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Algoritmos de Árvore</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="abrirMetricasAvaliacao()">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-red-500/50 group-hover:text-red-500 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Métricas de Avaliação</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript para interatividade -->
+    <script>
+        // Funções de navegação
+        function abrirDefinicaoOutliers() {
+            window.location.href = 'pages/anomalia/definicao-outliers.html';
+        }
+
+        function abrirZScore() {
+            window.location.href = 'pages/anomalia/z-score.html';
+        }
+
+        function abrirIQR() {
+            window.location.href = 'pages/anomalia/iqr.html';
+        }
+        function abrirMediaMovel() {
+            window.location.href = 'pages/anomalia/media-movel.html';
+        }
+        function abrirPoisson() {
+            window.location.href = 'pages/anomalia/poisson.html';
+        }
+
+        function abrirKNN() {
+            window.location.href = 'pages/anomalia/knn.html';
+        }
+
+        function abrirDBSCAN() {
+            window.location.href = 'pages/anomalia/dbscan.html';
+        }
+
+        function abrirLOF() {
+            window.location.href = 'pages/anomalia/lof.html';
+        }
+
+        function abrirIsolationForest() {
+            window.location.href = 'pages/anomalia/isolation-forest.html';
+        }
+
+        function abrirOneClassSVM() {
+            window.location.href = 'pages/anomalia/one-class-svm.html';
+        }
+
+        function abrirIntroPyOD() {
+            window.location.href = 'pages/anomalia/intro-pyod.html';
+        }
+
+        function abrirFeatureEngineering() {
+            window.location.href = 'pages/anomalia/feature-engineering.html';
+        }
+
+        function abrirAvaliacaoModelos() {
+            window.location.href = 'pages/anomalia/avaliacao-modelos.html';
+        }
+
+        function abrirLeiBenford() {
+            window.location.href = 'pages/anomalia/lei-benford.html';
+        }
+
+        function abrirAnaliseRedes() {
+            window.location.href = 'pages/anomalia/analise-redes.html';
+        }
+
+        function abrirDadosDesbalanceados() {
+            window.location.href = 'pages/anomalia/dados-desbalanceados.html';
+        }
+
+        function abrirTecnicasAmostragem() {
+            window.location.href = 'pages/anomalia/tecnicas-amostragem.html';
+        }
+
+        function abrirAlgoritmosArvore() {
+            window.location.href = 'pages/anomalia/algoritmos-arvore.html';
+        }
+
+        function abrirMetricasAvaliacao() {
+            window.location.href = 'pages/anomalia/metricas-avaliacao.html';
+        }
+
+
+        // Adicionar interatividade aos elementos clicáveis
+        document.addEventListener('DOMContentLoaded', function () {
+            const clickableElements = document.querySelectorAll('.element-clickable, .slide');
+
+            clickableElements.forEach(element => {
+                element.addEventListener('click', function (e) {
+                    // Evitar propagação se clicar em um link interno
+                    if (e.target.tagName === 'A') return;
+
+                    // Adicionar efeito visual de clique
+                    this.style.transform = 'scale(0.98)';
+                    this.style.backgroundColor = 'rgba(56, 189, 248, 0.2)';
+
+                    // Remover efeito após um tempo
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.backgroundColor = '';
+                    }, 200);
+                });
+            });
+
+            // Adicionar navegação por teclado
+            document.addEventListener('keydown', function (e) {
+                const slides = document.querySelectorAll('.slide');
+                const activeSlide = document.querySelector('.slide.active');
+                let currentIndex = Array.from(slides).indexOf(activeSlide);
+
+                // Se nenhum slide estiver ativo, ativar o primeiro
+                if (currentIndex === -1 && slides.length > 0) {
+                    currentIndex = 0;
+                }
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                }
+
+                if (currentIndex >= 0) {
+                    slides.forEach(slide => slide.classList.remove('active'));
+                    slides[currentIndex].classList.add('active');
+
+                    // Scroll para o elemento se necessário
+                    slides[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

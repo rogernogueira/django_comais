@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Engineering - Inteligência Policial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-purple': '#c084fc',  // Purple 400 (Forensics/Insight)
+                        'intel-dark': '#7e22ce',    // Purple 700
+                        'intel-danger': '#ef4444',  // Red 500
+                        'intel-success': '#10b981', // Green 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+        /* Grid pattern background for tech feel */
+        .tech-bg {
+            background-image: radial-gradient(#334155 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6 bg-bg-base/90 backdrop-blur">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-purple/10 hover:bg-intel-purple/20 text-intel-purple p-3 rounded-lg transition-all" onclick="history.back()">
+                    ← 
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-intel-purple tracking-tight">Feature Engineering</h1>
+                    <p class="text-text-muted mt-1">A Arte de Traduzir Dados em Features</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                <div class="absolute top-4 right-4 text-xs font-mono text-intel-purple">TRANSFORMAÇÃO DE DADOS</div>
+                
+                <svg aria-label="Feature Engineering Process" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <text x="80" y="40" fill="#94a3b8" font-size="12" font-weight="bold" text-anchor="middle">DADOS BRUTOS (B.O.)</text>
+                    
+                    <g transform="translate(30, 60)">
+                        <rect width="100" height="40" fill="#334155" rx="4"></rect>
+                        <text x="50" y="25" fill="#cbd5e1" font-size="10" text-anchor="middle">2023-10-27 03:00</text>
+                    </g>
+                    <g transform="translate(30, 110)">
+                        <rect width="100" height="40" fill="#334155" rx="4"></rect>
+                        <text x="50" y="25" fill="#cbd5e1" font-size="10" text-anchor="middle">R$ 50.000,00</text>
+                    </g>
+                    <g transform="translate(30, 160)">
+                        <rect width="100" height="40" fill="#334155" rx="4"></rect>
+                        <text x="50" y="25" fill="#cbd5e1" font-size="10" text-anchor="middle">Rua X, nº 10</text>
+                    </g>
+
+                    <circle cx="250" cy="130" r="30" fill="none" stroke="#c084fc" stroke-width="2" stroke-dasharray="4 2" class="animate-spin-slow"></circle>
+                    <text x="250" y="135" fill="#c084fc" font-size="20" text-anchor="middle">⚙️</text>
+                    <text x="250" y="180" fill="#c084fc" font-size="10" text-anchor="middle">ENGENHARIA</text>
+
+                    <line x1="140" y1="130" x2="210" y2="130" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"></line>
+                    <line x1="290" y1="130" x2="360" y2="130" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"></line>
+
+                    <text x="420" y="40" fill="#c084fc" font-size="12" font-weight="bold" text-anchor="middle">FEATURES (CRIME)</text>
+
+                    <g transform="translate(370, 60)">
+                        <rect width="100" height="40" fill="#c084fc" fill-opacity="0.2" stroke="#c084fc" rx="4"></rect>
+                        <text x="50" y="25" fill="#fff" font-size="10" text-anchor="middle">Is_Madrugada = 1</text>
+                    </g>
+                    <g transform="translate(370, 110)">
+                        <rect width="100" height="40" fill="#c084fc" fill-opacity="0.2" stroke="#c084fc" rx="4"></rect>
+                        <text x="50" y="25" fill="#fff" font-size="10" text-anchor="middle">Ratio_vs_Renda = 10x</text>
+                    </g>
+                    <g transform="translate(370, 160)">
+                        <rect width="100" height="40" fill="#c084fc" fill-opacity="0.2" stroke="#c084fc" rx="4"></rect>
+                        <text x="50" y="25" fill="#fff" font-size="10" text-anchor="middle">Dist_Cracolandia = 50m</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-intel-purple mb-3">O Algoritmo é "Cego"</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Para uma IA, "03:00 da manhã" é apenas um número. Ela não sabe que esse horário é crítico para roubos e suspeito para transferências bancárias.
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-purple pl-4">
+                        <strong>Feature Engineering</strong> é quando o analista ensina o computador a pensar como um detetive. Transformamos dados brutos em <em>indicadores de suspeita</em>.
+                    </p>
+                </div>
+
+                <div class="bg-bg-surface p-4 rounded border border-gray-700">
+                    <h4 class="text-sm font-bold text-intel-purple mb-2">Exemplo Clássico: Laranjas</h4>
+                    <p class="text-xs text-gray-400">
+                        O dado bruto <strong>"Idade: 19 anos"</strong> não diz nada.
+                        <br>O dado bruto <strong>"Sócio de Empresa LTDA"</strong> não diz nada.
+                        <br>A Feature criada <strong>"Idade_Socio < 21 AND Capital_Social > 1 Milhão"</strong> grita fraude.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-lg font-bold text-intel-purple  mb-2">1. Temporal (Janelas de Tempo)</h3>
+                <p class="text-sm text-gray-400 mb-4">Crimes são sequenciais. O passado recente importa.</p>
+                <div class="bg-black/30 p-3 rounded text-center">
+                    <p class="text-intel-purple text-xs font-mono">DELTA TIME</p>
+                    <p class="text-white math-font">Δt = t_atual - t_ultimo_crime</p>
+                </div>
+                <p class="text-xs text-gray-500 mt-2"><strong>Uso:</strong> Detectar "Cooling off" (resfriamento) em Serial Killers ou velocidade impossível em transações.</p>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-lg font-bold text-intel-purple mb-2">2. Razões e Proporções</h3>
+                <p class="text-sm text-gray-400 mb-4">Valores absolutos enganam. O relativo revela.</p>
+                <div class="bg-black/30 p-3 rounded text-center">
+                    <p class="text-intel-purple text-xs font-mono">RATIO DE GASTOS</p>
+                    <p class="text-white math-font">R = Valor_Transação / Média_Mensal</p>
+                </div>
+                <p class="text-xs text-gray-500 mt-2"><strong>Uso:</strong> Lavagem de dinheiro. Se R > 5, o desvio é significativo para aquele perfil.</p>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-lg font-bold text-intel-purple mb-2">3. Geo-Espacial</h3>
+                <p class="text-sm text-gray-400 mb-4">Onde o crime ocorre em relação a pontos de interesse.</p>
+                <div class="bg-black/30 p-3 rounded text-center">
+                    <p class="text-intel-purple text-xs font-mono">DISTÂNCIA DE RISCO</p>
+                    <p class="text-white math-font">d = Haversine(Local_Crime, Ponto_Tráfico)</p>
+                </div>
+                <p class="text-xs text-gray-500 mt-2"><strong>Uso:</strong> Verificar se roubos estão concentrados perto de rotas de fuga ou desmanches.</p>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 rounded-xl border-l-4 border-intel-purple">
+            <h2 class="text-2xl font-bold text-intel-purple mb-4">Antes e Depois: Detecção de Clonagem de Veículo</h2>
+            <p class="text-text-secondary mb-4 text-sm">
+                O objetivo é detectar placas clonadas usando leitores de OCR (LPR). O dado bruto sozinho não detecta nada. A feature <strong>"Velocidade Média entre Leituras"</strong> resolve o crime.
+            </p>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs text-left">
+                    <thead class="bg-gray-800 text-gray-400">
+                        <tr>
+                            <th class="p-3">Placa (Bruto)</th>
+                            <th class="p-3">Local (Bruto)</th>
+                            <th class="p-3">Hora (Bruto)</th>
+                            <th class="p-3 bg-intel-purple/10 text-intel-purple">Distância (Engenharia)</th>
+                            <th class="p-3 bg-intel-purple/10 text-intel-purple">Delta Tempo (Engenharia)</th>
+                            <th class="p-3 bg-intel-purple/20 text-white font-bold">Velocidade Calculada</th>
+                            <th class="p-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300">
+                        <tr class="border-b border-gray-700">
+                            <td class="p-3">ABC-1234</td>
+                            <td class="p-3">Radar A (SP)</td>
+                            <td class="p-3">14:00</td>
+                            <td class="p-3 text-gray-500">-</td>
+                            <td class="p-3 text-gray-500">-</td>
+                            <td class="p-3 text-gray-500">-</td>
+                            <td class="p-3"><span class="text-gray-500">1ª Leitura</span></td>
+                        </tr>
+                        <tr class="bg-intel-danger/10 border-l-2 border-intel-danger animate-pulse">
+                            <td class="p-3 font-bold text-white">ABC-1234</td>
+                            <td class="p-3">Radar B (RJ)</td>
+                            <td class="p-3">14:30</td>
+                            <td class="p-3 font-mono text-intel-purple">400 km</td>
+                            <td class="p-3 font-mono text-intel-purple">0.5 horas</td>
+                            <td class="p-3 font-mono text-intel-danger font-bold text-lg">800 km/h</td>
+                            <td class="p-3"><span class="bg-intel-danger text-white px-2 py-1 rounded font-bold">CLONE</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-2 text-xs text-gray-500">*A velocidade de 800km/h é fisicamente impossível. Logo, existem dois carros com a mesma placa em locais diferentes simultaneamente.</p>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-intel-danger/10 border border-intel-danger/20 p-5 rounded-lg">
+                <h3 class="text-intel-danger font-bold mb-2">⚠ Data Leakage (Vazamento)</h3>
+                <p class="text-sm text-gray-300">
+                    O erro mais comum. Ex: Criar uma feature "Total de Crimes do Suspeito" que inclui o crime que você está tentando prever agora.
+                    <br><strong>Regra:</strong> A feature só pode usar dados conhecidos <em>antes</em> do evento ocorrer.
+                </p>
+            </div>
+            <div class="bg-intel-purple/10 border border-intel-purple/20 p-5 rounded-lg">
+                <h3 class="text-intel-purple font-bold mb-2">⚠ Maldição da Dimensionalidade</h3>
+                <p class="text-sm text-gray-300">
+                    Criar features demais (ex: "Crime ocorreu na chuva?", "Lua cheia?", "Dia par?") confunde o modelo e exige mais dados.
+                    <br><strong>Regra:</strong> Mantenha apenas features que tenham lógica criminológica.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-intel-purple mb-6">Casos de Uso Reais</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-default">
+                    <div class="text-3xl mb-2">🏚️</div>
+                    <h3 class="font-bold text-white">Violência Doméstica</h3>
+                    <p class="text-sm text-gray-400 mt-2">
+                        <strong>Feature:</strong> `Frequência_Chamadas_Endereco`.
+                        <br>Se um endereço tem 3 chamadas em 30 dias, a probabilidade de feminicídio dispara (Escalada da Violência).
+                    </p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-default">
+                    <div class="text-3xl mb-2">💼</div>
+                    <h3 class="font-bold text-white">Fraude em Licitações</h3>
+                    <p class="text-sm text-gray-400 mt-2">
+                        <strong>Feature:</strong> `Delta_Preco_Vencedor_vs_Segundo`.
+                        <br>Se o vencedor ganha sempre por uma diferença de centavos (0.01%), é indício de conluio/ajuste prévio.
+                    </p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-default">
+                    <div class="text-3xl mb-2">🌐</div>
+                    <h3 class="font-bold text-white">Crimes Cibernéticos</h3>
+                    <p class="text-sm text-gray-400 mt-2">
+                        <strong>Feature:</strong> `Entropia_Nome_Dominio`.
+                        <br>Sites legítimos (google.com) têm baixa entropia. Sites de phishing (ax7-b99-login.com) têm alta entropia (aleatoriedade).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

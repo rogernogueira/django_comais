@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One-Class SVM </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'text-accent': '#facc15',   // Yellow 400 (Alert)
+                        'primary': '#facc15',
+                        'intel-blue': '#3b82f6',    // Blue 500 (Police/Tech)
+                        'intel-red': '#ef4444',     // Red 500 (Danger)
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        /* Efeito de vidro para os cards */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all" onclick="history.back()">
+                    ← Voltar
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-primary tracking-tight">One-Class SVM</h1>
+                    <p class="text-text-muted mt-1">Support Vector Machines para Detecção de Anomalias</p>
+                </div>
+            </div>
+          
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                <div class="absolute top-4 right-4 text-xs font-mono text-gray-500">FRONTEIRA DE DECISÃO NÃO-LINEAR</div>
+                <svg aria-label="One-Class SVM Concept" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <path d="M 150 150 Q 200 50 350 150 T 150 150" fill="rgba(59, 130, 246, 0.1)" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,5"></path>
+                    
+                    <circle cx="200" cy="140" r="3" fill="#3b82f6" opacity="0.8"></circle>
+                    <circle cx="220" cy="130" r="3" fill="#3b82f6" opacity="0.8"></circle>
+                    <circle cx="210" cy="150" r="3" fill="#3b82f6" opacity="0.8"></circle>
+                    <circle cx="250" cy="120" r="3" fill="#3b82f6" opacity="0.8"></circle>
+                    <circle cx="280" cy="140" r="3" fill="#3b82f6" opacity="0.8"></circle>
+                    
+                    <circle cx="400" cy="250" r="6" fill="#ef4444" class="animate-pulse"></circle>
+                    <line x1="280" y1="140" x2="400" y2="250" stroke="#64748b" stroke-width="1" stroke-dasharray="2,2"></line>
+                    <text x="380" y="280" fill="#ef4444" font-size="12" font-weight="bold">ANOMALIA DETECTADA</text>
+
+                    <text x="220" y="100" fill="#3b82f6" font-size="12">Perfil de Normalidade</text>
+                </svg>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-primary mb-3">Conceito: O "Círculo de Confiança"</h3>
+                    <p class="text-text-secondary leading-relaxed">
+                        Ao contrário de algoritmos que aprendem o que é fraude (Supervisionado), o OCSVM aprende <strong>apenas o que é normal</strong>. Ele desenha uma fronteira matemática "apertada" ao redor dos dados de rotina.
+                    </p>
+                    <p class="text-text-secondary mt-4 leading-relaxed border-l-4 border-intel-blue pl-4">
+                        <strong>Analogia:</strong> Imagine monitorar a Corregedoria. Você treina o modelo apenas com acessos legítimos aos bancos de dados. Se um policial faz um acesso que cai "fora" dessa fronteira (ex: pesquisar um vizinho às 3 da manhã), o sistema alerta como uma <strong>Novidade</strong>, mesmo que nunca tenha visto esse tipo específico de infração antes.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-white mb-4">Como Funciona (Under the Hood)</h3>
+                <ol class="space-y-4 text-text-secondary">
+                    <li class="flex gap-4">
+                        <span class="bg-gray-700 text-white font-bold px-3 py-1 rounded h-fit">1</span>
+                        <div>
+                            <strong class="text-primary">Mapeamento (Kernel Trick):</strong>
+                            O algoritmo projeta os dados de crimes/ocorrências para uma dimensão superior onde é mais fácil separar a origem dos dados.
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="bg-gray-700 text-white font-bold px-3 py-1 rounded h-fit">2</span>
+                        <div>
+                            <strong class="text-primary">Hiperplano de Separação:</strong>
+                            Ele tenta encontrar um hiperplano que separe os dados de treino da "Origem" (zero), maximizando a distância.
+                        </div>
+                    </li>
+                </ol>
+                
+                <div class="mt-6 bg-black/30 p-4 rounded border border-gray-600">
+                    <p class="text-gray-400 text-sm mb-2">Função de Decisão (Simplificada):</p>
+                    <div class="text-xl text-center text-white math-font">
+                        f(x) = sgn( <span class="text-intel-blue">∑ αᵢ K(xᵢ, x)</span> - ρ )
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2 text-center">
+                        Se o resultado for positivo (+1), é Normal. Se for negativo (-1), é Anomalia/Crime.
+                        <br>K(x,x) é a função Kernel que mede similaridade entre o caso investigado e os casos normais.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700 flex flex-col justify-center">
+                <h3 class="text-lg font-bold text-white mb-4">Quando NÃO usar</h3>
+                <ul class="space-y-3 text-sm text-text-muted">
+                    <li class="flex items-start gap-2">
+                        <span class="text-intel-red">✖</span>
+                        <span><strong>Dados de Treino Sujos:</strong> Se seu histórico já contém muitos crimes misturados com rotina, o modelo vai achar que o crime é normal.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-intel-red">✖</span>
+                        <span><strong>Big Data Massivo:</strong> OCSVM é pesado (O(n³)). Não use para processar milhões de leituras de radar em tempo real.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-white mb-6">Parâmetros de Ajuste Fino</h2>
+            <div class="overflow-hidden rounded-xl border border-gray-700 shadow-lg">
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="bg-bg-elevated text-xs uppercase text-gray-200">
+                        <tr>
+                            <th class="px-6 py-4">Parâmetro</th>
+                            <th class="px-6 py-4">O que faz?</th>
+                            <th class="px-6 py-4 text-intel-blue">Regra de Bolso (Segurança)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800 bg-bg-surface">
+                        <tr class="hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 font-mono text-primary">nu (ν)</td>
+                            <td class="px-6 py-4">Limite superior de erros de treino. Define o quão "tolerante" o modelo é a anomalias no treino.</td>
+                            <td class="px-6 py-4">
+                                Para dados policiais "limpos", use <strong>0.01 a 0.05</strong>.
+                                <br><span class="text-xs text-gray-500">Significa: "Aceito que no máximo 1-5% da minha rotina possa ser ruído/anomalia".</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 font-mono text-primary">kernel</td>
+                            <td class="px-6 py-4">Tipo de projeção matemática ('rbf', 'linear', 'poly').</td>
+                            <td class="px-6 py-4">
+                                Use <strong>'rbf'</strong> (Radial Basis Function) para 90% dos casos. Padrões criminais raramente são lineares.
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 font-mono text-primary">gamma</td>
+                            <td class="px-6 py-4">Define a influência de cada ponto. Ajusta a "aderência" da fronteira.</td>
+                            <td class="px-6 py-4">
+                                <strong>'scale'</strong> (padrão) ou <strong>'auto'</strong>.
+                                <br><span class="text-xs text-gray-500">Se gamma for muito alto, ocorre Overfitting (o modelo decora a rotina e qualquer desvio mínimo gera alerta falso).</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 md:p-8 rounded-xl border-l-4 border-primary">
+            <h2 class="text-2xl font-bold text-white mb-4">Exemplo Prático: Auditoria de Sistemas (Corregedoria)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <p class="text-text-secondary mb-4">
+                        O objetivo é detectar <strong>abuso de acesso</strong>. Treinamos o OCSVM com 6 meses de logs de "bons policiais".
+                    </p>
+                    <div class="space-y-2 text-sm font-mono">
+                        <div class="bg-gray-900 p-2 rounded text-green-400 border border-green-900/30">
+                            [NORMAL] Agente: Silva | Hora: 14:00 | Consulta: Placa (Viatura em patrulha) | Resultado OCSVM: 1
+                        </div>
+                        <div class="bg-gray-900 p-2 rounded text-green-400 border border-green-900/30">
+                            [NORMAL] Agente: Silva | Hora: 15:30 | Consulta: CPF (Suspeito na delegacia) | Resultado OCSVM: 1
+                        </div>
+                        <div class="bg-gray-900 p-2 rounded text-red-400 border border-red-900/50 flex justify-between items-center animate-pulse">
+                            <span>[ANOMALIA] Agente: Silva | Hora: 03:15 | Consulta: CPF (Político Local)</span>
+                            <span class="font-bold">Resultado OCSVM: -1</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <p class="text-sm text-gray-400 italic">
+                        "O acesso das 03:15 foi marcado como anomalia (-1) porque combinou horário atípico com um perfil de consulta (Político) que não faz parte da rotina operacional treinada." 
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-white mb-6">3 Casos de Uso </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-muted/20 p-6 rounded-lg hover:bg-bg-muted/40 transition border border-transparent hover:border-primary">
+                    <div class="text-3xl mb-3">🕵️‍♂️</div>
+                    <h3 class="font-bold text-white mb-2">Contra-Inteligência</h3>
+                    <p class="text-sm text-text-secondary">Identificar espiões ou vazamento de informações monitorando padrões de tráfego de rede criptografada que desviam do padrão da agência.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-6 rounded-lg hover:bg-bg-muted/40 transition border border-transparent hover:border-primary">
+                    <div class="text-3xl mb-3">💣</div>
+                    <h3 class="font-bold text-white mb-2">Ameaças Terroristas</h3>
+                    <p class="text-sm text-text-secondary">Detectar compras de insumos (fertilizantes, eletrônicos) que, isoladamente são legais, mas juntos fogem do padrão de consumo civil.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-6 rounded-lg hover:bg-bg-muted/40 transition border border-transparent hover:border-primary">
+                    <div class="text-3xl mb-3">🏭</div>
+                    <h3 class="font-bold text-white mb-2">Segurança de Infraestrutura Crítica</h3>
+                    <p class="text-sm text-text-secondary">Monitorar sensores de hidrelétricas ou refinarias. O modelo aprende a vibração "normal" das máquinas e alerta sabotagens ou falhas inéditas.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

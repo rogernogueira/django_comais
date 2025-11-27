@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poisson - Análise de Eventos Raros</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',
+                        "primary": '#4ade80',  // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-purple': '#8b5cf6',  // Violet 500 (Statistical/Probabilistic)
+                        'intel-alert': '#f43f5e',   // Rose 500
+                        'intel-safe': '#10b981',    // Emerald 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+
+        .bar-anim {
+            transition: height 1s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">
+                    ←
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-primary tracking-tight">Distribuição de Poisson</h1>
+                    <p class="text-text-muted mt-1">Detecção de Anomalias em Eventos Raros e Contagens Baixas</p>
+                </div>
+            </div>
+
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div
+                class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative flex flex-col justify-end">
+                <div class="absolute top-4 left-4 text-xs font-mono text-primary">PROBABILIDADE DE OCORRÊNCIA (PMF)
+                </div>
+
+                <svg aria-label="Gráfico de Poisson" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <line x1="50" y1="250" x2="450" y2="250" stroke="#475569" stroke-width="2"></line>
+                    <line x1="50" y1="250" x2="50" y2="50" stroke="#475569" stroke-width="2"></line>
+
+                    <rect x="70" y="100" width="40" height="150" fill="#8b5cf6" opacity="0.4"></rect>
+                    <text x="85" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">0</text>
+
+                    <rect x="130" y="80" width="40" height="170" fill="#8b5cf6" opacity="0.6"></rect>
+                    <text x="145" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">1</text>
+                    <text x="150" y="70" fill="#fff" font-size="10" text-anchor="middle">Média (λ)</text>
+
+                    <rect x="190" y="150" width="40" height="100" fill="#8b5cf6" opacity="0.4"></rect>
+                    <text x="205" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">2</text>
+
+                    <rect x="250" y="200" width="40" height="50" fill="#8b5cf6" opacity="0.3"></rect>
+                    <text x="265" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">3</text>
+
+                    <rect x="310" y="230" width="40" height="20" fill="#8b5cf6" opacity="0.2"></rect>
+                    <text x="325" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">4</text>
+
+                    <rect x="370" y="240" width="40" height="10" fill="#f43f5e" class="animate-pulse"></rect>
+                    <text x="385" y="270" fill="#f43f5e" font-weight="bold" font-size="12"
+                        text-anchor="middle">5+</text>
+                    <text x="390" y="230" fill="#f43f5e" font-size="12" text-anchor="middle">Alerta</text>
+                </svg>
+                <p class="text-center text-xs text-gray-500 mt-2">Histograma: Ocorrências esperadas vs. Raras</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                    <h3 class="text-xl font-bold text-primary mb-3">A Lei dos Eventos Raros</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Diferente do Z-Score (que assume uma curva de sino perfeita), Poisson é ideal para contar coisas
+                        que <strong>raramente acontecem</strong>.
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-purple pl-4">
+                        <strong>Cenário:</strong> Seu distrito tem média de 0.5 Homicídios/semana.
+                        <br>Se nesta semana ocorrerem <strong>3 homicídios</strong>, o Z-Score pode falhar ou ser
+                        impreciso por causa dos muitos "zeros".
+                        <br>Poisson calcula a probabilidade exata: "Qual a chance de ter 3 mortes quando a média é
+                        0.5?". Se for < 1%, é uma anomalia grave. </p>
+                </div>
+            </div>
+        </div>
+
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-primary mb-6">A Matemática (Simplificada)</h2>
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="bg-black/40 p-6 rounded-lg border border-gray-600 min-w-[300px]">
+                    <p class="text-2xl text-center text-white math-font mb-4">
+                        P(k) = <span class="inline-block text-center align-middle">
+                            <span class="block border-b border-gray-400 pb-1">e<sup class="-mt-2">-λ</sup> •
+                                λ<sup>k</sup></span>
+                            <span class="block pt-1">k!</span>
+                        </span>
+                    </p>
+                    <p class="text-xs text-center text-gray-500">Probabilidade de ocorrerem exatamente k eventos</p>
+                </div>
+
+                <div class="space-y-4 flex-1 text-sm">
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="w-8 h-8 rounded bg-intel-purple/20 text-intel-purple flex items-center justify-center font-bold font-mono">λ</span>
+                        <div>
+                            <p class="text-white font-bold">Lambda (Taxa Média)</p>
+                            <p class="text-gray-400">Histórico de ocorrências por período (ex: 2 roubos/dia).</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="w-8 h-8 rounded bg-intel-purple/20 text-intel-purple flex items-center justify-center font-bold font-mono">k</span>
+                        <div>
+                            <p class="text-white font-bold">Contagem Atual</p>
+                            <p class="text-gray-400">O que aconteceu hoje (ex: 5 roubos).</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="w-8 h-8 rounded bg-intel-purple/20 text-intel-purple flex items-center justify-center font-bold font-mono">!</span>
+                        <div>
+                            <p class="text-white font-bold">Fatorial</p>
+                            <p class="text-gray-400">Matemática para combinações (ex: 3! = 3×2×1 = 6).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-primary mb-6">Parâmetros </h2>
+            <div class="overflow-hidden rounded-xl border border-gray-700">
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="bg-bg-elevated text-xs uppercase text-gray-200">
+                        <tr>
+                            <th class="px-6 py-4">Parâmetro</th>
+                            <th class="px-6 py-4">Função</th>
+                            <th class="px-6 py-4 text-intel-purple">Dica Tática (Inteligência)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800 bg-bg-surface">
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-white">Janela de Tempo (t)</td>
+                            <td class="px-6 py-4">O período base para calcular o Lambda (dia, semana, mês).</td>
+                            <td class="px-6 py-4">Para crimes raros (homicídio), use <strong>Semana ou Mês</strong>.
+                                Para crimes comuns (furto), use <strong>Dia</strong>. Janelas muito curtas geram muitos
+                                zeros.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-white">Limiar de Probabilidade (p-value)</td>
+                            <td class="px-6 py-4">O ponto de corte para considerar anomalia.</td>
+                            <td class="px-6 py-4">Se a probabilidade do evento acontecer for <strong>menor que 0.05
+                                    (5%)</strong> ou <strong>0.01 (1%)</strong>, acione o alerta.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-intel-safe">
+                <h3 class="text-lg font-bold text-primary mb-2">Vantagens</h3>
+                <ul class="list-disc list-inside text-gray-300 space-y-2">
+                    <li>Perfeito para contagens discretas (números inteiros).</li>
+                    <li>Excelente para dados esparsos (muitos dias sem crime).</li>
+                    <li>Mais robusto que a Média Simples para eventos raros.</li>
+                </ul>
+            </div>
+            <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-intel-alert">
+                <h3 class="text-lg font-bold text-primary mb-2">Problemas (O "Buraco")</h3>
+                <ul class="list-disc list-inside text-gray-300 space-y-2">
+                    <li><strong>Pressuposto de Independência:</strong> Assume que um crime não influencia outro. Na
+                        realidade, crimes têm efeito de repetição (revanche de gangues).</li>
+                    <li><strong>Sobredispersão:</strong> Se a variância for muito maior que a média, Poisson falha.
+                        Nesse caso, use a distribuição <em>Binomial Negativa</em>.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-8 rounded-xl border border-intel-purple/30">
+            <h2 class="text-2xl font-bold text-primary mb-6">Estudo de Caso: Roubo a Banco (Evento Raro)</h2>
+            <p class="text-gray-400 mb-6">Em um estado, a média histórica <span class="math-font text-lg">λ</span> de
+                ataques a banco é de <strong>2 por ano</strong>.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <div class="bg-bg-surface p-4 rounded border border-gray-700">
+                        <p class="text-sm text-gray-400 uppercase tracking-wide">Cenário A</p>
+                        <p class="text-xl text-white font-bold">1 Ataque este ano</p>
+                        <p class="text-intel-safe font-mono mt-1">Probabilidade: 27% (Normal)</p>
+                        <div class="w-full bg-gray-700 h-2 mt-2 rounded-full overflow-hidden">
+                            <div class="bg-intel-safe h-full" style="width: 27%"></div>
+                        </div>
+                    </div>
+                    <div class="bg-bg-surface p-4 rounded border border-intel-alert/50 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 bg-intel-alert text-white text-xs px-2 py-1 font-bold">ALERTA
+                        </div>
+                        <p class="text-sm text-gray-400 uppercase tracking-wide">Cenário B (Atual)</p>
+                        <p class="text-xl text-white font-bold">6 Ataques este ano</p>
+                        <p class="text-intel-alert font-mono mt-1">Probabilidade: 1.2% (Anomalia)</p>
+                        <div class="w-full bg-gray-700 h-2 mt-2 rounded-full overflow-hidden">
+                            <div class="bg-intel-alert h-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-gray-300 text-sm italic border-l-2 border-gray-600 pl-4">
+                    "Detectar 6 ataques quando a média é 2 é estatisticamente improvável (1.2% de chance). Isso sugere
+                    uma causa externa sistêmica: uma nova quadrilha especializada ("Novo Cangaço") atuando na região, e
+                    não mero acaso."
+
+                    [Image of Poisson distribution graph for rare event probability]
+
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-primary mb-6">Casos de Uso</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div
+                    class="bg-bg-muted/30 p-6 rounded-lg hover:border-intel-purple border border-transparent transition cursor-pointer">
+                    <div class="text-3xl mb-3">🔫</div>
+                    <h3 class="font-bold text-white mb-2">Crimes Contra a Vida</h3>
+                    <p class="text-sm text-text-secondary">Monitoramento de homicídios e latrocínios em cidades
+                        pequenas, onde dias sem crimes são comuns e qualquer pico é relevante.</p>
+                </div>
+                <div
+                    class="bg-bg-muted/30 p-6 rounded-lg hover:border-intel-purple border border-transparent transition cursor-pointer">
+                    <div class="text-3xl mb-3">⚖️</div>
+                    <h3 class="font-bold text-white mb-2">Assuntos Internos (Corregedoria)</h3>
+                    <p class="text-sm text-text-secondary">Identificar policiais com número de denúncias de abuso acima
+                        do esperado, mesmo que o número absoluto seja baixo (ex: 3 em um ano vs média de 0.2).</p>
+                </div>
+                <div
+                    class="bg-bg-muted/30 p-6 rounded-lg hover:border-intel-purple border border-transparent transition cursor-pointer">
+                    <div class="text-3xl mb-3">💣</div>
+                    <h3 class="font-bold text-white mb-2">Ameaças Terroristas</h3>
+                    <p class="text-sm text-text-secondary">Detecção de padrões em chamadas de ameaça de bomba ou
+                        apreensão de explosivos, eventos extremamente raros onde Z-Score falha.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+
+</html>

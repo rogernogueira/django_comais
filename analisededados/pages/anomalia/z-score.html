@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-Score - Estatística Policial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#4ade80',  // Slate 50
+                        'primary': '#4ade80',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'police-green': '#10b981',  // Emerald 500 (Tactical Green)
+                        'police-alert': '#ef4444',  // Red 500
+                        'police-warn': '#f59e0b',   // Amber 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .stat-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .stat-card:hover {
+            transform: translateX(5px);
+            background-color: rgba(30, 41, 59, 0.8);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-police-green/10 hover:bg-police-green/20 text-police-green p-3 rounded-lg transition-all" onclick="history.back()">
+                    ←
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary tracking-tight">Método Z-Score</h1>
+                    <p class="text-text-muted mt-1">Padronização Estatística para Análise (CompStat)</p>
+                </div>
+            </div>
+
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                <div class="absolute top-4 left-4 text-xs font-mono text-police-green">DISTRIBUIÇÃO DE OCORRÊNCIAS</div>
+                <svg aria-label="Curva Normal Policial" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <rect x="150" y="50" width="200" height="200" fill="rgba(16, 185, 129, 0.05)"></rect>
+                    
+                    <path d="M 50 250 C 150 250, 200 50, 250 50 C 300 50, 350 250, 450 250" fill="none"
+                        stroke="#10b981" stroke-width="3"></path>
+                    <line stroke="#334155" stroke-width="1" x1="50" x2="450" y1="250" y2="250"></line>
+
+                    <line stroke="#94a3b8" stroke-dasharray="2 2" x1="250" x2="250" y1="50" y2="250"></line>
+                    <text fill="#94a3b8" font-size="10" x="255" y="60">Média (μ)</text>
+
+                    <line stroke="#f59e0b" stroke-dasharray="4 4" x1="350" x2="350" y1="100" y2="250"></line>
+                    <text fill="#f59e0b" font-size="11" x="355" y="240">+2σ (Atenção)</text>
+
+                    <line stroke="#ef4444" stroke-width="2" x1="400" x2="400" y1="180" y2="250"></line>
+                    <text fill="#ef4444" font-size="11" font-weight="bold" x="390" y="170">+3σ (SURTO)</text>
+
+                    <circle cx="260" cy="100" r="3" fill="#10b981"></circle>
+                    <circle cx="240" cy="110" r="3" fill="#10b981"></circle>
+                    <circle cx="410" cy="230" r="5" fill="#ef4444" class="animate-pulse"></circle>
+                    <text fill="#ef4444" font-size="12" x="420" y="235">Crime Spike</text>
+                </svg>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                    <h3 class="text-xl font-bold text-primary mb-3">O Problema da "Média" Simples</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Um Batalhão registra média de 10 roubos/dia. Hoje ocorreram 15. Isso é um surto criminal ou apenas um "dia ruim"?
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-police-green pl-4">
+                        O <strong>Z-Score</strong> traduz esse aumento em "unidades de desvio padrão". Ele nos diz se o aumento é estatisticamente significativo o suficiente para deslocar viaturas extras.
+                    </p>
+                    <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
+                        <div class="bg-black/30 p-2 rounded text-center text-gray-400">Z = 0.5 <br><span class="text-green-500">Rotina</span></div>
+                        <div class="bg-black/30 p-2 rounded text-center text-gray-400">Z = 3.2 <br><span class="text-red-500 font-bold">Anomalia Real</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-primary mb-6">Fórmula e Aplicação</h2>
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="bg-black/40 p-8 rounded-lg border border-gray-600">
+                    <p class="text-3xl text-center text-white math-font">
+                        Z = (x - μ) / σ
+                    </p>
+                </div>
+                <div class="space-y-4 flex-1">
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-white">x</span>
+                        <p class="text-gray-300"><strong>Valor Atual:</strong> O número de ocorrências hoje (ex: 15 roubos).</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-white">μ</span>
+                        <p class="text-gray-300"><strong>Média Histórica:</strong> A média dos últimos 90 dias (ex: 10 roubos).</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center font-bold text-white">σ</span>
+                        <p class="text-gray-300"><strong>Desvio Padrão:</strong> A volatilidade histórica. (Se σ for baixo, qualquer aumento pequeno gera um Z-Score alto).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-primary mb-6">Limiares de Alerta (Thresholds)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-muted/30 p-6 rounded-lg border-l-4 border-police-green">
+                    <h3 class="font-bold text-white text-lg">Z < 2.0</h3>
+                    <p class="text-sm text-gray-400 mt-2"><strong>STATUS: VERDE</strong></p>
+                    <p class="text-gray-300 mt-2">Flutuação normal de rotina. Nenhuma ação necessária além do patrulhamento padrão.</p>
+                </div>
+                <div class="bg-bg-muted/30 p-6 rounded-lg border-l-4 border-police-warn">
+                    <h3 class="font-bold text-white text-lg">2.0 < Z < 3.0</h3>
+                    <p class="text-sm text-gray-400 mt-2"><strong>STATUS: AMARELO</strong></p>
+                    <p class="text-gray-300 mt-2">Alerta de tendência. O crime está acima do normal (95% de confiança). Comandante deve observar.</p>
+                </div>
+                <div class="bg-bg-muted/30 p-6 rounded-lg border-l-4 border-police-alert">
+                    <h3 class="font-bold text-white text-lg">Z > 3.0</h3>
+                    <p class="text-sm text-gray-400 mt-2"><strong>STATUS: VERMELHO</strong></p>
+                    <p class="text-gray-300 mt-2"><strong>Outlier Confirmado.</strong> Evento raríssimo (99.7%). Exige intervenção imediata ou verificação de erro nos dados.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-police-alert/10 border border-police-alert/30 p-6 rounded-xl">
+            <h3 class="text-xl font-bold text-police-alert flex items-center gap-2">
+                ⚠ Atenção: A Armadilha da Distribuição Normal
+            </h3>
+            <p class="text-gray-300 mt-3 leading-relaxed">
+                O Z-Score assume que os crimes seguem uma "Curva de Sino" (Distribuição Gaussiana). 
+                <strong>Isso nem sempre é verdade.</strong> Crimes violentos (homicídios) muitas vezes seguem uma distribuição de Poisson ou Power Law.
+            </p>
+            <p class="text-gray-300 mt-2 font-bold">
+                Dica Prática: Para crimes de baixo volume (homicídios, sequestros), NÃO use Z-Score direto. Use médias móveis ou Poisson. Use Z-Score para crimes de alto volume (Furto, Roubo, Chamadas 190).
+            </p>
+        </section>
+
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-primary mb-6">Exemplo: Monitoramento de Chamadas 190</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="bg-bg-elevated text-xs uppercase text-gray-200">
+                        <tr>
+                            <th class="px-4 py-3">Dia</th>
+                            <th class="px-4 py-3">Chamadas (x)</th>
+                            <th class="px-4 py-3">Média Histórica (μ)</th>
+                            <th class="px-4 py-3">Desvio Padrão (σ)</th>
+                            <th class="px-4 py-3">Z-Score</th>
+                            <th class="px-4 py-3">Análise</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <tr>
+                            <td class="px-4 py-3">Segunda</td>
+                            <td class="px-4 py-3">120</td>
+                            <td class="px-4 py-3">115</td>
+                            <td class="px-4 py-3">10</td>
+                            <td class="px-4 py-3 font-mono text-white">0.5</td>
+                            <td class="px-4 py-3"><span class="text-police-green">Normal</span></td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3">Terça</td>
+                            <td class="px-4 py-3">135</td>
+                            <td class="px-4 py-3">115</td>
+                            <td class="px-4 py-3">10</td>
+                            <td class="px-4 py-3 font-mono text-white">2.0</td>
+                            <td class="px-4 py-3"><span class="text-police-warn">Atenção</span></td>
+                        </tr>
+                        <tr class="bg-police-alert/10">
+                            <td class="px-4 py-3 font-bold text-white">Quarta</td>
+                            <td class="px-4 py-3 font-bold text-white">160</td>
+                            <td class="px-4 py-3">115</td>
+                            <td class="px-4 py-3">10</td>
+                            <td class="px-4 py-3 font-mono text-police-alert font-bold">4.5</td>
+                            <td class="px-4 py-3"><span class="text-police-alert font-bold">CRÍTICO (Surto)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="stat-card bg-bg-muted/20 p-6 rounded-lg border-l-4 border-police-green hover:border-l-8">
+                <h3 class="text-lg font-bold text-primary">Tempos de Resposta de Viatura</h3>
+                <p class="text-sm text-gray-400 mt-2">Identificar viaturas que estão estatisticamente demorando muito mais para chegar às ocorrências do que a média do batalhão (Z > 3).</p>
+            </div>
+            <div class="stat-card bg-bg-muted/20 p-6 rounded-lg border-l-4 border-police-green hover:border-l-8">
+                <h3 class="text-lg font-bold text-primary">Auditoria de Munição (Corregedoria)</h3>
+                <p class="text-sm text-gray-400 mt-2">Se a média de uso de munição em treino é 50 e um policial gasta 200 (Z-Score altíssimo), pode indicar desvio ou necessidade de retreinamento.</p>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

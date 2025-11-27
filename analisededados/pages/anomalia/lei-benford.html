@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lei de Benford - Auditoria Forense</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-pink': '#f472b6',    // Pink 400 (Forensic Focus)
+                        'intel-rose': '#e11d48',    // Rose 600 (Danger/Fraud)
+                        'intel-success': '#10b981', // Green
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(244, 114, 182, 0.2);
+        }
+        /* Highlight para barras suspeitas */
+        .bar-suspicious {
+            fill: #e11d48;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-pink/10 hover:bg-intel-pink/20 text-intel-pink p-3 rounded-lg transition-all" onclick="history.back()">
+                    ← 
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-intel-pink tracking-tight">Lei de Benford</h1>
+                    <p class="text-text-muted mt-1">Análise de Frequência de Dígitos para Auditoria Forense</p>
+                </div>
+            </div>
+            
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                <div class="absolute top-4 right-4 text-xs font-mono text-intel-rose">ALERTA DE MANIPULAÇÃO DETECTADO</div>
+                
+                <svg aria-label="Benford Distribution Analysis" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <polyline points="65,50 115,110 165,145 215,170 265,190 315,205 365,215 415,225 465,230" 
+                        fill="none" stroke="#f472b6" stroke-width="2" stroke-dasharray="4 4" opacity="0.5"></polyline>
+                    <text x="350" y="40" fill="#f472b6" font-size="10">-- Curva Esperada (Natural)</text>
+
+                    <rect x="50" y="60" width="30" height="190" fill="#334155" opacity="0.8"></rect>
+                    <text x="65" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">1</text>
+                    
+                    <rect x="100" y="110" width="30" height="140" fill="#334155" opacity="0.8"></rect>
+                    <text x="115" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">2</text>
+
+                    <rect x="150" y="145" width="30" height="105" fill="#334155" opacity="0.8"></rect>
+                    <text x="165" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">3</text>
+
+                    <rect x="200" y="90" width="30" height="160" class="bar-suspicious"></rect> 
+                    <text x="215" y="80" fill="#e11d48" font-size="10" text-anchor="middle">DESVIO!</text>
+                    <text x="215" y="270" fill="#e11d48" font-size="12" text-anchor="middle" font-weight="bold">4</text>
+
+                    <rect x="250" y="190" width="30" height="60" fill="#334155" opacity="0.8"></rect>
+                    <text x="265" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">5</text>
+
+                    <rect x="300" y="205" width="30" height="45" fill="#334155" opacity="0.8"></rect>
+                    <text x="315" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">6</text>
+                    <rect x="350" y="215" width="30" height="35" fill="#334155" opacity="0.8"></rect>
+                    <text x="365" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">7</text>
+                    <rect x="400" y="225" width="30" height="25" fill="#334155" opacity="0.8"></rect>
+                    <text x="415" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">8</text>
+                    <rect x="450" y="230" width="30" height="20" fill="#334155" opacity="0.8"></rect>
+                    <text x="465" y="270" fill="#cbd5e1" font-size="12" text-anchor="middle">9</text>
+                </svg>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-intel-pink mb-3">O "Viés Humano" na Fraude</h3>
+                    <p class="text-text-secondary leading-relaxed">
+                        Quando um fraudador tenta inventar números (ex: criar notas fiscais falsas), ele tende a distribuir os dígitos inicial uniformemente (11% para cada número de 1 a 9).
+                    </p>
+                    <p class="text-text-secondary mt-3 leading-relaxed border-l-4 border-intel-pink pl-4">
+                        A natureza, contudo, é logarítmica. O dígito <strong>1</strong> deve aparecer em <strong>30.1%</strong> das transações legítimas. O dígito <strong>9</strong> apenas em <strong>4.6%</strong>. Se os dados da empresa desviam dessa curva, há alta probabilidade de manipulação humana.
+                    </p>
+                </div>
+                
+                <div class="bg-bg-surface p-4 rounded border border-gray-700">
+                    <h4 class="text-sm font-bold text-white mb-2">Passo a Passo da Perícia:</h4>
+                    <ol class="list-decimal list-inside text-sm text-gray-400 space-y-1">
+                        <li>Extrair o <strong>primeiro dígito</strong> de todos os valores monetários (ignorar centavos).</li>
+                        <li>Calcular a frequência percentual de cada dígito (1 a 9).</li>
+                        <li>Comparar com a probabilidade esperada de Benford.</li>
+                        <li>Calcular o <strong>Z-Score</strong> para provar significância estatística.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+
+[Image of Benford's Law distribution graph]
+
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-white mb-4">A Matemática (Admissível em Tribunal)</h3>
+                
+                <div class="mb-6">
+                    <p class="text-gray-400 text-xs mb-1">Probabilidade Esperada:</p>
+                    <div class="bg-black/40 p-3 rounded text-center mb-2">
+                        <span class="text-white math-font text-lg">P(d) = log₁₀(1 + 1/d)</span>
+                    </div>
+                    <p class="text-xs text-gray-500">Onde <em>d</em> é o dígito (1, 2... 9).</p>
+                </div>
+
+                <div>
+                    <p class="text-gray-400 text-xs mb-1">Teste Z (Para provar que não foi acaso):</p>
+                    <div class="bg-black/40 p-3 rounded text-center">
+                        <span class="text-white math-font text-lg">
+                            Z = |P_obs - P_exp| - (1/2N) / √[P_exp(1-P_exp)/N]
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Se Z > 1.96, o desvio é significativo (95% confiança).</p>
+                </div>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-white mb-4">Tabela de Expectativa vs. Realidade</h3>
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="text-xs uppercase text-gray-500 border-b border-gray-700">
+                        <tr>
+                            <th class="pb-2">Dígito</th>
+                            <th class="pb-2">Benford (%)</th>
+                            <th class="pb-2 text-intel-rose">Fraude Típica (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <tr>
+                            <td class="py-2 font-mono font-bold text-white">1</td>
+                            <td class="py-2 text-intel-success">30.1%</td>
+                            <td class="py-2 text-intel-rose">~11% (Baixo)</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 font-mono font-bold text-white">2</td>
+                            <td class="py-2 text-intel-success">17.6%</td>
+                            <td class="py-2 text-intel-rose">~11% (Baixo)</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 font-mono font-bold text-white">9</td>
+                            <td class="py-2 text-intel-success">4.6%</td>
+                            <td class="py-2 text-intel-rose">~11% (Alto!)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-xs text-gray-500 mt-4 italic">
+                    *Fraudadores costumam usar muitos 7s, 8s e 9s para fazer os valores parecerem "maiores" ou "aleatórios", violando a lei natural.
+                </p>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-green-900/10 border border-green-500/20 p-5 rounded-lg">
+                <h3 class="text-green-400 font-bold mb-3 flex items-center gap-2">✓ Quando Funciona (Elegibilidade)</h3>
+                <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                    <li><strong>Dados Financeiros:</strong> Folhas de pagamento, preços de licitação, saldos de contas.</li>
+                    <li><strong>Magnitude:</strong> Os dados devem variar em várias ordens de magnitude (ex: de R$ 10,00 a R$ 1.000.000,00).</li>
+                    <li><strong>Amostra Grande:</strong> N > 1000 transações é o ideal.</li>
+                </ul>
+            </div>
+
+            <div class="bg-intel-rose/10 border border-intel-rose/20 p-5 rounded-lg">
+                <h3 class="text-intel-rose font-bold mb-3 flex items-center gap-2">⚠ Quando NÃO Usar (Armadilhas)</h3>
+                <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                    <li><strong>Limites Artificiais:</strong> Se a política de viagens diz "reembolso máx R$ 500", haverá excesso de dígitos 4 (R$ 499) e falta de 5. Isso é política, não fraude.</li>
+                    <li><strong>Números Atribuídos:</strong> CPFs, RGs, Números de Telefone, CEPs.</li>
+                    <li><strong>Preços Psicológicos:</strong> R$ 9,99 (Excesso de 9).</li>
+                </ul>
+            </div>
+
+            <div class="bg-indigo-900/10 border border-indigo-500/20 p-5 rounded-lg">
+                <h3 class="text-indigo-400 font-bold mb-3 flex items-center gap-2">📊 Parâmetro MAD</h3>
+                <p class="text-sm text-gray-300 mb-2">
+                    Além do Z-Score, analistas usam o <strong>MAD (Mean Absolute Deviation)</strong>.
+                </p>
+                <div class="text-xs text-gray-400 space-y-1">
+                    <p>MAD > 0.015: <strong>Não Conformidade (Sinal Vermelho)</strong></p>
+                    <p>MAD < 0.006: <strong>Conformidade Estrita (Sinal Verde)</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 rounded-xl border-l-4 border-intel-pink mt-4">
+            <h2 class="text-2xl font-bold text-white mb-6">3 Casos de Uso em Investigação</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="space-y-2">
+                    <h3 class="font-bold text-white flex items-center gap-2">
+                        <span class="bg-intel-pink/20 text-intel-pink p-1 rounded text-xs">FRAUDE 01</span>
+                        Limiar de Aprovação
+                    </h3>
+                    <p class="text-sm text-gray-400">
+                        Um gerente pode aprovar gastos até R$ 5.000 sem supervisão. A análise Benford detecta um pico anormal no dígito <strong>4</strong> (muitas notas de R$ 4.900, R$ 4.950) para evitar o controle.
+                    </p>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 class="font-bold text-white flex items-center gap-2">
+                        <span class="bg-intel-pink/20 text-intel-pink p-1 rounded text-xs">FRAUDE 02</span>
+                        Notas Fiscais Frias
+                    </h3>
+                    <p class="text-sm text-gray-400">
+                        Uma empresa fantasma emite notas para "lavar" dinheiro. O criminoso preenche valores aleatórios mentalmente. O gráfico mostra uma distribuição quase plana (uniforme) em vez de curva descendente.
+                    </p>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 class="font-bold text-white flex items-center gap-2">
+                        <span class="bg-intel-pink/20 text-intel-pink p-1 rounded text-xs">FRAUDE 03</span>
+                        Manipulação Eleitoral
+                    </h3>
+                    <p class="text-sm text-gray-400">
+                        Em zonas com suspeita de enchimento de urnas, o número de votos por seção (ex: 150, 300 votos) deve seguir Benford. Se houver manipulação manual dos totais, os dígitos dos totais violarão a lei.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

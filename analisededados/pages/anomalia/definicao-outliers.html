@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Definição de Outliers - Inteligência Policial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'police-green': '#4ade80',  // Green 400 (Tactical/Normal)
+                        'police-warn': '#facc15',   // Yellow 400 (Contextual)
+                        'police-danger': '#ef4444', // Red 500 (Global/Alert)
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .element-clickable:hover {
+            transform: translateY(-2px);
+            border-color: rgba(74, 222, 128, 0.4);
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="back-button bg-police-green/10 text-police-green p-3 rounded-lg hover:bg-police-green/20 transition-all" onclick="history.back()">
+                    ← 
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-police-green tracking-tight">O que são Outliers?</h1>
+                    <p class="text-text-muted mt-1">Fundamentos da Detecção de Anomalias na Segurança Pública</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative">
+                    <div class="absolute top-4 left-4 text-xs font-mono text-gray-500">TIPOLOGIA DE ANOMALIAS</div>
+                    <svg aria-label="Tipos de Outliers" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                        <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+                        
+                        <line stroke="#334155" stroke-width="2" x1="40" x2="460" y1="260" y2="260"></line>
+                        <line stroke="#334155" stroke-width="2" x1="40" x2="40" y1="20" y2="260"></line>
+
+                        <g fill="#4ade80" opacity="0.6">
+                            <circle cx="100" cy="200" r="4"></circle>
+                            <circle cx="120" cy="190" r="4"></circle>
+                            <circle cx="110" cy="210" r="4"></circle>
+                            <circle cx="130" cy="180" r="4"></circle>
+                            <circle cx="140" cy="205" r="4"></circle>
+                            <circle cx="150" cy="195" r="4"></circle>
+                        </g>
+                        <text fill="#4ade80" font-size="10" x="80" y="230" opacity="0.8">Padrão de Rotina</text>
+
+                        <circle cx="400" cy="50" r="8" fill="#ef4444" class="animate-pulse"></circle>
+                        <text fill="#ef4444" font-weight="bold" font-size="12" x="360" y="40">1. Global (Crítico)</text>
+
+                        <circle cx="250" cy="240" r="6" fill="#facc15" stroke="#fff" stroke-width="1"></circle>
+                        <text fill="#facc15" font-weight="bold" font-size="12" x="260" y="235">2. Contextual</text>
+
+                        <g>
+                            <circle cx="350" cy="150" r="4" fill="#60a5fa"></circle>
+                            <circle cx="360" cy="145" r="4" fill="#60a5fa"></circle>
+                            <circle cx="355" cy="155" r="4" fill="#60a5fa"></circle>
+                            <circle cx="345" cy="150" r="4" fill="#60a5fa"></circle>
+                        </g>
+                        <text fill="#60a5fa" font-weight="bold" font-size="12" x="340" y="130">3. Coletivo</text>
+                    </svg>
+                </div>
+
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl mb-3 text-police-green font-bold">Definição Operacional</h3>
+                    <div class="text-text-secondary italic border-l-4 border-police-green pl-4 mb-4">
+                        "Na Segurança Pública, um outlier não é apenas um ponto fora da curva. É um sinal de alerta que indica ou um <strong>Erro de Dados</strong> (que polui a estatística) ou uma <strong>Atividade Criminosa Nova</strong> (que exige investigação)."
+                    </div>
+                    <p class="text-sm text-gray-400">
+                        Detectá-los é a diferença entre uma política de segurança reativa (que segue a média) e uma proativa (que investiga o desvio).
+                    </p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h3 class="text-xl text-police-green font-bold">Os 3 Tipos de Anomalias Policiais</h3>
+                
+                <div class="element-clickable bg-bg-surface border border-gray-700 p-4 rounded-lg">
+                    <div class="flex items-start gap-4">
+                        <span class="text-2xl">🔴</span>
+                        <div>
+                            <h4 class="text-police-danger font-bold">1. Outlier Global (Pontual)</h4>
+                            <p class="text-sm text-gray-400 mt-1">Um evento que é extremo por si só. Impossível de ignorar.</p>
+                            <p class="text-xs text-gray-500 mt-2 bg-black/30 p-2 rounded">Ex: Um homicídio em um bairro que não registra mortes há 10 anos. Ou uma apreensão de 5 Toneladas de drogas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="element-clickable bg-bg-surface border border-gray-700 p-4 rounded-lg">
+                    <div class="flex items-start gap-4">
+                        <span class="text-2xl">🟡</span>
+                        <div>
+                            <h4 class="text-police-warn font-bold">2. Outlier Contextual</h4>
+                            <p class="text-sm text-gray-400 mt-1">Um evento normal, mas <strong>anômalo para o contexto</strong> (hora, local, clima).</p>
+                            <p class="text-xs text-gray-500 mt-2 bg-black/30 p-2 rounded">Ex: Uma pessoa vestindo casaco pesado (Normal no inverno, suspeito no verão do RJ). Um carro parado em frente a um banco às 03:00 da manhã.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="element-clickable bg-bg-surface border border-gray-700 p-4 rounded-lg">
+                    <div class="flex items-start gap-4">
+                        <span class="text-2xl">🔵</span>
+                        <div>
+                            <h4 class="text-blue-400 font-bold">3. Outlier Coletivo</h4>
+                            <p class="text-sm text-gray-400 mt-1">Eventos individuais parecem normais, mas <strong>juntos formam uma anomalia</strong>.</p>
+                            <p class="text-xs text-gray-500 mt-2 bg-black/30 p-2 rounded">Ex: Ataque DDOS (vários acessos normais simultâneos). "Arrastão" (várias pessoas correndo juntas).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="mt-8 bg-bg-muted/20 p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-police-green mb-6 text-center">O Dilema do Analista: Lixo ou Ouro?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-red-900/10 border border-red-500/20 p-6 rounded-lg">
+                    <h3 class="text-red-400 font-bold mb-3">Cenário A: Ruído (Erro de Dados)</h3>
+                    <p class="text-sm text-gray-300 mb-4">Muitos outliers são apenas erros humanos. Eles distorcem a média e atrapalham o posicionamento de viaturas (Manchas Criminais falsas).</p>
+                    <table class="w-full text-xs text-left text-gray-400">
+                        <tr class="border-b border-gray-700">
+                            <th class="py-2">Dado</th>
+                            <th class="py-2">Valor</th>
+                            <th class="py-2">Diagnóstico</th>
+                        </tr>
+                        <tr>
+                            <td class="py-2">Lat/Long</td>
+                            <td class="py-2">0.00, 0.00</td>
+                            <td class="py-2 text-red-400">Crime no meio do oceano (Null Island)</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2">Idade Suspeito</td>
+                            <td class="py-2">199 Anos</td>
+                            <td class="py-2 text-red-400">Erro de digitação</td>
+                        </tr>
+                    </table>
+                    <div class="mt-4 text-xs font-bold text-red-400 uppercase">Ação: Limpar / Remover</div>
+                </div>
+
+                <div class="bg-green-900/10 border border-green-500/20 p-6 rounded-lg">
+                    <h3 class="text-police-green font-bold mb-3">Cenário B: Inteligência (Crime Real)</h3>
+                    <p class="text-sm text-gray-300 mb-4">Outliers legítimos representam novidades, fraudes ou comportamentos que fogem do perfil da população.</p>
+                    <table class="w-full text-xs text-left text-gray-400">
+                        <tr class="border-b border-gray-700">
+                            <th class="py-2">Dado</th>
+                            <th class="py-2">Valor</th>
+                            <th class="py-2">Diagnóstico</th>
+                        </tr>
+                        <tr>
+                            <td class="py-2">Transação</td>
+                            <td class="py-2">R$ 50.000 (Madrugada)</td>
+                            <td class="py-2 text-police-green">Possível Lavagem / Sequestro</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2">Rota Viatura</td>
+                            <td class="py-2">Fora do Setor</td>
+                            <td class="py-2 text-police-green">Desvio de Conduta</td>
+                        </tr>
+                    </table>
+                    <div class="mt-4 text-xs font-bold text-police-green uppercase">Ação: Investigar / Alertar</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-bg-elevated p-6 rounded-lg border-t-4 border-police-green hover:bg-bg-surface transition">
+                <h3 class="text-lg font-bold text-white mb-2">Fraude Financeira</h3>
+                <p class="text-sm text-gray-400">Identificar contas "laranjas" que recebem depósitos muito acima da renda declarada (Outliers Globais).</p>
+            </div>
+            <div class="bg-bg-elevated p-6 rounded-lg border-t-4 border-police-warn hover:bg-bg-surface transition">
+                <h3 class="text-lg font-bold text-white mb-2">Inteligência Cibernética</h3>
+                <p class="text-sm text-gray-400">Detectar acessos à rede da polícia vindos de IPs estrangeiros ou em horários não comerciais (Outliers Contextuais).</p>
+            </div>
+            <div class="bg-bg-elevated p-6 rounded-lg border-t-4 border-blue-400 hover:bg-bg-surface transition">
+                <h3 class="text-lg font-bold text-white mb-2">Monitoramento de Fronteira</h3>
+                <p class="text-sm text-gray-400">Detectar padrões de travessia anômalos. Ex: Veículo cruzando a fronteira 10x num dia (Outlier Coletivo/Frequência).</p>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

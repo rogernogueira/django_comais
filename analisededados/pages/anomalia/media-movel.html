@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Médias Móveis - Análise de Tendência Criminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-cyan': '#06b6d4',    // Cyan 500 (Analysis)
+                        'intel-warn': '#f59e0b',    // Amber 500
+                        'intel-chart': '#6366f1',   // Indigo 500
+                        'primary': '#4ade80',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        /* Grid de fundo para simular software de análise */
+        .grid-bg {
+            background-image: linear-gradient(rgba(30, 41, 59, 0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(30, 41, 59, 0.5) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all" onclick="history.back()">
+                    ←
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-primary tracking-tight">Médias Móveis (SMA & EWMA)</h1>
+                    <p class="text-text-muted mt-1">Suavização de Ruído e Identificação de Tendências</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative grid-bg">
+                <div class="absolute top-4 left-4 text-xs font-mono text-primary">DADOS BRUTOS vs TENDÊNCIA</div>
+                <svg aria-label="Moving Average Concept" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <line x1="50" y1="250" x2="450" y2="250" stroke="#334155" stroke-width="2"></line>
+                    <line x1="50" y1="50" x2="50" y2="250" stroke="#334155" stroke-width="2"></line>
+
+                    <polyline points="50,200 80,150 110,220 140,130 170,180 200,100 230,160 260,90 290,140 320,80 350,120 380,60 410,100 440,50"
+                        fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 2"></polyline>
+                    
+                    <path d="M 50 200 C 100 180, 150 170, 200 140 S 300 110, 440 70" 
+                        fill="none" stroke="#06b6d4" stroke-width="4"></path>
+
+                    <circle cx="300" cy="30" r="4" fill="#475569"></circle>
+                    <text x="310" y="35" fill="#94a3b8" font-size="12">Ocorrências Diárias (Caos)</text>
+                    
+                    <circle cx="300" cy="50" r="4" fill="#06b6d4"></circle>
+                    <text x="310" y="55" fill="#06b6d4" font-size="12" font-weight="bold">Tendência Real (SMA-7)</text>
+
+                    <text x="70" y="240" fill="#94a3b8" font-size="10">Dia 1</text>
+                    <text x="400" y="240" fill="#94a3b8" font-size="10">Dia 30</text>
+                </svg>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                    <h3 class="text-xl font-bold text-primary mb-3">O Problema do "Dia Ruim"</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        O crime é volátil. Um dia chuvoso reduz roubos; um feriado aumenta brigas. Analisar dia a dia causa <strong>falsos alarmes</strong>.
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-cyan pl-4">
+                        A <strong>Média Móvel</strong> funciona como um filtro. Ela ignora o "ruído" diário para mostrar ao Comandante a direção real: o crime está subindo, descendo ou estável nas últimas semanas?
+                    </p>
+                    <div class="mt-4 bg-intel-cyan/10 p-3 rounded text-sm text-intel-cyan border border-intel-cyan/20">
+                        <strong>Insight:</strong> É fundamental para remover a "sazonalidade semanal" (ex: sexta-feira sempre tem mais ocorrências que segunda).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-primary">Média Móvel Simples (SMA)</h3>
+                    <span class="bg-gray-700 text-xs px-2 py-1 rounded">Estratégico</span>
+                </div>
+                <div class="bg-black/40 p-4 rounded mb-4 text-center">
+                    <span class="math-font text-xl text-text-secondary">SMA = (P₁ + P₂ + ... + Pₙ) / n</span>
+                </div>
+                <p class="text-sm text-gray-400">
+                    Soma os últimos N dias e divide por N.
+                    <br><br>
+                    <strong>Prós:</strong> Muito estável, fácil de explicar.
+                    <br><strong>Contras:</strong> <span class="text-intel-warn">Alto LAG (Atraso)</span>. Demora para reagir a um surto repentino de crimes.
+                </p>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-primary">Média Móvel Exponencial (EWMA)</h3>
+                    <span class="bg-intel-cyan/20 text-intel-cyan text-xs px-2 py-1 rounded border border-intel-cyan/30">Tático</span>
+                </div>
+                <div class="bg-black/40 p-4 rounded mb-4 text-center">
+                    <span class="math-font text-xl text-text-secondary">EWMAₜ = α · xₜ + (1 - α) · EWMAₜ₋₁</span>
+                </div>
+                <p class="text-sm text-gray-400">
+                    Dá mais peso aos dados recentes (hoje/ontem).
+                    <br><br>
+                    <strong>Prós:</strong> Reage rápido a novos surtos criminais.
+                    <br><strong>Contras:</strong> Mais sensível a ruídos e alarmes falsos.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-primary mb-6">Regras de Bolso para Segurança Pública</h2>
+            <div class="overflow-hidden rounded-xl border border-gray-700 shadow-lg">
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="bg-bg-elevated text-xs uppercase text-gray-200">
+                        <tr>
+                            <th class="px-6 py-4">Parâmetro (Janela)</th>
+                            <th class="px-6 py-4">Contexto de Uso</th>
+                            <th class="px-6 py-4 text-intel-cyan">Dica do Especialista</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800 bg-bg-surface">
+                        <tr class="hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 font-bold text-white">7 Dias (Semanal)</td>
+                            <td class="px-6 py-4">Operacional / Curto Prazo</td>
+                            <td class="px-6 py-4">
+                                <strong>O Padrão Ouro.</strong> Remove o efeito "fim de semana". Use para comparar "essa semana vs. semana passada".
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 font-bold text-white">28 ou 30 Dias</td>
+                            <td class="px-6 py-4">Estratégico / Mensal</td>
+                            <td class="px-6 py-4">
+                                Ideal para reuniões mensais de indicadores (CompStat). Mostra a tendência macro.
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-700/50 transition">
+                            <td class="px-6 py-4 font-bold text-white">365 Dias</td>
+                            <td class="px-6 py-4">Política Pública</td>
+                            <td class="px-6 py-4">
+                                Use para ver tendências de longo prazo (anos) removendo a sazonalidade (férias, carnaval, natal).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-intel-warn/10 border-l-4 border-intel-warn p-6 rounded-r-xl">
+            <h3 class="text-xl font-bold text-intel-warn flex items-center gap-2">
+                ⚠ O Inimigo nº 1: O "Lag" (Atraso)
+            </h3>
+            <p class="text-gray-300 mt-3 leading-relaxed">
+                Médias Móveis olham para o <strong>passado</strong>. Se uma guerra de facções começar hoje, uma SMA de 30 dias só vai mostrar um aumento significativo daqui a uma semana.
+            </p>
+            <p class="text-gray-300 mt-2 font-bold">
+                Solução Tática: Use médias curtas (3 a 7 dias) ou EWMA para monitoramento de crises em tempo real. Deixe as médias longas (30+) para relatórios administrativos.
+            </p>
+        </section>
+
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-primary mb-6">Exemplo: Roubos de Celular (Centro)</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-center text-sm text-gray-400">
+                    <thead class="bg-bg-elevated text-xs uppercase text-gray-200">
+                        <tr>
+                            <th class="p-3">Dia</th>
+                            <th class="p-3">Roubos Reais (X)</th>
+                            <th class="p-3 bg-gray-800">Média Móvel (3 Dias)</th>
+                            <th class="p-3 text-left">Interpretação</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <tr>
+                            <td class="p-3">Seg</td>
+                            <td class="p-3">10</td>
+                            <td class="p-3 bg-gray-800">-</td>
+                            <td class="p-3 text-left text-xs">Dados insuficientes</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">Ter</td>
+                            <td class="p-3">12</td>
+                            <td class="p-3 bg-gray-800">-</td>
+                            <td class="p-3 text-left text-xs">Dados insuficientes</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">Qua</td>
+                            <td class="p-3">11</td>
+                            <td class="p-3 bg-gray-800 font-bold text-white">11.0</td>
+                            <td class="p-3 text-left text-xs">Estável</td>
+                        </tr>
+                        <tr class="bg-intel-warn/10">
+                            <td class="p-3 font-bold text-white">Qui (Surto)</td>
+                            <td class="p-3 font-bold text-intel-warn">25</td>
+                            <td class="p-3 bg-gray-800/50 font-bold text-white">16.0</td>
+                            <td class="p-3 text-left text-xs text-white">
+                                <span class="text-intel-warn">Note o Atraso:</span> O crime dobrou (25), mas a média só subiu um pouco (16).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">Sex</td>
+                            <td class="p-3">14</td>
+                            <td class="p-3 bg-gray-800 font-bold text-white">16.6</td>
+                            <td class="p-3 text-left text-xs">A média continua alta influenciada pelo pico de quinta.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-bg-muted/20 p-6 rounded-lg border-t-4 border-intel-cyan hover:bg-bg-muted/30 transition">
+                <h3 class="font-bold text-white text-lg mb-2">Previsão de Efetivo</h3>
+                <p class="text-sm text-text-secondary">
+                    Usar a média das últimas 4 sextas-feiras para prever quantas viaturas serão necessárias na próxima sexta, ignorando flutuações pontuais.
+                </p>
+            </div>
+            
+            <div class="bg-bg-muted/20 p-6 rounded-lg border-t-4 border-intel-cyan hover:bg-bg-muted/30 transition">
+                <h3 class="font-bold text-white text-lg mb-2">Detecção de Hotspots</h3>
+                <p class="text-sm text-text-secondary">
+                    Monitorar se a mancha criminal em um bairro está crescendo (Média de 30 dias subindo) ou se é apenas um fim de semana atípico.
+                </p>
+            </div>
+
+            <div class="bg-bg-muted/20 p-6 rounded-lg border-t-4 border-intel-cyan hover:bg-bg-muted/30 transition">
+                <h3 class="font-bold text-white text-lg mb-2">Análise de Denúncias 181</h3>
+                <p class="text-sm text-text-secondary">
+                    O volume de denúncias oscila muito. Médias móveis ajudam a ver se uma campanha de marketing da polícia surtiu efeito real no longo prazo.
+                </p>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

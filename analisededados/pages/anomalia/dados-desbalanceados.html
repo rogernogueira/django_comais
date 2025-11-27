@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados Desbalanceados - Inteligência Policial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-red': '#ef4444',     // Red 500 (Critical/Danger)
+                        'intel-dark-red': '#7f1d1d',// Red 900
+                        'intel-warn': '#f59e0b',    // Amber 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        /* Animação de pulso para a classe minoritária */
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .danger-dot {
+            animation: pulse-red 2s infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-red/10 hover:bg-intel-red/20 text-intel-red p-3 rounded-lg transition-all" onclick="history.back()">
+                    ←
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-intel-red tracking-tight">Dados Desbalanceados</h1>
+                    <p class="text-text-muted mt-1">O Paradoxo da Agulha no Palheiro na Análise Criminal</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative flex flex-col justify-center items-center">
+                <div class="absolute top-4 left-4 text-xs font-mono text-intel-red">POPULAÇÃO VS CRIMINOSOS</div>
+                
+                <svg aria-label="Imbalanced Data Visualization" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <rect x="20" y="40" width="400" height="220" fill="#334155" rx="4"></rect>
+                    <text x="220" y="150" fill="#94a3b8" font-size="20" text-anchor="middle" font-weight="bold">Cidadãos Honestos (99.5%)</text>
+                    <text x="220" y="170" fill="#64748b" font-size="12" text-anchor="middle">O modelo aprende que "ser honesto é o padrão"</text>
+
+                    <rect x="440" y="240" width="40" height="20" fill="#ef4444" rx="2" class="danger-dot"></rect>
+                    <line x1="420" y1="150" x2="440" y2="240" stroke="#ef4444" stroke-dasharray="2 2"></line>
+                    <text x="460" y="230" fill="#ef4444" font-size="12" text-anchor="middle" font-weight="bold">Terroristas (0.5%)</text>
+                </svg>
+                
+                <div class="mt-4 bg-intel-red/10 p-3 rounded border border-intel-red/30 w-full text-center">
+                    <p class="text-intel-red text-sm font-bold">Risco Real:</p>
+                    <p class="text-xs text-gray-400">O modelo ignora o retângulo vermelho para acertar o retângulo cinza.</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-intel-red mb-3">O Paradoxo da Acurácia</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Imagine um sistema antiterrorismo. Se apenas 1 em cada 1 milhão de pessoas é terrorista, um modelo que diz <strong>"Ninguém é terrorista"</strong> terá 99.9999% de acurácia.
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-red pl-4">
+                        Para a estatística acadêmica, é um modelo excelente. Para a <strong>Segurança Pública</strong>, é um fracasso total, pois o ataque acontece.
+                    </p>
+                    <p class="text-white font-bold mt-4 bg-red-900/50 p-2 rounded text-center">
+                        "Na polícia, não queremos Acurácia. Queremos Recall (Captura)."
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-lg font-bold text-intel-red mb-2">1. Recall (Sensibilidade)</h3>
+                <p class="text-xs text-gray-400 mb-3 uppercase tracking-wider">A mais importante</p>
+                <div class="text-2xl text-intel-red math-font mb-2">TP / (TP + FN)</div>
+                <p class="text-sm text-gray-300">
+                    Responde: <strong>"De todos os crimes reais, quantos nós pegamos?"</strong>
+                    <br><br>
+                    Um Recall baixo significa que deixamos bandidos soltos (Falso Negativo).
+                </p>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-lg font-bold text-intel-red mb-2">2. Precision (Precisão)</h3>
+                <p class="text-xs text-gray-400 mb-3 uppercase tracking-wider">Gestão de Recursos</p>
+                <div class="text-2xl text-intel-warn math-font mb-2">TP / (TP + FP)</div>
+                <p class="text-sm text-gray-300">
+                    Responde: <strong>"De todos os alertas que geramos, quantos eram reais?"</strong>
+                    <br><br>
+                    Uma Precisão baixa significa que a polícia perde tempo investigando inocentes (Falso Positivo).
+                </p>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-lg font-bold text-intel-red mb-2">3. F1-Score</h3>
+                <p class="text-xs text-gray-400 mb-3 uppercase tracking-wider">O Equilíbrio</p>
+                <div class="text-2xl text-intel-red math-font mb-2">Média Harmônica</div>
+                <p class="text-sm text-gray-300">
+                    Combina Recall e Precision. É a única métrica confiável para comparar modelos em dados desbalanceados.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-intel-red mb-6">Como Corrigir? (Táticas de Ciência de Dados)</h2>
+            
+            <div class="space-y-4">
+                <div class="bg-bg-surface border border-gray-700 rounded-lg p-6 hover:border-intel-red transition duration-300">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-intel-red flex items-center gap-2">
+                                1. SMOTE (Synthetic Minority Over-sampling Technique)
+                                <span class="text-xs bg-gray-700 text-white px-2 py-1 rounded">Nível de Dados</span>
+                            </h3>
+                            <p class="text-gray-300 mt-2">
+                                O algoritmo cria "crimes sintéticos". Ele pega dois casos reais de fraude parecidos e cria matematicamente um terceiro caso entre eles.
+                            </p>
+                            <p class="text-sm text-gray-400 mt-2 italic">
+                                <strong>Analogia:</strong> É como treinar cães policiais usando não apenas amostras de drogas reais, mas criando variações químicas sintéticas para que o cão aprenda o padrão geral, não apenas o cheiro específico de uma apreensão.
+                            </p>
+                        </div>
+                        <div class="hidden md:block text-4xl">🧬</div>
+                    </div>
+                </div>
+                
+
+                <div class="bg-bg-surface border border-gray-700 rounded-lg p-6 hover:border-intel-red transition duration-300">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-intel-warn flex items-center gap-2">
+                                2. Pesos de Classe (Class Weights)
+                                <span class="text-xs bg-gray-700 text-white px-2 py-1 rounded">Nível de Algoritmo</span>
+                            </h3>
+                            <p class="text-gray-300 mt-2">
+                                Você pune o modelo severamente por errar a classe minoritária.
+                            </p>
+                            <p class="text-sm text-gray-400 mt-2 italic">
+                                <strong>Regra de Bolso:</strong> Configurar <code>class_weight='balanced'</code>. Diz ao modelo: "Errar um cidadão honesto custa R$ 1. Errar um terrorista custa R$ 1.000.000". O modelo vai focar obsessivamente no terrorista.
+                            </p>
+                        </div>
+                        <div class="hidden md:block text-4xl">⚖️</div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface border border-gray-700 rounded-lg p-6 hover:border-intel-red transition duration-300 opacity-75">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-400 flex items-center gap-2">
+                                3. Undersampling (Random)
+                                <span class="text-xs bg-gray-700 text-white px-2 py-1 rounded">Cuidado</span>
+                            </h3>
+                            <p class="text-gray-300 mt-2">
+                                Jogar fora dados da classe majoritária (cidadãos honestos) para equilibrar a balança.
+                            </p>
+                            <p class="text-sm text-intel-red mt-2 font-bold">
+                                ⚠ Risco: Você perde informações valiosas sobre o comportamento normal da população. Use apenas em Big Data massivo (+10 milhões de linhas).
+                            </p>
+                        </div>
+                        <div class="hidden md:block text-4xl">🗑️</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border-l-4 border-intel-red">
+                <h3 class="text-xl font-bold text-white mb-2">Terrorismo & Ameaças Extremas</h3>
+                <p class="text-sm text-gray-400 mb-4">Proporção: 1:1.000.000</p>
+                <p class="text-gray-300">
+                    Aqui, o custo do Falso Negativo é catastrófico (mortes).
+                    <br><strong>Estratégia:</strong> Maximizar Recall a qualquer custo. Aceitamos investigar 100 inocentes (Falso Positivo) para não deixar passar 1 terrorista.
+                </p>
+            </div>
+
+            <div class="bg-bg-elevated p-6 rounded-xl border-l-4 border-intel-warn">
+                <h3 class="text-xl font-bold text-white mb-2">Corregedoria (Policial Corrupto)</h3>
+                <p class="text-sm text-gray-400 mb-4">Proporção: 1:500</p>
+                <p class="text-gray-300">
+                    A maioria dos policiais é honesta.
+                    <br><strong>Estratégia:</strong> Usar Detecção de Anomalias (Isolation Forest) em vez de classificação pura, pois o comportamento corrupto é uma aberração do padrão da tropa.
+                </p>
+            </div>
+        </section>
+
+        <footer class="border-t border-gray-800 pt-8 pb-12 text-center">
+            <p class="text-gray-500">Manual de Ciência de Dados Aplicada à Segurança Pública</p>
+        </footer>
+
+    </div>
+</body>
+</html>

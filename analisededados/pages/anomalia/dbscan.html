@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBSCAN - Mapeamento de Crimes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-violet': '#8b5cf6',  // Violet 500 (Clustering)
+                        'intel-light': '#a78bfa',   // Violet 400
+                        'intel-noise': '#94a3b8',   // Grey (Noise)
+                        'intel-danger': '#ef4444',  // Red 500
+                        'primary': '#5da0f1',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        /* Animação do Radar de Densidade */
+        @keyframes scan {
+            0% { r: 0; opacity: 1; }
+            100% { r: 100; opacity: 0; }
+        }
+        .radar-ping {
+            animation: scan 2s infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all" onclick="history.back()">
+                    ← 
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-primary tracking-tight">DBSCAN</h1>
+                    <p class="text-text-muted mt-1">Density-Based Spatial Clustering para Análise de Anomalias</p>
+                </div>
+            </div>
+           
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-4 left-4 text-xs font-mono text-intel-light z-10">DENSIDADE GEOGRÁFICA</div>
+                
+                <svg aria-label="DBSCAN Concept Diagram" class="w-full h-64" role="img" viewBox="0 0 500 300">
+                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+
+                    <circle cx="200" cy="150" r="100" fill="none" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="2 2"></circle>
+                    <circle cx="200" cy="150" r="400" fill="#8b5cf6" opacity="0.1" class="radar-ping"></circle>
+                    <circle cx="200" cy="150" r="10" fill="#a78bfa"></circle>
+                    <text x="190" y="175" fill="#8b5cf6" font-size="15">Core Point</text>
+                    <text x="210" y="140" fill="#8b5cf6" font-size="15" opacity="0.7">ε (Epsilon)</text>
+
+                    <circle cx="150" cy="160" r="10" fill="#8b5cf6" opacity="0.7"></circle>
+                    <circle cx="260" cy="120" r="10" fill="#8b5cf6" opacity="0.7"></circle>
+                    <circle cx="220" cy="200" r="10" fill="#8b5cf6" opacity="0.7"></circle>
+                    <circle cx="130" cy="100" r="10" fill="#8b5cf6" opacity="0.7"></circle>
+
+                    <circle cx="240" cy="190" r="10" fill="#8b5cf6"></circle>
+                    <line x1="200" y1="150" x2="130" y2="100" stroke="#4b5563" stroke-width="1"></line>
+                    <text x="140" y="125" fill="#a78bfa" font-size="15">Border</text>
+
+                    <circle cx="400" cy="80" r="4" fill="#94a3b8"></circle>
+                    <circle cx="400" cy="80" r="30" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2 2"></circle>
+                    <text x="410" y="85" fill="#94a3b8" font-size="12" font-weight="bold">Ruído</text>
+                    <text x="360" y="120" fill="#64748b" font-size="10" width="100">Sem vizinhos suficientes</text>
+                </svg>
+                <a class="text-primary" href="https://comais.uft.edu.br/playground/dbscan">Playground COMAIS</a>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-panel p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-primary mb-3">Conceito: Manchas Criminais vs. Acaso</h3>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Diferente de outros métodos que forçam os dados em círculos (K-Means), o DBSCAN encontra <strong>formas arbitrárias</strong>.
+                    </p>
+                    <p class="text-text-secondary leading-relaxed border-l-4 border-intel-violet pl-4">
+                        Na segurança pública, crimes seguem ruas, avenidas e praças. O DBSCAN identifica áreas de <strong>alta densidade</strong> (manchas criminais) e descarta automaticamente ocorrências isoladas como <strong>Ruído</strong> (Noise).
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-bg-surface p-3 rounded border border-gray-700">
+                        <span class="block text-2xl mb-1">🔥</span>
+                        <strong class="text-primary text-sm">Cluster (Mancha)</strong>
+                        <p class="text-xs text-gray-400">Zona onde o crime é sistêmico. Exige policiamento ostensivo.</p>
+                    </div>
+                    <div class="bg-bg-surface p-3 rounded border border-gray-700">
+                        <span class="block text-2xl mb-1">🗑️</span>
+                        <strong class="text-primary text-sm">Noise (Ruído)</strong>
+                        <p class="text-xs text-gray-400">Eventos aleatórios ou erros de preenchimento. Ignorar na estratégia macro.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-primary mb-4">Como Funciona (Algoritmo)</h3>
+                <ol class="list-decimal list-inside text-sm text-gray-400 space-y-3">
+                    <li>
+                        <strong class="text-intel-light">Raio de Busca (ε):</strong> O algoritmo escolhe um crime e desenha um círculo de raio Epsilon ao redor.
+                    </li>
+                    <li>
+                        <strong class="text-intel-light">Contagem (MinPts):</strong> Ele conta quantos outros crimes estão dentro desse círculo.
+                    </li>
+                    <li>
+                        <strong class="text-intel-light">Classificação:</strong>
+                        <ul class="pl-6 list-disc mt-1 space-y-1">
+                            <li><span class="text-white">Core Point:</span> Tem vizinhos suficientes (≥ MinPts). Inicia uma mancha.</li>
+                            <li><span class="text-white">Border Point:</span> Está perto de um Core, mas não tem vizinhos suficientes sozinho. Expande a mancha.</li>
+                            <li><span class="text-gray-500">Noise:</span> Não tem vizinhos. É descartado.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-primary mb-4">Parâmetros Críticos (Ajuste Tático)</h3>
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="text-xs uppercase text-gray-500 border-b border-gray-700">
+                        <tr>
+                            <th class="pb-2">Parâmetro</th>
+                            <th class="pb-2">Regra de Bolso (GIS)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <tr>
+                            <td class="py-3 font-mono text-intel-light">eps (ε)</td>
+                            <td class="py-3">
+                                A distância física máxima.
+                                <br><span class="text-xs text-gray-500">Ex: <strong>0.002 graus</strong> (~200m) para furtos a pé. Se usar métrica Haversine, coloque em metros/radianos.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 font-mono text-intel-light">min_samples</td>
+                            <td class="py-3">
+                                O mínimo para criar uma mancha.
+                                <br><span class="text-xs text-gray-500">Dica: Use <strong>4 ou 5</strong>. Se for muito baixo (2), qualquer par de crimes vira uma mancha. Se muito alto, perde manchas pequenas.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 font-mono text-intel-light">metric</td>
+                            <td class="py-3">Use <strong>'haversine'</strong> se estiver trabalhando com Latitude/Longitude para garantir precisão real em km.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-black/20 p-6 rounded-lg border border-gray-800 text-center">
+             <p class="text-gray-400 text-sm mb-2">Definição de Densidade:</p>
+             <div class="text-xl text-white math-font">
+                N_ε(p) = { q ∈ D | dist(p,q) ≤ ε }
+             </div>
+             <p class="text-gray-400 text-sm mt-2">
+                Um ponto <em>p</em> é <strong class="text-intel-violet">Core</strong> se |N_ε(p)| ≥ MinPts.
+             </p>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-green-900/10 border border-green-500/20 p-5 rounded-lg">
+                <h3 class="text-green-400 font-bold mb-3 flex items-center gap-2">✓ Por que é o Melhor para GIS?</h3>
+                <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                    <li><strong>Formas Orgânicas:</strong> Detecta manchas em formato de "S" (seguindo uma rodovia) ou "L" (esquina), o que o K-Means não faz.</li>
+                    <li><strong>Limpeza de Dados:</strong> O que for classificado como -1 (Noise) pode ser removido da análise tática, limpando o mapa.</li>
+                    <li><strong>Sem "K":</strong> Não precisa chutar quantos focos de crime existem na cidade. Ele descobre sozinho.</li>
+                </ul>
+            </div>
+
+            <div class="bg-intel-danger/10 border border-intel-danger/20 p-5 rounded-lg">
+                <h3 class="text-intel-danger font-bold mb-3 flex items-center gap-2">⚠ O Problema da Densidade Variável</h3>
+                <p class="text-sm text-gray-300 mb-2">
+                    O DBSCAN usa um único <code>eps</code> para o mapa todo.
+                </p>
+                <p class="text-sm text-gray-300">
+                    Isso é ruim se você compara o <strong>Centro</strong> (alta densidade) com a <strong>Zona Rural</strong> (baixa densidade). Um raio de 100m funciona no centro, mas na zona rural os vizinhos estão a 1km.
+                </p>
+                <p class="text-xs text-gray-400 italic mt-2">
+                    Solução avançada: Usar <strong>HDBSCAN</strong> ou <strong>OPTICS</strong>.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-primary mb-6">Casos de Uso</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-default group">
+                    <div class="text-3xl mb-2 group-hover:scale-110 transition">🗺️</div>
+                    <h3 class="font-bold text-primary">Hotspots de Roubo de Carga</h3>
+                    <p class="text-sm text-gray-400 mt-2">Identificar trechos específicos de rodovias onde os roubos se aglomeram. O DBSCAN ignora roubos isolados (oportunidade) e foca em áreas de atuação sistemática de quadrilhas.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-default group">
+                    <div class="text-3xl mb-2 group-hover:scale-110 transition">📡</div>
+                    <h3 class="font-bold text-primary">Torres de Celular (ERBs)</h3>
+                    <p class="text-sm text-gray-400 mt-2">Analisar logs de conexão. Se vários telefones "descartáveis" se conectam nas mesmas torres nos mesmos horários (cluster espaço-temporal), pode indicar uma célula criminosa.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded hover:bg-bg-muted/30 transition cursor-default group">
+                    <div class="text-3xl mb-2 group-hover:scale-110 transition">💸</div>
+                    <h3 class="font-bold text-primary">Lavagem de Dinheiro (Smurfing)</h3>
+                    <p class="text-sm text-gray-400 mt-2">Detectar aglomerados de transações financeiras. Muitas transações pequenas (abaixo do limite de alerta) feitas em curto intervalo de tempo formam um cluster denso no tempo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 rounded-xl border border-gray-700 mt-8">
+            <h2 class="text-xl font-bold text-primary mb-4">Exemplo de Saída (Python/Scikit-Learn)</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs text-left">
+                    <thead class="bg-gray-800 text-gray-400">
+                        <tr>
+                            <th class="p-3">ID Ocorrência</th>
+                            <th class="p-3">Lat/Long</th>
+                            <th class="p-3">Vizinhos (200m)</th>
+                            <th class="p-3">Cluster ID</th>
+                            <th class="p-3">Interpretação</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300">
+                        <tr class="border-b border-gray-700">
+                            <td class="p-3">BO-1001</td>
+                            <td class="p-3">-23.55, -46.63</td>
+                            <td class="p-3">12</td>
+                            <td class="p-3"><span class="text-intel-violet font-bold">0</span></td>
+                            <td class="p-3">Parte da Mancha Criminal "Centro"</td>
+                        </tr>
+                        <tr class="border-b border-gray-700">
+                            <td class="p-3">BO-1002</td>
+                            <td class="p-3">-23.55, -46.64</td>
+                            <td class="p-3">8</td>
+                            <td class="p-3"><span class="text-intel-violet font-bold">0</span></td>
+                            <td class="p-3">Parte da Mancha Criminal "Centro"</td>
+                        </tr>
+                        <tr class="bg-gray-800/50">
+                            <td class="p-3">BO-5099</td>
+                            <td class="p-3">-23.10, -46.10</td>
+                            <td class="p-3">0</td>
+                            <td class="p-3"><span class="text-gray-500 font-bold">-1</span></td>
+                            <td class="p-3 text-gray-500">Ruído (Isolado/Descartar)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
