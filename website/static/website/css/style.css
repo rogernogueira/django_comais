@@ -750,14 +750,16 @@ section {
 # Services
 --------------------------------------------------------------*/
 .services .icon-box, 
-.cursos .icon-box {
+.cursos .icon-box,
+.resources .icon-box {
   box-shadow: 0px 0 25px 0 rgba(0, 0, 0, 0.1);
   padding: 50px 30px;
   transition: all ease-in-out 0.4s;
   background: #fff;
 }
 .services .icon-box .icon,
-.cursos .icon-box .icon {
+.cursos .icon-box .icon,
+.resources .icon-box .icon {
   margin-bottom: 10px;
   text-align: center;
 }
@@ -767,35 +769,88 @@ section {
 }
 
 .services .icon-box .icon i,
-.cursos .icon-box .icon i {
+.cursos .icon-box .icon i,
+.resources .icon-box .icon i {
   color: #47b2e4;
   font-size: 36px;
   transition: 0.3s;
 }
 .services .icon-box h4,
-.cursos .icon-box h4 {
+.cursos .icon-box h4,
+.resources .icon-box h4 {
   font-weight: 500;
   margin-bottom: 15px;
   font-size: 24px;
 }
 .services .icon-box  a,
-.cursos .icon-box h4 a {
+.cursos .icon-box h4 a,
+.resources .icon-box h4 a {
   color: #37517e;
   transition: ease-in-out 0.3s;
 }
 .services .icon-box p,
-.cursos .icon-box p {
+.cursos .icon-box p,
+.resources .icon-box p {
   line-height: 24px;
   font-size: 14px;
   margin-bottom: 0;
 }
 .services .icon-box:hover,
-.cursos .icon-box:hover {
+.cursos .icon-box:hover,
+.resources .icon-box:hover {
   transform: translateY(-10px);
 }
 .services .icon-box:hover h4 a,
-.cursos .icon-box:hover  a {
+.cursos .icon-box:hover  a,
+.resources .icon-box:hover a {
   color: #47b2e4;
+}
+
+.resources .icon-box {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(71, 178, 228, 0.12), rgba(55, 81, 126, 0.08));
+  border: 1px solid rgba(71, 178, 228, 0.18);
+}
+
+.resources .icon-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(71, 178, 228, 0.25), rgba(55, 81, 126, 0.15));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.resources .icon-box:hover::before {
+  opacity: 1;
+}
+
+.resources .icon-box > * {
+  position: relative;
+  z-index: 1;
+}
+
+.resources .icon-box .icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(71, 178, 228, 0.15);
+  transition: transform 0.4s ease, background 0.4s ease;
+}
+
+.resources .icon-box .icon i {
+  font-size: 32px;
+  color: #37517e;
+}
+
+.resources .icon-box:hover .icon {
+  transform: scale(1.08) rotate(-2deg);
+  background: rgba(71, 178, 228, 0.3);
 }
 
 
