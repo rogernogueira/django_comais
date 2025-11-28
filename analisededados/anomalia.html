@@ -366,6 +366,63 @@
                 </div>
             </div>
 
+            <!-- Slide 7.1: Datasets do Laboratório -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-teal-400/20 hover:border-teal-400/50">
+                <h3 class="text-xl mb-3 text-teal-300 font-bold">Datasets do COMAIS</h3>
+                <p class="text-xs text-teal-200/70 mb-4 uppercase tracking-wider">Recursos educacionais</p>
+                <p class="text-sm text-text-secondary mb-5">Coleção de bases públicas utilizadas nos estudos de
+                    anomalias e análises exploratórias.</p>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="copiarLinkDataset('abastecimento.csv')">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-teal-400/50 group-hover:text-teal-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        <p class="text-text-secondary">Abastecimento</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="copiarLinkDataset('avenida_dos_crimes.csv')">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-teal-400/50 group-hover:text-teal-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m4 0H5"></path>
+                        </svg>
+                        <p class="text-text-secondary">Avenida dos Crimes</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="copiarLinkDataset('crimes_oportunidade_serial.csv')">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-teal-400/50 group-hover:text-teal-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 7h18M5 7l1 12h12l1-12"></path>
+                        </svg>
+                        <p class="text-text-secondary">Crimes Oportunidade Serial</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="copiarLinkDataset('furto_veiculos.csv')">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-teal-400/50 group-hover:text-teal-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.75 17L9 21h6l-.75-4M9 11h6m-.879-5.121l-3.75 3.75a.75.75 0 01-1.061 0l-1.44-1.44a.75.75 0 010-1.06l3.75-3.75A2.121 2.121 0 0115.364 4.5l1.44 1.44a2.121 2.121 0 010 3l-3.75 3.75"></path>
+                        </svg>
+                        <p class="text-text-secondary">Furto de Veículos</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="copiarLinkDataset('lavagem_dinheiro.csv')">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-teal-400/50 group-hover:text-teal-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 12v-2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-text-secondary">Lavagem de Dinheiro</p>
+                    </div>
+                </div>
+                
+            </div>
+
             <!-- Slide 7: Detecção de Fraudes -->
             <div
                 class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-red-500/20 hover:border-red-500/50">
@@ -493,6 +550,71 @@
 
         function abrirMetricasAvaliacao() {
             window.location.href = 'pages/anomalia/metricas-avaliacao.html';
+        }
+
+        async function copiarLinkDataset(nomeArquivo) {
+            const url = new URL(`datasets/${nomeArquivo}`, window.location.href).href;
+            await copiarParaClipboard(url, `Link do dataset "${nomeArquivo}" copiado!`);
+        }
+
+        async function copiarLinkDatasetFolder() {
+            const url = new URL('datasets/', window.location.href).href;
+            await copiarParaClipboard(url, 'Link da pasta de datasets copiado!');
+        }
+
+        async function copiarParaClipboard(texto, mensagemSucesso) {
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(texto);
+                } else {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = texto;
+                    textarea.setAttribute('readonly', '');
+                    textarea.style.position = 'absolute';
+                    textarea.style.left = '-9999px';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                }
+                exibirToast(mensagemSucesso);
+            } catch (error) {
+                console.error('Erro ao copiar link:', error);
+                alert('Não foi possível copiar automaticamente. Copie manualmente: ' + texto);
+            }
+        }
+
+        function exibirToast(mensagem) {
+            let toast = document.getElementById('toast-copiar');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-copiar';
+                toast.style.position = 'fixed';
+                toast.style.bottom = '24px';
+                toast.style.right = '24px';
+                toast.style.padding = '12px 20px';
+                toast.style.borderRadius = '9999px';
+                toast.style.background = 'rgba(56, 189, 248, 0.9)';
+                toast.style.color = '#0f172a';
+                toast.style.fontSize = '0.9rem';
+                toast.style.fontWeight = '600';
+                toast.style.boxShadow = '0 10px 25px rgba(56, 189, 248, 0.35)';
+                toast.style.zIndex = '9999';
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                toast.style.transform = 'translateY(20px)';
+                document.body.appendChild(toast);
+            }
+
+            toast.textContent = mensagem;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+
+            clearTimeout(window.__toastTimeout);
+            window.__toastTimeout = setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+            }, 2500);
         }
 
 
