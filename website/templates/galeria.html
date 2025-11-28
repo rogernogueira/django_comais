@@ -11,18 +11,27 @@
   <div class="shadow p-4 mb-5 bg-body rounded">
     <section id="gallery" class="gallery">
       <div class="container">
+        {% for imagem in imagens %}
+        <div>
+          imagem: {{ imagem}}
+        </div>
+        {% endfor%}
         <div class="row gy-4">
+          
           {% for imagem in imagens %}
+          
           <div class="col-lg-4 col-md-6">
             <div class="gallery-item">
-              <a href="{{ imagem.url }}" data-gallery="gallery" class="gallery-lightbox">
+              <a href="/media/{{ imagem }}" data-gallery="gallery" class="gallery-lightbox">
                 <div class="gallery-img-container">
-                  <img src="/media/{{ imagem.thumbnail_url }}" class="img-fluid" alt="{{ imagem.titulo }}">
+                  <img src="/media/{{ imagem }}" class="img-fluid" alt="{{ imagem.titulo }}">
+                  <p>/media/{{ imagem }}</p>
                   <div class="gallery-overlay">
                     <div class="gallery-overlay-content">
-                      <h4>{{ imagem.titulo }}</h4>
+                      <h4>{{imagem.titulo }}</h4>
                       <p>{{ imagem.descricao|truncatechars:100 }}</p>
                     </div>
+                    
                   </div>
                 </div>
               </a>
