@@ -4,140 +4,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Métricas de Avaliação - Detecção de Anomalias</title>
+    <title>Métricas de Avaliação - Inteligência Policial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'bg-base': '#0f172a',
-                        'bg-elevated': '#020617',
-                        'bg-surface': '#1e293b',
-                        'bg-muted': '#334155',
-                        'text-primary': '#f1f5f9',
-                        'text-secondary': '#cbd5e1',
-                        'text-muted': '#94a3b8',
-                        'text-accent': '#ef4444',
-                        'primary': '#ef4444',
-                        'primary-foreground': '#0f172a',
+                        'bg-base': '#0f172a',       // Slate 900
+                        'bg-elevated': '#020617',   // Slate 950
+                        'bg-surface': '#1e293b',    // Slate 800
+                        'bg-muted': '#334155',      // Slate 700
+                        'text-primary': '#f8fafc',  // Slate 50
+                        'text-secondary': '#cbd5e1',// Slate 300
+                        'text-muted': '#94a3b8',    // Slate 400
+                        'intel-red': '#ef4444',     // Red 500 (Critical)
+                        'intel-dark-red': '#7f1d1d',// Red 900
+                        'intel-green': '#10b981',   // Emerald 500
+                        'primary': '#ef4444'
                     }
                 }
             }
         }
     </script>
     <style>
-        .element-clickable {
-            transition: all 0.2s ease;
-            cursor: pointer;
+        .math-font {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
         }
-
-        .element-clickable:hover {
-            background-color: rgba(239, 68, 68, 0.1);
-            transform: translateY(-2px);
+        .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 0.9em;
         }
-
-        .element-clickable:active {
-            transform: translateY(0);
+        .fraction > span {
+            display: block;
+            padding: 0 0.2em;
         }
-
-        .back-button {
-            transition: all 0.2s ease;
+        .fraction span.bottom {
+            border-top: 1px solid #cbd5e1;
         }
-
-        .back-button:hover {
-            background-color: rgba(239, 68, 68, 0.2);
-            transform: translateX(-2px);
+        .matrix-cell {
+            transition: all 0.3s ease;
+        }
+        .matrix-cell:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 
-<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
-    <div class="max-w-6xl mx-auto">
-        <div class="flex items-center mb-8">
-            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="history.back()">
-                <span class="text-primary text-lg">←</span>
-            </button>
-            <h1 class="text-4xl text-primary font-bold">Métricas de Avaliação</h1>
-        </div>
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
 
-        <p class="text-xl text-center mb-12 text-text-secondary">Além da Acurácia: Precision, Recall e F1-Score</p>
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-intel-red/10 hover:bg-intel-red/20 text-intel-red p-3 rounded-lg transition-all" onclick="history.back()">
+                    ←
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-primary tracking-tight">Métricas de Avaliação</h1>
+                    <p class="text-text-muted mt-1">O Dilema Tático: Precisão vs. Recall em Segurança Pública</p>
+                </div>
+            </div>
+       
+        </header>
+
+        <section class="bg-bg-surface p-6 rounded-xl border-l-4 border-intel-red">
+            <h2 class="text-xl font-bold text-primary mb-2">⚠ Por que não usar apenas "Acurácia"?</h2>
+            <p class="text-text-secondary">
+                Em segurança pública, os dados são desbalanceados. Crimes representam talvez 0,1% das ocorrências.
+                Se um modelo disser <strong>"Ninguém é criminoso"</strong>, ele terá <strong>99,9% de acurácia</strong>, mas falhará em sua única missão: detectar o crime.
+                Por isso, usamos a <strong>Matriz de Confusão</strong>.
+            </p>
+        </section>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="space-y-6">
-                <div class="bg-bg-muted/20 p-4 rounded-lg">
-                    <h3 class="text-xl mb-4 text-primary font-bold">Matriz de Confusão</h3>
-                    <div class="grid grid-cols-2 gap-2 text-center">
-                        <div class="bg-bg-surface p-4 rounded border border-green-500/30">
-                            <p class="text-green-400 font-bold">Verdadeiro Negativo (VN)</p>
-                            <p class="text-xs text-text-muted">Normal classificado como Normal</p>
-                        </div>
-                        <div class="bg-bg-surface p-4 rounded border border-red-500/30">
-                            <p class="text-red-400 font-bold">Falso Positivo (FP)</p>
-                            <p class="text-xs text-text-muted">Alarme Falso (Normal como Fraude)</p>
-                        </div>
-                        <div class="bg-bg-surface p-4 rounded border border-red-500/30">
-                            <p class="text-red-400 font-bold">Falso Negativo (FN)</p>
-                            <p class="text-xs text-text-muted">Fraude Perdida (Fraude como Normal)</p>
-                        </div>
-                        <div class="bg-bg-surface p-4 rounded border border-green-500/30">
-                            <p class="text-green-400 font-bold">Verdadeiro Positivo (VP)</p>
-                            <p class="text-xs text-text-muted">Fraude classificada como Fraude</p>
-                        </div>
+            <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-xl relative">
+                <div class="absolute top-4 left-4 text-xs font-mono text-intel-red">REALIDADE vs PREDIÇÃO</div>
+                
+                <div class="grid grid-cols-2 gap-4 mt-6 h-64">
+                    <div class="matrix-cell bg-bg-surface p-4 rounded border border-intel-green/30 flex flex-col justify-center items-center text-center">
+                        <span class="text-2xl font-bold text-intel-green">Verdadeiro Negativo</span>
+                        <span class="text-xs text-gray-400 mt-1">Cidadão Honesto classificado como Honesto.</span>
+                        <span class="text-xs text-gray-500 mt-2 italic">"O ideal. A rotina policial."</span>
                     </div>
-                </div>
-
-                <div class="bg-bg-muted/20 p-4 rounded-lg">
-                    <h3 class="text-xl mb-4 text-primary font-bold">As Métricas Reais</h3>
-                    <div class="space-y-4">
-                        <div class="bg-bg-surface p-4 rounded">
-                            <h4 class="text-primary font-bold">Precision (Precisão)</h4>
-                            <p class="text-text-secondary text-sm">De todos que chamei de fraude, quantos eram realmente
-                                fraude?</p>
-                            <p class="text-text-muted font-mono text-xs mt-1">VP / (VP + FP)</p>
-                        </div>
-                        <div class="bg-bg-surface p-4 rounded">
-                            <h4 class="text-primary font-bold">Recall (Sensibilidade)</h4>
-                            <p class="text-text-secondary text-sm">De todas as fraudes que existem, quantas eu peguei?
-                            </p>
-                            <p class="text-text-muted font-mono text-xs mt-1">VP / (VP + FN)</p>
-                        </div>
-                        <div class="bg-bg-surface p-4 rounded">
-                            <h4 class="text-primary font-bold">F1-Score</h4>
-                            <p class="text-text-secondary text-sm">Média harmônica entre Precision e Recall.</p>
-                        </div>
+                    <div class="matrix-cell bg-bg-surface p-4 rounded border border-intel-red/50 flex flex-col justify-center items-center text-center bg-intel-red/5">
+                        <span class="text-2xl font-bold text-intel-red">Falso Positivo</span>
+                        <span class="text-xs text-gray-300 mt-1">Cidadão classificado como Criminoso.</span>
+                        <span class="text-xs text-intel-red mt-2 font-bold italic">"Abordagem desnecessária. Constrangimento."</span>
+                    </div>
+                    <div class="matrix-cell bg-bg-surface p-4 rounded border border-intel-dark-red flex flex-col justify-center items-center text-center bg-intel-dark-red/20">
+                        <span class="text-2xl font-bold text-red-400">Falso Negativo</span>
+                        <span class="text-xs text-gray-300 mt-1">Criminoso classificado como Honesto.</span>
+                        <span class="text-xs text-red-400 mt-2 font-bold italic">"Crime não detectado. Risco à sociedade."</span>
+                    </div>
+                    <div class="matrix-cell bg-bg-surface p-4 rounded border border-intel-green/30 flex flex-col justify-center items-center text-center bg-intel-green/10">
+                        <span class="text-2xl font-bold text-intel-green">Verdadeiro Positivo</span>
+                        <span class="text-xs text-gray-300 mt-1">Criminoso classificado como Criminoso.</span>
+                        <span class="text-xs text-gray-500 mt-2 italic">"Sucesso na operação."</span>
                     </div>
                 </div>
             </div>
 
             <div class="space-y-6">
-                <div>
-                    <h3 class="text-xl mb-3 text-primary font-bold">Trade-off Precision vs Recall</h3>
-                    <p class="text-text-secondary leading-relaxed">
-                        Em detecção de fraudes, geralmente preferimos <strong>Alto Recall</strong> (pegar todas as
-                        fraudes), mesmo que isso gere alguns Falsos Positivos (bloquear cartão de cliente legítimo
-                        temporariamente).
-                    </p>
+                <div class="glass-panel bg-bg-surface/50 p-5 rounded-xl border border-gray-700">
+                    <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                        <span class="text-intel-red">1.</span> Precision (Precisão)
+                    </h3>
+                    <div class="flex items-center gap-6">
+                        <div class="text-xl text-white math-font">
+                            <div class="fraction">
+                                <span class="top">VP</span>
+                                <span class="bottom">VP + FP</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-400">
+                            <strong>"Qualidade do Alerta"</strong>. De todos os alarmes que soaram, quantos eram reais?
+                            <br><i>Baixa precisão gera "Fadiga de Alerta" na tropa.</i>
+                        </p>
+                    </div>
                 </div>
 
-                <div>
-                    <h3 class="text-xl mb-3 text-primary font-bold">Curvas de Avaliação</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
-                            <h4 class="text-primary font-bold mb-2">ROC Curve</h4>
-                            <p class="text-sm text-text-secondary">Taxa de VP vs Taxa de FP.</p>
+                <div class="glass-panel bg-bg-surface/50 p-5 rounded-xl border border-gray-700">
+                    <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                        <span class="text-intel-red">2.</span> Recall (Sensibilidade)
+                    </h3>
+                    <div class="flex items-center gap-6">
+                        <div class="text-xl text-white math-font">
+                            <div class="fraction">
+                                <span class="top">VP</span>
+                                <span class="bottom">VP + FN</span>
+                            </div>
                         </div>
-                        <div class="element-clickable bg-bg-muted/30 p-4 rounded-lg">
-                            <h4 class="text-primary font-bold mb-2">PR Curve</h4>
-                            <p class="text-sm text-text-secondary">Precision vs Recall (Melhor para dados
-                                desbalanceados).</p>
+                        <p class="text-sm text-gray-400">
+                            <strong>"Cobertura do Crime"</strong>. De todos os crimes que aconteceram, quantos nós pegamos?
+                            <br><i>Baixo Recall significa impunidade.</i>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-panel bg-bg-surface/50 p-5 rounded-xl border border-gray-700">
+                    <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                        <span class="text-intel-red">3.</span> F1-Score
+                    </h3>
+                    <div class="flex items-center gap-6">
+                        <div class="text-xl text-white math-font">
+                            2 * <div class="fraction">
+                                <span class="top">Precision * Recall</span>
+                                <span class="bottom">Precision + Recall</span>
+                            </div>
                         </div>
+                        <p class="text-sm text-gray-400">
+                            A média harmônica. Use quando você precisa de um equilíbrio entre não incomodar inocentes e não deixar bandido escapar.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-  <script src="../../assets/js/footer.js"></script>
-</body>
+        
 
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-primary mb-4">Ajuste de Threshold (Limiar de Corte)</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    A maioria dos algoritmos cospe uma probabilidade (ex: 0.75). Você decide onde cortar. 
+                    O padrão é 0.5, mas na polícia isso muda conforme o risco.
+                </p>
+                <div class="space-y-4">
+                    <div class="bg-black/30 p-3 rounded border-l-4 border-yellow-500">
+                        <h4 class="text-yellow-500 font-bold text-sm">Estratégia: Alto Recall (Limiar Baixo: 0.2)</h4>
+                        <p class="text-xs text-gray-400">"Melhor parar 10 inocentes do que deixar 1 terrorista passar."</p>
+                        <p class="text-xs text-white mt-1">Uso: Antiterrorismo, Ameaça de Bomba, Homicídio.</p>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded border-l-4 border-blue-500">
+                        <h4 class="text-blue-500 font-bold text-sm">Estratégia: Alta Precisão (Limiar Alto: 0.9)</h4>
+                        <p class="text-xs text-gray-400">"Só acuse se tiver certeza absoluta, para não destruir reputações."</p>
+                        <p class="text-xs text-white mt-1">Uso: Fraude Interna (Corregedoria), Denúncias Anônimas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-primary mb-4">Outras Métricas Táticas</h3>
+                <ul class="space-y-4 text-sm text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <span class="text-intel-red font-bold">AUC-ROC:</span>
+                        <span>Mede a capacidade do modelo de separar classes. Se AUC = 0.5, o modelo é uma moeda (aleatório). Se AUC = 1.0, é perfeito. Em segurança, buscamos > 0.85.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-intel-red font-bold">Tempo de Inferência:</span>
+                        <span>Crítico. Se o modelo leva 10 segundos para processar uma placa (LPR), o carro roubado já passou. Tem que ser milissegundos.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="bg-bg-elevated p-6 md:p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-primary mb-6">Exemplo Prático: Leitura de Placas (LPR)</h2>
+            <p class="text-gray-400 text-sm mb-4">Cenário: Câmera inteligente detectando carros roubados. Total de leituras: 1.000.</p>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-800 text-gray-200 uppercase text-xs">
+                        <tr>
+                            <th class="p-3">Situação Real</th>
+                            <th class="p-3">Previsão do Modelo</th>
+                            <th class="p-3">Quantidade</th>
+                            <th class="p-3">Classificação</th>
+                            <th class="p-3">Impacto Operacional</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300 divide-y divide-gray-700">
+                        <tr>
+                            <td class="p-3 text-red-400 font-bold">Roubado</td>
+                            <td class="p-3 text-red-400 font-bold">Roubado</td>
+                            <td class="p-3">15</td>
+                            <td class="p-3"><span class="bg-green-900 text-green-300 px-2 py-1 rounded text-xs">VP</span></td>
+                            <td class="p-3">15 Carros Recuperados (Sucesso)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">Normal</td>
+                            <td class="p-3">Normal</td>
+                            <td class="p-3">950</td>
+                            <td class="p-3"><span class="bg-green-900 text-green-300 px-2 py-1 rounded text-xs">VN</span></td>
+                            <td class="p-3">Fluxo segue normal.</td>
+                        </tr>
+                        <tr class="bg-intel-red/10">
+                            <td class="p-3">Normal</td>
+                            <td class="p-3 text-red-400 font-bold">Roubado</td>
+                            <td class="p-3">30</td>
+                            <td class="p-3"><span class="bg-red-900 text-red-300 px-2 py-1 rounded text-xs">FP</span></td>
+                            <td class="p-3">30 Famílias paradas pela polícia por engano.</td>
+                        </tr>
+                        <tr class="bg-red-950/30">
+                            <td class="p-3 text-red-400 font-bold">Roubado</td>
+                            <td class="p-3">Normal</td>
+                            <td class="p-3">5</td>
+                            <td class="p-3"><span class="bg-red-900 text-red-300 px-2 py-1 rounded text-xs">FN</span></td>
+                            <td class="p-3">5 Carros roubados não detectados.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div class="bg-black/40 p-3 rounded">
+                    <p class="text-xs text-gray-500">Precision</p>
+                    <p class="text-xl font-bold text-white">33%</p>
+                    <p class="text-xs text-gray-500 mt-1">De cada 3 abordagens, só 1 era ladrão.</p>
+                </div>
+                <div class="bg-black/40 p-3 rounded">
+                    <p class="text-xs text-gray-500">Recall</p>
+                    <p class="text-xl font-bold text-white">75%</p>
+                    <p class="text-xs text-gray-500 mt-1">Recuperamos 75% dos carros roubados.</p>
+                </div>
+                <div class="bg-black/40 p-3 rounded border border-intel-red">
+                    <p class="text-xs text-gray-500">Decisão do Comandante</p>
+                    <p class="text-sm font-bold text-white mt-1">"A Precisão de 33% está muito baixa. Estamos parando muito inocente. Ajuste o limiar para subir a precisão, mesmo que o Recall caia um pouco."</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-primary mb-6">Cenários de Métricas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bg-muted/20 p-5 rounded border-l-4 border-red-500 hover:bg-bg-muted/30 transition">
+                    <h3 class="font-bold text-white mb-2">Ameaça de Bomba em Aeroporto</h3>
+                    <p class="text-sm text-gray-300"><strong>Prioridade: Recall Máximo (~100%).</strong></p>
+                    <p class="text-xs text-gray-400 mt-2">Não podemos deixar passar NENHUMA mala suspeita. Aceitamos revistar 100 malas normais (Falsos Positivos) para achar 1 bomba. O custo do erro (FN) é catastrófico.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded border-l-4 border-yellow-500 hover:bg-bg-muted/30 transition">
+                    <h3 class="font-bold text-white mb-2">Monitoramento de Tornozeleira</h3>
+                    <p class="text-sm text-gray-300"><strong>Prioridade: F1-Score (Equilíbrio).</strong></p>
+                    <p class="text-xs text-gray-400 mt-2">Se alertar a cada perda de sinal de GPS (túnel), a central ignora (fadiga). Se não alertar fuga, é grave. Busca-se o meio termo.</p>
+                </div>
+                <div class="bg-bg-muted/20 p-5 rounded border-l-4 border-blue-500 hover:bg-bg-muted/30 transition">
+                    <h3 class="font-bold text-white mb-2">Investigação de Policiais (IA)</h3>
+                    <p class="text-sm text-gray-300"><strong>Prioridade: Precisão Máxima.</strong></p>
+                    <p class="text-xs text-gray-400 mt-2">Só abrir inquérito administrativo se houver indícios muito fortes de corrupção. Falsos positivos destroem o moral da tropa e carreiras.</p>
+                </div>
+            </div>
+        </section>
+     
+        <script src="../../assets/js/footer.js"></script>
+     
+    </div>
+</body>
 </html>
