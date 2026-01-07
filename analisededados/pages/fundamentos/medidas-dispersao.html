@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medidas de Dispersão - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#fbbf24', /* Amber/Yellow for Dispersion */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Medidas de Dispersão</h1>
+                    <p class="text-gray-400 mt-1">Quão "espalhados" estão seus dados? (Variabilidade)</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- The Concepts -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- Amplitude -->
+            <div
+                class="bg-bg-surface p-6 rounded-xl border-t-4 border-gray-500 hover:transform hover:-translate-y-1 transition-transform">
+                <h3 class="text-xl font-bold text-gray-300 mb-2">Amplitude (Range)</h3>
+                <p class="text-xs text-gray-500 font-mono mb-4">Max - Min</p>
+                <p class="text-sm text-gray-400">A distância total entre o menor e o maior valor. Muito sensível a
+                    outliers.</p>
+            </div>
+
+            <!-- Variância -->
+            <div
+                class="bg-bg-surface p-6 rounded-xl border-t-4 border-primary hover:transform hover:-translate-y-1 transition-transform">
+                <h3 class="text-xl font-bold text-primary mb-2">Variância (σ²)</h3>
+                <p class="text-xs text-primary/70 font-mono mb-4">Média dos quadrados</p>
+                <p class="text-sm text-gray-400">Média das distâncias ao quadrado em relação à média. Difícil de
+                    interpretar pois a unidade fica ao quadrado (ex: metros²).</p>
+            </div>
+
+            <!-- Desvio Padrão -->
+            <div
+                class="bg-bg-surface p-6 rounded-xl border-t-4 border-primary hover:transform hover:-translate-y-1 transition-transform bg-primary/5">
+                <h3 class="text-xl font-bold text-primary mb-2">Desvio Padrão (σ)</h3>
+                <p class="text-xs text-primary/70 font-mono mb-4">Raiz da Variância</p>
+                <p class="text-sm text-gray-400">Traz a variância de volta para a unidade original. É a "distância
+                    média" típica dos dados até a média.</p>
+            </div>
+
+            <!-- IQR -->
+            <div
+                class="bg-bg-surface p-6 rounded-xl border-t-4 border-green-500 hover:transform hover:-translate-y-1 transition-transform">
+                <h3 class="text-xl font-bold text-green-400 mb-2">IQR (Interquartil)</h3>
+                <p class="text-xs text-green-400/70 font-mono mb-4">Q3 - Q1</p>
+                <p class="text-sm text-gray-400">Mede o espalhamento dos 50% centrais dos dados. Medida robusta que
+                    ignora os extremos.</p>
+            </div>
+
+        </div>
+
+        <!-- Simulation/Visual -->
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-white mb-6">Visualizando a Dispersão</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+                <!-- Low Dispersion -->
+                <div>
+                    <h4 class="text-lg font-bold text-green-400 mb-4 flex justify-between">
+                        Baixa Dispersão (σ = 2)
+                        <span class="text-xs bg-green-900 text-green-300 px-2 py-1 rounded">Consistente</span>
+                    </h4>
+                    <div
+                        class="relative h-40 bg-gray-900/50 rounded-lg flex items-end justify-center pb-4 border-b border-gray-600">
+                        <!-- Bars simulating normal dist -->
+                        <div class="w-4 h-4 bg-primary/20 mx-1"></div>
+                        <div class="w-4 h-12 bg-primary/40 mx-1"></div>
+                        <div class="w-4 h-24 bg-primary/60 mx-1"></div>
+                        <div class="w-4 h-32 bg-primary mx-1"></div> <!-- High Peak -->
+                        <div class="w-4 h-24 bg-primary/60 mx-1"></div>
+                        <div class="w-4 h-12 bg-primary/40 mx-1"></div>
+                        <div class="w-4 h-4 bg-primary/20 mx-1"></div>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-2">Dados agrupados perto da média. Previsível.</p>
+                </div>
+
+                <!-- High Dispersion -->
+                <div>
+                    <h4 class="text-lg font-bold text-red-400 mb-4 flex justify-between">
+                        Alta Dispersão (σ = 15)
+                        <span class="text-xs bg-red-900 text-red-300 px-2 py-1 rounded">Volátil</span>
+                    </h4>
+                    <div
+                        class="relative h-40 bg-gray-900/50 rounded-lg flex items-end justify-center pb-4 border-b border-gray-600">
+                        <!-- Bars simulating flat dist -->
+                        <div class="w-4 h-12 bg-primary/30 mx-1"></div>
+                        <div class="w-4 h-14 bg-primary/30 mx-1"></div>
+                        <div class="w-4 h-16 bg-primary/30 mx-1"></div>
+                        <div class="w-4 h-16 bg-primary/30 mx-1"></div> <!-- Low Peak -->
+                        <div class="w-4 h-16 bg-primary/30 mx-1"></div>
+                        <div class="w-4 h-14 bg-primary/30 mx-1"></div>
+                        <div class="w-4 h-12 bg-primary/30 mx-1"></div>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-2">Dados espalhados. Imprevisível.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Practical Example -->
+        <section class="bg-blue-500/10 p-6 rounded-xl border border-blue-500/20">
+            <h3 class="text-blue-300 font-bold mb-2">Exemplo Policial: Tempo de Chegada</h3>
+            <p class="text-gray-300 mb-4">Duas viaturas (A e B) têm tempo médio de chegada de <strong>10
+                    minutos</strong>. Mas a dispersão conta a história real:</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+                <li class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    <strong>Viatura A (σ = 1 min):</strong> Chega entre 9 e 11 min. <strong>Confiável.</strong>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                    <strong>Viatura B (σ = 8 min):</strong> Chega entre 2 e 18 min. <strong>Arriscada</strong> (pode
+                    chegar muito cedo ou tarde demais).
+                </li>
+            </ul>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

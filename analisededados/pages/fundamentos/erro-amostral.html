@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro Amostral - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#f472b6', /* Pink */
+                        'danger': '#f87171',
+                        'success': '#4ade80',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Erro Amostral e Erro Padrão</h1>
+                    <p class="text-gray-400 mt-1">A certeza sobre a incerteza</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Concept -->
+        <section class="max-w-4xl mx-auto text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Nunca teremos o valor exato. E tudo bem.</h2>
+            <p class="text-gray-400 mb-8">
+                Como usamos apenas uma amostra, a média que calculamos (x̄) raramente é exatamente igual à média real da
+                população (μ). A diferença entre elas é o <strong>Erro Amostral</strong>.
+            </p>
+        </section>
+
+        <!-- Standard Error Formula -->
+        <section
+            class="bg-bg-surface p-8 rounded-xl border border-gray-700 flex flex-col md:flex-row items-center justify-around gap-8">
+            <div class="text-center">
+                <p class="text-sm text-gray-400 uppercase tracking-widest mb-2">A Fórmula do Erro Padrão</p>
+                <div class="text-4xl font-serif text-primary font-bold">SE = σ / √n</div>
+            </div>
+            <div class="space-y-4 max-w-lg">
+                <div class="flex items-start gap-4">
+                    <span class="text-2xl mt-1">📉</span>
+                    <div>
+                        <strong class="text-white block">A Incerteza diminui com o tamanho (n)</strong>
+                        <p class="text-sm text-gray-400">Como o 'n' está no denominador, quanto maior sua amostra, menor
+                            o erro. Quadruplicar a amostra reduz o erro pela metade.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <span class="text-2xl mt-1">📊</span>
+                    <div>
+                        <strong class="text-white block">A Dispersão (σ) importa</strong>
+                        <p class="text-sm text-gray-400">Se a população é muito variada (σ alto), é mais difícil acertar
+                            a média. Precisamos de mais amostras.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Simulator -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-bg-elevated p-6 rounded-xl border-l-4 border-danger">
+                <h3 class="text-xl font-bold text-danger mb-2">Amostra Pequena (n=10)</h3>
+                <div class="h-24 relative bg-gray-900 rounded mb-4 flex items-center justify-center">
+                    <!-- Wide confidence interval -->
+                    <div class="w-[80%] h-1 bg-danger/50 absolute"></div>
+                    <div class="w-1 h-3 bg-danger absolute left-[10%]"></div>
+                    <div class="w-1 h-3 bg-danger absolute right-[10%]"></div>
+                    <div class="w-2 h-2 bg-white rounded-full absolute z-10"></div>
+                </div>
+                <p class="text-sm text-gray-400">
+                    O erro é grande. A média real pode estar em qualquer lugar nessa barra larga.
+                    <br><span class="text-danger font-bold">Margem de Erro: ± 10%</span>
+                </p>
+            </div>
+
+            <div class="bg-bg-elevated p-6 rounded-xl border-l-4 border-success">
+                <h3 class="text-xl font-bold text-success mb-2">Amostra Grande (n=1000)</h3>
+                <div class="h-24 relative bg-gray-900 rounded mb-4 flex items-center justify-center">
+                    <!-- Narrow confidence interval -->
+                    <div class="w-[20%] h-1 bg-success/50 absolute"></div>
+                    <div class="w-1 h-3 bg-success absolute left-[40%]"></div>
+                    <div class="w-1 h-3 bg-success absolute right-[40%]"></div>
+                    <div class="w-2 h-2 bg-white rounded-full absolute z-10"></div>
+                </div>
+                <p class="text-sm text-gray-400">
+                    O erro é minúsculo. Sabemos com precisão onde está a média real.
+                    <br><span class="text-success font-bold">Margem de Erro: ± 1%</span>
+                </p>
+            </div>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

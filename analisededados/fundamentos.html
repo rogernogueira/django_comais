@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos de Estatística - Conceitos Essenciais</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'text-accent': '#06b6d4', /* Cyan for Fundamentos */
+                        'primary': '#06b6d4',
+                        'primary-foreground': '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .slide {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .slide:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
+        }
+
+        .slide.active {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.5);
+            border: 2px solid #06b6d4;
+        }
+
+        .element-clickable {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .element-clickable:hover {
+            background-color: rgba(6, 182, 212, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .element-clickable:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-8">
+
+    <!-- Container principal com grid responsivo -->
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl md:text-5xl text-center mb-8 text-primary font-bold">Fundamentos de Estatística</h1>
+        <p class="text-xl text-center mb-12 text-text-secondary">Conceitos e Ferramentas Essenciais para Análise de
+            Dados</p>
+
+        <!-- Grid de slides interativos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Slide 1: Título Principal -->
+            <div
+                class="slide bg-bg-elevated rounded-2xl p-8 flex flex-col justify-center items-center text-center border-2 border-primary/20 hover:border-primary/50">
+                <h2 class="text-3xl mb-4 text-primary font-bold">Base Estatística</h2>
+                <p class="text-lg text-text-secondary">Conceitos Fundamentais</p>
+                <p class="text-sm mt-4 text-text-muted">Do Básico à Inferência</p>
+                <a href="index.html"
+                    class="mt-6 text-sm text-text-muted hover:text-white transition-colors border border-bg-muted px-4 py-2 rounded-full">←
+                    Voltar ao Menu Principal</a>
+            </div>
+
+            <!-- Slide 2: Tipos de Dados e Escalas -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-green-400/20 hover:border-green-400/50">
+                <h3 class="text-xl mb-4 text-green-400 font-bold">Tipos de Dados e Escalas</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/tipos-variaveis.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-green-400/50 group-hover:text-green-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Qualitativa/Quantitativa</p>
+                        <p class="text-xs text-text-muted">Discreta e Contínua</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/escalas-medida.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-green-400/50 group-hover:text-green-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Escalas de Medida</p>
+                        <p class="text-xs text-text-muted">Nominal, Ordinal, Intervalar, Razão</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Estatística Descritiva -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-blue-400/20 hover:border-blue-400/50">
+                <h3 class="text-xl mb-4 text-blue-400 font-bold">Estatística Descritiva</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/medidas-tendencia.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-blue-400/50 group-hover:text-blue-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Média, Mediana, Moda</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/medidas-posicao.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-blue-400/50 group-hover:text-blue-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                        <p class="text-text-secondary">Quartis e Percentis</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/assimetria-curtose.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-blue-400/50 group-hover:text-blue-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Assimetria e Curtose</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Dispersão -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-yellow-400/20 hover:border-yellow-400/50">
+                <h3 class="text-xl mb-4 text-yellow-400 font-bold">Dispersão</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/medidas-dispersao.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-yellow-400/50 group-hover:text-yellow-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        <p class="text-text-secondary">Amplitude, Var, DP, IQR</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/coeficiente-variacao.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-yellow-400/50 group-hover:text-yellow-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Coeficiente de Variação</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/robustez.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-yellow-400/50 group-hover:text-yellow-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Sensível vs Robusto</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Distribuições e Forma -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-purple-400/20 hover:border-purple-400/50">
+                <h3 class="text-xl mb-4 text-purple-400 font-bold">Distribuições e Forma</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/distribuicoes.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-purple-400/50 group-hover:text-purple-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Normal, Binomial, Poisson</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/teorema-central.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-purple-400/50 group-hover:text-purple-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Teorema Central (TCL)</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/escore-z.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-purple-400/50 group-hover:text-purple-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Padronização Z, Escore-Z</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Amostragem e Inferência -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-pink-400/20 hover:border-pink-400/50">
+                <h3 class="text-xl mb-4 text-pink-400 font-bold">Amostragem e Inferência</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/populacao-amostra.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-pink-400/50 group-hover:text-pink-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">População x Amostra</p>
+                        <p class="text-xs text-text-muted">Viés e Aleatoriedade</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/erro-amostral.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-pink-400/50 group-hover:text-pink-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Erro Amostral e Padrão</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/inferencia-intro.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-pink-400/50 group-hover:text-pink-400 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">IC e Teste de Hipótese</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Visualização e Leitura -->
+            <div
+                class="slide bg-bg-surface rounded-2xl p-6 flex flex-col border-2 border-red-500/20 hover:border-red-500/50">
+                <h3 class="text-xl mb-4 text-red-500 font-bold">Visualização e Leitura</h3>
+                <div class="space-y-3 flex-1">
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/visualizacao-basica.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-red-500/50 group-hover:text-red-500 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Histograma, Densidade</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/visualizacao-relacoes.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-red-500/50 group-hover:text-red-500 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Boxplot e Scatter</p>
+                    </div>
+                    <div class="element-clickable bg-bg-muted/30 p-3 rounded-lg relative group"
+                        onclick="window.location.href='pages/fundamentos/leitura-dados.html'">
+                        <svg class="w-4 h-4 absolute top-2 right-2 text-red-500/50 group-hover:text-red-500 transition-colors"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        <p class="text-text-secondary">Outliers e Assimetria</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript para interatividade -->
+    <script>
+        // Adicionar interatividade aos elementos clicáveis
+        document.addEventListener('DOMContentLoaded', function () {
+            const clickableElements = document.querySelectorAll('.element-clickable, .slide');
+
+            clickableElements.forEach(element => {
+                element.addEventListener('click', function (e) {
+                    // Evitar propagação se clicar em um link interno
+                    if (e.target.tagName === 'A') return;
+
+                    // Adicionar efeito visual de clique
+                    this.style.transform = 'scale(0.98)';
+                    this.style.backgroundColor = 'rgba(6, 182, 212, 0.2)';
+
+                    // Remover efeito após um tempo
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        // Restaurar background original (seria melhor se não fosse inline e sim classe, mas...)
+                        this.style.backgroundColor = '';
+                    }, 200);
+                });
+            });
+
+            // Adicionar navegação por teclado
+            document.addEventListener('keydown', function (e) {
+                const slides = document.querySelectorAll('.slide');
+                const activeSlide = document.querySelector('.slide.active');
+                let currentIndex = Array.from(slides).indexOf(activeSlide);
+
+                // Se nenhum slide estiver ativo, ativar o primeiro
+                if (currentIndex === -1 && slides.length > 0) {
+                    currentIndex = 0;
+                }
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                }
+
+                if (currentIndex >= 0) {
+                    slides.forEach(slide => slide.classList.remove('active'));
+                    slides[currentIndex].classList.add('active');
+
+                    // Scroll para o elemento se necessário
+                    slides[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+        });
+    </script>
+
+    <script src="assets/js/footer.js"></script>
+</body>
+
+</html>

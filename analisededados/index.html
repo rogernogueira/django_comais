@@ -22,6 +22,7 @@
             'corr': '#f59e0b',       // Correlação
             'reg': '#8b5cf6',        // Regressão
             'anom': '#10b981',       // Anomalia (Emerald)
+            'fund': '#06b6d4',       // Fundamentos (Cyan)
           }
         }
       }
@@ -226,29 +227,29 @@
         <div class="puzzle-grid ">
 
           <!-- TOP-LEFT – Correlação (aba direita + aba embaixo) -->
-          <div onclick="window.location.href='correlacao.html'"
+          <div onclick="window.location.href='fundamentos.html'"
             class="module-card puzzle-piece piece-tl bg-bg-surface p-8 group ">
 
             <!-- tabs -->
             <div class="puzzle-tab out right"></div>
             <div class="puzzle-tab out bottom"></div>
-
-            <div class="module-inner ">
-              <div class="flex items-start justify-between mb-6 ">
-                <div class="p-4 bg-corr/10 rounded-2xl group-hover:bg-corr/20 transition-colors">
-                  <svg class="w-8 h-8 text-corr" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="module-inner ml-4">
+              <div class="flex items-start justify-between mb-6">
+                <div class="p-4 bg-fund/10 rounded-2xl group-hover:bg-fund/20 transition-colors">
+                  <svg class="w-8 h-8 text-fund" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                    </path>
                   </svg>
                 </div>
                 <span
-                  class="text-xs font-bold tracking-wider text-corr uppercase bg-corr/10 px-3 py-1 rounded-full">Correlation</span>
+                  class="text-xs font-bold tracking-wider text-fund uppercase bg-fund/10 px-3 py-1 rounded-full">Fundamentals</span>
               </div>
-              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-corr transition-colors">Correlação</h2>
+              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-fund transition-colors">Fundamentos</h2>
               <p class="text-text-secondary mb-6">
-                Pearson, Spearman e Kendall. Para medir a força e direção de relacionamentos entre variáveis.
+                Conceitos essenciais: Tipos de dados, Distribuições, Amostragem e Inferência.
               </p>
-              <div class="flex items-center text-corr font-semibold">
+              <div class="flex items-center text-fund font-semibold">
                 <span>Acessar Painel</span>
                 <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none"
                   stroke="currentColor" viewBox="0 0 24 24">
@@ -257,6 +258,7 @@
                 </svg>
               </div>
             </div>
+            
           </div>
 
           <!-- TOP-RIGHT – Associação (encaixe esquerda + aba embaixo) -->
@@ -401,35 +403,43 @@
             </div>
           </div>
 
-          <!-- BOTTOM-RIGHT – Future (encaixe esquerda + encaixe em cima) -->
-          <div class="module-card puzzle-piece piece-br bg-bg-surface/50 p-8 group cursor-default">
+          <!-- BOTTOM-RIGHT – Fundamentos (encaixe esquerda + encaixe em cima) -->
+          <div onclick="window.location.href='correlacao.html'"
+            class="module-card puzzle-piece piece-br bg-bg-surface p-8 group">
 
             <!-- tabs -->
             <div class="puzzle-tab in left"></div>
             <div class="puzzle-tab in top"></div>
-
-            <div class="module-inner ml-4 opacity-50">
-              <div class="flex items-start justify-between mb-6">
-                <div class="p-4 bg-gray-700/30 rounded-2xl">
-                  <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="module-inner ml-4">
+              <div class="flex items-start justify-between mb-6 ">
+                <div class="p-4 bg-corr/10 rounded-2xl group-hover:bg-corr/20 transition-colors">
+                  <svg class="w-8 h-8 text-corr" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                   </svg>
                 </div>
                 <span
-                  class="text-xs font-bold tracking-wider text-gray-500 uppercase bg-gray-700/30 px-3 py-1 rounded-full">Em
-                  Breve</span>
+                  class="text-xs font-bold tracking-wider text-corr uppercase bg-corr/10 px-3 py-1 rounded-full">Correlation</span>
               </div>
-              <h2 class="text-3xl font-bold text-gray-500 mb-3">Novos Módulos</h2>
-              <p class="text-gray-600 mb-6">
-                Mais ferramentas estatísticas e de machine learning estão sendo desenvolvidas.
+              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-corr transition-colors">Correlação</h2>
+              <p class="text-text-secondary mb-6">
+                Pearson, Spearman e Kendall. Para medir a força e direção de relacionamentos entre variáveis.
               </p>
+              <div class="flex items-center text-corr font-semibold">
+                <span>Acessar Painel</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                  </path>
+                </svg>
+              </div>
             </div>
+            
           </div>
-        
+
+        </div>
       </div>
     </div>
-  </div>
 
   </div>
 

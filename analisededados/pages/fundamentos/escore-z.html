@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escore Z (Padronização) - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#a855f7', /* Purple */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Escore-Z (Padronização)</h1>
+                    <p class="text-gray-400 mt-1">A "Régua Universal" da Estatística</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Concept -->
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700 flex flex-col items-center text-center">
+            <h2 class="text-2xl font-bold text-white font-serif mb-4">Z = (x - μ) / σ</h2>
+            <p class="text-lg text-gray-300 max-w-2xl">
+                O Escore-Z conta <strong>quantos desvios padrão</strong> um valor está distante da média.
+                Ao transformar seus dados para Z, você coloca tudo na mesma régua.
+            </p>
+        </section>
+
+        <!-- Comparison Example -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-blue-500">
+                <h3 class="text-xl font-bold text-white mb-2">Aluno A: Prova de Matemática</h3>
+                <div class="text-sm text-gray-400 space-y-1 mb-4">
+                    <p>Nota: <strong>80</strong></p>
+                    <p>Média da Turma: 70</p>
+                    <p>Desvio Padrão: 10</p>
+                </div>
+                <div class="bg-blue-900/30 p-3 rounded text-center">
+                    <p class="text-xs text-blue-300 uppercase">Cálculo</p>
+                    <p class="font-bold text-white">(80 - 70) / 10 = <span class="text-blue-400 text-lg">+1.0</span></p>
+                </div>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-purple-500">
+                <h3 class="text-xl font-bold text-white mb-2">Aluno B: Prova de História</h3>
+                <div class="text-sm text-gray-400 space-y-1 mb-4">
+                    <p>Nota: <strong>90</strong></p>
+                    <p>Média da Turma: 85</p>
+                    <p>Desvio Padrão: 2.5</p>
+                </div>
+                <div class="bg-purple-900/30 p-3 rounded text-center">
+                    <p class="text-xs text-purple-300 uppercase">Cálculo</p>
+                    <p class="font-bold text-white">(90 - 85) / 2.5 = <span class="text-purple-400 text-lg">+2.0</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="bg-bg-muted/20 p-6 rounded-xl border border-primary/20 text-center">
+            <h3 class="text-xl font-bold text-white mb-2">Quem foi melhor?</h3>
+            <p class="text-gray-300">
+                O aluno B teve nota 90 (maior que 80), mas o <strong>Escore-Z do Aluno B (+2.0)</strong> é maior, ou
+                seja, ele se destacou muito mais em relação à turma dele.
+                O Aluno A foi apenas "bom", o Aluno B foi "excepcional".
+            </p>
+        </div>
+
+        <!-- Distribution Map -->
+        <section class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+            <div class="flex justify-between text-xs text-gray-500 mb-2 font-mono uppercase tracking-wider">
+                <span>Raro (Baixo)</span>
+                <span>Média</span>
+                <span>Raro (Alto)</span>
+            </div>
+
+            <div class="relative h-12 bg-gray-700 rounded-full w-full flex items-center shadow-inner">
+                <!-- Scale -->
+                <div class="absolute left-[50%] h-full w-[2px] bg-white z-10"></div>
+
+                <!-- Zones -->
+                <div class="h-full w-[68%] bg-primary/20 absolute left-[16%]"></div> <!-- 1 SD -->
+                <div class="h-full w-[95%] bg-primary/10 absolute left-[2.5%]"></div> <!-- 2 SD -->
+
+                <!-- Labels -->
+                <div class="absolute left-[16%] text-xs text-gray-400 -bottom-6">-1σ</div>
+                <div class="absolute right-[16%] text-xs text-gray-400 -bottom-6">+1σ</div>
+                <div class="absolute left-[2.5%] text-xs text-gray-400 -bottom-6">-2σ</div>
+                <div class="absolute right-[2.5%] text-xs text-gray-400 -bottom-6">+2σ</div>
+
+                <div class="absolute left-[50%] text-xs text-white -top-6 -translate-x-1/2">0 (Z)</div>
+            </div>
+            <p class="text-center text-gray-400 text-sm mt-8">
+                Em uma Distribuição Normal, 68% dos dados estão entre Z = -1 e Z = +1.
+            </p>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

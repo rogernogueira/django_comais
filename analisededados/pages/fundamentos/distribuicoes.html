@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribuições - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#a855f7', /* Purple */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Principais Distribuições</h1>
+                    <p class="text-gray-400 mt-1">Os "Formatos" mais comuns que os dados assumem na natureza</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Normal Distribution -->
+            <div class="bg-bg-surface rounded-2xl p-6 border-t-4 border-green-400">
+                <h2 class="text-2xl font-bold text-green-400 mb-2">1. Normal (Gaussiana)</h2>
+                <p class="text-xs text-green-400/70 uppercase font-bold tracking-wider mb-4">A Rainha das Distribuições
+                </p>
+
+                <div class="bg-black/30 h-32 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+                    <svg viewBox="0 0 200 100" class="w-full h-full text-green-400">
+                        <path d="M10 90 Q 50 90 100 10 T 190 90" fill="none" stroke="currentColor" stroke-width="3" />
+                        <line x1="100" y1="10" x2="100" y2="90" stroke="currentColor" stroke-dasharray="4" />
+                    </svg>
+                </div>
+
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li>✅ <strong>Simétrica:</strong> Média = Mediana = Moda.</li>
+                    <li>✅ <strong>Forma de Sino:</strong> A maioria dos dados no meio.</li>
+                    <li>✅ <strong>Exemplos:</strong> Altura de pessoas, erros de medição, notas de provas.</li>
+                </ul>
+            </div>
+
+            <!-- Binomial Distribution -->
+            <div class="bg-bg-surface rounded-2xl p-6 border-t-4 border-blue-400">
+                <h2 class="text-2xl font-bold text-blue-400 mb-2">2. Binomial</h2>
+                <p class="text-xs text-blue-400/70 uppercase font-bold tracking-wider mb-4">Sucesso ou Fracasso</p>
+
+                <div
+                    class="bg-black/30 h-32 rounded-lg mb-4 flex items-end justify-around px-4 pb-2 relative overflow-hidden">
+                    <div class="w-4 bg-blue-400/30 h-[10%]"></div>
+                    <div class="w-4 bg-blue-400/50 h-[30%]"></div>
+                    <div class="w-4 bg-blue-400 h-[60%]"></div>
+                    <div class="w-4 bg-blue-400/50 h-[30%]"></div>
+                    <div class="w-4 bg-blue-400/30 h-[10%]"></div>
+                </div>
+
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li>✅ <strong>Discreta:</strong> Conta sucessos em N tentativas.</li>
+                    <li>✅ <strong>Binária:</strong> Só há 2 resultados (Sim/Não, Cara/Coroa).</li>
+                    <li>✅ <strong>Exemplos:</strong> Nº de acertos em 10 tiros, Nº de produtos defeituosos em um lote.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Poisson Distribution -->
+            <div class="bg-bg-surface rounded-2xl p-6 border-t-4 border-yellow-400">
+                <h2 class="text-2xl font-bold text-yellow-400 mb-2">3. Poisson</h2>
+                <p class="text-xs text-yellow-400/70 uppercase font-bold tracking-wider mb-4">Eventos Raros no Tempo</p>
+
+                <div
+                    class="bg-black/30 h-32 rounded-lg mb-4 flex items-end justify-start gap-2 px-4 pb-2 relative overflow-hidden">
+                    <div class="w-4 bg-yellow-400 h-[80%]"></div>
+                    <div class="w-4 bg-yellow-400/80 h-[60%]"></div>
+                    <div class="w-4 bg-yellow-400/60 h-[30%]"></div>
+                    <div class="w-4 bg-yellow-400/40 h-[15%]"></div>
+                    <div class="w-4 bg-yellow-400/20 h-[5%]"></div>
+                </div>
+
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li>✅ <strong>Contagem:</strong> Nº de eventos em um intervalo fixo.</li>
+                    <li>✅ <strong>Assimétrica:</strong> Geralmente à direita (cauda longa).</li>
+                    <li>✅ <strong>Exemplos:</strong> Chamadas 190 por hora, Homicídios por dia, Acidentes por mês.</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

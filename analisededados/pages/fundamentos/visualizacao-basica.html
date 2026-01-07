@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualização Básica - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#ef4444', /* Red */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Histograma e Densidade</h1>
+                    <p class="text-gray-400 mt-1">Vendo a "alma" dos dados</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Histogram -->
+            <div class="bg-bg-surface p-6 rounded-xl border-t-4 border-blue-500">
+                <h2 class="text-2xl font-bold text-blue-500 mb-4">Histograma</h2>
+                <div class="h-40 bg-gray-900 rounded-lg mb-4 flex items-end justify-center gap-1 p-2">
+                    <div class="w-8 bg-blue-500/50 h-[20%]"></div>
+                    <div class="w-8 bg-blue-500/50 h-[50%]"></div>
+                    <div class="w-8 bg-blue-500 h-[80%]"></div>
+                    <div class="w-8 bg-blue-500/50 h-[40%]"></div>
+                    <div class="w-8 bg-blue-500/50 h-[10%]"></div>
+                </div>
+                <p class="text-gray-300 text-sm mb-2">
+                    Agrupa os dados em "bins" (faixas) e conta a frequência.
+                </p>
+                <ul class="text-xs text-gray-400 list-disc list-inside">
+                    <li>Mostra a distribuição de frequência real.</li>
+                    <li>Sensível à escolha do número de faixas (bins).</li>
+                    <li>Ótimo para ver gaps nos dados.</li>
+                </ul>
+            </div>
+
+            <!-- Density Plot -->
+            <div class="bg-bg-surface p-6 rounded-xl border-t-4 border-purple-500">
+                <h2 class="text-2xl font-bold text-purple-500 mb-4">Densidade (KDE)</h2>
+                <div class="h-40 bg-gray-900 rounded-lg mb-4 flex items-end justify-center relative overflow-hidden">
+                    <svg viewBox="0 0 200 100" class="w-full h-full p-2">
+                        <path d="M10 90 C 50 90, 80 10, 100 10 S 150 90, 190 90" fill="rgba(168, 85, 247, 0.2)"
+                            stroke="#a855f7" stroke-width="2" />
+                    </svg>
+                </div>
+                <p class="text-gray-300 text-sm mb-2">
+                    Uma versão suavizada do histograma. Estima a probabilidade.
+                </p>
+                <ul class="text-xs text-gray-400 list-disc list-inside">
+                    <li>Melhor para visualizar a "forma" abstrata.</li>
+                    <li>Permite comparar múltiplos grupos sobrepostos.</li>
+                    <li>Esconde pequenos detalhes/ruídos.</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <!-- Use Cases -->
+        <section class="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+            <h3 class="font-bold text-white mb-4">Quando usar qual?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-900 p-4 rounded text-sm text-gray-400">
+                    <strong class="text-white block mb-1">Use Histograma:</strong>
+                    Para exploração inicial e verificar a qualidade dos dados (ex: ver se números foram arredondados).
+                </div>
+                <div class="bg-gray-900 p-4 rounded text-sm text-gray-400">
+                    <strong class="text-white block mb-1">Use Densidade:</strong>
+                    Para apresentações finais ou comparar a distribuição de 2+ grupos no mesmo gráfico.
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

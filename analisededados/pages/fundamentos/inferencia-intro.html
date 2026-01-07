@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inferência Estatística - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#f472b6', /* Pink */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Inferência Estatística</h1>
+                    <p class="text-gray-400 mt-1">Tomando decisões com base em dados incompletos</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Confidence Intervals -->
+            <div class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+                <h2 class="text-2xl font-bold text-primary mb-4">1. Intervalo de Confiança (IC)</h2>
+                <p class="text-gray-300 mb-4">
+                    Em vez de cravar um número ("A média é 10"), damos um intervalo com uma probabilidade de acerto.
+                </p>
+                <div class="bg-black/30 p-4 rounded-lg font-mono text-sm text-center mb-4 border border-gray-600">
+                    "Tenho 95% de confiança de que a média real está entre <span class="text-green-400">9.5</span> e
+                    <span class="text-green-400">10.5</span>."
+                </div>
+                <div class="text-sm text-gray-400">
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Se o IC de dois grupos <strong>não se cruza</strong>, eles são diferentes.</li>
+                        <li>Se cruzam, não podemos afirmar diferença.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Hypothesis Testing -->
+            <div class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+                <h2 class="text-2xl font-bold text-primary mb-4">2. Teste de Hipótese</h2>
+                <p class="text-gray-300 mb-4">
+                    O julgamento estatístico. Começamos assumindo que "nada aconteceu".
+                </p>
+
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <span class="bg-gray-700 px-2 py-1 rounded text-xs font-bold text-white">H0</span>
+                        <div>
+                            <strong class="text-white text-sm">Hipótese Nula (Réu Inocente)</strong>
+                            <p class="text-xs text-gray-400">"Não há diferença.", "O remédio não funciona."</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="bg-primary px-2 py-1 rounded text-xs font-bold text-bg-base">H1</span>
+                        <div>
+                            <strong class="text-white text-sm">Hipótese Alternativa (Culpado)</strong>
+                            <p class="text-xs text-gray-400">"Há diferença significativa."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- P-value Section -->
+        <section class="bg-bg-elevated p-8 rounded-xl border-l-4 border-yellow-500">
+            <h2 class="text-2xl font-bold text-yellow-500 mb-4">O Polêmico Valor-P (P-value)</h2>
+            <p class="text-gray-300 mb-6">
+                É a probabilidade de ter encontrado seus dados <strong>por pura sorte</strong>, assumindo que H0 é
+                verdadeira.
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1 bg-green-500/10 p-4 rounded border border-green-500/30">
+                    <h3 class="font-bold text-green-400">p < 0.05 (Significativo)</h3>
+                            <p class="text-sm text-gray-400 mt-2">
+                                A chance de ser sorte é muito baixa (menos de 5%).
+                                <br><strong>Veredito:</strong> Rejeita-se H0. Existe efeito real.
+                            </p>
+                </div>
+                <div class="flex-1 bg-red-500/10 p-4 rounded border border-red-500/30">
+                    <h3 class="font-bold text-red-400">p > 0.05 (Não Significativo)</h3>
+                    <p class="text-sm text-gray-400 mt-2">
+                        Pode ser apenas coincidência.
+                        <br><strong>Veredito:</strong> Falha em rejeitar H0. Não há provas suficientes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

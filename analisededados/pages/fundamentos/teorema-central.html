@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teorema Central do Limite - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#a855f7', /* Purple */
+                        'magic': '#d8b4fe',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Teorema Central do Limite (TCL)</h1>
+                    <p class="text-gray-400 mt-1">A "Mágica" que faz a Estatística funcionar</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-magic mb-6 text-center">O Conceito em 3 Passos</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <!-- Step 1 -->
+                <div class="text-center relative z-10">
+                    <div
+                        class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border-2 border-gray-500">
+                        🎲</div>
+                    <h3 class="font-bold text-white mb-2">1. População Caótica</h3>
+                    <p class="text-sm text-gray-400">Imagine uma população com formato estranho (ex: dados de crimes,
+                        salários) não-Normais.</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="hidden md:block absolute top-8 left-[30%] w-[10%] h-[2px] bg-gray-600"></div>
+
+                <!-- Step 2 -->
+                <div class="text-center relative z-10">
+                    <div
+                        class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border-2 border-primary">
+                        📊</div>
+                    <h3 class="font-bold text-white mb-2">2. Colete Amostras</h3>
+                    <p class="text-sm text-gray-400">Pegue várias amostras aleatórias (tamanho n > 30) e calcule a média
+                        de cada uma.</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="hidden md:block absolute top-8 right-[30%] w-[10%] h-[2px] bg-gray-600"></div>
+
+                <!-- Step 3 -->
+                <div class="text-center relative z-10">
+                    <div
+                        class="w-16 h-16 bg-magic/20 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border-2 border-magic animate-pulse">
+                        🔔</div>
+                    <h3 class="font-bold text-magic mb-2">3. O Milagre</h3>
+                    <p class="text-sm text-gray-400">As <strong>médias</strong> dessas amostras formarão uma
+                        <strong>Curva Normal</strong>, não importa a forma original!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-blue-500/10 p-6 rounded-xl border border-blue-500/30">
+                <h3 class="font-bold text-blue-300 mb-2">Por que isso é incrível?</h3>
+                <p class="text-gray-300">
+                    Isso significa que podemos usar fórmulas baseadas na Distribuição Normal (como Intervalos de
+                    Confiança e Testes de Hipótese) mesmo que os dados originais não sejam normais, desde que tenhamos
+                    uma amostra grande o suficiente.
+                </p>
+            </div>
+            <div class="bg-red-500/10 p-6 rounded-xl border border-red-500/30">
+                <h3 class="font-bold text-red-300 mb-2">A Regra do N > 30</h3>
+                <p class="text-gray-300">
+                    Na prática, consideramos que o teorema "entra em vigor" com amostras acima de <strong>30
+                        observações</strong>. Para amostras menores, precisamos de métodos específicos (Teste T
+                    Student).
+                </p>
+            </div>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

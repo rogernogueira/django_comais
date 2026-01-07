@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>População vs Amostra - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#f472b6', /* Pink */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">População vs Amostra</h1>
+                    <p class="text-gray-400 mt-1">O Grande Desafio da Inferência</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Definition Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+
+            <!-- Population -->
+            <div class="bg-bg-surface p-6 rounded-xl border-t-4 border-blue-400">
+                <div class="flex justify-between items-start mb-4">
+                    <h2 class="text-2xl font-bold text-blue-400">População (N)</h2>
+                    <span class="text-4xl">🌍</span>
+                </div>
+                <p class="text-gray-300 mb-4">
+                    O conjunto <strong>completo</strong> de todos os elementos que você quer estudar. Todos os cidadãos,
+                    todas as ocorrências, todos os parafusos.
+                </p>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li>🎯 <strong>Meta:</strong> Descobrir a Verdade (Parâmetros: μ, σ).</li>
+                    <li>💰 <strong>Problema:</strong> Caro, lento ou impossível de medir tudo.</li>
+                    <li>📋 <strong>Exemplo:</strong> O Censo Demográfico.</li>
+                </ul>
+            </div>
+
+            <!-- Arrow -->
+            <div
+                class="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-700 rounded-full p-2 z-10 border-4 border-bg-base">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
+                    </path>
+                </svg>
+            </div>
+
+            <!-- Sample -->
+            <div class="bg-bg-surface p-6 rounded-xl border-t-4 border-primary">
+                <div class="flex justify-between items-start mb-4">
+                    <h2 class="text-2xl font-bold text-primary">Amostra (n)</h2>
+                    <span class="text-4xl">🧪</span>
+                </div>
+                <p class="text-gray-300 mb-4">
+                    Uma <strong>parte</strong> selecionada da população. É o que realmente temos em mãos para analisar.
+                </p>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li>🎯 <strong>Meta:</strong> Estimar a Verdade (Estatísticas: x̄, s).</li>
+                    <li>💰 <strong>Vantagem:</strong> Rápido, barato e viável.</li>
+                    <li>Example: Uma pesquisa eleitoral com 2.000 pessoas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bias vs Randomness -->
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-white mb-6">O Perigo do Viés (Bias)</h2>
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1">
+                    <p class="text-gray-300 mb-4">
+                        Se sua amostra não for representativa, <strong>todas as suas conclusões estarão
+                            erradas</strong>. Não importa quão chique seja sua matemática.
+                    </p>
+                    <div class="bg-red-500/10 border-l-4 border-red-500 p-4 rounded text-sm text-gray-400">
+                        <strong class="text-red-400 block mb-1">Exemplo Clássico de Viés</strong>
+                        Tentar prever o resultado da eleição perguntando apenas para leitores de uma revista de luxo.
+                        (Viés de Seleção)
+                    </div>
+                </div>
+                <div class="flex-1 bg-gray-900 p-6 rounded-xl border border-dashed border-gray-600 text-center">
+                    <h3 class="text-primary font-bold text-lg mb-2">A Solução: Aleatoriedade</h3>
+                    <div class="text-4xl mb-4">🎲</div>
+                    <p class="text-sm text-gray-400">
+                        O sorteio aleatório é a única forma de garantir que a amostra seja uma "miniaturas justa" da
+                        população, cancelando vieses conhecidos e desconhecidos.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

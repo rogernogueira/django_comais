@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escalas de Medida - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'primary': '#4ade80',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Escalas de Medida</h1>
+                    <p class="text-text-muted mt-1">A hierarquia da informação: Nominal, Ordinal, Intervalar e Razão</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Nominal -->
+            <div class="bg-bg-surface p-6 rounded-xl border-t-4 border-gray-500 hover:bg-bg-elevated transition-colors">
+                <div class="text-3xl mb-2">🏷️</div>
+                <h3 class="text-xl font-bold mb-2">Nominal</h3>
+                <p class="text-sm text-text-secondary mb-4">Apenas rótulos ou nomes. Não existe ordem.</p>
+                <div class="bg-bg-muted/30 p-3 rounded text-xs text-gray-300">
+                    <strong>Exemplos:</strong><br>
+                    • Tipo de Crime (Roubo, Furto)<br>
+                    • Batalhão (1º BPM, 2º BPM)<br>
+                    • Cor dos Olhos
+                </div>
+                <p class="text-xs text-primary mt-4 font-mono">Operações: = ≠ (Igual/Diferente)</p>
+            </div>
+
+            <!-- Ordinal -->
+            <div class="bg-bg-surface p-6 rounded-xl border-t-4 border-blue-500 hover:bg-bg-elevated transition-colors">
+                <div class="text-3xl mb-2">📶</div>
+                <h3 class="text-xl font-bold mb-2">Ordinal</h3>
+                <p class="text-sm text-text-secondary mb-4">Categorias com uma ordem natural, mas a distância entre elas
+                    não é mensurável.</p>
+                <div class="bg-bg-muted/30 p-3 rounded text-xs text-gray-300">
+                    <strong>Exemplos:</strong><br>
+                    • Patentes (Sd < cb < Sgt)<br>
+                        • Nível de Risco (Baixo, Médio, Alto)<br>
+                        • Escala Likert
+                </div>
+                <p class="text-xs text-primary mt-4 font-mono">Operações: <> (Maior/Menor)</p>
+            </div>
+
+            <!-- Intervalar -->
+            <div
+                class="bg-bg-surface p-6 rounded-xl border-t-4 border-yellow-500 hover:bg-bg-elevated transition-colors">
+                <div class="text-3xl mb-2">🌡️</div>
+                <h3 class="text-xl font-bold mb-2">Intervalar</h3>
+                <p class="text-sm text-text-secondary mb-4">Números onde a diferença faz sentido, mas o "zero" é
+                    arbitrário (não indica ausência).</p>
+                <div class="bg-bg-muted/30 p-3 rounded text-xs text-gray-300">
+                    <strong>Exemplos:</strong><br>
+                    • Temperatura (Celsius/Fahrenheit)<br>
+                    • Ano (2023, 2024)<br>
+                    • QI
+                </div>
+                <p class="text-xs text-primary mt-4 font-mono">Operações: + - (Soma/Subtração)</p>
+            </div>
+
+            <!-- Razão -->
+            <div
+                class="bg-bg-surface p-6 rounded-xl border-t-4 border-green-500 hover:bg-bg-elevated transition-colors">
+                <div class="text-3xl mb-2">📏</div>
+                <h3 class="text-xl font-bold mb-2">Razão</h3>
+                <p class="text-sm text-text-secondary mb-4">O nível mais rico. Existe um "zero absoluto" que indica
+                    ausência total.</p>
+                <div class="bg-bg-muted/30 p-3 rounded text-xs text-gray-300">
+                    <strong>Exemplos:</strong><br>
+                    • Nº de Ocorrências (0 = nenhuma)<br>
+                    • Distância (km)<br>
+                    • Tempo de resposta
+                </div>
+                <p class="text-xs text-primary mt-4 font-mono">Operações: × ÷ (Multiplicação/Divisão)</p>
+            </div>
+        </div>
+
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-white mb-6">Regra de Ouro da Análise</h2>
+            <p class="text-text-secondary mb-4">Quanto "maior" a escala (mais à direita), mais estatísticas você pode
+                calcular.</p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="bg-bg-elevated text-xs uppercase text-gray-200">
+                        <tr>
+                            <th class="px-4 py-3">Escala</th>
+                            <th class="px-4 py-3">Moda</th>
+                            <th class="px-4 py-3">Mediana</th>
+                            <th class="px-4 py-3">Média</th>
+                            <th class="px-4 py-3">Desvio Padrão</th>
+                            <th class="px-4 py-3">Razão (Dobro/Metade)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <tr>
+                            <td class="px-4 py-3 font-bold text-white">Nominal</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-red-500">❌ Não</td>
+                            <td class="px-4 py-3 text-red-500">❌ Não</td>
+                            <td class="px-4 py-3 text-red-500">❌ Não</td>
+                            <td class="px-4 py-3 text-red-500">❌ Não</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 font-bold text-white">Ordinal</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-red-500">⚠️ Evitar</td>
+                            <td class="px-4 py-3 text-red-500">❌ Não</td>
+                            <td class="px-4 py-3 text-red-500">❌ Não</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 font-bold text-white">Intervalar</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-red-500">❌ Não</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 font-bold text-white">Razão</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                            <td class="px-4 py-3 text-green-400">✅ Sim</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

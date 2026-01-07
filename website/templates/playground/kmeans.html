@@ -41,8 +41,17 @@
     </aside>
     <!-- Gráfico -->
     <main class="col-span-3 bg-white rounded shadow p-2">
-      <canvas id="chart" class="w-full h-[600px]"></canvas>
+      <div class="w-full h-80 lg:h-[600px] overflow-hidden">
+        <canvas id="chart" class="w-full h-full"></canvas>
+      </div>
     </main>
+    <section class="col-span-3 bg-white rounded shadow p-4 space-y-3">
+      <h2 class="text-lg font-semibold">Variância dos Clusters</h2>
+      <div class="w-full h-64 lg:h-72 overflow-hidden">
+        <canvas id="variance-chart" class="w-full h-full"></canvas>
+      </div>
+      <p id="variance-summary" class="text-sm text-gray-700">Execute um passo para ver a variância dos clusters.</p>
+    </section>
   </div>
 </body>
 </html>

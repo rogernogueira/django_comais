@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assimetria e Curtose - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#f472b6',
+                        'skew-pos': '#38bdf8', // Blue
+                        'skew-neg': '#f87171', // Red
+                        'normal': '#4ade80',   // Green
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Assimetria e Curtose</h1>
+                    <p class="text-gray-400 mt-1">A "Forma" dos Dados (Shape Statistics)</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Skewness Section -->
+        <section>
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <span
+                    class="bg-primary/20 text-primary w-8 h-8 rounded flex items-center justify-center text-sm">1</span>
+                Assimetria (Skewness)
+            </h2>
+            <p class="text-gray-400 mb-8 max-w-3xl">Mede a falta de simetria na distribuição. Indica para onde a "cauda"
+                dos dados se estende mais.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Negative Skew -->
+                <div
+                    class="bg-bg-surface p-6 rounded-xl border-t-4 border-skew-neg group hover:bg-bg-elevated transition-all">
+                    <h3 class="text-lg font-bold text-skew-neg mb-2">Assimetria Negativa</h3>
+                    <p class="text-xs text-gray-400 mb-4">Cauda longa à ESQUERDA</p>
+
+                    <!-- SVG Graph -->
+                    <svg viewBox="0 0 200 100"
+                        class="w-full h-32 mb-4 opacity-80 group-hover:opacity-100 transition-opacity">
+                        <path d="M10 90 Q 50 90 90 80 T 150 20 T 190 90" fill="none" stroke="#f87171"
+                            stroke-width="3" />
+                        <text x="100" y="95" fill="#f87171" font-size="10" text-anchor="middle">Média &lt;
+                            Mediana</text>
+                    </svg>
+
+                    <p class="text-sm text-gray-300">A maioria dos dados está concentrada à direita (valores altos), com
+                        alguns valores baixos puxando a cauda.</p>
+                </div>
+
+                <!-- Symmetrical -->
+                <div
+                    class="bg-bg-surface p-6 rounded-xl border-t-4 border-normal group hover:bg-bg-elevated transition-all">
+                    <h3 class="text-lg font-bold text-normal mb-2">Simétrica (Normal)</h3>
+                    <p class="text-xs text-gray-400 mb-4">Sem cauda predominante</p>
+
+                    <!-- SVG Graph -->
+                    <svg viewBox="0 0 200 100"
+                        class="w-full h-32 mb-4 opacity-80 group-hover:opacity-100 transition-opacity">
+                        <path d="M10 90 Q 50 90 100 10 T 190 90" fill="none" stroke="#4ade80" stroke-width="3" />
+                        <text x="100" y="95" fill="#4ade80" font-size="10" text-anchor="middle">Média ≈ Mediana</text>
+                    </svg>
+
+                    <p class="text-sm text-gray-300">Os dados se distribuem igualmente ao redor do centro. A famosa
+                        Curva de Sino.</p>
+                </div>
+
+                <!-- Positive Skew -->
+                <div
+                    class="bg-bg-surface p-6 rounded-xl border-t-4 border-skew-pos group hover:bg-bg-elevated transition-all">
+                    <h3 class="text-lg font-bold text-skew-pos mb-2">Assimetria Positiva</h3>
+                    <p class="text-xs text-gray-400 mb-4">Cauda longa à DIREITA</p>
+
+                    <!-- SVG Graph -->
+                    <svg viewBox="0 0 200 100"
+                        class="w-full h-32 mb-4 opacity-80 group-hover:opacity-100 transition-opacity">
+                        <path d="M10 90 Q 50 10 90 20 T 190 90" fill="none" stroke="#38bdf8" stroke-width="3" />
+                        <text x="100" y="95" fill="#38bdf8" font-size="10" text-anchor="middle">Média &gt;
+                            Mediana</text>
+                    </svg>
+
+                    <p class="text-sm text-gray-300">A maioria dos dados está à esquerda (valores baixos), com outliers
+                        altos puxando a cauda (ex: Renda).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kurtosis Section -->
+        <section class="mt-12">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <span
+                    class="bg-primary/20 text-primary w-8 h-8 rounded flex items-center justify-center text-sm">2</span>
+                Curtose (Kurtosis)
+            </h2>
+            <p class="text-gray-400 mb-8 max-w-3xl">Mede o "achatamento" da curva e o peso das caudas. Indica a
+                propensão a outliers extremos.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Leptokurtic -->
+                <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                    <h3 class="font-bold text-purple-400 mb-2">Leptocúrtica (K > 3)</h3>
+                    <p class="text-sm text-gray-300 mb-3">Pico alto e fino. Caudas pesadas (muitos outliers).</p>
+                    <div class="h-2 w-full bg-gray-700 rounded overflow-hidden">
+                        <div class="h-full bg-purple-500 w-3/4"></div>
+                    </div>
+                </div>
+
+                <!-- Mesokurtic -->
+                <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                    <h3 class="font-bold text-normal mb-2">Mesocúrtica (K ≈ 3)</h3>
+                    <p class="text-sm text-gray-300 mb-3">Intermediária. Igual à Distribuição Normal Padrão.</p>
+                    <div class="h-2 w-full bg-gray-700 rounded overflow-hidden">
+                        <div class="h-full bg-green-500 w-1/2"></div>
+                    </div>
+                </div>
+
+                <!-- Platykurtic -->
+                <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                    <h3 class="font-bold text-yellow-400 mb-2">Platicúrtica (K < 3)</h3>
+                            <p class="text-sm text-gray-300 mb-3">Achatada (formato de prato). Caudas leves (poucos
+                                outliers).</p>
+                            <div class="h-2 w-full bg-gray-700 rounded overflow-hidden">
+                                <div class="h-full bg-yellow-500 w-1/4"></div>
+                            </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Warning -->
+        <div class="bg-red-500/10 border border-red-500/30 p-6 rounded-xl mt-8">
+            <h3 class="text-red-400 font-bold mb-2 flex items-center gap-2">
+                ⚠ Por que isso importa?
+            </h3>
+            <p class="text-gray-300 text-sm">
+                Muitos testes estatísticos (Teste T, ANOVA, Regressão Linear) assumem que seus dados são
+                <strong>Normais</strong> (Simétricos e Mesocúrticos).
+                Se seus dados tiverem alta Assimetria ou alta Curtose, esses testes podem falhar ou dar resultados
+                errados!
+            </p>
+        </div>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

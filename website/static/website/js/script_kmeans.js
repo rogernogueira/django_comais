@@ -9,6 +9,13 @@ const labelK = document.getElementById('label-k');
 const btnInit = document.getElementById('btn-init');
 const btnStep = document.getElementById('btn-step');
 const currentStep = document.getElementById('current-step');
+const varianceCanvas = document.getElementById('variance-chart');
+const varianceSummary = document.getElementById('variance-summary');
+let varianceChart = null;
+let varianceSeries = [];
+let lastVariances = [];
+let meanSeries = [];
+let lastMean = null;
 
 // Paleta pastel vibrante
 const pastelColors = [
@@ -30,6 +37,129 @@ const pastelColors = [
 //     pattern.draw('diamond', '#cc65fe'),
 //     pattern.draw('triangle', '#ffce56')
 //   ]
+
+if (varianceCanvas) {
+  const varianceCtx = varianceCanvas.getContext('2d');
+  varianceChart = new Chart(varianceCtx, {
+    type: 'line',
+    data: { datasets: [] },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: false,
+      scales: {
+        x: {
+          type: 'linear',
+          title: { display: true, text: 'Iteração' },
+          ticks: { precision: 0 }
+        },
+        y: {
+          title: { display: true, text: 'Variância' },
+          beginAtZero: true
+        }
+      },
+      plugins: { legend: { display: true } }
+    }
+  });
+}
+
+function resetVarianceTracking(clusterCount) {
+  varianceSeries = Array.from({ length: clusterCount }, () => []);
+  meanSeries = [];
+  if (varianceChart) {
+    const clusterDatasets = varianceSeries.map((_, index) => ({
+      label: `Cluster ${index}`,
+      data: [],
+      borderColor: pastelColors[index % pastelColors.length],
+      backgroundColor: pastelColors[index % pastelColors.length],
+      fill: false,
+      tension: 0.25,
+      spanGaps: true,
+      pointRadius: 3
+    }));
+    const meanDataset = {
+      label: 'Média',
+      data: [],
+      borderColor: 'rgba(0, 0, 0, 0.7)',
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      borderDash: [6, 4],
+      fill: false,
+      tension: 0.1,
+      spanGaps: true,
+      pointRadius: 0
+    };
+    varianceChart.data.datasets = [...clusterDatasets, meanDataset];
+    varianceChart.update();
+  }
+  lastVariances = [];
+  lastMean = null;
+  updateVarianceSummary(0);
+}
+
+function computeClusterVariances() {
+  if (!centroids.length || !assignments.length) {
+    return centroids.map(() => null);
+  }
+  return centroids.map((centroid, clusterIndex) => {
+    let sum = 0;
+    let count = 0;
+    assignments.forEach((assignedCluster, pointIndex) => {
+      if (assignedCluster !== clusterIndex) return;
+      const point = dataPoints[pointIndex];
+      const dx = point.x - centroid.x;
+      const dy = point.y - centroid.y;
+      sum += dx * dx + dy * dy;
+      count++;
+    });
+    if (!count) return null;
+    return sum / count;
+  });
+}
+
+function computeVarianceMean(variances) {
+  const valid = variances.filter(value => value !== null && value !== undefined);
+  if (!valid.length) return null;
+  const total = valid.reduce((acc, value) => acc + value, 0);
+  return total / valid.length;
+}
+
+function recordVariance(iteration, variances) {
+  if (!variances.length) return;
+  if (!varianceSeries.length) {
+    varianceSeries = Array.from({ length: variances.length }, () => []);
+    meanSeries = [];
+  }
+  variances.forEach((value, index) => {
+    if (!varianceSeries[index]) varianceSeries[index] = [];
+    varianceSeries[index].push({ x: iteration, y: value === null ? null : value });
+    if (varianceChart && varianceChart.data.datasets[index]) {
+      varianceChart.data.datasets[index].data = varianceSeries[index];
+    }
+  });
+  const meanValue = computeVarianceMean(variances);
+  lastVariances = variances;
+  lastMean = meanValue;
+  meanSeries.push({ x: iteration, y: meanValue === null ? null : meanValue });
+  if (varianceChart) {
+    const meanDatasetIndex = varianceSeries.length;
+    if (varianceChart.data.datasets[meanDatasetIndex]) {
+      varianceChart.data.datasets[meanDatasetIndex].data = meanSeries;
+    }
+    varianceChart.update();
+  }
+  updateVarianceSummary(iteration);
+}
+
+function updateVarianceSummary(iteration = step) {
+  if (!varianceSummary) return;
+  if (!lastVariances.length || !iteration) {
+    varianceSummary.textContent = 'Execute um passo para ver a variância dos clusters.';
+    return;
+  }
+  const details = lastVariances.map((value, index) => `Cluster ${index}: ${value === null ? '—' : value.toFixed(3)}`);
+  const meanText = lastMean === null ? 'Média: —' : `Média: ${lastMean.toFixed(3)}`;
+  varianceSummary.textContent = `Iteração ${iteration}: ${[...details, meanText].join(' · ')}`;
+}
 
 // Instancia Chart.js sem animações
 const chart = new Chart(ctx, {
@@ -69,6 +199,11 @@ function preset(type) {
   assignments = [];
   step = 0;
   currentStep.textContent = step;
+  resetVarianceTracking(k);
+  if (!type || type === 'clear') {
+    updateChart();
+    return;
+  }
   if (type === 'linear') {
     for (let i = 0; i < 50; i++) {
       dataPoints.push({ x: Math.random()*4+1, y: Math.random()*4+1 });
@@ -80,7 +215,7 @@ function preset(type) {
       const th = Math.random()*2*Math.PI;
       dataPoints.push({ x: 5 + r*Math.cos(th), y: 5 + r*Math.sin(th) });
     }
-  } else {
+  } else if (type === 'noise') {
     for (let i = 0; i < 200; i++) dataPoints.push({ x: Math.random()*10, y: Math.random()*10 });
   }
   updateChart();
@@ -100,6 +235,7 @@ btnInit.onclick = () => {
   assignments = new Array(dataPoints.length).fill(-1);
   step = 0;
   currentStep.textContent = step;
+  resetVarianceTracking(k);
   updateChart();
 };
 
@@ -124,8 +260,10 @@ btnStep.onclick = () => {
     counts[assignments[i]]++;
   });
   centroids = centroids.map((c,i) => counts[i] ? ({ x: sums[i].x/counts[i], y: sums[i].y/counts[i] }) : c);
+  const variances = computeClusterVariances();
   step++;
   currentStep.textContent = step;
+  recordVariance(step, variances);
   updateChart();
 };
 
@@ -166,4 +304,5 @@ function updateChart() {
 }
 
 // Inicia sem animações
+resetVarianceTracking(k);
 updateChart();

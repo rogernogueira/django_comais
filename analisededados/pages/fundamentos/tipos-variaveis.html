@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de Dados - Fundamentos Estatística</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#4ade80',  /* Green for Data Types */
+                        'primary': '#4ade80',
+                        'text-secondary': '#cbd5e1',
+                        'text-muted': '#94a3b8',
+                        'type-qualitative': '#a78bfa', /* Purple */
+                        'type-quantitative': '#38bdf8', /* Blue */
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .concept-card {
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">
+                    ←
+                </button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary tracking-tight">Tipos de Dados e Variáveis</h1>
+                    <p class="text-text-muted mt-1">Classificação fundamental para escolha de métodos estatísticos</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Concept Map -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Qualitative Branch -->
+            <div class="bg-bg-elevated p-6 rounded-xl border-t-4 border-type-qualitative relative concept-card">
+                <h2 class="text-2xl font-bold text-type-qualitative mb-4 flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                        </path>
+                    </svg>
+                    Qualitativa (Categórica)
+                </h2>
+                <p class="text-text-secondary mb-6">Descreve qualidades ou características. Responde à pergunta: "O que
+                    é?" ou "Qual atributo?". Não possui valor numérico intrínseco de magnitude.</p>
+
+                <div class="space-y-4">
+                    <div class="bg-bg-surface p-4 rounded-lg border border-gray-700">
+                        <h3 class="font-bold text-white mb-2">🏷️ Nominal</h3>
+                        <p class="text-sm text-gray-400">Rótulos sem ordem natural.</p>
+                        <p class="text-xs text-gray-500 mt-2">Exemplos: Sexo (M/F), Cor dos Olhos, Estado Civil, Tipo de
+                            Crime.</p>
+                    </div>
+                    <div class="bg-bg-surface p-4 rounded-lg border border-gray-700">
+                        <h3 class="font-bold text-white mb-2">🔢 Ordinal</h3>
+                        <p class="text-sm text-gray-400">Categorias com uma ordem ou hierarquia implícita.</p>
+                        <p class="text-xs text-gray-500 mt-2">Exemplos: Escolaridade (Fundamental < Médio < Superior),
+                                Patente Militar, Avaliação (Ruim < Bom < Ótimo).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quantitative Branch -->
+            <div class="bg-bg-elevated p-6 rounded-xl border-t-4 border-type-quantitative relative concept-card">
+                <h2 class="text-2xl font-bold text-type-quantitative mb-4 flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                    Quantitativa (Numérica)
+                </h2>
+                <p class="text-text-secondary mb-6">Descreve quantidades. Responde à pergunta: "Quanto?" ou "Quantos?".
+                    Pode ser submetida a operações aritméticas (média, soma).</p>
+
+                <div class="space-y-4">
+                    <div class="bg-bg-surface p-4 rounded-lg border border-gray-700">
+                        <h3 class="font-bold text-white mb-2">🍎 Discreta</h3>
+                        <p class="text-sm text-gray-400">Resulta de uma contagem. Apenas números inteiros (geralmente).
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Exemplos: Nº de Filhos, Nº de Ocorrências, Nº de Viaturas.
+                        </p>
+                    </div>
+                    <div class="bg-bg-surface p-4 rounded-lg border border-gray-700">
+                        <h3 class="font-bold text-white mb-2">📏 Contínua</h3>
+                        <p class="text-sm text-gray-400">Resulta de uma mensuração. Pode assumir qualquer valor na reta
+                            real (decimais).</p>
+                        <p class="text-xs text-gray-500 mt-2">Exemplos: Altura, Peso, Tempo de Resposta, Temperatura,
+                            Salário.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Interactive Examples or Table -->
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-white mb-6">Por que isso importa?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                <div class="p-4 bg-bg-muted/50 rounded-lg">
+                    <strong class="block text-primary mb-2">Escolha do Gráfico</strong>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li>Qualitativa: Pizza ou Barras.</li>
+                        <li>Quantitativa: Histograma ou Boxplot.</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-bg-muted/50 rounded-lg">
+                    <strong class="block text-primary mb-2">Tendência Central</strong>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li>Nominal: Apenas Moda.</li>
+                        <li>Ordinal: Moda e Mediana.</li>
+                        <li>Quantitativa: Média, Mediana e Moda.</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-bg-muted/50 rounded-lg">
+                    <strong class="block text-primary mb-2">Testes Estatísticos</strong>
+                    <ul class="list-disc list-inside text-gray-300 space-y-1">
+                        <li>Associação (Quali x Quali): Qui-Quadrado.</li>
+                        <li>Comparação (Quali x Quanti): Teste t / ANOVA.</li>
+                        <li>Correlação (Quanti x Quanti): Pearson/Spearman.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Decision Flowchart (Visual Representation) -->
+        <section class="flex justify-center py-8">
+            <div class="bg-bg-elevated p-8 rounded-2xl border border-gray-700 max-w-3xl w-full">
+                <h3 class="text-center text-white font-bold mb-8 uppercase tracking-widest">Árvore de Decisão</h3>
+                <div class="flex flex-col items-center">
+                    <div class="bg-gray-700 px-6 py-2 rounded text-white font-bold mb-4">Dado Bruto</div>
+                    <div class="h-8 w-0.5 bg-gray-600"></div>
+                    <div class="w-full h-0.5 bg-gray-600 relative">
+                        <!-- Connectors -->
+                        <div class="absolute left-1/4 top-0 h-4 w-0.5 bg-gray-600 md:-ml-0.5"></div>
+                        <div class="absolute right-1/4 top-0 h-4 w-0.5 bg-gray-600 md:-mr-0.5"></div>
+                    </div>
+                    <div class="flex justify-around w-full mt-4">
+                        <div class="flex flex-col items-center w-1/2 px-2">
+                            <div class="bg-type-qualitative text-bg-elevated px-4 py-2 rounded font-bold text-center">É
+                                Nome/Rótulo?</div>
+                            <div class="h-4 w-0.5 bg-type-qualitative"></div>
+                            <div class="text-type-qualitative text-sm font-bold my-1">Qualitativa</div>
+                            <div class="flex gap-2 mt-2">
+                                <span
+                                    class="text-xs bg-bg-surface border border-type-qualitative px-2 py-1 rounded text-gray-300">Tem
+                                    Ordem?<br>NÃO: Nominal<br>SIM: Ordinal</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center w-1/2 px-2">
+                            <div class="bg-type-quantitative text-bg-elevated px-4 py-2 rounded font-bold text-center">É
+                                Número?</div>
+                            <div class="h-4 w-0.5 bg-type-quantitative"></div>
+                            <div class="text-type-quantitative text-sm font-bold my-1">Quantitativa</div>
+                            <div class="flex gap-2 mt-2">
+                                <span
+                                    class="text-xs bg-bg-surface border border-type-quantitative px-2 py-1 rounded text-gray-300">Conta
+                                    ou Mede?<br>CONTA: Discreta<br>MEDE: Contínua</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

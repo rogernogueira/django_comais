@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robustez Estatística - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#f59e0b', /* Amber */
+                        'sensitive': '#f87171', /* Red */
+                        'robust': '#4ade80',    /* Green */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Sensível vs Robusto</h1>
+                    <p class="text-gray-400 mt-1">Como os outliers afetam suas métricas</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- The Battle -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Sensitive Team -->
+            <div class="bg-bg-surface p-8 rounded-xl border border-sensitive/30 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-1 bg-sensitive"></div>
+                <h2 class="text-2xl font-bold text-sensitive mb-4 flex items-center gap-2">
+                    🚫 Medidas Sensíveis
+                </h2>
+                <p class="text-gray-300 mb-6 min-h-[50px]">
+                    São facilmente influenciadas por valores extremos. Um único dado errado pode arruinar a análise
+                    inteira.
+                </p>
+
+                <div class="bg-bg-elevated p-4 rounded-lg space-y-2 mb-6">
+                    <div class="flex justify-between">
+                        <span class="font-bold text-white">Média</span>
+                        <span class="text-xs text-sensitive border border-sensitive px-2 rounded">Drasticamente
+                            afetada</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-bold text-white">Desvio Padrão</span>
+                        <span class="text-xs text-sensitive border border-sensitive px-2 rounded">Explode com
+                            outliers</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-bold text-white">Amplitude</span>
+                        <span class="text-xs text-sensitive border border-sensitive px-2 rounded">Depende 100% dos
+                            extremos</span>
+                    </div>
+                </div>
+
+                <div class="text-center text-sm text-gray-500 italic">
+                    "Use apenas quando os dados forem Normais/Limpos."
+                </div>
+            </div>
+
+            <!-- Robust Team -->
+            <div class="bg-bg-surface p-8 rounded-xl border border-robust/30 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-1 bg-robust"></div>
+                <h2 class="text-2xl font-bold text-robust mb-4 flex items-center gap-2">
+                    🛡️ Medidas Robustas
+                </h2>
+                <p class="text-gray-300 mb-6 min-h-[50px]">
+                    Resistem bravamente aos valores extremos. Focam na massa central dos dados.
+                </p>
+
+                <div class="bg-bg-elevated p-4 rounded-lg space-y-2 mb-6">
+                    <div class="flex justify-between">
+                        <span class="font-bold text-white">Mediana</span>
+                        <span class="text-xs text-robust border border-robust px-2 rounded">Ignora extremos</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-bold text-white">IQR</span>
+                        <span class="text-xs text-robust border border-robust px-2 rounded">Mede apenas o
+                            "centrão"</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-bold text-white">Moda</span>
+                        <span class="text-xs text-robust border border-robust px-2 rounded">Não muda com valores
+                            raros</span>
+                    </div>
+                </div>
+
+                <div class="text-center text-sm text-gray-500 italic">
+                    "Use sempre que houver assimetria ou outliers."
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Visual Metaphor: Tug of War -->
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-white mb-8 text-center">Cabo de Guerra Estatístico</h2>
+
+            <div class="relative h-32 bg-gray-900/50 rounded-lg flex items-center px-12">
+                <!-- The Line -->
+                <div class="w-full h-1 bg-gray-600 absolute"></div>
+
+                <!-- Data Points (Normal) -->
+                <div class="w-4 h-4 bg-gray-400 rounded-full absolute left-[40%]"></div>
+                <div class="w-4 h-4 bg-gray-400 rounded-full absolute left-[45%]"></div>
+                <div class="w-4 h-4 bg-gray-400 rounded-full absolute left-[50%]"></div>
+                <div class="w-4 h-4 bg-gray-400 rounded-full absolute left-[55%]"></div>
+
+                <!-- The Outlier -->
+                <div
+                    class="w-6 h-6 bg-red-500 rounded-full absolute right-[5%] animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.6)]">
+                </div>
+
+                <!-- The Metrics -->
+
+                <!-- Median (Stays Put) -->
+                <div class="absolute left-[50%] -translate-x-1/2 -mt-10 flex flex-col items-center">
+                    <span class="text-robust font-bold">Mediana</span>
+                    <div class="text-2xl">🛡️</div>
+                    <div class="w-1 h-10 bg-robust"></div>
+                </div>
+
+                <!-- Mean (Pulled Away) -->
+                <div class="absolute left-[65%] -translate-x-1/2 -mt-10 flex flex-col items-center opacity-80">
+                    <span class="text-sensitive font-bold">Média</span>
+                    <div class="text-2xl">😫</div>
+                    <div class="w-1 h-10 bg-sensitive rotate-12"></div>
+                </div>
+            </div>
+            <p class="text-center text-gray-400 mt-6">
+                O outlier (bola vermelha) "puxa" a Média para longe do centro real dos dados. A Mediana nem se mexe.
+            </p>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medidas de Posição - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#0f172a',
+                        'bg-elevated': '#020617',
+                        'bg-surface': '#1e293b',
+                        'bg-muted': '#334155',
+                        'text-primary': '#f1f5f9',
+                        'primary': '#f472b6', /* Pinkish/Purple for Position */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans overflow-x-hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        <header class="flex items-center justify-between border-b border-gray-800 pb-6">
+            <div class="flex items-center gap-4">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
+                    onclick="history.back()">←</button>
+                <div>
+                    <h1 class="text-4xl font-bold text-text-primary">Medidas de Posição</h1>
+                    <p class="text-gray-400 mt-1">Quartis, Percentis e o Poder do Boxplot</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Definition Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-primary">
+                <h3 class="text-xl font-bold text-primary mb-3">O que são Percentis?</h3>
+                <p class="text-gray-300 mb-4">O percentil <span class="font-mono text-white">P(k)</span> é o valor
+                    abaixo do qual se encontram <span class="font-mono text-white">k%</span> dos dados.</p>
+                <div class="bg-black/30 p-3 rounded text-sm text-gray-400">
+                    Exemplo: Se você está no <strong>percentil 95</strong> de altura, você é mais alto que 95% das
+                    pessoas.
+                </div>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border-l-4 border-purple-500">
+                <h3 class="text-xl font-bold text-purple-400 mb-3">O que são Quartis?</h3>
+                <p class="text-gray-300 mb-4">São percentis específicos que dividem os dados em 4 partes iguais (25%
+                    cada).</p>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li><strong>Q1 (25%):</strong> Primeiro quartil. 25% dos dados são menores que ele.</li>
+                    <li><strong>Q2 (50%):</strong> Segundo quartil. É exatamente a <strong>Mediana</strong>.</li>
+                    <li><strong>Q3 (75%):</strong> Terceiro quartil. 75% dos dados são menores que ele.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Visual Boxplot Guide -->
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700 relative overflow-hidden">
+            <div
+                class="absolute top-0 right-0 bg-primary/20 text-primary px-4 py-1 rounded-bl-xl text-xs font-bold uppercase tracking-wider">
+                Anatomia do Boxplot</div>
+
+            <h2 class="text-2xl font-bold text-white mb-8 text-center">Entendendo o Boxplot</h2>
+
+            <div class="relative h-64 w-full max-w-4xl mx-auto mt-10">
+                <!-- Main Box -->
+                <div
+                    class="absolute top-1/2 left-1/4 w-1/2 h-24 bg-primary/10 border-2 border-primary transform -translate-y-1/2">
+                </div>
+
+                <!-- Median Line -->
+                <div
+                    class="absolute top-1/2 left-1/2 w-[1px] h-24 bg-white transform -translate-y-1/2 translate-x-4 border-l-2 border-dashed">
+                </div> <!-- Slightly offset median -->
+
+                <!-- Whiskers -->
+                <div class="absolute top-1/2 left-[10%] w-[15%] h-[2px] bg-gray-500 transform -translate-y-1/2"></div>
+                <!-- Left Whisker -->
+                <div class="absolute top-1/2 left-[10%] w-[2px] h-10 bg-gray-500 transform -translate-y-1/2"></div>
+                <!-- Left Cap -->
+
+                <div class="absolute top-1/2 right-[10%] w-[15%] h-[2px] bg-gray-500 transform -translate-y-1/2"></div>
+                <!-- Right Whisker -->
+                <div class="absolute top-1/2 right-[10%] w-[2px] h-10 bg-gray-500 transform -translate-y-1/2"></div>
+                <!-- Right Cap -->
+
+                <!-- Outliers -->
+                <div class="absolute top-1/2 right-[5%] w-2 h-2 bg-red-500 rounded-full transform -translate-y-1/2">
+                </div>
+                <div class="absolute top-1/2 left-[2%] w-2 h-2 bg-red-500 rounded-full transform -translate-y-1/2">
+                </div>
+
+                <!-- Labels with Connecting Lines -->
+
+                <!-- Q1 -->
+                <div class="absolute top-[80%] left-[25%] -translate-x-1/2 text-center">
+                    <div class="w-[1px] h-8 bg-gray-600 mx-auto -mt-8"></div>
+                    <span class="text-primary font-bold">Q1</span><br><span class="text-xs text-gray-500">25%</span>
+                </div>
+
+                <!-- Q3 -->
+                <div class="absolute top-[80%] right-[25%] translate-x-1/2 text-center">
+                    <div class="w-[1px] h-8 bg-gray-600 mx-auto -mt-8"></div>
+                    <span class="text-primary font-bold">Q3</span><br><span class="text-xs text-gray-500">75%</span>
+                </div>
+
+                <!-- Median -->
+                <div class="absolute top-[20%] left-[54%] -translate-x-1/2 text-center">
+                    <span class="text-white font-bold">Mediana (Q2)</span>
+                    <div class="w-[1px] h-8 bg-gray-600 mx-auto mt-1"></div>
+                </div>
+
+                <!-- IQR Label -->
+                <div class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-[200%] text-center w-1/2">
+                    <span class="text-primary/70 text-sm tracking-widest ">IQR (Intervalo Interquartil)</span>
+                    <div class="w-full h-[1px] bg-primary/30 mt-1"></div>
+                </div>
+
+                <!-- Limits -->
+                <div class="absolute top-[65%] left-[10%] -translate-x-1/2 text-xs text-gray-500">Min (Q1 - 1.5*IQR)
+                </div>
+                <div class="absolute top-[65%] right-[10%] translate-x-1/2 text-xs text-gray-500">Max (Q3 + 1.5*IQR)
+                </div>
+                <div class="absolute top-[55%] right-[5%] translate-x-1/2 text-xs text-red-500 font-bold">Outlier</div>
+
+            </div>
+        </section>
+
+        <!-- Practical Use -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-bg-muted/20 p-5 rounded-lg">
+                <h4 class="font-bold text-white mb-2">Resumo dos 5 Números</h4>
+                <p class="text-sm text-gray-400">Todo boxplot representa 5 números essenciais: Min, Q1, Mediana, Q3,
+                    Max.</p>
+            </div>
+            <div class="bg-bg-muted/20 p-5 rounded-lg">
+                <h4 class="font-bold text-white mb-2">Detectando Assimetria</h4>
+                <p class="text-sm text-gray-400">Se a mediana está mais perto de Q1, os dados são assimétricos à
+                    direita. Se perto de Q3, à esquerda.</p>
+            </div>
+            <div class="bg-bg-muted/20 p-5 rounded-lg">
+                <h4 class="font-bold text-white mb-2">Filtro de Ruído</h4>
+                <p class="text-sm text-gray-400">Focar no IQR (a "caixa") ignora os extremos e mostra onde está a
+                    "massa" dos dados (os 50% centrais).</p>
+            </div>
+        </section>
+
+    </div>
+    <script src="../../assets/js/footer.js"></script>
+</body>
+
+</html>
