@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medidas de Posição - Fundamentos</title>
+    <title>Medidas de Posição & IQR - Fundamentos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -17,6 +17,8 @@
                         'bg-muted': '#334155',
                         'text-primary': '#f1f5f9',
                         'primary': '#f472b6', /* Pinkish/Purple for Position */
+                        'intel-green': '#10b981',
+                        'intel-light': '#6ee7b7',
                     }
                 }
             }
@@ -31,8 +33,8 @@
                 <button class="bg-primary/10 hover:bg-primary/20 text-primary p-3 rounded-lg transition-all"
                     onclick="history.back()">←</button>
                 <div>
-                    <h1 class="text-4xl font-bold text-text-primary">Medidas de Posição</h1>
-                    <p class="text-gray-400 mt-1">Quartis, Percentis e o Poder do Boxplot</p>
+                    <h1 class="text-4xl font-bold text-text-primary">Medidas de Posição & IQR</h1>
+                    <p class="text-gray-400 mt-1">Quartis, Percentis e o Intervalo Interquartil</p>
                 </div>
             </div>
         </header>
@@ -54,20 +56,66 @@
                 <p class="text-gray-300 mb-4">São percentis específicos que dividem os dados em 4 partes iguais (25%
                     cada).</p>
                 <ul class="text-sm text-gray-400 space-y-2">
-                    <li><strong>Q1 (25%):</strong> Primeiro quartil. 25% dos dados são menores que ele.</li>
-                    <li><strong>Q2 (50%):</strong> Segundo quartil. É exatamente a <strong>Mediana</strong>.</li>
-                    <li><strong>Q3 (75%):</strong> Terceiro quartil. 75% dos dados são menores que ele.</li>
+                    <li><strong>Q1 (25%):</strong> A fronteira dos "menores" dados.</li>
+                    <li><strong>Q2 (50%):</strong> Exatamente a <strong>Mediana</strong>.</li>
+                    <li><strong>Q3 (75%):</strong> A fronteira dos "maiores" dados.</li>
                 </ul>
             </div>
         </div>
+
+        <!-- Passo a Passo Didático (Igual Anomalia/IQR) -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-intel-green mb-4">Como Calcular o IQR (Passo a Passo)</h3>
+                <ol class="list-decimal list-inside text-sm text-gray-400 space-y-4">
+                    <li>
+                        <strong class="text-intel-light">Ordenar os Dados (Rol):</strong>
+                        <p class="text-xs mt-1 ml-4">Nada funciona se os dados não estiverem em ordem crescente.</p>
+                    </li>
+                    <li>
+                        <strong class="text-intel-light">Encontrar Q1 e Q3:</strong>
+                        <p class="text-xs mt-1 ml-4">Q1 é a mediana da primeira metade. Q3 é a mediana da segunda
+                            metade.</p>
+                    </li>
+                    <li>
+                        <strong class="text-intel-light">Calcular o IQR:</strong>
+                        <div
+                            class="bg-black/30 p-3 mt-2 rounded text-center font-mono text-white text-lg border border-gray-600">
+                            IQR = Q3 - Q1
+                        </div>
+                        <p class="text-xs mt-2 ml-1 text-center text-gray-500">Isso mede o tamanho da "caixa" (os 50%
+                            centrais).</p>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-bg-surface p-6 rounded-xl border border-gray-700">
+                <h3 class="text-xl font-bold text-intel-green mb-4">Detectando Outliers (Limites)</h3>
+                <p class="text-sm text-gray-400 mb-4">
+                    Qualquer valor fora das "barreiras" abaixo é considerado estatisticamente anormal (Outlier).
+                </p>
+
+                <div class="space-y-3">
+                    <div class="bg-bg-muted/30 p-3 rounded border-l-4 border-red-500">
+                        <strong class="text-white block text-sm">Limite Inferior (Mínimo Aceitável)</strong>
+                        <span class="font-mono text-primary text-lg">L_inf = Q1 - (1.5 × IQR)</span>
+                    </div>
+
+                    <div class="bg-bg-muted/30 p-3 rounded border-l-4 border-red-500">
+                        <strong class="text-white block text-sm">Limite Superior (Máximo Aceitável)</strong>
+                        <span class="font-mono text-primary text-lg">L_sup = Q3 + (1.5 × IQR)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Visual Boxplot Guide -->
         <section class="bg-bg-surface p-8 rounded-xl border border-gray-700 relative overflow-hidden">
             <div
                 class="absolute top-0 right-0 bg-primary/20 text-primary px-4 py-1 rounded-bl-xl text-xs font-bold uppercase tracking-wider">
-                Anatomia do Boxplot</div>
+                Anatomia Visual</div>
 
-            <h2 class="text-2xl font-bold text-white mb-8 text-center">Entendendo o Boxplot</h2>
+            <h2 class="text-2xl font-bold text-white mb-8 text-center text-primary">Interpretando o Boxplot</h2>
 
             <div class="relative h-64 w-full max-w-4xl mx-auto mt-10">
                 <!-- Main Box -->
@@ -92,7 +140,8 @@
                 <!-- Right Cap -->
 
                 <!-- Outliers -->
-                <div class="absolute top-1/2 right-[5%] w-2 h-2 bg-red-500 rounded-full transform -translate-y-1/2">
+                <div
+                    class="absolute top-1/2 right-[5%] w-2 h-2 bg-red-500 rounded-full transform -translate-y-1/2 animate-pulse">
                 </div>
                 <div class="absolute top-1/2 left-[2%] w-2 h-2 bg-red-500 rounded-full transform -translate-y-1/2">
                 </div>
@@ -119,33 +168,128 @@
 
                 <!-- IQR Label -->
                 <div class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-[200%] text-center w-1/2">
-                    <span class="text-primary/70 text-sm tracking-widest ">IQR (Intervalo Interquartil)</span>
+                    <span class="text-primary/70 text-sm tracking-widest ">IQR (O Intervalo Interquartil)</span>
                     <div class="w-full h-[1px] bg-primary/30 mt-1"></div>
                 </div>
 
                 <!-- Limits -->
-                <div class="absolute top-[65%] left-[10%] -translate-x-1/2 text-xs text-gray-500">Min (Q1 - 1.5*IQR)
+                <div class="absolute top-[65%] left-[10%] -translate-x-1/2 text-xs text-gray-500">Limite Inferior<br>(Q1
+                    - 1.5*IQR)
                 </div>
-                <div class="absolute top-[65%] right-[10%] translate-x-1/2 text-xs text-gray-500">Max (Q3 + 1.5*IQR)
+                <div class="absolute top-[65%] right-[10%] translate-x-1/2 text-xs text-gray-500">Limite Superior<br>(Q3
+                    + 1.5*IQR)
                 </div>
                 <div class="absolute top-[55%] right-[5%] translate-x-1/2 text-xs text-red-500 font-bold">Outlier</div>
 
             </div>
         </section>
 
-        <!-- Practical Use -->
+        <!-- IQR as Dispersion Measure -->
+        <section class="bg-bg-elevated p-8 rounded-xl border-l-4 border-yellow-500">
+            <h2 class="text-2xl font-bold text-yellow-500 mb-4">O IQR é Dispersão! (Variabilidade)</h2>
+            <p class="text-gray-300 mb-6">
+                Embora calculado usando Quartis (Posição), o IQR é uma das medidas de <strong>dispersão</strong> mais
+                importantes.
+                Ele responde: <em class="text-white">"Quão espalhados estão os dados normais?"</em> (ignorando os
+                extremos).
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Comparative Case -->
+                <div class="bg-bg-surface p-5 rounded-lg border border-gray-700">
+                    <h3 class="font-bold text-white mb-3">O Duelo: Amplitude vs IQR</h3>
+                    <p class="text-sm text-gray-400 mb-4">Imagine uma tropa onde todos correm 2.4km em 12 min, mas um
+                        superatleta corre em 8 min e um lesionado anda em 25 min.</p>
+
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-xs text-red-400 font-bold mb-1">
+                                <span>Amplitude Total (Max - Min)</span>
+                                <span>17 min (25 - 8)</span>
+                            </div>
+                            <div class="h-2 bg-gray-700 rounded w-full">
+                                <div class="h-2 bg-red-500 rounded w-full"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Diz que a tropa é muito heterogênea (culpa dos
+                                extremos).</p>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs text-intel-green font-bold mb-1">
+                                <span>IQR (Q3 - Q1)</span>
+                                <span>~1 min</span>
+                            </div>
+                            <div class="h-2 bg-gray-700 rounded w-full">
+                                <div class="h-2 bg-intel-green rounded w-[10%]"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Diz a verdade: a maioria (50%) corre tempos quase
+                                iguais.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Why it matters -->
+                <div class="bg-bg-surface p-5 rounded-lg border border-gray-700 flex flex-col justify-center">
+                    <h3 class="font-bold text-primary mb-3">Quando usar o IQR como dispersão?</h3>
+                    <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                        <li>Quando seus dados têm <strong>muitos outliers</strong> (Salários, Preços de Imóveis).</li>
+                        <li>Quando a distribuição <strong>não é Normal</strong> (Assimétrica).</li>
+                        <li>Quando você quer saber a consistência da "maioria" e não se importa com os casos raros.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Example Table -->
+        <section class="bg-bg-surface p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-white mb-6">Exemplo Prático: Salários</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-400">
+                    <thead class="bg-bg-elevated text-xs uppercase text-gray-200">
+                        <tr>
+                            <th class="px-4 py-3">Dados (R$)</th>
+                            <th class="px-4 py-3">Q1 (25%)</th>
+                            <th class="px-4 py-3">Q3 (75%)</th>
+                            <th class="px-4 py-3">IQR</th>
+                            <th class="px-4 py-3">Teto (Limite Sup.)</th>
+                            <th class="px-4 py-3">Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <tr>
+                            <td class="px-4 py-3 font-mono">2k, 3k, 3k, 4k, 5k, 6k, 7k, 30k</td>
+                            <td class="px-4 py-3">3.000</td>
+                            <td class="px-4 py-3">6.500</td>
+                            <td class="px-4 py-3 font-bold text-intel-green">3.500</td>
+                            <td class="px-4 py-3 text-white">11.750</td>
+                            <td class="px-4 py-3">
+                                <span class="text-red-500 font-bold">30k é Outlier!</span>
+                                <br><span class="text-xs text-gray-500">Porque 30k > 11.750</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-4 text-xs text-gray-500 italic text-center">
+                * IQR = 6.500 - 3.000 = 3.500 <br>
+                * Teto = 6.500 + (1.5 × 3.500) = 6.500 + 5.250 = 11.750
+            </p>
+        </section>
+
+
+        <!-- Interpretation Guide -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-bg-muted/20 p-5 rounded-lg">
+            <div class="bg-bg-muted/20 p-5 rounded-lg border border-gray-700 hover:bg-bg-muted/30 transition">
                 <h4 class="font-bold text-white mb-2">Resumo dos 5 Números</h4>
                 <p class="text-sm text-gray-400">Todo boxplot representa 5 números essenciais: Min, Q1, Mediana, Q3,
                     Max.</p>
             </div>
-            <div class="bg-bg-muted/20 p-5 rounded-lg">
+            <div class="bg-bg-muted/20 p-5 rounded-lg border border-gray-700 hover:bg-bg-muted/30 transition">
                 <h4 class="font-bold text-white mb-2">Detectando Assimetria</h4>
                 <p class="text-sm text-gray-400">Se a mediana está mais perto de Q1, os dados são assimétricos à
                     direita. Se perto de Q3, à esquerda.</p>
             </div>
-            <div class="bg-bg-muted/20 p-5 rounded-lg">
+            <div class="bg-bg-muted/20 p-5 rounded-lg border border-gray-700 hover:bg-bg-muted/30 transition">
                 <h4 class="font-bold text-white mb-2">Filtro de Ruído</h4>
                 <p class="text-sm text-gray-400">Focar no IQR (a "caixa") ignora os extremos e mostra onde está a
                     "massa" dos dados (os 50% centrais).</p>
