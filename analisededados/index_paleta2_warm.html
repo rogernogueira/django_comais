@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estatística Interativa - Menu Principal</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-base': '#2a2623',
+            'bg-surface': '#3a3632',
+            'text-primary': '#f0e8e0',
+            'text-secondary': '#b8a89a',
+            'primary': '#9b7563',      // Comparação (marrom quente)
+            'assoc': '#c89968',        // Associação (coral natural)
+            'corr': '#d4a556',         // Correlação (ouro terra)
+            'reg': '#8b7d8b',          // Regressão (roxo acinzentado)
+            'anom': '#6b9a7b',         // Anomalias (verde natural)
+            'fund': '#7a9ca8',         // Fundamentos (azul terra)
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+      background: linear-gradient(135deg, #2a2623 0%, #3a3632 50%, #2a2623 100%);
+      position: relative;
+    }
+
+    .floating-card {
+      background: linear-gradient(135deg, rgba(58, 54, 50, 0.4) 0%, rgba(58, 54, 50, 0.2) 100%);
+      border: 1px solid rgba(184, 168, 154, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .floating-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 50%;
+    }
+
+    .floating-card:hover {
+      transform: translateY(-10px) scale(1.01);
+      border-color: rgba(184, 168, 154, 0.4);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, rgba(58, 54, 50, 0.6) 0%, rgba(58, 54, 50, 0.4) 100%);
+    }
+
+    .floating-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-gradient-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      border-radius: 20px 20px 0 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .floating-card:hover .card-gradient-border {
+      opacity: 1;
+    }
+
+    .icon-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .floating-card:hover .icon-container {
+      transform: scale(1.1);
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+    }
+
+    h1, h2 {
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #9b7563 0%, #c89968 50%, #d4a556 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .float-animation {
+      animation: float 3.5s ease-in-out infinite;
+    }
+
+    .float-animation:nth-child(2) { animation-delay: 0.2s; }
+    .float-animation:nth-child(3) { animation-delay: 0.4s; }
+    .float-animation:nth-child(4) { animation-delay: 0.6s; }
+    .float-animation:nth-child(5) { animation-delay: 0.8s; }
+    .float-animation:nth-child(6) { animation-delay: 1s; }
+  </style>
+</head>
+
+<body class="text-text-primary min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+
+  <div class="max-w-7xl w-full">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h1 class="text-5xl md:text-7xl font-bold mb-4 gradient-text">
+        Análise de Dados
+      </h1>
+      <h3 class="text-2xl md:text-4xl font-bold mb-6 gradient-text">
+        Painel Interativo
+      </h3>
+      <p class="text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
+        Selecione o tipo de análise que deseja realizar para acessar o guia completo, fórmulas e interpretações.
+      </p>
+    </div>
+
+    <!-- Grid of Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+      <!-- Card 1: Fundamentos -->
+      <div onclick="window.location.href='fundamentos.html'" class="floating-card float-animation group">
+        <div class="card-gradient-border" style="background: linear-gradient(90deg, #7a9ca8, transparent);"></div>
+        <div class="content-wrapper">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="icon-container bg-fund/20">
+              <svg class="w-6 h-6 text-fund" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                </path>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold tracking-wider text-fund uppercase px-3 py-1 rounded-full bg-fund/15">Fundamentos</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-fund transition-colors">Fundamentos</h2>
+          <p class="text-text-secondary mb-6 text-sm leading-relaxed">
+            Conceitos essenciais: Tipos de dados, Distribuições, Amostragem e Inferência.
+          </p>
+          <div class="flex items-center text-fund font-semibold text-sm">
+            <span>Acessar Painel</span>
+            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Associação -->
+      <div onclick="window.location.href='associacao.html'" class="floating-card float-animation group">
+        <div class="card-gradient-border" style="background: linear-gradient(90deg, #c89968, transparent);"></div>
+        <div class="content-wrapper">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="icon-container bg-assoc/20">
+              <svg class="w-6 h-6 text-assoc" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                </path>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold tracking-wider text-assoc uppercase px-3 py-1 rounded-full bg-assoc/15">Associação</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-assoc transition-colors">Associação</h2>
+          <p class="text-text-secondary mb-6 text-sm leading-relaxed">
+            Qui-Quadrado, Teste de Fisher e medidas de associação. Para variáveis categóricas.
+          </p>
+          <div class="flex items-center text-assoc font-semibold text-sm">
+            <span>Acessar Painel</span>
+            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Comparação -->
+      <div onclick="window.location.href='comparacao.html'" class="floating-card float-animation group">
+        <div class="card-gradient-border" style="background: linear-gradient(90deg, #9b7563, transparent);"></div>
+        <div class="content-wrapper">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="icon-container bg-primary/20">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                </path>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold tracking-wider text-primary uppercase px-3 py-1 rounded-full bg-primary/15">Comparação</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors">Comparação</h2>
+          <p class="text-text-secondary mb-6 text-sm leading-relaxed">
+            Testes t, ANOVA e equivalentes não paramétricos. Para comparar médias entre grupos.
+          </p>
+          <div class="flex items-center text-primary font-semibold text-sm">
+            <span>Acessar Painel</span>
+            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Regressão -->
+      <div onclick="window.location.href='regressao.html'" class="floating-card float-animation group">
+        <div class="card-gradient-border" style="background: linear-gradient(90deg, #8b7d8b, transparent);"></div>
+        <div class="content-wrapper">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="icon-container bg-reg/20">
+              <svg class="w-6 h-6 text-reg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
+                </path>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold tracking-wider text-reg uppercase px-3 py-1 rounded-full bg-reg/15">Regressão</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-reg transition-colors">Regressão</h2>
+          <p class="text-text-secondary mb-6 text-sm leading-relaxed">
+            Regressão Linear e Logística. Para modelagem preditiva e análise de impacto.
+          </p>
+          <div class="flex items-center text-reg font-semibold text-sm">
+            <span>Acessar Painel</span>
+            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Anomalias -->
+      <div onclick="window.location.href='anomalia.html'" class="floating-card float-animation group">
+        <div class="card-gradient-border" style="background: linear-gradient(90deg, #6b9a7b, transparent);"></div>
+        <div class="content-wrapper">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="icon-container bg-anom/20">
+              <svg class="w-6 h-6 text-anom" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                </path>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold tracking-wider text-anom uppercase px-3 py-1 rounded-full bg-anom/15">Anomalias</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-anom transition-colors">Anomalias</h2>
+          <p class="text-text-secondary mb-6 text-sm leading-relaxed">
+            Detecção de Outliers, Fraudes e Padrões Atípicos. Métodos supervisionados e não supervisionados.
+          </p>
+          <div class="flex items-center text-anom font-semibold text-sm">
+            <span>Acessar Painel</span>
+            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Correlação -->
+      <div onclick="window.location.href='correlacao.html'" class="floating-card float-animation group">
+        <div class="card-gradient-border" style="background: linear-gradient(90deg, #d4a556, transparent);"></div>
+        <div class="content-wrapper">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="icon-container bg-corr/20">
+              <svg class="w-6 h-6 text-corr" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold tracking-wider text-corr uppercase px-3 py-1 rounded-full bg-corr/15">Correlação</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-corr transition-colors">Correlação</h2>
+          <p class="text-text-secondary mb-6 text-sm leading-relaxed">
+            Pearson, Spearman e Kendall. Para medir força e direção de relacionamentos.
+          </p>
+          <div class="flex items-center text-corr font-semibold text-sm">
+            <span>Acessar Painel</span>
+            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="assets/js/footer.js"></script>
+</body>
+
+</html>
