@@ -11,17 +11,17 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-base': '#0f172a',       // Slate 900
-                        'bg-elevated': '#020617',   // Slate 950
-                        'bg-surface': '#1e293b',    // Slate 800
-                        'bg-muted': '#334155',      // Slate 700
+                        'bg-base': '#2a2623',       // Slate 900
+                        'bg-elevated': '#1a1614',   // Slate 950
+                        'bg-surface': '#3a3632',    // Slate 800
+                        'bg-muted': '#504946',      // Slate 700
                         'text-primary': '#f8fafc',  // Slate 50
-                        'text-secondary': '#cbd5e1',// Slate 300
-                        'text-muted': '#94a3b8',    // Slate 400
-                        'intel-amber': '#f59e0b',   // Amber 500 (Intelligence)
+                        'text-secondary': '#d4c4b8',// Slate 300
+                        'text-muted': '#b8a89a',    // Slate 400
+                        'intel-amber': '#d4a556',   // Amber 500 (Intelligence)
                         'intel-gold': '#fbbf24',    // Amber 400
                         'intel-wood': '#78350f',
-                        'primary': '#f59e0b',    // Brown (Roots/Trees)
+                        'primary': '#d4a556',    // Brown (Roots/Trees)
                     }
                 }
             }
@@ -35,7 +35,7 @@
         .glass-panel {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(212, 165, 86, 0.2);
         }
         /* Efeito de conexão entre árvores */
         .tree-line {
@@ -73,32 +73,32 @@
 [Image of Random Forest structure]
 
                 <svg aria-label="Ensemble Tree Concept" class="w-full h-64" role="img" viewBox="0 0 500 300">
-                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+                    <rect fill="#1a1614" height="300" width="500" x="0" y="0"></rect>
 
                     <g transform="translate(80, 50)">
-                        <path d="M 0 0 L -30 60 M 0 0 L 30 60" stroke="#f59e0b" stroke-width="2"></path>
-                        <circle cx="0" cy="0" r="5" fill="#f59e0b"></circle>
-                        <text x="0" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Investigador A</text>
-                        <text x="0" y="95" fill="#f59e0b" font-size="10" text-anchor="middle" font-weight="bold">"FRAUDE"</text>
+                        <path d="M 0 0 L -30 60 M 0 0 L 30 60" stroke="#d4a556" stroke-width="2"></path>
+                        <circle cx="0" cy="0" r="5" fill="#d4a556"></circle>
+                        <text x="0" y="80" fill="#d4c4b8" font-size="10" text-anchor="middle">Investigador A</text>
+                        <text x="0" y="95" fill="#d4a556" font-size="10" text-anchor="middle" font-weight="bold">"FRAUDE"</text>
                     </g>
 
                     <g transform="translate(250, 50)">
-                        <path d="M 0 0 L -30 60 M 0 0 L 30 60" stroke="#f59e0b" stroke-width="2"></path>
-                        <circle cx="0" cy="0" r="5" fill="#f59e0b"></circle>
-                        <text x="0" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Investigador B</text>
-                        <text x="0" y="95" fill="#f59e0b" font-size="10" text-anchor="middle" font-weight="bold">"FRAUDE"</text>
+                        <path d="M 0 0 L -30 60 M 0 0 L 30 60" stroke="#d4a556" stroke-width="2"></path>
+                        <circle cx="0" cy="0" r="5" fill="#d4a556"></circle>
+                        <text x="0" y="80" fill="#d4c4b8" font-size="10" text-anchor="middle">Investigador B</text>
+                        <text x="0" y="95" fill="#d4a556" font-size="10" text-anchor="middle" font-weight="bold">"FRAUDE"</text>
                     </g>
 
                     <g transform="translate(420, 50)">
-                        <path d="M 0 0 L -30 60 M 0 0 L 30 60" stroke="#94a3b8" stroke-width="2"></path>
-                        <circle cx="0" cy="0" r="5" fill="#94a3b8"></circle>
-                        <text x="0" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Investigador C</text>
-                        <text x="0" y="95" fill="#94a3b8" font-size="10" text-anchor="middle" font-weight="bold">"NORMAL"</text>
+                        <path d="M 0 0 L -30 60 M 0 0 L 30 60" stroke="#b8a89a" stroke-width="2"></path>
+                        <circle cx="0" cy="0" r="5" fill="#b8a89a"></circle>
+                        <text x="0" y="80" fill="#d4c4b8" font-size="10" text-anchor="middle">Investigador C</text>
+                        <text x="0" y="95" fill="#b8a89a" font-size="10" text-anchor="middle" font-weight="bold">"NORMAL"</text>
                     </g>
 
-                    <rect x="100" y="200" width="300" height="60" rx="10" fill="#1e293b" stroke="#475569"></rect>
+                    <rect x="100" y="200" width="300" height="60" rx="10" fill="#3a3632" stroke="#475569"></rect>
                     <text x="250" y="225" fill="#fff" text-anchor="middle" font-weight="bold">CONSELHO DE SENTENÇA (VOTAÇÃO)</text>
-                    <text x="250" y="245" fill="#f59e0b" text-anchor="middle" font-size="14">Resultado Final: FRAUDE (2 vs 1)</text>
+                    <text x="250" y="245" fill="#d4a556" text-anchor="middle" font-size="14">Resultado Final: FRAUDE (2 vs 1)</text>
 
                     <line x1="80" y1="100" x2="150" y2="200" stroke="#475569" stroke-dasharray="4 4"></line>
                     <line x1="250" y1="100" x2="250" y2="200" stroke="#475569" stroke-dasharray="4 4"></line>

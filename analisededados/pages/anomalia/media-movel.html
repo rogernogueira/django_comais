@@ -11,15 +11,15 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-base': '#0f172a',       // Slate 900
-                        'bg-elevated': '#020617',   // Slate 950
-                        'bg-surface': '#1e293b',    // Slate 800
-                        'bg-muted': '#334155',      // Slate 700
+                        'bg-base': '#2a2623',       // Slate 900
+                        'bg-elevated': '#1a1614',   // Slate 950
+                        'bg-surface': '#3a3632',    // Slate 800
+                        'bg-muted': '#504946',      // Slate 700
                         'text-primary': '#f8fafc',  // Slate 50
-                        'text-secondary': '#cbd5e1',// Slate 300
-                        'text-muted': '#94a3b8',    // Slate 400
-                        'intel-cyan': '#06b6d4',    // Cyan 500 (Analysis)
-                        'intel-warn': '#f59e0b',    // Amber 500
+                        'text-secondary': '#d4c4b8',// Slate 300
+                        'text-muted': '#b8a89a',    // Slate 400
+                        'intel-cyan': '#7a9ca8',    // Cyan 500 (Analysis)
+                        'intel-warn': '#d4a556',    // Amber 500
                         'intel-chart': '#6366f1',   // Indigo 500
                         'primary': '#4ade80',
                     }
@@ -60,23 +60,23 @@
             <div class="bg-bg-elevated p-6 rounded-xl border border-gray-800 shadow-2xl relative grid-bg">
                 <div class="absolute top-4 left-4 text-xs font-mono text-primary">DADOS BRUTOS vs TENDÊNCIA</div>
                 <svg aria-label="Moving Average Concept" class="w-full h-64" role="img" viewBox="0 0 500 300">
-                    <line x1="50" y1="250" x2="450" y2="250" stroke="#334155" stroke-width="2"></line>
-                    <line x1="50" y1="50" x2="50" y2="250" stroke="#334155" stroke-width="2"></line>
+                    <line x1="50" y1="250" x2="450" y2="250" stroke="#504946" stroke-width="2"></line>
+                    <line x1="50" y1="50" x2="50" y2="250" stroke="#504946" stroke-width="2"></line>
 
                     <polyline points="50,200 80,150 110,220 140,130 170,180 200,100 230,160 260,90 290,140 320,80 350,120 380,60 410,100 440,50"
                         fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 2"></polyline>
                     
                     <path d="M 50 200 C 100 180, 150 170, 200 140 S 300 110, 440 70" 
-                        fill="none" stroke="#06b6d4" stroke-width="4"></path>
+                        fill="none" stroke="#7a9ca8" stroke-width="4"></path>
 
                     <circle cx="300" cy="30" r="4" fill="#475569"></circle>
-                    <text x="310" y="35" fill="#94a3b8" font-size="12">Ocorrências Diárias (Caos)</text>
+                    <text x="310" y="35" fill="#b8a89a" font-size="12">Ocorrências Diárias (Caos)</text>
                     
-                    <circle cx="300" cy="50" r="4" fill="#06b6d4"></circle>
-                    <text x="310" y="55" fill="#06b6d4" font-size="12" font-weight="bold">Tendência Real (SMA-7)</text>
+                    <circle cx="300" cy="50" r="4" fill="#7a9ca8"></circle>
+                    <text x="310" y="55" fill="#7a9ca8" font-size="12" font-weight="bold">Tendência Real (SMA-7)</text>
 
-                    <text x="70" y="240" fill="#94a3b8" font-size="10">Dia 1</text>
-                    <text x="400" y="240" fill="#94a3b8" font-size="10">Dia 30</text>
+                    <text x="70" y="240" fill="#b8a89a" font-size="10">Dia 1</text>
+                    <text x="400" y="240" fill="#b8a89a" font-size="10">Dia 30</text>
                 </svg>
             </div>
 

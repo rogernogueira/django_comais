@@ -12,13 +12,13 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-base': '#0f172a',
-                        'bg-elevated': '#020617',
-                        'bg-surface': '#1e293b',
-                        'bg-muted': '#334155',
-                        'text-primary': '#f1f5f9',
-                        'text-secondary': '#cbd5e1',
-                        'text-muted': '#94a3b8',
+                        'bg-base': '#2a2623',
+                        'bg-elevated': '#1a1614',
+                        'bg-surface': '#3a3632',
+                        'bg-muted': '#504946',
+                        'text-primary': '#f0e8e0',
+                        'text-secondary': '#d4c4b8',
+                        'text-muted': '#b8a89a',
                         'reg-blue': '#3b82f6',
                         'primary': '#3b82f6',
                     }
@@ -32,7 +32,7 @@
         }
 
         .back-button:hover {
-            background-color: rgba(59, 130, 246, 0.2);
+            background-color: rgba(122, 156, 168, 0.2);
             transform: translateX(-2px);
         }
     </style>
@@ -310,13 +310,13 @@
             ctx3D.strokeStyle = '#ef4444'; ctx3D.stroke();
 
             ctx3D.beginPath(); ctx3D.moveTo(origin.x, origin.y); ctx3D.lineTo(yAxis.x, yAxis.y);
-            ctx3D.strokeStyle = '#10b981'; ctx3D.stroke();
+            ctx3D.strokeStyle = '#6b9a7b'; ctx3D.stroke();
 
             ctx3D.beginPath(); ctx3D.moveTo(origin.x, origin.y); ctx3D.lineTo(zAxis.x, zAxis.y);
             ctx3D.strokeStyle = '#3b82f6'; ctx3D.stroke();
 
             // Draw Plane Grid
-            ctx3D.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+            ctx3D.strokeStyle = 'rgba(122, 156, 168, 0.2)';
             ctx3D.lineWidth = 1;
 
             for (let i = -10; i <= 10; i += 2) {
@@ -331,7 +331,7 @@
             }
 
             // Draw Points
-            ctx3D.fillStyle = '#f1f5f9';
+            ctx3D.fillStyle = '#f0e8e0';
             for (let p of points3D) {
                 const proj = project(p.x, p.y, p.z, w, h);
                 const alpha = Math.max(0.2, 1 - (proj.d + 2) / 6);

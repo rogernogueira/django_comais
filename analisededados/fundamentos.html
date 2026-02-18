@@ -11,16 +11,16 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-base': '#0f172a',
-                        'bg-elevated': '#020617',
-                        'bg-surface': '#1e293b',
-                        'bg-muted': '#334155',
-                        'text-primary': '#f1f5f9',
-                        'text-secondary': '#cbd5e1',
-                        'text-muted': '#94a3b8',
-                        'text-accent': '#06b6d4', /* Cyan for Fundamentos */
-                        'primary': '#06b6d4',
-                        'primary-foreground': '#0f172a',
+                        'bg-base': '#2a2623',
+                        'bg-elevated': '#1a1614',
+                        'bg-surface': '#3a3632',
+                        'bg-muted': '#504946',
+                        'text-primary': '#f0e8e0',
+                        'text-secondary': '#d4c4b8',
+                        'text-muted': '#b8a89a',
+                        'text-accent': '#7a9ca8', /* Azul terra for Fundamentos */
+                        'primary': '#7a9ca8',
+                        'primary-foreground': '#2a2623',
                     }
                 }
             }
@@ -34,13 +34,13 @@
 
         .slide:hover {
             transform: scale(1.02);
-            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 10px 25px rgba(122, 156, 168, 0.3);
         }
 
         .slide.active {
             transform: scale(1.05);
-            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.5);
-            border: 2px solid #06b6d4;
+            box-shadow: 0 15px 35px rgba(122, 156, 168, 0.5);
+            border: 2px solid #7a9ca8;
         }
 
         .element-clickable {
@@ -49,7 +49,7 @@
         }
 
         .element-clickable:hover {
-            background-color: rgba(6, 182, 212, 0.1);
+            background-color: rgba(122, 156, 168, 0.1);
             transform: translateY(-2px);
         }
 
@@ -318,7 +318,7 @@
 
                     // Adicionar efeito visual de clique
                     this.style.transform = 'scale(0.98)';
-                    this.style.backgroundColor = 'rgba(6, 182, 212, 0.2)';
+                    this.style.backgroundColor = 'rgba(122, 156, 168, 0.2)';
 
                     // Remover efeito após um tempo
                     setTimeout(() => {

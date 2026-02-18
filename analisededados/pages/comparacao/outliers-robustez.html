@@ -10,16 +10,16 @@
       theme: {
         extend: {
           colors: {
-            'bg-base': '#0f172a',
-            'bg-elevated': '#020617',
-            'bg-surface': '#1e293b',
-            'bg-muted': '#334155',
-            'text-primary': '#f1f5f9',
-            'text-secondary': '#cbd5e1',
-            'text-muted': '#94a3b8',
+            'bg-base': '#2a2623',
+            'bg-elevated': '#1a1614',
+            'bg-surface': '#3a3632',
+            'bg-muted': '#504946',
+            'text-primary': '#f0e8e0',
+            'text-secondary': '#d4c4b8',
+            'text-muted': '#b8a89a',
             'text-accent': '#38bdf8',
             'primary': '#38bdf8',
-            'primary-foreground': '#0f172a',
+            'primary-foreground': '#2a2623',
           }
         }
       }
@@ -32,7 +32,7 @@
     }
     
     .element-clickable:hover {
-      background-color: rgba(56, 189, 248, 0.1);
+      background-color: rgba(155, 117, 99, 0.1);
       transform: translateY(-2px);
     }
     
@@ -45,7 +45,7 @@
     }
     
     .back-button:hover {
-      background-color: rgba(56, 189, 248, 0.2);
+      background-color: rgba(155, 117, 99, 0.2);
       transform: translateX(-2px);
     }
   </style>
@@ -69,20 +69,20 @@
         <div class="bg-bg-muted/20 p-4 rounded-lg">
           <h3 class="text-xl mb-4 text-primary font-bold">Impacto dos Outliers</h3>
           <svg aria-label="Comparação de dados com e sem outliers" class="w-full" role="img" viewBox="0 0 500 360">
-            <rect fill="#1e293b" height="360" width="500" x="0" y="0"></rect>
+            <rect fill="#3a3632" height="360" width="500" x="0" y="0"></rect>
             
             <!-- Eixo X -->
-            <line stroke="#CBD5E1" stroke-width="2" x1="40" x2="460" y1="300" y2="300"></line>
+            <line stroke="#d4c4b8" stroke-width="2" x1="40" x2="460" y1="300" y2="300"></line>
             
             <!-- Distribuição normal sem outliers -->
             <path d="M 60 300 C 120 200, 200 120, 260 100 C 320 80, 380 120, 440 200 L 440 300 Z" 
-                  fill="#10b981" opacity="0.4"></path>
+                  fill="#6b9a7b" opacity="0.4"></path>
             <path d="M 60 300 C 120 200, 200 120, 260 100 C 320 80, 380 120, 440 200" 
-                  fill="none" stroke="#10b981" stroke-width="4"></path>
+                  fill="none" stroke="#6b9a7b" stroke-width="4"></path>
             
             <!-- Média sem outliers -->
-            <line stroke="#10b981" stroke-dasharray="6 6" stroke-width="4" x1="260" x2="260" y1="100" y2="300"></line>
-            <text fill="#10b981" font-family="Source Sans 3, Arial" font-size="14" font-weight="bold" text-anchor="middle" x="260" y="318">
+            <line stroke="#6b9a7b" stroke-dasharray="6 6" stroke-width="4" x1="260" x2="260" y1="100" y2="300"></line>
+            <text fill="#6b9a7b" font-family="Source Sans 3, Arial" font-size="14" font-weight="bold" text-anchor="middle" x="260" y="318">
               Média (sem outliers)
             </text>
             
@@ -110,16 +110,16 @@
             </text>
             
             <!-- Legenda -->
-            <rect fill="#10b981" height="12" rx="2" width="12" x="60" y="24"></rect>
-            <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="13" x="78" y="34">
+            <rect fill="#6b9a7b" height="12" rx="2" width="12" x="60" y="24"></rect>
+            <text fill="#d4c4b8" font-family="Source Sans 3, Arial" font-size="13" x="78" y="34">
               Sem outliers
             </text>
             <rect fill="#ef4444" height="12" rx="2" width="12" x="160" y="24"></rect>
-            <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="13" x="178" y="34">
+            <text fill="#d4c4b8" font-family="Source Sans 3, Arial" font-size="13" x="178" y="34">
               Com outliers
             </text>
             <rect fill="#fbbf24" height="12" rx="2" width="12" x="260" y="24"></rect>
-            <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="13" x="278" y="34">
+            <text fill="#d4c4b8" font-family="Source Sans 3, Arial" font-size="13" x="278" y="34">
               Outliers
             </text>
           </svg>
@@ -278,3 +278,4 @@
   <script src="../../assets/js/footer.js"></script>
 </body>
 </html>
+

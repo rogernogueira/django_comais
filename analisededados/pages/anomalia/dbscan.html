@@ -11,16 +11,16 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-base': '#0f172a',       // Slate 900
-                        'bg-elevated': '#020617',   // Slate 950
-                        'bg-surface': '#1e293b',    // Slate 800
-                        'bg-muted': '#334155',      // Slate 700
+                        'bg-base': '#2a2623',       // Slate 900
+                        'bg-elevated': '#1a1614',   // Slate 950
+                        'bg-surface': '#3a3632',    // Slate 800
+                        'bg-muted': '#504946',      // Slate 700
                         'text-primary': '#f8fafc',  // Slate 50
-                        'text-secondary': '#cbd5e1',// Slate 300
-                        'text-muted': '#94a3b8',    // Slate 400
-                        'intel-violet': '#8b5cf6',  // Violet 500 (Clustering)
+                        'text-secondary': '#d4c4b8',// Slate 300
+                        'text-muted': '#b8a89a',    // Slate 400
+                        'intel-violet': '#8b7d8b',  // Violet 500 (Clustering)
                         'intel-light': '#a78bfa',   // Violet 400
-                        'intel-noise': '#94a3b8',   // Grey (Noise)
+                        'intel-noise': '#b8a89a',   // Grey (Noise)
                         'intel-danger': '#ef4444',  // Red 500
                         'primary': '#5da0f1',
                     }
@@ -70,26 +70,26 @@
                 <div class="absolute top-4 left-4 text-xs font-mono text-intel-light z-10">DENSIDADE GEOGRÁFICA</div>
                 
                 <svg aria-label="DBSCAN Concept Diagram" class="w-full h-64" role="img" viewBox="0 0 500 300">
-                    <rect fill="#020617" height="300" width="500" x="0" y="0"></rect>
+                    <rect fill="#1a1614" height="300" width="500" x="0" y="0"></rect>
 
-                    <circle cx="200" cy="150" r="100" fill="none" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="2 2"></circle>
-                    <circle cx="200" cy="150" r="400" fill="#8b5cf6" opacity="0.1" class="radar-ping"></circle>
+                    <circle cx="200" cy="150" r="100" fill="none" stroke="#8b7d8b" stroke-width="1" stroke-dasharray="2 2"></circle>
+                    <circle cx="200" cy="150" r="400" fill="#8b7d8b" opacity="0.1" class="radar-ping"></circle>
                     <circle cx="200" cy="150" r="10" fill="#a78bfa"></circle>
-                    <text x="190" y="175" fill="#8b5cf6" font-size="15">Core Point</text>
-                    <text x="210" y="140" fill="#8b5cf6" font-size="15" opacity="0.7">ε (Epsilon)</text>
+                    <text x="190" y="175" fill="#8b7d8b" font-size="15">Core Point</text>
+                    <text x="210" y="140" fill="#8b7d8b" font-size="15" opacity="0.7">ε (Epsilon)</text>
 
-                    <circle cx="150" cy="160" r="10" fill="#8b5cf6" opacity="0.7"></circle>
-                    <circle cx="260" cy="120" r="10" fill="#8b5cf6" opacity="0.7"></circle>
-                    <circle cx="220" cy="200" r="10" fill="#8b5cf6" opacity="0.7"></circle>
-                    <circle cx="130" cy="100" r="10" fill="#8b5cf6" opacity="0.7"></circle>
+                    <circle cx="150" cy="160" r="10" fill="#8b7d8b" opacity="0.7"></circle>
+                    <circle cx="260" cy="120" r="10" fill="#8b7d8b" opacity="0.7"></circle>
+                    <circle cx="220" cy="200" r="10" fill="#8b7d8b" opacity="0.7"></circle>
+                    <circle cx="130" cy="100" r="10" fill="#8b7d8b" opacity="0.7"></circle>
 
-                    <circle cx="240" cy="190" r="10" fill="#8b5cf6"></circle>
+                    <circle cx="240" cy="190" r="10" fill="#8b7d8b"></circle>
                     <line x1="200" y1="150" x2="130" y2="100" stroke="#4b5563" stroke-width="1"></line>
                     <text x="140" y="125" fill="#a78bfa" font-size="15">Border</text>
 
-                    <circle cx="400" cy="80" r="4" fill="#94a3b8"></circle>
+                    <circle cx="400" cy="80" r="4" fill="#b8a89a"></circle>
                     <circle cx="400" cy="80" r="30" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="2 2"></circle>
-                    <text x="410" y="85" fill="#94a3b8" font-size="12" font-weight="bold">Ruído</text>
+                    <text x="410" y="85" fill="#b8a89a" font-size="12" font-weight="bold">Ruído</text>
                     <text x="360" y="120" fill="#64748b" font-size="10" width="100">Sem vizinhos suficientes</text>
                 </svg>
                 <a class="text-primary" href="https://comais.uft.edu.br/playground/dbscan">Playground COMAIS</a>

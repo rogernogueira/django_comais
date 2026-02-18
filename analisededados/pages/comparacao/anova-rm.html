@@ -11,16 +11,16 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-base': '#0f172a',
-                        'bg-elevated': '#020617',
-                        'bg-surface': '#1e293b',
-                        'bg-muted': '#334155',
-                        'text-primary': '#f1f5f9',
-                        'text-secondary': '#cbd5e1',
-                        'text-muted': '#94a3b8',
+                        'bg-base': '#2a2623',
+                        'bg-elevated': '#1a1614',
+                        'bg-surface': '#3a3632',
+                        'bg-muted': '#504946',
+                        'text-primary': '#f0e8e0',
+                        'text-secondary': '#d4c4b8',
+                        'text-muted': '#b8a89a',
                         'text-accent': '#38bdf8',
                         'primary': '#38bdf8',
-                        'primary-foreground': '#0f172a',
+                        'primary-foreground': '#2a2623',
                     }
                 }
             }
@@ -33,7 +33,7 @@
         }
 
         .element-clickable:hover {
-            background-color: rgba(56, 189, 248, 0.1);
+            background-color: rgba(155, 117, 99, 0.1);
             transform: translateY(-2px);
         }
 
@@ -46,7 +46,7 @@
         }
 
         .back-button:hover {
-            background-color: rgba(56, 189, 248, 0.2);
+            background-color: rgba(155, 117, 99, 0.2);
             transform: translateX(-2px);
         }
     </style>
@@ -72,18 +72,18 @@
                 <div class="bg-bg-muted/20 p-4 rounded-lg">
                     <h3 class="text-xl mb-4 text-primary font-bold">Medidas ao Longo do Tempo</h3>
                     <svg aria-label="Evolução de medidas repetidas" class="w-full" role="img" viewBox="0 0 500 360">
-                        <rect fill="#1e293b" height="360" width="500" x="0" y="0"></rect>
+                        <rect fill="#3a3632" height="360" width="500" x="0" y="0"></rect>
 
                         <!-- Eixos -->
-                        <line stroke="#CBD5E1" stroke-width="2" x1="60" x2="60" y1="40" y2="300"></line>
-                        <line stroke="#CBD5E1" stroke-width="2" x1="60" x2="460" y1="300" y2="300"></line>
+                        <line stroke="#d4c4b8" stroke-width="2" x1="60" x2="60" y1="40" y2="300"></line>
+                        <line stroke="#d4c4b8" stroke-width="2" x1="60" x2="460" y1="300" y2="300"></line>
 
                         <!-- Labels dos eixos -->
-                        <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle"
+                        <text fill="#d4c4b8" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle"
                             x="260" y="330">
                             Tempo / Condição
                         </text>
-                        <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle"
+                        <text fill="#d4c4b8" font-family="Source Sans 3, Arial" font-size="12" text-anchor="middle"
                             transform="rotate(-90 30 170)" x="30" y="170">
                             Medida
                         </text>
@@ -94,9 +94,9 @@
 
                         <!-- Pontos de medida -->
                         <circle cx="100" cy="250" r="8" fill="#38bdf8"></circle>
-                        <circle cx="180" cy="200" r="8" fill="#10b981"></circle>
+                        <circle cx="180" cy="200" r="8" fill="#6b9a7b"></circle>
                         <circle cx="260" cy="180" r="8" fill="#eab308"></circle>
-                        <circle cx="340" cy="160" r="8" fill="#f59e0b"></circle>
+                        <circle cx="340" cy="160" r="8" fill="#d4a556"></circle>
                         <circle cx="420" cy="140" r="8" fill="#ef4444"></circle>
 
                         <!-- Labels dos pontos -->
@@ -104,7 +104,7 @@
                             x="100" y="320">
                             T1
                         </text>
-                        <text fill="#10b981" font-family="Source Sans 3, Arial" font-size="11" text-anchor="middle"
+                        <text fill="#6b9a7b" font-family="Source Sans 3, Arial" font-size="11" text-anchor="middle"
                             x="180" y="320">
                             T2
                         </text>
@@ -112,7 +112,7 @@
                             x="260" y="320">
                             T3
                         </text>
-                        <text fill="#f59e0b" font-family="Source Sans 3, Arial" font-size="11" text-anchor="middle"
+                        <text fill="#d4a556" font-family="Source Sans 3, Arial" font-size="11" text-anchor="middle"
                             x="340" y="320">
                             T4
                         </text>
@@ -122,7 +122,7 @@
                         </text>
 
                         <!-- Título -->
-                        <text fill="#cbd5e1" font-family="Source Sans 3, Arial" font-size="14" font-weight="bold"
+                        <text fill="#d4c4b8" font-family="Source Sans 3, Arial" font-size="14" font-weight="bold"
                             text-anchor="middle" x="260" y="25">
                             Mesmo grupo avaliado múltiplas vezes
                         </text>

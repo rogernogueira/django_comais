@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estatística Interativa - Menu Principal</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-base': '#2a2623',
+            'bg-surface': '#3a3632',
+            'text-primary': '#f0e8e0',
+            'text-secondary': '#b8a89a',
+            'primary': '#9b7563',    // Comparação (marrom quente)
+            'assoc': '#c89968',      // Associação (coral natural)
+            'corr': '#d4a556',       // Correlação (ouro terra)
+            'reg': '#8b7d8b',        // Regressão (roxo acinzentado)
+            'anom': '#6b9a7b',       // Anomalias (verde natural)
+            'fund': '#7a9ca8',       // Fundamentos (azul terra)
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --pz-border: 5px;
+      /* espessura do "trilho" preto */
+      --pz-tab: 72px;
+      /* diâmetro dos círculos */
+      --pz-radius: 32px;
+      /* arredondamento dos cards */
+      --pz-bg: #1a1614;
+      /* cor do tabuleiro */
+    }
+
+    body {
+      scroll-behavior: smooth;
+      background: linear-gradient(135deg, #2a2623 0%, #3a3632 50%, #2a2623 100%);
+    }
+
+    .module-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .module-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* leve brilho no hover */
+    .module-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.06) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .module-card:hover::before {
+      opacity: 1;
+    }
+
+    /* garantir que conteúdo fique acima do efeito */
+    .module-inner {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* --------- LAYOUT BÁSICO (MOBILE) --------- */
+
+    .puzzle-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+
+      /* TABULEIRO */
+      .puzzle-wrapper {
+        background: var(--pz-bg);
+        border-radius: calc(var(--pz-radius) + 16px);
+        padding: 1.5rem;
+        display: inline-block;
+        box-shadow: 0 24px 40px rgba(0, 0, 0, 0.6);
+      }
+
+      /* GRID 2x2 – quem separa é o "trilho" preto (gap) */
+      .puzzle-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--pz-border);
+      }
+
+      .puzzle-piece {
+        position: relative;
+        border-radius: var(--pz-radius);
+        background: #3a3632;
+        overflow: visible;
+      }
+
+      /* cantos externos extra arredondados */
+      .piece-tl {
+        border-top-left-radius: calc(var(--pz-radius) + 12px);
+      }
+
+      .piece-tr {
+        border-top-right-radius: calc(var(--pz-radius) + 12px);
+      }
+
+      .piece-bl {
+        border-bottom-left-radius: calc(var(--pz-radius) + 12px);
+      }
+
+      .piece-br {
+        border-bottom-right-radius: calc(var(--pz-radius) + 12px);
+      }
+
+      /* "trilho" preto ao redor de cada peça (faz parte do contorno) */
+      .puzzle-piece::after {
+        content: '';
+        position: absolute;
+        inset: calc(-1 * var(--pz-bg) / 2);
+        border-radius: inherit;
+        border: var(--pz-bg) solid var(--pz-bg);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      /* ---------- TABS (CÍRCULOS) ---------- */
+
+      .puzzle-tab {
+        display: none;
+        /* some no mobile */
+      }
+
+      .puzzle-tab {
+        position: absolute;
+        width: var(--pz-tab);
+        height: var(--pz-tab);
+        border-radius: 9999px;
+        z-index: 2;
+      }
+
+      .puzzle-tab.out {
+        background: var(--pz-bg);
+        /* mesma cor do card */
+        border: var(--pz-bg);
+      }
+
+      .puzzle-tab.in {
+        background: var(--pz-bg);
+        /* "buraco" */
+        border: var(--pz-bg);
+      }
+
+      /* posições */
+      .puzzle-tab.right {
+        right: calc(-1 * var(--pz-tab) / 2);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .puzzle-tab.left {
+        left: calc(-1 * var(--pz-tab) / 2);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .puzzle-tab.top {
+        top: calc(-1 * var(--pz-tab) / 2);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .puzzle-tab.bottom {
+        bottom: calc(-1 * var(--pz-tab) / 2);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      /* só mostra tabs em telas md+ */
+      @media (min-width: 768px) {
+        .puzzle-tab {
+          display: block;
+        }
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans min-h-screen flex flex-col items-center justify-center p-8">
+
+  <div class="max-w-6xl w-full">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-16">
+      <h1
+        class="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-assoc to-primary">
+        Análise de Dados
+      </h1>
+      <h3
+        class="text-2xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-assoc to-primary">
+        Painel Interativo
+      </h3>
+      <p class="text-xl text-text-secondary max-w-2xl mx-auto">
+        Selecione o tipo de análise que deseja realizar para acessar o guia completo, fórmulas e interpretações.
+      </p>
+    </div>
+
+    <!-- Quebra-cabeça -->
+    <div class="flex justify-center">
+      <div class="puzzle-wrapper">
+
+        <div class="puzzle-grid ">
+
+          <!-- TOP-LEFT – Correlação (aba direita + aba embaixo) -->
+          <div onclick="window.location.href='fundamentos.html'"
+            class="module-card puzzle-piece piece-tl bg-bg-surface p-8 group ">
+
+            <!-- tabs -->
+            <div class="puzzle-tab out right"></div>
+            <div class="puzzle-tab out bottom"></div>
+            <div class="module-inner ml-4">
+              <div class="flex items-start justify-between mb-6">
+                <div class="p-4 bg-fund/10 rounded-2xl group-hover:bg-fund/20 transition-colors">
+                  <svg class="w-8 h-8 text-fund" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                    </path>
+                  </svg>
+                </div>
+                <span
+                  class="text-xs font-bold tracking-wider text-fund uppercase bg-fund/10 px-3 py-1 rounded-full">Fundamentals</span>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-fund transition-colors">Fundamentos</h2>
+              <p class="text-text-secondary mb-6">
+                Conceitos essenciais: Tipos de dados, Distribuições, Amostragem e Inferência.
+              </p>
+              <div class="flex items-center text-fund font-semibold">
+                <span>Acessar Painel</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                  </path>
+                </svg>
+              </div>
+            </div>
+            
+          </div>
+
+          <!-- TOP-RIGHT – Associação (encaixe esquerda + aba embaixo) -->
+          <div onclick="window.location.href='associacao.html'"
+            class="module-card puzzle-piece piece-tr bg-bg-surface p-8 group">
+
+            <!-- tabs -->
+            <div class="puzzle-tab in left"></div>
+            <div class="puzzle-tab out bottom"></div>
+
+            <div class="module-inner ml-4">
+              <div class="flex items-start justify-between mb-6">
+                <div class="p-4 bg-assoc/10 rounded-2xl group-hover:bg-assoc/20 transition-colors">
+                  <svg class="w-8 h-8 text-assoc" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                    </path>
+                  </svg>
+                </div>
+                <span
+                  class="text-xs font-bold tracking-wider text-assoc uppercase bg-assoc/10 px-3 py-1 rounded-full">Association</span>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-assoc transition-colors">Associação</h2>
+              <p class="text-text-secondary mb-6">
+                Qui-Quadrado, Teste de Fisher e medidas de associação. Para analisar relações entre variáveis
+                categóricas.
+              </p>
+              <div class="flex items-center text-assoc font-semibold">
+                <span>Acessar Painel</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                  </path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- MIDDLE-LEFT – Comparação (aba direita + encaixe em cima + aba embaixo) -->
+          <div onclick="window.location.href='comparacao.html'"
+            class="module-card puzzle-piece bg-bg-surface p-8 group ">
+
+            <!-- tabs -->
+            <div class="puzzle-tab out right"></div>
+            <div class="puzzle-tab in top"></div>
+            <div class="puzzle-tab out bottom"></div>
+
+            <div class="module-inner ml-4">
+              <div class="flex items-start justify-between mb-6">
+                <div class="p-4 bg-primary/10 rounded-2xl group-hover:bg-primary/20 transition-colors">
+                  <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                    </path>
+                  </svg>
+                </div>
+                <span
+                  class="text-xs font-bold tracking-wider text-primary uppercase bg-primary/10 px-3 py-1 rounded-full">Comparison</span>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-primary transition-colors">Comparação</h2>
+              <p class="text-text-secondary mb-6">
+                Testes t, ANOVA e seus equivalentes não paramétricos. Para comparar médias entre dois ou mais grupos.
+              </p>
+              <div class="flex items-center text-primary font-semibold">
+                <span>Acessar Painel</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                  </path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- MIDDLE-RIGHT – Regressão (encaixe esquerda + encaixe em cima + aba embaixo) -->
+          <div onclick="window.location.href='regressao.html'" class="module-card puzzle-piece bg-bg-surface p-8 group">
+
+            <!-- tabs -->
+            <div class="puzzle-tab in left"></div>
+            <div class="puzzle-tab in top"></div>
+            <div class="puzzle-tab out bottom"></div>
+
+            <div class="module-inner ml-4">
+              <div class="flex items-start justify-between mb-6">
+                <div class="p-4 bg-reg/10 rounded-2xl group-hover:bg-reg/20 transition-colors">
+                  <svg class="w-8 h-8 text-reg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
+                    </path>
+                  </svg>
+                </div>
+                <span
+                  class="text-xs font-bold tracking-wider text-reg uppercase bg-reg/10 px-3 py-1 rounded-full">Regression</span>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-reg transition-colors">Regressão</h2>
+              <p class="text-text-secondary mb-6">
+                Regressão Linear e Logística. Para modelagem preditiva e análise de impacto entre variáveis.
+              </p>
+              <div class="flex items-center text-reg font-semibold">
+                <span>Acessar Painel</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                  </path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOTTOM-LEFT – Anomalia (aba direita + encaixe em cima) -->
+          <div onclick="window.location.href='anomalia.html'"
+            class="module-card puzzle-piece piece-bl bg-bg-surface p-8 group">
+
+            <!-- tabs -->
+            <div class="puzzle-tab out right"></div>
+            <div class="puzzle-tab in top"></div>
+
+            <div class="module-inner ml-4">
+              <div class="flex items-start justify-between mb-6">
+                <div class="p-4 bg-anom/10 rounded-2xl group-hover:bg-anom/20 transition-colors">
+                  <svg class="w-8 h-8 text-anom" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                    </path>
+                  </svg>
+                </div>
+                <span
+                  class="text-xs font-bold tracking-wider text-anom uppercase bg-anom/10 px-3 py-1 rounded-full">Anomaly</span>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-anom transition-colors">Anomalias</h2>
+              <p class="text-text-secondary mb-6">
+                Detecção de Outliers, Fraudes e Padrões Atípicos. Métodos supervisionados e não supervisionados.
+              </p>
+              <div class="flex items-center text-anom font-semibold">
+                <span>Acessar Painel</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                  </path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOTTOM-RIGHT – Fundamentos (encaixe esquerda + encaixe em cima) -->
+          <div onclick="window.location.href='correlacao.html'"
+            class="module-card puzzle-piece piece-br bg-bg-surface p-8 group">
+
+            <!-- tabs -->
+            <div class="puzzle-tab in left"></div>
+            <div class="puzzle-tab in top"></div>
+            <div class="module-inner ml-4">
+              <div class="flex items-start justify-between mb-6 ">
+                <div class="p-4 bg-corr/10 rounded-2xl group-hover:bg-corr/20 transition-colors">
+                  <svg class="w-8 h-8 text-corr" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                  </svg>
+                </div>
+                <span
+                  class="text-xs font-bold tracking-wider text-corr uppercase bg-corr/10 px-3 py-1 rounded-full">Correlation</span>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-corr transition-colors">Correlação</h2>
+              <p class="text-text-secondary mb-6">
+                Pearson, Spearman e Kendall. Para medir a força e direção de relacionamentos entre variáveis.
+              </p>
+              <div class="flex items-center text-corr font-semibold">
+                <span>Acessar Painel</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                  </path>
+                </svg>
+              </div>
+            </div>
+            
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="assets/js/footer.js"></script>
+</body>
+
+</html>

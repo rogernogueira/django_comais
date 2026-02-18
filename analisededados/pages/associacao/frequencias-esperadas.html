@@ -7,6 +7,13 @@
     <title>Frequências Esperadas - Pressupostos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
         tailwind.config = {
@@ -14,15 +21,15 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-base': '#0f172a',
-                        'bg-elevated': '#020617',
-                        'bg-surface': '#1e293b',
-                        'bg-muted': '#334155',
-                        'text-primary': '#f1f5f9',
-                        'text-secondary': '#cbd5e1',
-                        'text-muted': '#94a3b8',
-                        'assoc-cyan': '#06b6d4',
-                        'primary': '#06b6d4',
+                        'bg-base': '#2a2623',
+                        'bg-elevated': '#1a1614',
+                        'bg-surface': '#3a3632',
+                        'bg-muted': '#504946',
+                        'text-primary': '#f0e8e0',
+                        'text-secondary': '#d4c4b8',
+                        'text-muted': '#b8a89a',
+                        'assoc-cyan': '#7a9ca8',
+                        'primary': '#7a9ca8',
                     }
                 }
             }
@@ -34,7 +41,7 @@
         }
 
         .back-button:hover {
-            background-color: rgba(6, 182, 212, 0.2);
+            background-color: rgba(122, 156, 168, 0.2);
             transform: translateX(-2px);
         }
     </style>
@@ -56,31 +63,80 @@
             <!-- Conceito -->
             <div class="space-y-6">
                 <div class="bg-bg-muted/20 p-6 rounded-lg border-l-4 border-primary">
-                    <h3 class="text-xl mb-4 text-primary font-bold">A Regra dos "5"</h3>
+                    <h3 class="text-xl mb-4 text-primary font-bold">O que são e a Regra dos "5"</h3>
+                    
+                    <div class="mb-6 bg-assoc-cyan/10 p-4 rounded-lg">
+                        <p class="text-sm text-text-secondary italic">
+                            💡 <strong>Analogia:</strong> Imagine dividir 100 balas entre 2 grupos de crianças de forma justa. 
+                            Se não houver preferência (independência), esperamos que cada grupo receba quantidade proporcional 
+                            ao seu tamanho. A <strong>Frequência Esperada</strong> é exatamente isso: o que "deveria" acontecer 
+                            se não houvesse nenhuma relação especial entre as variáveis.
+                        </p>
+                    </div>
+
                     <p class="text-text-secondary leading-relaxed mb-4">
                         Para que a aproximação da distribuição Qui-Quadrado seja válida, as frequências
-                        <strong>esperadas</strong> (não as observadas!) em cada célula da tabela de contingência devem
+                        <strong>esperadas</strong> (o cenário teórico de independência) em cada célula da tabela devem
                         ser suficientemente grandes.
                     </p>
                     <div class="bg-bg-surface p-4 rounded">
-                        <p class="text-sm text-white font-bold mb-2">Critério Padrão:</p>
-                        <ul class="text-sm text-text-muted space-y-1 list-disc list-inside">
-                            <li>Nenhuma célula deve ter frequência esperada < 1.</li>
-                            <li>Não mais que 20% das células devem ter frequência esperada < 5.</li>
+                        <p class="text-sm text-white font-bold mb-2">Critério Padrão (Cochran, 1954):</p>
+                        <ul class="text-sm text-text-muted space-y-2 list-disc list-inside">
+                            <li><span class="text-primary font-bold">Nenhuma célula</span> deve ter frequência esperada < 1.</li>
+                            <li><span class="text-primary font-bold">No máximo 20%</span> das células podem ter frequência esperada < 5.</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="bg-bg-muted/20 p-6 rounded-lg">
-                    <h3 class="text-xl mb-4 text-primary font-bold">Como Calcular?</h3>
+                    <h3 class="text-xl mb-4 text-primary font-bold">Como Calcular na Prática?</h3>
                     <p class="text-sm text-text-secondary mb-4">
-                        A frequência esperada ($E_{ij}$) para uma célula na linha $i$ e coluna $j$ é calculada assumindo
-                        que as variáveis são independentes:
+                        A frequência esperada ($E_{ij}$) é calculada sob a suposição de independência entre as variáveis. O cálculo é simples e usa apenas os totais das linhas e colunas:
                     </p>
-                    <div class="bg-bg-surface p-6 rounded text-center mb-4">
+                    <div class="bg-bg-surface p-6 rounded text-center mb-6">
                         <p class="text-lg text-white font-mono">
-                            $$ E_{ij} = \frac{\text{Total da Linha } i \times \text{Total da Coluna } j}{\text{Total
-                            Geral}} $$
+                            $$ E_{ij} = \frac{\text{Total da Linha } i \times \text{Total da Coluna } j}{\text{Total Geral}} $$
+                        </p>
+                    </div>
+
+                    <!-- Exemplo Prático -->
+                    <div class="border-t border-bg-surface pt-4">
+                        <h4 class="text-primary font-bold text-sm mb-3">Exemplo Numérico:</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-text-secondary">
+                                <thead class="text-xs text-text-muted uppercase bg-bg-surface">
+                                    <tr>
+                                        <th class="px-2 py-1">Grupo</th>
+                                        <th class="px-2 py-1">Sim</th>
+                                        <th class="px-2 py-1">Não</th>
+                                        <th class="px-2 py-1 bg-bg-base">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-bg-surface">
+                                        <td class="px-2 py-1 font-bold">A</td>
+                                        <td class="px-2 py-1">10</td>
+                                        <td class="px-2 py-1">40</td>
+                                        <td class="px-2 py-1 bg-bg-base font-bold text-primary">50</td>
+                                    </tr>
+                                    <tr class="border-b border-bg-surface">
+                                        <td class="px-2 py-1 font-bold">B</td>
+                                        <td class="px-2 py-1">20</td>
+                                        <td class="px-2 py-1">30</td>
+                                        <td class="px-2 py-1 bg-bg-base font-bold text-primary">50</td>
+                                    </tr>
+                                    <tr class="bg-bg-base font-bold">
+                                        <td class="px-2 py-1 text-primary">Total</td>
+                                        <td class="px-2 py-1 text-primary">30</td>
+                                        <td class="px-2 py-1 text-primary">70</td>
+                                        <td class="px-2 py-1 text-white">100</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-xs text-text-muted mt-3">
+                            Para a célula (A, Sim): <br>
+                            $E = \frac{50 (\text{linha}) \times 30 (\text{coluna})}{100 (\text{total})} = 15$.
                         </p>
                     </div>
                 </div>
@@ -89,34 +145,42 @@
             <!-- Problemas e Soluções -->
             <div class="space-y-6">
                 <div class="bg-bg-muted/20 p-6 rounded-lg">
-                    <h3 class="text-xl mb-4 text-primary font-bold">Por que isso importa?</h3>
-                    <p class="text-sm text-text-secondary mb-4">
-                        Se as frequências esperadas forem muito baixas, a estatística de teste $\chi^2$ não seguirá a
-                        distribuição teórica Qui-Quadrado, levando a valores-p incorretos (geralmente aumentando o erro
-                        Tipo I - falsos positivos).
+                    <h3 class="text-xl mb-4 text-primary font-bold">⚠️ Por que isso é Importante?</h3>
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">
+                        Se as frequências esperadas forem muito baixas, a estatística $\chi^2$ se torna instável.
                     </p>
+                    <div class="bg-red-900/20 border border-red-500/30 p-4 rounded-lg">
+                        <p class="text-sm text-red-200">
+                            <strong>O Risco:</strong> O teste tende a encontrar significância onde não existe (<strong>Erro Tipo I</strong> - Falso Positivo).
+                        </p>
+                        <p class="text-xs text-red-300 mt-2 italic">
+                            É como tentar medir a temperatura de uma formiga com um termômetro gigante – a ferramenta não tem precisão suficiente para essa escala.
+                        </p>
+                    </div>
                 </div>
 
                 <div class="bg-primary/10 p-6 rounded-lg border border-primary/30">
-                    <h4 class="text-primary font-bold mb-2">O que fazer se violado?</h4>
-                    <ul class="text-sm text-text-secondary space-y-3">
-                        <li class="flex items-start">
-                            <span class="text-primary mr-2 font-bold">1.</span>
-                            <span><strong>Usar Teste Exato de Fisher:</strong> Ideal para tabelas 2x2 ou tabelas maiores
-                                com amostras pequenas. Ele calcula a probabilidade exata sem depender de
-                                aproximações.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-primary mr-2 font-bold">2.</span>
-                            <span><strong>Agrupar Categorias:</strong> Combinar categorias adjacentes ou similares para
-                                aumentar as contagens esperadas (ex: juntar "Discordo Totalmente" e "Discordo").</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-primary mr-2 font-bold">3.</span>
-                            <span><strong>Aumentar a Amostra:</strong> Coletar mais dados para preencher as células
-                                esparsas.</span>
-                        </li>
-                    </ul>
+                    <h4 class="text-primary font-bold mb-4 text-lg">🛠️ Soluções Práticas</h4>
+                    <div class="space-y-4">
+                        <div class="border-b border-primary/20 pb-3 last:border-0 last:pb-0">
+                            <p class="text-primary font-bold text-sm">1. Teste Exato de Fisher</p>
+                            <p class="text-xs text-text-muted mt-1">
+                                <strong>Melhor para:</strong> Tabelas 2x2 ou amostras pequenas. Calcula a probabilidade exata sem aproximações.
+                            </p>
+                        </div>
+                        <div class="border-b border-primary/20 pb-3 last:border-0 last:pb-0">
+                            <p class="text-primary font-bold text-sm">2. Agrupar Categorias (Binning)</p>
+                            <p class="text-xs text-text-muted mt-1">
+                                <strong>Melhor para:</strong> Tabelas grandes com muitas categorias. Combine categorias adjacentes (ex: "Discordo" + "Discordo Totalmente").
+                            </p>
+                        </div>
+                        <div class="border-b border-primary/20 pb-3 last:border-0 last:pb-0">
+                            <p class="text-primary font-bold text-sm">3. Aumentar a Amostra</p>
+                            <p class="text-xs text-text-muted mt-1">
+                                <strong>Melhor para:</strong> Estudos em andamento. Mais dados preenchem as células vazias naturalmente.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

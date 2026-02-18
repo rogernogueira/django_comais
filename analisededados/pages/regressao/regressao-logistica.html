@@ -12,15 +12,15 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-base': '#0f172a',
-                        'bg-elevated': '#020617',
-                        'bg-surface': '#1e293b',
-                        'bg-muted': '#334155',
-                        'text-primary': '#f1f5f9',
-                        'text-secondary': '#cbd5e1',
-                        'text-muted': '#94a3b8',
-                        'reg-purple': '#8b5cf6',
-                        'primary': '#8b5cf6',
+                        'bg-base': '#2a2623',
+                        'bg-elevated': '#1a1614',
+                        'bg-surface': '#3a3632',
+                        'bg-muted': '#504946',
+                        'text-primary': '#f0e8e0',
+                        'text-secondary': '#d4c4b8',
+                        'text-muted': '#b8a89a',
+                        'reg-purple': '#8b7d8b',
+                        'primary': '#8b7d8b',
                     }
                 }
             }
@@ -306,7 +306,7 @@
             ctx.clearRect(0, 0, width, height);
 
             // Grid
-            ctx.strokeStyle = '#334155';
+            ctx.strokeStyle = '#504946';
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             for (let i = 0; i < width; i += 40) { ctx.moveTo(i, 0); ctx.lineTo(i, height); }
@@ -321,14 +321,14 @@
             ctx.stroke();
 
             // Labels
-            ctx.fillStyle = '#94a3b8';
+            ctx.fillStyle = '#b8a89a';
             ctx.font = '10px sans-serif';
             ctx.fillText('P = 1', 5, 15);
             ctx.fillText('P = 0.5', 5, height / 2 - 5);
             ctx.fillText('P = 0', 5, height - 5);
 
             // Sigmoid curve
-            ctx.strokeStyle = '#8b5cf6';
+            ctx.strokeStyle = '#8b7d8b';
             ctx.lineWidth = 3;
             ctx.beginPath();
 
