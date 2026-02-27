@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo Didático - Regressão Linear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-base': '#2a2623',
+                        'bg-elevated': '#1a1614',
+                        'bg-surface': '#3a3632',
+                        'bg-muted': '#504946',
+                        'text-primary': '#f0e8e0',
+                        'text-secondary': '#d4c4b8',
+                        'text-muted': '#b8a89a',
+                        'reg-blue': '#3b82f6',
+                        'primary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .back-button {
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(122, 156, 168, 0.2);
+            transform: translateX(-2px);
+        }
+
+        @keyframes pulse-custom {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.75;
+            }
+        }
+
+        .animate-pulse-custom {
+            animation: pulse-custom 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            transform-origin: center;
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base text-text-primary font-sans p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center mb-8">
+            <button class="back-button bg-primary/20 p-3 rounded-lg mr-4" onclick="window.location.href='../regressao-linear.html'">
+                <span class="text-primary text-lg">←</span>
+            </button>
+            <h1 class="text-4xl text-primary font-bold">Exemplo Didático: Regressão Linear</h1>
+        </div>
+
+        <p class="text-xl text-center mb-10 text-text-secondary">
+            Siga o passo a passo para entender como a reta é ajustada e como a previsão é feita.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                <p class="text-xs text-blue-300 uppercase tracking-wide mb-1">Dimensão 1</p>
+                <h2 class="text-lg font-bold text-blue-400">Aprendizado</h2>
+                <p class="text-sm text-blue-100 mt-1">O modelo observa os pontos (X, Y) e identifica a tendência da relação.</p>
+            </div>
+            <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                <p class="text-xs text-red-300 uppercase tracking-wide mb-1">Dimensão 2</p>
+                <h2 class="text-lg font-bold text-red-400">Otimização do Objetivo</h2>
+                <p class="text-sm text-red-100 mt-1">A reta é escolhida para minimizar o erro médio (MSE), aproximando-se dos dados.</p>
+            </div>
+            <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                <p class="text-xs text-green-300 uppercase tracking-wide mb-1">Dimensão 3</p>
+                <h2 class="text-lg font-bold text-green-400">Generalização</h2>
+                <p class="text-sm text-green-100 mt-1">Depois de aprender, o modelo prevê Y para novos valores de X não vistos antes.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h2 class="text-xl mb-4 text-primary font-bold">1) Inserir Dados</h2>
+                    <p class="text-sm text-text-secondary mb-4">
+                        Digite valores entre 0 e 100. Cada par (X, Y) representa um exemplo observado.
+                    </p>
+
+                    <form id="dataForm" class="grid grid-cols-1 gap-3 mb-4">
+                        <input type="number" id="inputX" placeholder="Valor de X" min="0" max="100" required
+                            class="w-full bg-bg-surface border border-bg-muted rounded-lg px-3 py-2 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary/60">
+                        <input type="number" id="inputY" placeholder="Valor de Y" min="0" max="100" required
+                            class="w-full bg-bg-surface border border-bg-muted rounded-lg px-3 py-2 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary/60">
+                        <button type="submit"
+                            class="bg-primary hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                            Adicionar ponto
+                        </button>
+                    </form>
+
+                    <div class="flex gap-2 mb-4">
+                        <button id="exampleBtn"
+                            class="flex-1 text-sm bg-blue-500/10 text-blue-300 px-3 py-2 rounded hover:bg-blue-500/20 transition-colors border border-blue-500/20">
+                            Carregar exemplo
+                        </button>
+                        <button id="clearBtn"
+                            class="flex-1 text-sm bg-red-500/10 text-red-400 px-3 py-2 rounded hover:bg-red-500/20 transition-colors border border-red-500/20">
+                            Limpar tudo
+                        </button>
+                    </div>
+
+                    <div class="max-h-52 overflow-y-auto">
+                        <h3 class="text-sm font-semibold text-text-primary mb-2">Pontos inseridos (<span id="pointsCount">0</span>)</h3>
+                        <ul id="pointsList" class="space-y-2 text-sm text-text-secondary"></ul>
+                    </div>
+                </div>
+
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h2 class="text-xl mb-3 text-primary font-bold">2) Entender os Termos</h2>
+                    <div class="bg-bg-surface p-3 rounded border border-bg-muted">
+                        <p class="text-primary font-mono text-sm mb-2">Y = β₀ + β₁X</p>
+                        <p class="text-xs text-text-muted">β₀: valor inicial de Y quando X = 0</p>
+                        <p class="text-xs text-text-muted">β₁: quanto Y muda quando X aumenta 1 unidade</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-bg-muted/20 p-4 rounded-lg">
+                    <h2 class="text-xl mb-4 text-primary font-bold">3) Aprendizado (ajuste da reta)</h2>
+                    <p class="text-sm text-text-secondary mb-3">
+                        A reta azul é ajustada por mínimos quadrados; as linhas vermelhas mostram os resíduos (erros).
+                    </p>
+
+                    <div class="bg-black/30 rounded-lg p-4">
+                        <div class="relative w-full overflow-x-auto">
+                            <svg id="chart" width="640" height="380" class="mx-auto block bg-gray-900 rounded border border-gray-700"></svg>
+                        </div>
+
+                        <div class="mt-4 bg-primary/10 p-3 rounded border border-primary/30">
+                            <p class="text-sm text-text-secondary">Equação estimada</p>
+                            <p id="equationDisplay" class="text-2xl text-primary font-mono font-bold">Adicione ao menos 2 pontos...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-bg-muted/20 p-4 rounded-lg">
+                        <h2 class="text-xl mb-4 text-primary font-bold">4) Otimização do Objetivo (MSE)</h2>
+                        <div id="modelStatus" class="bg-bg-surface p-3 rounded border border-bg-muted text-sm text-text-secondary">
+                            Aguardando dados suficientes para calcular o modelo.
+                        </div>
+                    </div>
+
+                    <div class="bg-bg-muted/20 p-4 rounded-lg">
+                        <h2 class="text-xl mb-4 text-primary font-bold">5) Generalização (fazer previsão)</h2>
+                        <p class="text-sm text-text-secondary mb-3">
+                            Digite um novo X para estimar o valor de Y.
+                        </p>
+                        <input type="number" id="predictX" placeholder="Novo valor de X" min="0" max="100" disabled
+                            class="w-full bg-bg-surface border border-bg-muted rounded-lg px-3 py-2 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary/60 disabled:opacity-50 disabled:cursor-not-allowed">
+
+                        <div id="predictionResult" class="hidden mt-3 bg-green-900/20 p-3 rounded border border-green-500/30">
+                            <p class="text-sm text-green-300">Para X = <span id="predXLabel" class="font-bold"></span>, o modelo prevê:</p>
+                            <p id="predYValue" class="text-3xl font-bold text-green-400 mt-1"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WIDTH = 640;
+        const HEIGHT = 380;
+        const PAD = 40;
+
+        let points = [];
+        let model = null;
+        let predictXValue = null;
+
+        const form = document.getElementById('dataForm');
+        const inputX = document.getElementById('inputX');
+        const inputY = document.getElementById('inputY');
+        const pointsList = document.getElementById('pointsList');
+        const pointsCount = document.getElementById('pointsCount');
+        const chart = document.getElementById('chart');
+        const equationDisplay = document.getElementById('equationDisplay');
+        const modelStatus = document.getElementById('modelStatus');
+        const predictInput = document.getElementById('predictX');
+        const predictionResult = document.getElementById('predictionResult');
+        const predXLabel = document.getElementById('predXLabel');
+        const predYValue = document.getElementById('predYValue');
+        const clearBtn = document.getElementById('clearBtn');
+        const exampleBtn = document.getElementById('exampleBtn');
+
+        const scaleX = (x) => PAD + (x / 100) * (WIDTH - 2 * PAD);
+        const scaleY = (y) => HEIGHT - PAD - (y / 100) * (HEIGHT - 2 * PAD);
+
+        function updateModel() {
+            const n = points.length;
+            if (n < 2) {
+                model = null;
+                return;
+            }
+
+            let sumX = 0;
+            let sumY = 0;
+            let sumXX = 0;
+            let sumXY = 0;
+
+            points.forEach((point) => {
+                sumX += point.x;
+                sumY += point.y;
+                sumXX += point.x * point.x;
+                sumXY += point.x * point.y;
+            });
+
+            const denominator = n * sumXX - sumX * sumX;
+            if (denominator === 0) {
+                model = null;
+                return;
+            }
+
+            const slope = (n * sumXY - sumX * sumY) / denominator;
+            const intercept = (sumY - slope * sumX) / n;
+
+            let mse = 0;
+            points.forEach((point) => {
+                const predictedY = slope * point.x + intercept;
+                mse += Math.pow(point.y - predictedY, 2);
+            });
+
+            mse /= n;
+            model = { slope, intercept, mse };
+        }
+
+        function drawChart() {
+            let svg = '';
+
+            svg += `<rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="transparent" />`;
+
+            [0, 20, 40, 60, 80, 100].forEach((tick) => {
+                const x = scaleX(tick);
+                const y = scaleY(tick);
+                svg += `<line x1="${x}" y1="${PAD}" x2="${x}" y2="${HEIGHT - PAD}" stroke="#504946" stroke-width="1" />`;
+                svg += `<line x1="${PAD}" y1="${y}" x2="${WIDTH - PAD}" y2="${y}" stroke="#504946" stroke-width="1" />`;
+                svg += `<text x="${x}" y="${HEIGHT - 12}" fill="#b8a89a" font-size="11" text-anchor="middle">${tick}</text>`;
+                svg += `<text x="20" y="${y + 4}" fill="#b8a89a" font-size="11" text-anchor="start">${tick}</text>`;
+            });
+
+            svg += `<line x1="${PAD}" y1="${HEIGHT - PAD}" x2="${WIDTH - PAD}" y2="${HEIGHT - PAD}" stroke="#94a3b8" stroke-width="2" />`;
+            svg += `<line x1="${PAD}" y1="${PAD}" x2="${PAD}" y2="${HEIGHT - PAD}" stroke="#94a3b8" stroke-width="2" />`;
+            svg += `<text x="${WIDTH - PAD + 8}" y="${HEIGHT - PAD + 4}" fill="#d4c4b8" font-size="12">X</text>`;
+            svg += `<text x="${PAD - 12}" y="${PAD - 8}" fill="#d4c4b8" font-size="12">Y</text>`;
+
+            if (model) {
+                points.forEach((point) => {
+                    const predictedY = model.slope * point.x + model.intercept;
+                    svg += `<line x1="${scaleX(point.x)}" y1="${scaleY(point.y)}" x2="${scaleX(point.x)}" y2="${scaleY(predictedY)}" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.7" />`;
+                });
+
+                const yStart = model.slope * 0 + model.intercept;
+                const yEnd = model.slope * 100 + model.intercept;
+                svg += `<line x1="${scaleX(0)}" y1="${scaleY(yStart)}" x2="${scaleX(100)}" y2="${scaleY(yEnd)}" stroke="#3b82f6" stroke-width="3" />`;
+            }
+
+            points.forEach((point) => {
+                svg += `<circle cx="${scaleX(point.x)}" cy="${scaleY(point.y)}" r="5" fill="#38bdf8" stroke="#2a2623" stroke-width="1" />`;
+            });
+
+            if (model && predictXValue !== null && predictXValue !== '' && !isNaN(predictXValue)) {
+                const px = parseFloat(predictXValue);
+                const py = model.slope * px + model.intercept;
+                svg += `<circle cx="${scaleX(px)}" cy="${scaleY(py)}" r="7" fill="#22c55e" class="animate-pulse-custom" style="transform-origin:${scaleX(px)}px ${scaleY(py)}px;" />`;
+            }
+
+            chart.innerHTML = svg;
+        }
+
+        function renderModelStatus() {
+            if (!model) {
+                equationDisplay.textContent = 'Adicione ao menos 2 pontos...';
+                modelStatus.innerHTML = 'Aguardando dados suficientes para calcular o modelo.';
+                predictInput.disabled = true;
+                predictInput.value = '';
+                predictXValue = null;
+                predictionResult.classList.add('hidden');
+                return;
+            }
+
+            const b1Signal = model.slope >= 0 ? '+' : '-';
+            const b0Signal = model.intercept >= 0 ? '+' : '-';
+            equationDisplay.textContent = `Y = ${model.slope.toFixed(2)}X ${b0Signal} ${Math.abs(model.intercept).toFixed(2)}`;
+
+            modelStatus.innerHTML = `
+                <div class="space-y-2">
+                    <p class="text-xs text-text-muted uppercase tracking-wide">Dimensão: Otimização do Objetivo</p>
+                    <p><span class="text-text-muted">Inclinação (β₁):</span> <span class="text-primary font-semibold">${model.slope.toFixed(3)}</span></p>
+                    <p><span class="text-text-muted">Intercepto (β₀):</span> <span class="text-primary font-semibold">${model.intercept.toFixed(3)}</span></p>
+                    <p><span class="text-text-muted">MSE:</span> <span class="text-red-400 font-semibold">${model.mse.toFixed(3)}</span></p>
+                    <p class="text-xs text-text-muted">Objetivo matemático: minimizar o MSE para reduzir a distância média quadrática entre valores reais e previstos.</p>
+                    <p class="text-xs text-text-muted">Leitura rápida: β₁ ${b1Signal === '+' ? 'positivo' : 'negativo'} indica tendência ${b1Signal === '+' ? 'de crescimento' : 'de queda'} em Y conforme X aumenta.</p>
+                </div>
+            `;
+
+            predictInput.disabled = false;
+        }
+
+        function renderPrediction() {
+            if (!model || predictXValue === null || predictXValue === '' || isNaN(predictXValue)) {
+                predictionResult.classList.add('hidden');
+                return;
+            }
+
+            const x = parseFloat(predictXValue);
+            const y = model.slope * x + model.intercept;
+            predXLabel.textContent = x.toFixed(2);
+            predYValue.textContent = y.toFixed(2);
+            predictionResult.classList.remove('hidden');
+        }
+
+        function renderPoints() {
+            pointsCount.textContent = points.length;
+            if (points.length === 0) {
+                pointsList.innerHTML = '<li class="bg-bg-surface px-3 py-2 rounded border border-bg-muted text-text-muted">Nenhum ponto adicionado ainda.</li>';
+                return;
+            }
+
+            pointsList.innerHTML = points
+                .map((point, index) => `<li class="bg-bg-surface px-3 py-2 rounded border border-bg-muted">Ponto ${index + 1}: X=${point.x}, Y=${point.y}</li>`)
+                .join('');
+        }
+
+        function render() {
+            renderPoints();
+            drawChart();
+            renderModelStatus();
+            renderPrediction();
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const x = parseFloat(inputX.value);
+            const y = parseFloat(inputY.value);
+
+            if (isNaN(x) || isNaN(y)) {
+                return;
+            }
+
+            if (x < 0 || x > 100 || y < 0 || y > 100) {
+                return;
+            }
+
+            points.push({ x, y });
+            inputX.value = '';
+            inputY.value = '';
+            inputX.focus();
+
+            updateModel();
+            render();
+        });
+
+        predictInput.addEventListener('input', (event) => {
+            predictXValue = event.target.value;
+            drawChart();
+            renderPrediction();
+        });
+
+        clearBtn.addEventListener('click', () => {
+            points = [];
+            model = null;
+            predictXValue = null;
+            predictInput.value = '';
+            render();
+        });
+
+        exampleBtn.addEventListener('click', () => {
+            points = [
+                { x: 10, y: 18 },
+                { x: 20, y: 25 },
+                { x: 35, y: 38 },
+                { x: 50, y: 52 },
+                { x: 70, y: 66 },
+                { x: 85, y: 80 }
+            ];
+            updateModel();
+            render();
+        });
+
+        render();
+    </script>
+</body>
+
+</html>

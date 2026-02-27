@@ -13,6 +13,11 @@ body {
   color: #444444;
 }
 
+#main {
+  padding-top: 100px;
+  min-height: 80vh; /* Ensure footer pushes down */
+}
+
 a {
   color: #47b2e4;
   text-decoration: none;
@@ -111,9 +116,15 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.5s;
   z-index: 997;
   padding: 15px 0;
+  background-color: rgba(255, 255, 255, 0.85); /* Fallback */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
+
 #header.header-scrolled, #header.header-inner-pages {
-  background: rgba(40, 58, 90, 0.2);
+  background: rgba(40, 58, 90, 0.9);
+  padding: 10px 0;
 }
 #header .logo {
   font-size: 30px;
