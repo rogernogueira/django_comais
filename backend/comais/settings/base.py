@@ -33,10 +33,17 @@ INSTALLED_APPS = [
     "membros",
     "reset_migrations",
     "tinymce",
+    # REST API
+    "rest_framework",
+    "django_filters",
+    "drf_spectacular",
+    "corsheaders",
+    "api",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -117,3 +124,42 @@ MESSAGE_TAGS = {
     messages.WARNING: "alert-warning",
     messages.ERROR: "alert-danger",
 }
+
+# --- DRF ---
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+    ],
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "COMAIS API",
+    "DESCRIPTION": "REST API for the COMAIS Labs management system.",
+    "VERSION": "0.1.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
+
+# CORS — overridden per-environment. Same-origin via nginx/Vite proxy means
+# CORS is not normally needed; dev keeps it on as a safety net.
+CORS_ALLOWED_ORIGINS = []
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = []
+
+# Required for the React SPA to read csrftoken via JS.
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"

@@ -23,6 +23,16 @@ if DATABASES["default"]["ENGINE"] != "django.db.backends.mysql":  # noqa: F405
         "DB_NAME/DB_USER/DB_PASSWORD/DB_HOST env vars must be set in production."
     )
 
+# --- CORS / CSRF for the SPA ---
+# Same-origin via nginx makes these usually unnecessary; env vars allow
+# split-domain deployments without code changes.
+def _split_csv(name):
+    raw = os.environ.get(name, "")
+    return [item.strip() for item in raw.split(",") if item.strip()]
+
+CSRF_TRUSTED_ORIGINS = _split_csv("DJANGO_CSRF_TRUSTED_ORIGINS")
+CORS_ALLOWED_ORIGINS = _split_csv("DJANGO_CORS_ALLOWED_ORIGINS")
+
 # --- Hardening (assumes TLS terminated by a reverse proxy) ---
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
