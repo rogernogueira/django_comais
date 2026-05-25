@@ -11,6 +11,7 @@ dependencies = [
     "html2markdown==0.1.7",
     "mysqlclient==2.1.1",
     "pillow==9.2.0",
+    "python-dotenv>=1.2.2",
 ]
 
 [tool.uv]
