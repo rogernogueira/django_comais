@@ -1,0 +1,17 @@
+[project]
+name = "comais-backend"
+version = "0.1.0"
+description = "COMAIS Labs management system - Django backend (REST API)"
+requires-python = ">=3.10,<3.11"
+dependencies = [
+    "django==4.1.1",
+    "django-reset-migrations==0.4.0",
+    "django-tinymce==3.5.0",
+    "docxtpl==0.16.4",
+    "html2markdown==0.1.7",
+    "mysqlclient==2.1.1",
+    "pillow==9.2.0",
+]
+
+[tool.uv]
+package = false
