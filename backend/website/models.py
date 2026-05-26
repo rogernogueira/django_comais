@@ -84,7 +84,7 @@ class Projeto(models.Model):
         return self.name
 
 class Colaborador(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     name = models.CharField('Nome',max_length=100)
     url_latters = models.URLField('URL',max_length=100)
     funcao = models.CharField('Função',max_length=100)
@@ -184,3 +184,49 @@ class Templates(models.Model):
     template = models.FileField(upload_to='templates/', blank=True, null=True)
     def __str__(self):
         return self.nome
+
+
+class Parceiro(models.Model):
+    nome = models.CharField('Nome', max_length=200)
+    logo = models.ImageField('Logo', upload_to='parceiros/', blank=True, null=True)
+    site = models.URLField('Site', blank=True, null=True)
+
+    def __str__(self):
+        return self.nome
+
+
+class Noticia(models.Model):
+    titulo = models.CharField('Título', max_length=300)
+    resumo = models.CharField('Resumo', max_length=500, blank=True, default='')
+    conteudo = models.TextField('Conteúdo')
+    imagem = models.ImageField('Imagem', upload_to='noticias/', blank=True, null=True)
+    fonte_nome = models.CharField('Nome da fonte', max_length=200, blank=True, default='')
+    fonte_url = models.URLField('URL da fonte', blank=True, default='')
+    data_publicacao = models.DateField('Data de publicação', default=django.utils.timezone.now)
+    data_criacao = models.DateTimeField('Data de criação', auto_now_add=True)
+
+    class Meta:
+        ordering = ['-data_publicacao', '-data_criacao']
+        verbose_name = 'Notícia'
+        verbose_name_plural = 'Notícias'
+
+    def __str__(self):
+        return self.titulo
+
+
+class Curso(models.Model):
+    titulo = models.CharField('Título', max_length=300)
+    descricao = models.TextField('Descrição')
+    carga_horaria = models.IntegerField('Carga Horária')
+    data_inicio = models.DateField('Data de Início')
+    data_termino = models.DateField('Data de Término')
+    instrutor = models.CharField('Instrutor', max_length=100)
+    local = models.CharField('Local', max_length=100)
+    parceiros = models.ManyToManyField(Parceiro, blank=True)
+    data_criacao = models.DateTimeField('Data de Criação', default=django.utils.timezone.now)
+
+    class Meta:
+        ordering = ['-data_inicio']
+
+    def __str__(self):
+        return self.titulo
