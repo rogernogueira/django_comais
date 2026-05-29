@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convenções de CSV - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#facc15','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Modelagem</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Modelagem · 3.3</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Convenções de CSV que evitam dor</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">CSV parece simples, mas é onde 80% dos bugs começam. Estas regras eliminam quase todos.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="grid md:grid-cols-2 gap-6">
+        <div class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+          <h3 class="text-xl font-bold text-accent mb-3">Codificação</h3>
+          <ul class="space-y-2 text-text-secondary text-sm">
+            <li class="flex"><span class="text-accent mr-2">›</span>Sempre <strong class="text-text-primary">UTF-8</strong> (suporta acentos)</li>
+            <li class="flex"><span class="text-accent mr-2">›</span>Separador: vírgula (internacional) ou ponto-e-vírgula (Excel BR)</li>
+            <li class="flex"><span class="text-accent mr-2">›</span>Quebra de linha: LF (<code class="text-accent">\n</code>)</li>
+            <li class="flex"><span class="text-accent mr-2">›</span>Para Excel brasileiro: salvar com <strong class="text-text-primary">BOM</strong></li>
+          </ul>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+          <h3 class="text-xl font-bold text-accent mb-3">Conteúdo</h3>
+          <ul class="space-y-2 text-text-secondary text-sm">
+            <li class="flex"><span class="text-accent mr-2">›</span>Campos com vírgula ou aspas: envolver em <strong class="text-text-primary">aspas duplas</strong></li>
+            <li class="flex"><span class="text-accent mr-2">›</span>Aspas dentro do campo: <strong class="text-text-primary">duplicar</strong> (RFC 4180)</li>
+            <li class="flex"><span class="text-accent mr-2">›</span>Números: <strong class="text-text-primary">ponto decimal</strong>, sem separador de milhar</li>
+            <li class="flex"><span class="text-accent mr-2">›</span>Null: célula vazia, <strong class="text-red-400">nunca</strong> a palavra "null"</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Exemplos: certo × errado</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-xs font-mono text-red-400 uppercase mb-2">Errado</p>
+            <pre class="bg-black/40 p-4 rounded-lg text-xs text-text-secondary font-mono leading-relaxed">codigo,descricao,valor
+2.1.1,Achado importante, com vírgula,R$ 1.000.000,50
+2.2.1,Outro achado,null</pre>
+            <ul class="text-xs text-red-400 mt-2 space-y-1">
+              <li>× vírgula na descrição vira coluna extra</li>
+              <li>× separador de milhar vira nova coluna</li>
+              <li>× "null" como texto</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-green-400 uppercase mb-2">Certo</p>
+            <pre class="bg-black/40 p-4 rounded-lg text-xs text-text-secondary font-mono leading-relaxed">codigo,descricao,valor
+2.1.1,"Achado importante, com vírgula",1000000.50
+2.2.1,"Outro achado",</pre>
+            <ul class="text-xs text-green-400 mt-2 space-y-1">
+              <li>✓ aspas envolvem descrição com vírgula</li>
+              <li>✓ ponto decimal sem milhar</li>
+              <li>✓ célula vazia para null</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Diga isso no prompt</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-sm text-text-secondary font-mono leading-relaxed">Ao gerar o CSV:
+  - UTF-8, vírgula como separador, cabeçalho na primeira linha
+  - Toda célula com vírgula ou aspas: entre aspas duplas (RFC 4180)
+  - Números: ponto decimal, sem separador de milhar, sem símbolo R$
+  - Null: célula vazia (não a palavra "null" nem zero)</pre>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">CSV mal formado é o tipo de bug que <strong>aparece tarde</strong>: tudo funciona até alguém abrir no Excel BR e ver as colunas embaralhadas. Convenções aqui custam segundos; debugar custa horas.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="modelagem-chaves.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Chaves estrangeiras</a>
+      <a href="modelagem-checkpoint.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Schema antes do dado →</a>
+    </footer>
+  </div>
+</body>
+</html>

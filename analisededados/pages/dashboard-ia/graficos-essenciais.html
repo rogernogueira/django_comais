@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KPIs e barras - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#c084fc','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Gráficos</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Gráficos · 4.2</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">KPIs e barras — os essenciais</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Os dois tipos que aparecem em 95% dos bons dashboards.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">KPIs — os cinco números do topo</h2>
+        <p class="text-text-secondary mb-4">Cartão grande, número grande, rótulo pequeno. Responde "em uma piscada, qual o tamanho do problema?"</p>
+        <div class="bg-bg-muted/30 rounded-xl p-5">
+          <p class="text-accent font-bold mb-2">Anatomia</p>
+          <ul class="space-y-1 text-sm text-text-secondary">
+            <li>• Número (grande, ocupa espaço)</li>
+            <li>• Rótulo (curto, em caixa alta pequena)</li>
+            <li>• Sub-rótulo (contexto: meta, variação, total)</li>
+          </ul>
+        </div>
+        <div class="grid grid-cols-3 gap-3 mt-5">
+          <div class="bg-accent/10 rounded-xl p-5 border border-accent/30">
+            <p class="text-xs text-text-muted uppercase mb-1">Total corrigido</p>
+            <p class="text-2xl font-bold text-accent">R$ 22 bi</p>
+            <p class="text-xs text-text-muted mt-1">↑ ante 2023</p>
+          </div>
+          <div class="bg-red-500/10 rounded-xl p-5 border border-red-500/30">
+            <p class="text-xs text-text-muted uppercase mb-1">Não corrigido</p>
+            <p class="text-2xl font-bold text-red-400">R$ 1,79 bi</p>
+            <p class="text-xs text-text-muted mt-1">pendente</p>
+          </div>
+          <div class="bg-yellow-400/10 rounded-xl p-5 border border-yellow-400/30">
+            <p class="text-xs text-text-muted uppercase mb-1">Sem reavaliação</p>
+            <p class="text-2xl font-bold text-yellow-400">72,58%</p>
+            <p class="text-xs text-text-muted mt-1">imóveis MS</p>
+          </div>
+        </div>
+        <div class="mt-5 bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+          <p class="text-sm text-red-400 font-bold mb-1">Quando NÃO usar KPI</p>
+          <p class="text-sm text-text-secondary">Quando o gestor precisa <strong>comparar</strong> valores entre categorias — aí use barras.</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Barras — o cavalo de batalha</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Verticais</p>
+            <p class="text-sm text-text-secondary">Até 6–8 categorias e rótulos curtos. Eixo Y é a métrica.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Horizontais</p>
+            <p class="text-sm text-text-secondary">Muitas categorias ou rótulos longos. Eixo X é a métrica.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Empilhadas</p>
+            <p class="text-sm text-text-secondary">Composição por categoria. 100% empilhadas = proporção.</p>
+          </div>
+        </div>
+        <div class="mt-5 bg-accent/10 border border-accent/30 rounded-xl p-4">
+          <p class="text-sm text-accent font-bold mb-1">Regra de ordenação</p>
+          <p class="text-sm text-text-secondary">Decrescente por valor — exceto se a categoria tem ordem natural (meses, estágios). Ordenação alfabética é quase sempre errada.</p>
+        </div>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Se você só pudesse usar dois tipos de gráfico, seriam <strong>KPIs e barras</strong>. Tudo o mais é especialização. Domine os dois antes de partir para variações.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="graficos-decisao.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: A pergunta antes do gráfico</a>
+      <a href="graficos-composicao.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Donut, treemap e heatmap →</a>
+    </footer>
+  </div>
+</body>
+</html>

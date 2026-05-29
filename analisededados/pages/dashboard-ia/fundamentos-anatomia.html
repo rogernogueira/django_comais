@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anatomia de um dashboard - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#4ade80','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Fundamentos</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Fundamentos · 1.3</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Anatomia de um dashboard bem feito</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Cinco regiões com funções distintas. Quando uma falta, o usuário sente.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Mapa visual</h2>
+        <pre class="bg-black/30 p-4 rounded-lg text-sm text-text-secondary font-mono leading-relaxed overflow-x-auto">
+┌──────────────────────────────────────────────────────────┐
+│  CABEÇALHO (título + ações: limpar filtros, exportar)   │
+├──────────────────────────────────────────────────────────┤
+│  FILTROS (unidade · tema · período · impacto · situação) │
+├──────────────────────────────────────────────────────────┤
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐           │
+│  │ KPI  │ │ KPI  │ │ KPI  │ │ KPI  │ │ KPI  │ ← 3 a 5  │
+│  └──────┘ └──────┘ └──────┘ └──────┘ └──────┘           │
+├──────────────────────────────────────────────────────────┤
+│  ┌──────────────────┐  ┌──────────────────┐              │
+│  │   GRÁFICO 1      │  │   GRÁFICO 2      │              │
+│  └──────────────────┘  └──────────────────┘              │
+│  ┌──────────────────┐  ┌──────────────────┐              │
+│  │   GRÁFICO 3      │  │   GRÁFICO 4      │              │
+│  └──────────────────┘  └──────────────────┘              │
+├──────────────────────────────────────────────────────────┤
+│  TABELA DETALHADA (linha por item, drill-down)          │
+└──────────────────────────────────────────────────────────┘</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">As cinco regiões</h2>
+        <div class="space-y-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-1">1. Cabeçalho</p>
+            <p class="text-text-secondary">Título descritivo do conteúdo + data de atualização + botão "limpar filtros". Opcional: exportar para PDF/CSV.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-1">2. Filtros</p>
+            <p class="text-text-secondary">Entre 3 e 6 dimensões. Multi-select por padrão. Sempre visíveis (não escondidos atrás de cliques).</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-1">3. Linha de KPIs</p>
+            <p class="text-text-secondary">Três a cinco cards com os números mais importantes. Respondem "em uma piscada, qual o tamanho do problema?".</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-1">4. Grade de gráficos</p>
+            <p class="text-text-secondary">Cada gráfico responde uma pergunta. Ordem do mais agregado para o mais granular. Layout em grid de 2 ou 3 colunas.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-1">5. Tabela detalhada</p>
+            <p class="text-text-secondary">Drill-down completo. Cada linha é um item; cada coluna é um atributo. Permite auditar as afirmações dos gráficos.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">A <strong>tabela detalhada</strong> é a região mais subestimada do dashboard. Ela é o que <em>prova</em> os números dos gráficos. Dashboard sem tabela vira "confie em mim". Com tabela, vira "veja você mesmo".</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="fundamentos-estagios.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Os 4 estágios</a>
+      <a href="fundamentos-ia.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Onde a IA entra →</a>
+    </footer>
+  </div>
+</body>
+</html>

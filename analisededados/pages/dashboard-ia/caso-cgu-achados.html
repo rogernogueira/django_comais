@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caso CGU - Os 20 achados - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#818cf8','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Caso CGU</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Estudo de caso · 9.2</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Os 20 achados extraídos</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Resultado do prompt de extração aplicado ao capítulo 2 do relatório.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="grid md:grid-cols-4 gap-4">
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-green-400/30">
+          <span class="text-xs font-mono text-green-400 uppercase">Categoria 1</span>
+          <p class="text-3xl font-bold text-text-primary mt-2">4</p>
+          <p class="text-sm text-text-secondary mt-1">Distorções <strong class="text-text-primary">corrigidas</strong> durante a auditoria — estoques, bens móveis, obras, partes relacionadas.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-red-500/30">
+          <span class="text-xs font-mono text-red-400 uppercase">Categoria 2</span>
+          <p class="text-3xl font-bold text-text-primary mt-2">5</p>
+          <p class="text-sm text-text-secondary mt-1">Distorções de <strong class="text-text-primary">valor não corrigidas</strong> — reavaliação de imóveis, benfeitorias, divergências.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-yellow-400/30">
+          <span class="text-xs font-mono text-yellow-400 uppercase">Categoria 3</span>
+          <p class="text-3xl font-bold text-text-primary mt-2">3</p>
+          <p class="text-sm text-text-secondary mt-1">Distorções de <strong class="text-text-primary">classificação</strong> — bens móveis, imóveis, perdas em estoques.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-purple-400/30">
+          <span class="text-xs font-mono text-purple-400 uppercase">Categoria 4</span>
+          <p class="text-3xl font-bold text-text-primary mt-2">8</p>
+          <p class="text-sm text-text-secondary mt-1">Inconformidades em transações — leitos de UTI, FAEC, PNRF, convênios.</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Amostra de 5 achados (JSON extraído)</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">[
+  {
+    "codigo": "2.1.1", "categoria": "corrigida", "tema": "estoques",
+    "unidade": "MS/DLOG", "valor_brl": 21900000000,
+    "impacto": "alto", "pagina_pdf": 11
+  },
+  {
+    "codigo": "2.2.1", "categoria": "nao_corrigida_valor",
+    "tema": "patrimonio_imoveis", "unidade": "MS",
+    "valor_brl": null,
+    "_nota": "Distorção não mensurada — depende de reavaliação ainda não realizada",
+    "impacto": "alto", "pagina_pdf": 13
+  },
+  {
+    "codigo": "2.2.3", "categoria": "nao_corrigida_valor",
+    "tema": "patrimonio_moveis", "unidade": "MS+Fiocruz",
+    "valor_brl": 1070000000,
+    "impacto": "alto", "pagina_pdf": 15
+  },
+  {
+    "codigo": "2.4.7", "categoria": "inconformidade",
+    "tema": "transferencias_voluntarias", "unidade": "Funasa",
+    "valor_brl": 150000000,
+    "impacto": "alto", "pagina_pdf": 60
+  },
+  {
+    "codigo": "2.4.8", "categoria": "inconformidade",
+    "tema": "transferencias_voluntarias", "unidade": "MS/FNS",
+    "valor_brl": 100000000,
+    "impacto": "alto", "pagina_pdf": 61
+  }
+]</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Distribuição por tema</h2>
+        <table class="w-full text-text-secondary text-sm">
+          <thead>
+            <tr class="border-b-2 border-bg-muted">
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Tema</th>
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Qtd</th>
+              <th class="text-left py-3 text-text-muted text-xs uppercase tracking-wider">Total valor (R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Estoques</td><td class="py-3 pr-4">2</td><td class="py-3">21,9 bi</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Patrimônio imóveis</td><td class="py-3 pr-4">4</td><td class="py-3">1,0 bi</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Patrimônio móveis</td><td class="py-3 pr-4">3</td><td class="py-3">1,3 bi</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Provisões judiciais</td><td class="py-3 pr-4">2</td><td class="py-3">não mensurado</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Leitos de UTI</td><td class="py-3 pr-4">2</td><td class="py-3">não mensurado</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Transferências fundo a fundo</td><td class="py-3 pr-4">3</td><td class="py-3">não mensurado</td></tr>
+            <tr><td class="py-3 pr-4">Transferências voluntárias</td><td class="py-3 pr-4">3</td><td class="py-3">263 mi</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Observação</h3>
+        <p class="text-text-primary text-lg leading-relaxed">A maioria das <strong>inconformidades qualitativas</strong> (provisões, UTI, transferências fundo a fundo) tem <code class="text-accent">valor = null</code>. É comum em auditoria. Tratamento adequado de null é essencial para que o dashboard não exclua esses itens dos filtros.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="caso-cgu-relatorio.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: O relatório</a>
+      <a href="caso-cgu-dashboard.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: O dashboard final →</a>
+    </footer>
+  </div>
+</body>
+</html>

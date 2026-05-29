@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estrutura de um dashboard standalone - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#2dd4bf','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Construção</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Construção · 6.2</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Estrutura de um dashboard standalone</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Um arquivo HTML, tudo embutido, abre direto. Aqui está o esqueleto.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Esqueleto completo</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Dashboard X&lt;/title&gt;
+  &lt;script src="https://cdn.jsdelivr.net/.../chart.js"&gt;&lt;/script&gt;
+  &lt;style&gt;
+    /* paleta + grid + cards */
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Título&lt;/h1&gt;
+    &lt;button id="reset"&gt;Limpar filtros&lt;/button&gt;
+  &lt;/header&gt;
+
+  &lt;section class="filters"&gt;
+    &lt;select id="f-unidade" multiple&gt;...&lt;/select&gt;
+    &lt;select id="f-tema" multiple&gt;...&lt;/select&gt;
+  &lt;/section&gt;
+
+  &lt;main&gt;
+    &lt;div class="kpi-row" id="kpis"&gt;&lt;/div&gt;
+    &lt;div class="grid"&gt;
+      &lt;canvas id="grafico-1"&gt;&lt;/canvas&gt;
+      &lt;canvas id="grafico-2"&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+    &lt;table id="detail"&gt;...&lt;/table&gt;
+  &lt;/main&gt;
+
+  &lt;script&gt;
+    const DATA = [/* dados embutidos */];
+    const FILTERS = {/* estado */};
+    function filtered() {...}
+    function refreshAll() {...}
+    refreshAll();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">As cinco regiões funcionais</h2>
+        <ol class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">1.</span><strong class="text-text-primary mr-2">&lt;head&gt;</strong> — CDNs + CSS embutido. Tudo o que carrega antes do conteúdo.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">2.</span><strong class="text-text-primary mr-2">&lt;header&gt;</strong> — Título + ações globais (reset, exportar).</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">3.</span><strong class="text-text-primary mr-2">&lt;section.filters&gt;</strong> — Selects multi-select, sempre visíveis.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">4.</span><strong class="text-text-primary mr-2">&lt;main&gt;</strong> — KPIs, grade de gráficos, tabela detalhada.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">5.</span><strong class="text-text-primary mr-2">&lt;script&gt;</strong> no final do body — dados embutidos + funções de render.</li>
+        </ol>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Por que o script no final</h2>
+        <p class="text-text-secondary mb-3">Coloque o <code class="text-accent">&lt;script&gt;</code> antes de <code class="text-accent">&lt;/body&gt;</code>:</p>
+        <ul class="space-y-2 text-text-secondary text-sm">
+          <li class="flex"><span class="text-accent mr-3">›</span>O DOM já está renderizado quando o JS roda</li>
+          <li class="flex"><span class="text-accent mr-3">›</span><code class="text-accent">document.getElementById('...')</code> funciona direto</li>
+          <li class="flex"><span class="text-accent mr-3">›</span>Não precisa de <code class="text-accent">DOMContentLoaded</code></li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Mantenha o arquivo <strong>autocontido</strong>. Quanto menos pedaços externos, menos coisa para quebrar quando alguém compartilhar o HTML por email.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="construcao-stack.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Stack mínima</a>
+      <a href="construcao-dados.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Dados embutidos × externos →</a>
+    </footer>
+  </div>
+</body>
+</html>

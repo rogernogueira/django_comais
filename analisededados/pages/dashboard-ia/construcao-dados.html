@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dados embutidos × externos - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#2dd4bf','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Construção</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Construção · 6.3</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Dados embutidos × dados externos</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Onde os dados moram? A escolha muda completamente o ciclo de uso do dashboard.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Comparativo</h2>
+        <table class="w-full text-text-secondary text-sm">
+          <thead>
+            <tr class="border-b-2 border-bg-muted">
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Aspecto</th>
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Embutidos no HTML</th>
+              <th class="text-left py-3 text-text-muted text-xs uppercase tracking-wider">Arquivo externo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4"><strong class="text-text-primary">Setup</strong></td><td class="py-3 pr-4 text-green-400">Zero — abre direto</td><td class="py-3 text-yellow-400">Precisa de servidor local ou CORS</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4"><strong class="text-text-primary">Tamanho aceitável</strong></td><td class="py-3 pr-4">Até ~10 mil linhas</td><td class="py-3">Qualquer tamanho</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4"><strong class="text-text-primary">Atualização</strong></td><td class="py-3 pr-4">Reeditar o HTML</td><td class="py-3 text-green-400">Trocar só o arquivo de dado</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4"><strong class="text-text-primary">Compartilhamento</strong></td><td class="py-3 pr-4 text-green-400">Um único arquivo</td><td class="py-3">Múltiplos arquivos</td></tr>
+            <tr><td class="py-3 pr-4"><strong class="text-text-primary">Versão dos dados</strong></td><td class="py-3 pr-4">Atrelada ao HTML</td><td class="py-3 text-green-400">Independente</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Embutidos — exemplo</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">// dentro do &lt;script&gt; do HTML
+const DATA = [
+  { codigo: "2.1.1", categoria: "corrigida", valor: 21900000000 },
+  { codigo: "2.1.2", categoria: "corrigida", valor: 235114529.82 },
+  /* ...mais 18 linhas... */
+];
+
+// renderização usa DATA direto, sem fetch</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Externos — exemplo</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">// carrega o CSV externo
+async function loadData() {
+  const res = await fetch('./achados.csv');
+  const text = await res.text();
+  return parseCSV(text);  // sua função de parsing
+}
+
+loadData().then(data =&gt; {
+  DATA = data;
+  refreshAll();
+});</pre>
+        <p class="text-yellow-400 text-sm mt-3 font-mono">⚠ Atenção: navegadores bloqueiam <code>fetch('./arquivo.csv')</code> ao abrir HTML direto (file://). Precisa servir via HTTP local.</p>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed"><strong>Dashboard didático ou one-off?</strong> Embutido. <strong>Dashboard que atualiza periodicamente?</strong> Externo, com cache. A regra é o ciclo de uso — não a sofisticação técnica.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="construcao-estrutura.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Estrutura standalone</a>
+      <a href="construcao-layout.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Layout responsivo →</a>
+    </footer>
+  </div>
+</body>
+</html>

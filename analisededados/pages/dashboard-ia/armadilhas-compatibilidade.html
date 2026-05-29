@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compatibilidade de navegadores - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#fb923c','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Armadilhas</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Armadilhas · 8.6</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Funciona no Chrome, quebra no Edge</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">O dashboard abre lindo no seu navegador. No do gestor, tela em branco.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="grid md:grid-cols-3 gap-4">
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-red-500/30">
+          <p class="text-xs font-mono text-red-400 uppercase tracking-wider mb-2">Sintoma</p>
+          <p class="text-text-primary font-bold text-lg mb-2">Funciona em um, não no outro</p>
+          <p class="text-text-secondary text-sm">No seu Chrome: tudo OK. No Edge do gestor: gráficos em branco, ou erro no console.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-yellow-400/30">
+          <p class="text-xs font-mono text-yellow-400 uppercase tracking-wider mb-2">Causa</p>
+          <p class="text-text-primary font-bold text-lg mb-2">JS muito moderno</p>
+          <p class="text-text-secondary text-sm">Recurso muito novo do JS/CSS, ou versão de Edge/Firefox mais antiga sem suporte.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-green-400/30">
+          <p class="text-xs font-mono text-green-400 uppercase tracking-wider mb-2">Solução</p>
+          <p class="text-text-primary font-bold text-lg mb-2">Testar em 2 navegadores</p>
+          <p class="text-text-secondary text-sm">Abrir em Chrome + Firefox (ou Edge) antes de entregar. Avisar a IA das versões-alvo.</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Recursos que costumam quebrar</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span><strong class="text-text-primary mr-2">Optional chaining em lugares estranhos:</strong> <code class="text-accent">a?.b?.c?.d?.e</code> em navegadores antigos.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span><strong class="text-text-primary mr-2">CSS Grid avançado:</strong> <code class="text-accent">subgrid</code> não funciona em todos.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span><strong class="text-text-primary mr-2">Top-level await:</strong> sem module type, quebra.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span><strong class="text-text-primary mr-2">Intl.NumberFormat com opções recentes:</strong> "notation: 'compact'" pode falhar em versões antigas.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span><strong class="text-text-primary mr-2">ES2022+:</strong> nem todo navegador desktop está atualizado em ambientes corporativos.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Diga isso no prompt</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed">Compatibilidade alvo:
+  - Chrome 120+
+  - Firefox 115+
+  - Edge 120+
+
+Evitar:
+  - Top-level await
+  - Optional chaining encadeado &gt; 3 níveis
+  - CSS subgrid
+  - Sintaxe JS posterior a ES2022</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Checklist de teste</h2>
+        <div class="bg-bg-muted/40 rounded-xl p-5 font-mono text-sm text-text-secondary space-y-2">
+          <p>[ ] Abriu no Chrome — sem erros no console</p>
+          <p>[ ] Abriu no Firefox — sem erros no console</p>
+          <p>[ ] Abriu no Edge — sem erros no console</p>
+          <p>[ ] Filtros funcionam em todos</p>
+          <p>[ ] Gráficos renderizam em todos</p>
+          <p>[ ] Layout responsivo em todos</p>
+        </div>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">"Funciona no meu computador" é a pior frase em engenharia. <strong>Teste em pelo menos dois navegadores</strong> antes de entregar. Cinco minutos de teste valem horas de "por que não abre?".</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="armadilhas-csv.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: CSV mal formado</a>
+      <a href="caso-cgu-relatorio.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Estudo de caso CGU →</a>
+    </footer>
+  </div>
+</body>
+</html>

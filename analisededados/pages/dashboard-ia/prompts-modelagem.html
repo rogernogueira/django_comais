@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt 2 — Modelagem - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#ef4444','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Prompts</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Prompts · 7.2</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Prompt 2 — Modelagem</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Segundo prompt: JSON → tabelas CSV relacionadas.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O prompt completo</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">A partir do JSON da etapa anterior, modele N tabelas em CSV.
+UTF-8, vírgula como separador, cabeçalho na primeira linha.
+
+  1. tabela_principal.csv  (uma linha por item, todos os campos)
+  2. tabela_dimensao_X.csv (agregação por dimensão X)
+  3. tabela_dimensao_Y.csv (agregação por dimensão Y)
+  ...
+
+Regras:
+  - Chave compartilhada entre tabelas mantém o mesmo nome.
+  - Célula vazia para null, nunca a palavra "null".
+  - Números: ponto decimal, sem separador de milhar, sem símbolo R$.
+  - Toda célula com vírgula ou aspas: envolver em aspas duplas.
+
+Antes de gerar, devolva apenas os NOMES de colunas de cada
+tabela. Eu confirmo o schema, e só então você preenche os dados.</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Pontos-chave</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Tabelas numeradas:</strong> a IA segue ordem. Sem números, ela pode pular ou misturar.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Regras de CSV explícitas:</strong> UTF-8, separador, escaping de aspas.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">"Chave mantém nome":</strong> impede a IA de renomear arbitrariamente entre tabelas.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Checkpoint de schema:</strong> antes do conteúdo, confirme os nomes das colunas.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Variação: especificar nomes de tabela e colunas</h2>
+        <p class="text-text-secondary mb-3">Se você quiser controle total, em vez de pedir "modele N tabelas", liste-as:</p>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed">Modele as seguintes 5 tabelas:
+
+  1. tabela_achados.csv
+     colunas: codigo, categoria, tema, unidade, descricao,
+              valor_brl, impacto, situacao, pagina_pdf
+
+  2. tabela_recomendacoes.csv
+     colunas: id, achado_codigo, estagio, prazo, descricao
+
+  3. tabela_unidades.csv (agregado)
+     colunas: unidade, total_achados, total_valor, percentual_corrigido
+
+  4. tabela_temas.csv (agregado)
+     colunas: tema, total_achados, total_valor, impacto_predominante
+
+  5. tabela_imoveis_reavaliacao.csv
+     colunas: orgao, percentual_sem_reavaliacao</pre>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Quanto mais você especifica, menos a IA inventa. Pedir "modele algumas tabelas" devolve algo bonito mas não reutilizável. Pedir "modele estas 5 tabelas com estas colunas" devolve <em>exatamente</em> o que você precisa.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="prompts-extracao.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Prompt 1 — Extração</a>
+      <a href="prompts-curadoria.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Prompt 3 — Curadoria →</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt 4 — Entrega do dashboard - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#ef4444','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Prompts</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Prompts · 7.4</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Prompt 4 — Entrega do dashboard</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Quarto prompt: CSVs + catálogo → HTML standalone.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O prompt completo</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">Gere UM arquivo dashboard.html standalone com:
+
+  1. Cabeçalho com título e botão "limpar filtros"
+  2. Linha de KPIs no topo (5 cards)
+  3. Filtros multi-select: unidade, tema, categoria, impacto, situação
+     (KPIs e gráficos reagem em tempo real)
+  4. Grid com os 10 gráficos do catálogo da etapa anterior
+  5. Tabela detalhada dos itens filtrados, no rodapé
+
+Stack:
+  - HTML5 + Vanilla JS
+  - Chart.js via CDN (versão estável mais recente)
+  - Plugins via CDN quando necessário (treemap, matrix)
+  - CSS embutido. Sem build, sem framework.
+
+Critérios:
+  - Layout responsivo
+  - Paleta acessível (contraste AA)
+  - Formatação BR de moeda e data
+  - Sem chamadas de rede em runtime exceto os CDNs
+
+Cada gráfico de render() recebe a lista de itens filtrados como
+parâmetro. Envolva cada render em try/catch para que um gráfico
+quebrado não derrube os outros.</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Por que cada parte importa</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Stack explícita:</strong> HTML+JS+Chart.js. Sem isso, a IA pode entregar React.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Layout numerado:</strong> 5 regiões específicas. Reduz ambiguidade.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">"Reagem em tempo real":</strong> critério de aceite testável.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">try/catch obrigatório:</strong> blindagem contra erros de gráficos individuais.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">"Sem chamadas de rede":</strong> garante que abre direto, sem servidor.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Critério de sucesso explícito</h2>
+        <p class="text-text-secondary mb-3">Termine o prompt com um critério testável:</p>
+        <blockquote class="bg-black/30 border-l-4 border-accent p-5 rounded-r-xl text-text-primary italic">
+          "Critério de aceite: ao abrir o arquivo no Chrome, todos os filtros funcionam, todos os gráficos renderizam, a tabela mostra dados filtrados, e o console fica sem erros."
+        </blockquote>
+        <p class="text-text-secondary text-sm mt-3">Critério testável = critério útil. Sem ele, a IA decide o que "funcionar" significa.</p>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">No último prompt da cadeia, <strong>seja específico sobre stack</strong>. É aqui que escolhas de tecnologia entram. Antes disso, atrapalham a clareza dos dados.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="prompts-curadoria.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Prompt 3 — Curadoria</a>
+      <a href="prompts-iteracao.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Iteração cirúrgica →</a>
+    </footer>
+  </div>
+</body>
+</html>

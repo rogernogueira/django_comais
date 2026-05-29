@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caso CGU - Lições aprendidas - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#818cf8','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Caso CGU</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Estudo de caso · 9.4</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Lições aprendidas</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">O que funcionou e o que precisaria de mais trabalho — reflexão honesta sobre o caso real.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-green-400/30">
+        <h2 class="text-2xl font-bold text-green-400 mb-4">O que funcionou</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-green-400 mr-3 font-bold">✓</span><strong class="text-text-primary mr-2">Schema explícito + enums:</strong> zero ambiguidade nos filtros do dashboard.</li>
+          <li class="flex"><span class="text-green-400 mr-3 font-bold">✓</span><strong class="text-text-primary mr-2">Contagem antes do JSON:</strong> flagrou itens faltando no primeiro turno — antes de gastar tempo validando.</li>
+          <li class="flex"><span class="text-green-400 mr-3 font-bold">✓</span><strong class="text-text-primary mr-2">Campo <code class="text-green-400 bg-black/30 px-2 py-0.5 rounded">_nota</code> rotulando inferências:</strong> separa "real" de "estimado" no próprio dado.</li>
+          <li class="flex"><span class="text-green-400 mr-3 font-bold">✓</span><strong class="text-text-primary mr-2">Try/catch por gráfico:</strong> quando o CDN do treemap deu 404, a tabela ainda apareceu.</li>
+          <li class="flex"><span class="text-green-400 mr-3 font-bold">✓</span><strong class="text-text-primary mr-2">Stack simples (HTML+Chart.js):</strong> qualquer pessoa abre, sem setup.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-yellow-400/30">
+        <h2 class="text-2xl font-bold text-yellow-400 mb-4">O que precisaria de mais trabalho</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-yellow-400 mr-3 font-bold">⚠</span><strong class="text-text-primary mr-2">% de reavaliação dos demais órgãos foi inferido:</strong> só MS aparece com 72,58% no relatório. Os demais (Fiocruz, GHC etc.) foram estimados para o gráfico funcionar. Precisa de fonte real.</li>
+          <li class="flex"><span class="text-yellow-400 mr-3 font-bold">⚠</span><strong class="text-text-primary mr-2">IDs de recomendações:</strong> só dois (#1707415, #1707431) são literais do relatório. Os demais foram inferidos para manter o relacionamento 1:N. Antes de uso real, substituir pelos IDs verdadeiros.</li>
+          <li class="flex"><span class="text-yellow-400 mr-3 font-bold">⚠</span><strong class="text-text-primary mr-2">Provisões judiciais ficaram como "risco":</strong> a CGU não mensurou — não dá para mostrar valor. Solução: campos null + nota explicativa.</li>
+          <li class="flex"><span class="text-yellow-400 mr-3 font-bold">⚠</span><strong class="text-text-primary mr-2">Comparação 2023 × 2024 não foi implementada:</strong> exigiria buscar o relatório do ano anterior e modelar a série histórica.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Aprendizados-chave</h2>
+        <ol class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">1.</span><strong class="text-text-primary mr-2">A decomposição em 4 etapas funciona:</strong> extração → modelagem → curadoria → entrega. Pular qualquer uma vira improviso.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">2.</span><strong class="text-text-primary mr-2">Outlier real importa:</strong> os R$ 21,9 bi de estoques forçaram escala log no gráfico de valor. Sem isso, todo o resto sumia.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">3.</span><strong class="text-text-primary mr-2">null não é exceção:</strong> 60% dos achados não tinham valor mensurado. Tratamento de null não é detalhe — é central.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">4.</span><strong class="text-text-primary mr-2">Iteração cirúrgica vale ouro:</strong> quando descobrimos o bug do CDN, conserto cirúrgico (URL + try/catch) resolveu sem refazer nada.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">5.</span><strong class="text-text-primary mr-2">Rotular inferência é não-negociável:</strong> num dashboard educacional, é didática; num dashboard real, é integridade.</li>
+        </ol>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Conclusão geral</h3>
+        <p class="text-text-primary text-lg leading-relaxed">A IA <strong>não vai pensar por você</strong>. Vai pensar <em>com</em> você — se você for específico sobre onde a ajuda começa e onde sua decisão começa. O dashboard funciona. Os números, parcialmente verificados. As lições, totalmente aplicáveis.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="caso-cgu-dashboard.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: O dashboard final</a>
+      <a href="../../dashboard-ia.html" class="text-accent font-semibold hover:text-white transition-colors">Voltar ao índice do material →</a>
+    </footer>
+  </div>
+</body>
+</html>

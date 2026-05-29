@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtros como linguagem - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#f472b6','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Interatividade</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Interatividade · 5.1</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Filtros como linguagem de exploração</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Filtros não são adornos. Eles são a forma como o usuário <em>fala</em> com o dashboard.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Princípio</h2>
+        <p class="text-text-secondary text-lg mb-3">Cada filtro é uma <strong class="text-text-primary">pergunta latente</strong>:</p>
+        <ul class="space-y-2 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3">›</span>"E se eu olhar só a unidade X?" → filtro de unidade</li>
+          <li class="flex"><span class="text-accent mr-3">›</span>"E se eu olhar só achados pendentes?" → filtro de situação</li>
+          <li class="flex"><span class="text-accent mr-3">›</span>"E se eu olhar só o período da gestão anterior?" → filtro temporal</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Quantidade ideal: 3 a 6</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-5">
+            <p class="text-red-400 font-bold mb-2">&lt; 3</p>
+            <p class="text-sm text-text-secondary">Pouca exploração possível. Dashboard fica "estático".</p>
+          </div>
+          <div class="bg-green-400/10 border border-green-400/30 rounded-xl p-5">
+            <p class="text-green-400 font-bold mb-2">3 a 6</p>
+            <p class="text-sm text-text-secondary">Faixa ideal. Cobre as dimensões importantes sem sobrecarregar.</p>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-5">
+            <p class="text-red-400 font-bold mb-2">&gt; 6</p>
+            <p class="text-sm text-text-secondary">Paralisia de escolha. Usuário não sabe o que combinar.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Multi-select × single-select</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Multi-select (padrão)</p>
+            <p class="text-sm text-text-secondary">"Quero unidades A, B e C". Permite combinações ricas. Use para a maioria dos filtros.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Single-select</p>
+            <p class="text-sm text-text-secondary">Para dimensões <strong class="text-text-primary">mutuamente exclusivas</strong> — ex.: "comparar com" = ano anterior <em>ou</em> média histórica.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Como apresentar visualmente</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Sempre visíveis</strong> — não escondidos atrás de cliques.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Barra superior</strong> ou <strong class="text-text-primary">lateral fixa</strong> — em ambos os casos, fácil de encontrar.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Botão "limpar filtros"</strong> sempre presente.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Indicador de filtro ativo</strong> — "Mostrando 12 de 20 achados".</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Filtros são <strong>verbos</strong>; gráficos são <strong>substantivos</strong>. Dashboard sem filtro é só substantivo — narração passiva do que aconteceu. Com filtro, vira diálogo.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="graficos-regras.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Cardinalidade e escala</a>
+      <a href="interatividade-reatividade.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Reatividade em tempo real →</a>
+    </footer>
+  </div>
+</body>
+</html>

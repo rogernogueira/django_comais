@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schema explícito e enums - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#60a5fa','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Dados</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Dados · 2.2</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Schema explícito e enums fechados</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Não peça "uma lista". Peça uma planilha pronta com cada coluna tipada.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O que vai no prompt</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-sm text-text-secondary font-mono leading-relaxed overflow-x-auto">Para cada achado, devolva:
+  codigo:     string "x.y.z"
+  categoria:  enum ["corrigida", "nao_corrigida_valor",
+                    "classificacao", "inconformidade"]
+  tema:       enum ["estoques", "patrimonio_imoveis",
+                    "patrimonio_moveis", "provisoes_judiciais",
+                    "transferencias_voluntarias",
+                    "transferencias_fundo_a_fundo",
+                    "habilitacao_leitos_uti", "outros"]
+  unidade:    string
+  descricao:  string (máximo 25 palavras)
+  valor_brl:  número | null
+  impacto:    "alto" | "medio" | "baixo"
+  situacao:   "corrigida" | "pendente" | "em_monitoramento"
+  pagina_pdf: número</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Por que cada parte importa</h2>
+        <div class="space-y-3">
+          <div class="bg-bg-muted/30 rounded-xl p-4">
+            <p class="text-accent font-bold mb-1">Tipo em cada campo</p>
+            <p class="text-sm text-text-secondary">Evita interpretação ambígua. "número" não é o mesmo que "texto que parece número".</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-4">
+            <p class="text-accent font-bold mb-1">Enums fechados</p>
+            <p class="text-sm text-text-secondary">A IA é obrigada a escolher uma das opções fornecidas. Sem isso, ela inventa categorias novas a cada execução.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-4">
+            <p class="text-accent font-bold mb-1">Limite de tamanho (≤ 25 palavras)</p>
+            <p class="text-sm text-text-secondary">Descrições padronizadas ocupam espaço previsível na interface. Sem limite, vêm parágrafos.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-4">
+            <p class="text-accent font-bold mb-1">null permitido</p>
+            <p class="text-sm text-text-secondary">Remove o incentivo de chutar. Sem isso, a IA inventa "R$ 0" ou "indeterminado".</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-red-500/30">
+        <h2 class="text-2xl font-bold text-red-400 mb-4">Sem enum × com enum (mesma execução, 5 itens)</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-xs font-mono text-red-400 uppercase mb-2">Sem enum (5 grafias diferentes)</p>
+            <pre class="bg-black/40 p-4 rounded-lg text-xs text-text-secondary font-mono leading-relaxed">categoria: "Corrigida"
+categoria: "corrigida"
+categoria: "Já corrigido"
+categoria: "OK"
+categoria: "corrigida no exercício"</pre>
+            <p class="text-xs text-red-400 mt-2">Filtros quebram. Agregações duplicam.</p>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-green-400 uppercase mb-2">Com enum (consistência total)</p>
+            <pre class="bg-black/40 p-4 rounded-lg text-xs text-accent font-mono leading-relaxed">categoria: "corrigida"
+categoria: "corrigida"
+categoria: "corrigida"
+categoria: "corrigida"
+categoria: "corrigida"</pre>
+            <p class="text-xs text-green-400 mt-2">Filtros e agregações funcionam direto.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Schema é <strong>contrato com a IA</strong>. Sem contrato, ela age conforme o que parece bonito naquele momento. Com contrato, ela <em>cumpre</em>.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="dados-extracao.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Extração</a>
+      <a href="dados-anti-alucinacao.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Anti-alucinação →</a>
+    </footer>
+  </div>
+</body>
+</html>

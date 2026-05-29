@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validação humana - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#60a5fa','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Dados</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Dados · 2.5</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Validação humana — checklist obrigatório</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">A validação não é opcional. É o que separa "demonstração bonita" de "documento confiável".</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Checklist antes de seguir para a próxima etapa</h2>
+        <div class="bg-bg-muted/40 rounded-xl p-5 font-mono text-sm text-text-secondary space-y-2">
+          <p>[ ] A soma dos valores bate com o total declarado na fonte?</p>
+          <p>[ ] Toda página citada existe e fala daquele assunto?</p>
+          <p>[ ] Os enums têm exatamente os valores combinados?</p>
+          <p>[ ] Todo valor null tem campo _nota explicando?</p>
+          <p>[ ] As descrições respeitam o limite de palavras?</p>
+          <p>[ ] Não há duplicatas no campo de código?</p>
+          <p>[ ] As chaves estrangeiras entre tabelas casam?</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Quanto validar — proporção realista</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold text-2xl mb-1">100%</p>
+            <p class="text-sm text-text-muted">até 30 registros</p>
+            <p class="text-sm text-text-secondary mt-2">Confira todos. É rápido.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold text-2xl mb-1">10 por categoria</p>
+            <p class="text-sm text-text-muted">30 a 300 registros</p>
+            <p class="text-sm text-text-secondary mt-2">Amostra estratificada — confira 10 de cada enum.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold text-2xl mb-1">Amostra + soma</p>
+            <p class="text-sm text-text-muted">300+ registros</p>
+            <p class="text-sm text-text-secondary mt-2">Estratificada + valida agregados contra fonte.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Sinais de alerta durante a validação</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Números muito redondos onde a fonte tem precisão decimal.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Descrições genéricas ("conforme normas vigentes") onde a fonte é específica.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Páginas citadas que não falam do tema.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Categorias que "parecem" certas mas não estão no enum fornecido.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Total não bate com a soma das partes.</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">A validação humana <strong>não é opcional</strong> — é o passo que torna o dashboard auditável. Sem ela, você tem um produto com cara de profissional e fundamento de palpite.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="dados-procedencia.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Procedência</a>
+      <a href="modelagem-tabelas.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Modelagem em tabelas →</a>
+    </footer>
+  </div>
+</body>
+</html>

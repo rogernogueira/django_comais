@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardinalidade e escala - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#c084fc','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Gráficos</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Gráficos · 4.5</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Cardinalidade e escala — regras práticas</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Quando o gráfico vai dar errado por números — não por escolha de tipo.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Cardinalidade — quantas categorias?</h2>
+        <table class="w-full text-text-secondary text-sm">
+          <thead>
+            <tr class="border-b-2 border-bg-muted">
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Categorias</th>
+              <th class="text-left py-3 text-text-muted text-xs uppercase tracking-wider">Gráfico apropriado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">Até 5</td><td class="py-3">Pizza/donut funcionam. Barras também.</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">5–15</td><td class="py-3">Barras (verticais até 8, horizontais acima)</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">15–50</td><td class="py-3">Barras horizontais, ordenado, com scroll</td></tr>
+            <tr><td class="py-3 pr-4 font-mono text-accent">50+</td><td class="py-3">Top N + categoria "outros" ou tabela paginada</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Escala — quão diferentes são os valores?</h2>
+        <table class="w-full text-text-secondary text-sm">
+          <thead>
+            <tr class="border-b-2 border-bg-muted">
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Razão maior ÷ menor</th>
+              <th class="text-left py-3 text-text-muted text-xs uppercase tracking-wider">Decisão</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">&lt; 10×</td><td class="py-3">Escala linear comum</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">10× a 100×</td><td class="py-3">Considere escala <strong class="text-text-primary">logarítmica</strong></td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">&gt; 100×</td><td class="py-3">Separe o outlier em gráfico próprio</td></tr>
+            <tr><td class="py-3 pr-4 font-mono text-accent">0–100%</td><td class="py-3">Sempre 0–100 no eixo, com referência em 50%</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Outras regras práticas</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Eixo Y começa em zero</strong> quando os valores são positivos e a comparação importa. Cortar o eixo distorce magnitudes.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Para variações pequenas</strong> (todos os valores próximos), use eixo cortado <strong>com aviso explícito</strong>.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Cores categóricas</strong> devem ser distinguíveis em monocromia (acessibilidade).</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Cor sequencial</strong> (degradê) para variável numérica; <strong class="text-text-primary">cor categórica</strong> (paleta) para variável discreta.</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Cardinalidade e escala são <strong>checagens que você faz nos dados, não nos gráficos</strong>. Antes de pedir o gráfico à IA, descubra esses dois números — eles determinam o tipo.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="graficos-especialistas.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Bubble, stacked e funil</a>
+      <a href="interatividade-filtros.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Filtros como linguagem →</a>
+    </footer>
+  </div>
+</body>
+</html>

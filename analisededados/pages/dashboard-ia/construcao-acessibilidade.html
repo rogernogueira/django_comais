@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acessibilidade - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#2dd4bf','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Construção</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Construção · 6.5</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Acessibilidade — não é opcional</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Dashboard inacessível exclui daltônicos, usuários de teclado, leitores de tela. Pequenos cuidados resolvem 80%.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Mínimos obrigatórios</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Contraste AA (4.5:1):</strong> texto sobre fundo precisa contrastar. Ferramenta: contrast-ratio.com.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Acessível por teclado:</strong> Tab para navegar, Enter para confirmar. Filtros precisam ser <code class="text-accent">&lt;select&gt;</code> nativos.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Canvas com aria-label:</strong> cada gráfico tem rótulo textual descrevendo seu conteúdo.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Ícones com aria-hidden:</strong> ícones decorativos devem ser ignorados pelo leitor de tela.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Foco visível:</strong> nunca remover <code class="text-accent">outline</code> sem substituir por outro indicador.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Cor — cuidados extras</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Não use só cor</strong> para distinguir categorias — adicione padrão, ícone ou rótulo. 8% dos homens são daltônicos.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Vermelho × verde</strong> é a combinação mais problemática. Prefira vermelho × azul.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Paleta acessível</strong> (ColorBrewer, Viridis): cores distinguíveis em monocromia também.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Tamanho de fonte</h2>
+        <table class="w-full text-text-secondary text-sm">
+          <thead>
+            <tr class="border-b-2 border-bg-muted">
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Elemento</th>
+              <th class="text-left py-3 text-text-muted text-xs uppercase tracking-wider">Mínimo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Corpo (parágrafo, tabela)</td><td class="py-3 font-mono text-accent">14 px</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Rótulos pequenos (legenda, eixo)</td><td class="py-3 font-mono text-accent">12 px</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">KPI número (destaque)</td><td class="py-3 font-mono text-accent">28 px+</td></tr>
+            <tr><td class="py-3 pr-4">Título do dashboard</td><td class="py-3 font-mono text-accent">22 px+</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Alternativa textual aos gráficos</h2>
+        <p class="text-text-secondary mb-3">A <strong class="text-text-primary">tabela detalhada</strong> é também uma forma de acessibilidade. Quem não enxerga o gráfico ainda consegue ler os números.</p>
+        <p class="text-text-secondary">Em casos críticos, adicione um <code class="text-accent">&lt;p&gt;</code> resumindo o gráfico ("3 unidades concentram 80% dos achados pendentes").</p>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Acessibilidade não é "ramp para cadeirante" — é <strong>fundação do bom design</strong>. Dashboard acessível costuma ser <em>mais claro</em> também para quem não tem deficiência.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="construcao-layout.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Layout responsivo</a>
+      <a href="prompts-extracao.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Prompt de extração →</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti-alucinação - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#60a5fa','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Dados</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Dados · 2.3</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Anti-alucinação: peça escopo antes do conteúdo</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Um truque simples que reduz drasticamente o risco de a IA inventar dados.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O padrão de prompt</h2>
+        <blockquote class="bg-black/30 border-l-4 border-accent p-6 rounded-r-xl text-lg italic text-text-primary">
+          "Antes de gerar o JSON, liste em texto livre <strong class="not-italic">quantos itens</strong> você identificou em cada categoria. Eu confirmo, e só depois você gera o conteúdo."
+        </blockquote>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Por que isso é poderoso</h2>
+        <p class="text-text-secondary mb-4 text-lg">Você vê o <strong class="text-text-primary">número</strong> antes do <strong class="text-text-primary">conteúdo</strong>. Se a IA achou 8 quando o documento tem 20, você descobre em 2 segundos — antes de gastar tempo validando 8 registros falsos.</p>
+        <p class="text-text-secondary text-lg">Funciona porque a IA <em>tenta</em> ser consistente com promessas anteriores. Quando ela diz "encontrei 12", ela vai se esforçar para entregar 12 — não 8 nem 15.</p>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Fluxo recomendado em 3 turnos</h2>
+        <div class="space-y-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5 border-l-4 border-accent">
+            <p class="text-xs font-mono text-accent uppercase mb-2">Turno 1 · Você</p>
+            <p class="text-text-secondary">"Antes de gerar o JSON, liste quantos achados você identificou em cada categoria do capítulo 2."</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5 border-l-4 border-blue-400">
+            <p class="text-xs font-mono text-blue-400 uppercase mb-2">Turno 2 · IA</p>
+            <p class="text-text-secondary">"Identifiquei: 4 corrigidas, 5 não corrigidas de valor, 3 de classificação, 8 inconformidades. Total: 20."</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5 border-l-4 border-green-400">
+            <p class="text-xs font-mono text-green-400 uppercase mb-2">Turno 3 · Você</p>
+            <p class="text-text-secondary">"Confirmado. Agora gere o JSON com os 20 itens completos."</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Outras travas anti-alucinação</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Campo "fonte" obrigatório:</strong> cada linha precisa de número de página ou seção citável.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">"Use null se não está claro":</strong> trava direta contra chute.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Pedir contagem por categoria:</strong> agrega validação à própria saída.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">"Não invente":</strong> dito explicitamente, vira norma do contexto.</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">A IA <strong>inventa com confiança</strong>. Travas pequenas (contagem antes, fonte obrigatória, null permitido) são mais eficazes do que pedir "não invente" no final.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="dados-schema.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Schema explícito</a>
+      <a href="dados-procedencia.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Procedência →</a>
+    </footer>
+  </div>
+</body>
+</html>

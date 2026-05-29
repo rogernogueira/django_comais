@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O que é um dashboard analítico - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+        'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+        'accent':'#4ade80','dashai':'#a87a9c'
+      }}}
+    }
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a>
+      <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a>
+      <span class="mx-2">›</span>
+      <span class="text-accent">Fundamentos</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Fundamentos · 1.1</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 text-text-primary leading-tight">O que é um dashboard analítico</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Interface visual que condensa estado e tendência de um domínio em uma única tela — para monitorar, comparar e investigar.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Definição operacional</h2>
+        <p class="text-text-secondary text-lg leading-relaxed">Um dashboard analítico é uma <strong class="text-text-primary">interface visual que reúne em uma só tela métricas, gráficos e filtros</strong> que respondem perguntas recorrentes sobre um domínio. Diferente de um relatório, ele é <strong class="text-text-primary">interativo</strong> e atualizável; diferente de uma planilha, ele é <strong class="text-text-primary">prescritivo</strong> sobre o que importa olhar.</p>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">As três funções essenciais</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold text-lg mb-2">1. Monitorar</p>
+            <p class="text-text-secondary">Mostrar o estado atual dos indicadores-chave. KPIs no topo da tela respondem "como estamos agora?".</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold text-lg mb-2">2. Comparar</p>
+            <p class="text-text-secondary">Permitir cortes por dimensão (unidade, tema, tempo) para responder "onde está concentrado?" e "como mudou?".</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold text-lg mb-2">3. Investigar</p>
+            <p class="text-text-secondary">Drill-down do agregado ao detalhe individual — para responder "quais exatamente?" sem trocar de ferramenta.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-red-500/20">
+        <h2 class="text-2xl font-bold text-red-400 mb-4">O que NÃO é um dashboard</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">×</span>Um <strong>relatório longo em PDF</strong>: não tem interatividade, e o leitor precisa rolar para encontrar o que importa.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">×</span>Uma <strong>coleção aleatória de gráficos bonitos</strong>: bonito sem pergunta de negócio vira ruído.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">×</span>Uma <strong>planilha colorida</strong>: cor decorativa não é a mesma coisa que cor com semântica.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">×</span>Um <strong>substituto para análise profunda</strong>: o dashboard mostra o "o quê"; o "por quê" continua sendo trabalho humano.</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Se você não consegue listar <strong>três perguntas concretas</strong> que o gestor vai fazer ao olhar a tela, ainda não está pronto para projetar o dashboard. Volte e converse com quem vai usar.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="../../dashboard-ia.html" class="text-text-muted hover:text-dashai transition-colors">← Voltar ao Dashboard-IA</a>
+      <a href="fundamentos-estagios.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Os 4 estágios →</a>
+    </footer>
+  </div>
+</body>
+</html>

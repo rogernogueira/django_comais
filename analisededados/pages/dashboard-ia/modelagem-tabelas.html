@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabela principal + auxiliares - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#facc15','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Modelagem</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Modelagem · 3.1</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Tabela principal + tabelas auxiliares</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Uma tabela "fato" central e várias tabelas "dimensão" enriquecendo-a. Modelo simples que cobre 90% dos casos.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Por que modelar antes de visualizar</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-1">Controle</p>
+            <p class="text-sm text-text-secondary">Você decide quais dimensões viram filtros. Sem schema, a IA escolhe por você.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-1">Inspeção</p>
+            <p class="text-sm text-text-secondary">Conferir 5 CSVs é mais fácil do que conferir 1 HTML de 1000 linhas com dados embutidos.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-1">Reuso</p>
+            <p class="text-sm text-text-secondary">Outras pessoas constroem coisas diferentes sobre os mesmos CSVs.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Anatomia do modelo</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-bg-muted/30 rounded-xl p-6 border border-accent/30">
+            <h3 class="text-lg font-bold text-text-primary mb-2">Tabela principal — "o fato"</h3>
+            <p class="text-text-secondary text-sm mb-3">Uma linha por evento, registro ou achado. Carrega a chave única que identifica cada item. É a tabela que será filtrada.</p>
+            <p class="text-xs font-mono text-accent">Exemplo: cada achado de auditoria é uma linha com código, categoria, valor, etc.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-6 border border-accent/30">
+            <h3 class="text-lg font-bold text-text-primary mb-2">Tabelas auxiliares — "as dimensões"</h3>
+            <p class="text-text-secondary text-sm mb-3">Uma linha por categoria, unidade ou tema. Carregam metadados que enriquecem a tabela principal.</p>
+            <p class="text-xs font-mono text-accent">Exemplo: tabela de unidades com total de achados e % corrigido.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Caso CGU: 5 tabelas</h2>
+        <table class="w-full text-text-secondary text-sm">
+          <thead>
+            <tr class="border-b-2 border-bg-muted">
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Arquivo</th>
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Papel</th>
+              <th class="text-left py-3 text-text-muted text-xs uppercase tracking-wider">Linhas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">tabela_achados.csv</td><td class="py-3 pr-4">principal — 1 linha por achado</td><td class="py-3">20</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">tabela_recomendacoes.csv</td><td class="py-3 pr-4">filha (1:N com achados)</td><td class="py-3">15</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">tabela_unidades.csv</td><td class="py-3 pr-4">dimensão — agregado por unidade</td><td class="py-3">7</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4 font-mono text-accent">tabela_temas.csv</td><td class="py-3 pr-4">dimensão — agregado por tema</td><td class="py-3">8</td></tr>
+            <tr><td class="py-3 pr-4 font-mono text-accent">tabela_imoveis_reavaliacao.csv</td><td class="py-3 pr-4">métrica auxiliar (por órgão)</td><td class="py-3">6</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Schema é <strong>decisão de produto</strong>, não decisão de IA. Quem decide quais colunas existem é quem vai usar o dashboard. A IA só preenche o schema.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="dados-validacao.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Validação humana</a>
+      <a href="modelagem-chaves.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Chaves estrangeiras →</a>
+    </footer>
+  </div>
+</body>
+</html>

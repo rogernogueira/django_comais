@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Os 4 estágios da construção - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#4ade80','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Fundamentos</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Fundamentos · 1.2</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Os 4 estágios da construção</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Todo dashboard nasce numa sequência. Pular etapas significa improvisar — e improvisar custa caro.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-6">A cadeia completa</h2>
+        <div class="grid md:grid-cols-4 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5 border border-accent/30">
+            <span class="font-mono text-xs text-accent">ESTÁGIO 1</span>
+            <h3 class="text-xl font-bold text-text-primary mt-2 mb-2">Extração</h3>
+            <p class="text-sm text-text-secondary">Tirar dados de onde estão: PDF, planilhas, APIs, banco. Resultado: arquivo estruturado.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5 border border-accent/30">
+            <span class="font-mono text-xs text-accent">ESTÁGIO 2</span>
+            <h3 class="text-xl font-bold text-text-primary mt-2 mb-2">Modelagem</h3>
+            <p class="text-sm text-text-secondary">Organizar em tabelas relacionadas. Definir chaves, tipos e regras.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5 border border-accent/30">
+            <span class="font-mono text-xs text-accent">ESTÁGIO 3</span>
+            <h3 class="text-xl font-bold text-text-primary mt-2 mb-2">Visualização</h3>
+            <p class="text-sm text-text-secondary">Decidir <em>quais</em> gráficos respondem <em>quais</em> perguntas. Não é decisão estética.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5 border border-accent/30">
+            <span class="font-mono text-xs text-accent">ESTÁGIO 4</span>
+            <h3 class="text-xl font-bold text-text-primary mt-2 mb-2">Entrega</h3>
+            <p class="text-sm text-text-secondary">Montar a interface: filtros, layout, responsividade, acessibilidade.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Por que essa ordem (e não outra)</h2>
+        <p class="text-text-secondary mb-4">Cada estágio depende do artefato do anterior. Se você inverte, vai pedir à IA que invente — e ela inventa.</p>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span>Não dá para modelar tabelas sem saber <strong>quais campos</strong> os achados têm.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span>Não dá para escolher gráfico sem saber <strong>quantos</strong> valores existem em cada categoria.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span>Não dá para montar o dashboard sem ter os <strong>dados</strong> prontos.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Checkpoints entre etapas</h2>
+        <p class="text-text-secondary mb-4">Entre cada estágio, pare e olhe a saída antes de avançar:</p>
+        <div class="bg-bg-muted/40 rounded-xl p-5 font-mono text-sm text-text-secondary space-y-2">
+          <p>[ ] A saída faz sentido para o domínio?</p>
+          <p>[ ] Os números batem com o documento de origem?</p>
+          <p>[ ] Sobrou algo importante de fora?</p>
+          <p>[ ] Os enums (categorias fechadas) estão consistentes?</p>
+          <p>[ ] Há rastreabilidade da origem de cada dado?</p>
+        </div>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Se você só pergunta "está bom?" <strong>depois</strong> de receber o dashboard final, fica caro voltar. Checkpoint de 2 minutos entre cada etapa economiza 2 horas de retrabalho no fim.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="fundamentos-conceito.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: O que é um dashboard</a>
+      <a href="fundamentos-anatomia.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Anatomia do dashboard →</a>
+    </footer>
+  </div>
+</body>
+</html>

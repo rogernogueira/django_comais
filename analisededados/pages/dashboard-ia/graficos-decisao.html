@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A pergunta antes do gráfico - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#c084fc','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Gráficos</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Gráficos · 4.1</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">A pergunta vem antes do gráfico</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Se você não consegue escrever a pergunta em uma frase, não desenhe o gráfico.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="grid md:grid-cols-2 gap-6">
+        <div class="bg-bg-elevated rounded-2xl p-8 border-2 border-red-500/30">
+          <span class="inline-block text-xs font-mono text-red-400 bg-red-500/10 px-3 py-1 rounded-full mb-4">Caminho ruim</span>
+          <p class="text-text-primary text-lg mb-3">"Vamos fazer um gráfico de pizza."</p>
+          <p class="text-text-secondary text-sm">Decisão estética. Resultado: pizza com 12 fatias ilegíveis.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-8 border-2 border-green-400/30">
+          <span class="inline-block text-xs font-mono text-green-400 bg-green-400/10 px-3 py-1 rounded-full mb-4">Caminho bom</span>
+          <p class="text-text-primary text-lg mb-3">"Quero saber qual unidade concentra mais achados pendentes."</p>
+          <p class="text-text-secondary text-sm">A pergunta dita o gráfico: barras horizontais, ordenadas por contagem.</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Ficha mínima por gráfico</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">pergunta_de_negocio:</strong> a pergunta que o gestor faria, em uma frase</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">tipo_de_grafico:</strong> barras horizontais, donut, funil…</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">eixo_x_ou_categorias:</strong> o que aparece nas categorias</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">eixo_y_ou_metrica:</strong> o que está sendo medido</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">filtros_aplicaveis:</strong> quais filtros afetam este gráfico</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">regra_de_ordenacao:</strong> como ordenar (decrescente por valor? alfabético?)</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">quando_NAO_usar:</strong> em que caso este gráfico engana o leitor</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">A gramática: categórico × numérico × temporal</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Categórico</p>
+            <p class="text-sm text-text-secondary mb-3">Unidade, tema, estado civil. Geralmente <strong>poucas opções</strong>.</p>
+            <p class="text-xs font-mono text-accent">→ barras, donut, treemap, heatmap</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Numérico</p>
+            <p class="text-sm text-text-secondary mb-3">Valor em R$, contagem, percentual. <strong>Ordenação natural</strong>.</p>
+            <p class="text-xs font-mono text-accent">→ histograma, KPIs, scatter, bubble</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Temporal</p>
+            <p class="text-sm text-text-secondary mb-3">Data, mês, ano. <strong>Ordem cronológica</strong>.</p>
+            <p class="text-xs font-mono text-accent">→ linha, área, gantt, funil</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Dashboards ruins são feitos de <strong>gráficos sem pergunta</strong>. Cada gráfico no seu dashboard precisa caber em "este gráfico responde: ____".</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="modelagem-checkpoint.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Schema antes do dado</a>
+      <a href="graficos-essenciais.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: KPIs e barras →</a>
+    </footer>
+  </div>
+</body>
+</html>

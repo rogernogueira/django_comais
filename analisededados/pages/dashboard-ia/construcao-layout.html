@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout responsivo (CSS Grid) - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#2dd4bf','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Construção</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Construção · 6.4</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Layout responsivo com CSS Grid</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Grade de 12 colunas. Cards ocupam frações. Em tela estreita, tudo vira coluna única.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">CSS Grid em 10 linhas</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+.col-6  { grid-column: span 6; }   /* meia largura  */
+.col-4  { grid-column: span 4; }   /* terço         */
+.col-12 { grid-column: span 12; }  /* largura total */
+
+@media (max-width: 980px) {
+  .col-6, .col-4 {
+    grid-column: span 12;   /* mobile: tudo cheio */
+  }
+}</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Princípios de grade de 12</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">12 é divisível por 2, 3, 4, 6:</strong> dá flexibilidade para meio, terço, quarto, dois-terços.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Cards ocupam 6, 4 ou 12 colunas:</strong> outras frações funcionam, mas estas três cobrem a maioria.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Tela estreita = coluna única:</strong> em mobile, lutar por layout 2×2 vira ilegível.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Gap consistente:</strong> 16px ou 20px entre cards. Espaço respira.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Cuidado com Chart.js no responsivo</h2>
+        <p class="text-text-secondary mb-3">Chart.js precisa de dimensão definida pelo container. Sem isso, ele pode crescer infinitamente:</p>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed">.chart-wrap {
+  position: relative;
+  height: 280px;           /* altura explícita */
+}
+
+// No options do Chart.js:
+options: {
+  responsive: true,
+  maintainAspectRatio: false,   /* ← chave! */
+}</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Breakpoints recomendados</h2>
+        <table class="w-full text-text-secondary text-sm">
+          <thead>
+            <tr class="border-b-2 border-bg-muted">
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Tela</th>
+              <th class="text-left py-3 pr-4 text-text-muted text-xs uppercase tracking-wider">Largura</th>
+              <th class="text-left py-3 text-text-muted text-xs uppercase tracking-wider">Layout</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Mobile</td><td class="py-3 pr-4 font-mono text-accent">&lt; 640px</td><td class="py-3">1 coluna, KPIs empilhados</td></tr>
+            <tr class="border-b border-bg-muted/50"><td class="py-3 pr-4">Tablet</td><td class="py-3 pr-4 font-mono text-accent">640–980px</td><td class="py-3">2 colunas para gráficos</td></tr>
+            <tr><td class="py-3 pr-4">Desktop</td><td class="py-3 pr-4 font-mono text-accent">&gt; 980px</td><td class="py-3">Grade 12 colunas completa</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Sempre teste numa tela estreita antes de entregar. <strong>Layout que parece bom no desktop</strong> pode ficar inutilizável no celular. CSS Grid + um media query resolve 90% dos casos.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="construcao-dados.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Dados embutidos × externos</a>
+      <a href="construcao-acessibilidade.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Acessibilidade →</a>
+    </footer>
+  </div>
+</body>
+</html>

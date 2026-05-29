@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reatividade em tempo real - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#f472b6','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Interatividade</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Interatividade · 5.2</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Reatividade em tempo real</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Toda mudança de filtro recalcula tudo. Se um componente não reage, é bug — não é feature.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Princípio: fonte única de verdade filtrada</h2>
+        <p class="text-text-secondary text-lg">Toda renderização (KPIs, gráficos, tabela) parte do <strong class="text-text-primary">mesmo conjunto filtrado de dados</strong>. Quando o usuário muda um filtro, esse conjunto recalcula, e cascateia para tudo.</p>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Arquitetura mínima em vanilla JS</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">// 1. Estado dos filtros
+const FILTERS = {
+  unidade: [], tema: [], categoria: [],
+  impacto: [], situacao: []
+};
+
+// 2. Função pura: aplica filtros e devolve subconjunto
+function filtered() {
+  return DATA.filter(row =>
+    Object.entries(FILTERS).every(([key, vals]) =>
+      vals.length === 0 || vals.includes(row[key])
+    )
+  );
+}
+
+// 3. Orquestrador: recalcula tudo
+function refreshAll() {
+  const data = filtered();
+  renderKPIs(data);
+  renderCharts(data);
+  renderTable(data);
+}
+
+// 4. Cada filtro do DOM dispara refresh
+document.querySelectorAll('select').forEach(sel =>
+  sel.addEventListener('change', e => {
+    FILTERS[e.target.id] = Array.from(e.target.selectedOptions).map(o => o.value);
+    refreshAll();
+  })
+);</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O que pode dar errado</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Algum render usa <code class="text-red-400 bg-black/30 px-2 py-0.5 rounded">DATA</code> global em vez do parâmetro <code class="text-red-400 bg-black/30 px-2 py-0.5 rounded">data</code> — fica "preso" no estado inicial.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Chart.js não é destruído e re-renderizado — gráfico antigo persiste sobreposto.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Tabela só repinta a parte visível — drill-down some.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Erro em um render quebra toda a cadeia — proteja com <code class="text-red-400 bg-black/30 px-2 py-0.5 rounded">try/catch</code>.</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Teste de aceitação: <strong>selecione um filtro e veja se TUDO muda</strong>. Se KPIs mudam mas o gráfico não, ou se a tabela atualiza mas o donut não, há acoplamento errado. Toda renderização deve receber <code class="text-accent">data</code> como argumento.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="interatividade-filtros.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Filtros como linguagem</a>
+      <a href="interatividade-drill-down.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Drill-down →</a>
+    </footer>
+  </div>
+</body>
+</html>

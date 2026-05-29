@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt 3 — Curadoria de gráficos - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#ef4444','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Prompts</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Prompts · 7.3</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Prompt 3 — Curadoria de gráficos</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Terceiro prompt: planejar visualizações <em>antes</em> de codar.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O prompt completo</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">A partir das tabelas da etapa anterior, devolva uma ficha em
+Markdown para cada gráfico planejado contendo:
+
+  - pergunta_de_negocio:  a pergunta que o gestor faria
+  - tipo_de_grafico:      barras horizontais, donut, funil…
+  - eixos_ou_categorias:  o que aparece no X e no Y
+  - filtros_aplicaveis:   quais filtros afetam este gráfico
+  - regra_de_ordenacao:   como ordenar
+  - quando_NAO_usar:      em que caso este gráfico engana o leitor
+
+NÃO desenhe nada. Apenas descreva.
+
+Quero exatamente N gráficos. Numere de 1 a N.</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Por que pedir ficha antes do código</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Decisão consciente:</strong> a IA é forçada a justificar cada escolha.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">"Quando NÃO usar":</strong> o campo mais importante — força a IA a pensar nos limites.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Checkpoint barato:</strong> revisar 10 fichas em texto é mais rápido que revisar 10 gráficos em código.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Documentação automática:</strong> o resultado deste prompt vira o "manual" do dashboard.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Exemplo de saída</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">### 1. Barras horizontais — Valor por categoria
+
+- pergunta_de_negocio: "Onde está o dinheiro em risco?"
+- tipo_de_grafico:     barras horizontais
+- eixos_ou_categorias: X = soma(valor_brl) · Y = categoria
+- filtros_aplicaveis:  unidade, tema, impacto
+- regra_de_ordenacao:  decrescente por valor
+- quando_NAO_usar:     quando 1 categoria tem &gt;95% do total
+                       (usar log ou separar outlier)</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Variação avançada</h2>
+        <p class="text-text-secondary mb-3">Se quiser ir além, peça também:</p>
+        <ul class="space-y-2 text-sm text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3">›</span><strong class="text-text-primary mr-2">paleta_sugerida:</strong> cores específicas para cada categoria</li>
+          <li class="flex"><span class="text-accent mr-3">›</span><strong class="text-text-primary mr-2">tamanho_no_layout:</strong> ocupa quantas colunas da grade (6 ou 4)</li>
+          <li class="flex"><span class="text-accent mr-3">›</span><strong class="text-text-primary mr-2">interacao_clique:</strong> clicar numa barra filtra o resto?</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Curadoria de gráficos é onde o <strong>design do dashboard acontece</strong>. Pular esta etapa significa terceirizar decisões de visualização para a IA. Não delegue isso.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="prompts-modelagem.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Prompt 2 — Modelagem</a>
+      <a href="prompts-entrega.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Prompt 4 — Entrega →</a>
+    </footer>
+  </div>
+</body>
+</html>

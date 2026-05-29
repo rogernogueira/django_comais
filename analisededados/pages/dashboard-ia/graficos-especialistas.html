@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubble, stacked e funil - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#c084fc','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Gráficos</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Gráficos · 4.4</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Bubble, stacked e funil</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Três tipos especialistas. Cada um tem uma pergunta muito específica que ele responde melhor que qualquer outro.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Bubble — três dimensões em um ponto</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-text-secondary mb-3">Eixo X, eixo Y e <strong class="text-text-primary">tamanho</strong> codificam três métricas distintas. Cor pode ser uma quarta.</p>
+            <p class="text-sm font-mono text-accent">Pergunta: "Quais itens merecem atenção prioritária?"</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold text-sm mb-2">Exemplo (caso CGU)</p>
+            <ul class="text-sm text-text-secondary space-y-1">
+              <li>• X = impacto (alto/médio/baixo)</li>
+              <li>• Y = valor em R$ (log)</li>
+              <li>• Tamanho = nº de recomendações</li>
+              <li>• Cor = categoria do achado</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-4 bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+          <p class="text-sm text-red-400 font-bold mb-1">Quando NÃO usar</p>
+          <p class="text-sm text-text-secondary">Mais de ~30 pontos viram "poeira". Use scatter sem tamanho, ou um sumário top-N.</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Stacked bar — composição interna</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-text-secondary mb-3">Barras que mostram a <strong class="text-text-primary">composição interna</strong> de cada categoria. Ideal para "como é a mistura dentro de cada grupo?".</p>
+            <p class="text-sm font-mono text-accent">Pergunta: "Quais unidades concentram mais achados pendentes?"</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold text-sm mb-2">Variantes</p>
+            <ul class="text-sm text-text-secondary space-y-1">
+              <li>• <strong class="text-text-primary">Empilhada absoluta:</strong> compara totais</li>
+              <li>• <strong class="text-text-primary">Empilhada 100%:</strong> compara proporção</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-4 bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+          <p class="text-sm text-red-400 font-bold mb-1">Quando NÃO usar</p>
+          <p class="text-sm text-text-secondary">Se você precisa comparar precisamente a "fatia do meio" entre categorias — fica difícil pelo eixo flutuante. Use barras agrupadas.</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Funil — etapas com perda</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-text-secondary mb-3">Estágios sequenciais com perda em cada passo. Cada barra estreita conforme avança.</p>
+            <p class="text-sm font-mono text-accent">Pergunta: "Em que etapa as recomendações estão emperrando?"</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold text-sm mb-2">Caso CGU</p>
+            <ul class="text-sm text-text-secondary space-y-1">
+              <li>• Emitidas: 15</li>
+              <li>• Em atendimento: 10</li>
+              <li>• Atendidas: 1</li>
+              <li>• Pendentes: 2</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-4 bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+          <p class="text-sm text-red-400 font-bold mb-1">Quando NÃO usar</p>
+          <p class="text-sm text-text-secondary">Sem ordem natural entre os estágios — vire barra simples. Funil sem ordem engana mais do que esclarece.</p>
+        </div>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Bubble, stacked e funil são <strong>respostas específicas</strong>. Cada um tem UMA pergunta que ele responde melhor que qualquer outro tipo. Aprenda a reconhecer a pergunta — e o gráfico vem em seguida.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="graficos-composicao.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Donut, treemap e heatmap</a>
+      <a href="graficos-regras.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Cardinalidade e escala →</a>
+    </footer>
+  </div>
+</body>
+</html>

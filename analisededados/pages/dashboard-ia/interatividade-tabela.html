@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabela detalhada - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#f472b6','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Interatividade</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Interatividade · 5.4</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Tabela detalhada — a âncora de confiança</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Os gráficos resumem. A tabela <em>prova</em>. Sem ela, o dashboard vira "confie em mim".</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O que colocar</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Toda coluna da tabela principal:</strong> o usuário precisa ver o dado bruto, não uma versão "filtrada para o gráfico".</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Colunas derivadas com tags:</strong> impacto, situação, categoria viram tags coloridas — mais legível que texto puro.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Fonte sempre que possível:</strong> link, página, ou identificador externo. Sem isso, o número fica órfão.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Indicador de procedência:</strong> ✓ verificado vs ⚠ inferido.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Recursos importantes</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Scroll vertical com cabeçalho fixo</p>
+            <p class="text-sm text-text-secondary"><code class="text-accent">position: sticky; top: 0</code> no <code class="text-accent">&lt;thead&gt;</code>. Usuário sempre vê os nomes das colunas.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Ordenação por coluna</p>
+            <p class="text-sm text-text-secondary">Clique no cabeçalho ordena por aquela coluna. Indicador visual (↑↓).</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Linhas com hover</p>
+            <p class="text-sm text-text-secondary">Realce sutil ao passar o mouse — facilita acompanhar a linha de olho.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Exportar CSV</p>
+            <p class="text-sm text-text-secondary">Botão "exportar visível" gera CSV do que está filtrado. Auditoria fica fácil.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Erros comuns</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Esconder a tabela em outra aba — perde a função de âncora.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Mostrar só as colunas "bonitas" — esconder a fonte é esconder a verdade.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Não responder a filtros — tabela "estática" desconecta do resto.</li>
+          <li class="flex"><span class="text-red-400 mr-3 font-bold">⚠</span>Truncar texto sem opção de expandir — perda de informação.</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">A tabela detalhada é a região <strong>mais subestimada</strong> do dashboard. Ela é o que torna os gráficos auditáveis. Sem ela, qualquer afirmação fica indefensável.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="interatividade-drill-down.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Drill-down</a>
+      <a href="construcao-stack.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Stack mínima →</a>
+    </footer>
+  </div>
+</body>
+</html>

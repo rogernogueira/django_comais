@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alucinação numérica - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#fb923c','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Armadilhas</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Armadilhas · 8.1</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Alucinação numérica</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">A IA "completa" um número que não existe no documento. Plausível e falso.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="grid md:grid-cols-3 gap-4">
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-red-500/30">
+          <p class="text-xs font-mono text-red-400 uppercase tracking-wider mb-2">Sintoma</p>
+          <p class="text-text-primary font-bold text-lg mb-2">Número fantasma</p>
+          <p class="text-text-secondary text-sm">Aparece um valor que ninguém acha no documento original. O número "parece certo" mas não bate em nenhuma página.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-yellow-400/30">
+          <p class="text-xs font-mono text-yellow-400 uppercase tracking-wider mb-2">Causa</p>
+          <p class="text-text-primary font-bold text-lg mb-2">Falta de citação</p>
+          <p class="text-text-secondary text-sm">O prompt não exigiu campo de fonte. A IA "completou" com plausibilidade quando o dado não estava claro.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-green-400/30">
+          <p class="text-xs font-mono text-green-400 uppercase tracking-wider mb-2">Solução</p>
+          <p class="text-text-primary font-bold text-lg mb-2">Fonte obrigatória + null</p>
+          <p class="text-text-secondary text-sm">Campo <code class="text-green-400">fonte</code> ou <code class="text-green-400">pagina_pdf</code> obrigatório no schema. Sem origem, vira <code class="text-green-400">null</code> com <code class="text-green-400">_nota</code>.</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Diagnóstico em 60 segundos</h2>
+        <ol class="space-y-2 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">1.</span>Pegue 3 linhas aleatórias da saída da IA.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">2.</span>Abra a página citada do PDF de origem.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">3.</span>O número aparece <strong class="text-text-primary">literalmente</strong> ali?</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">4.</span>Se não — alucinação. Refaça com prompt mais restritivo.</li>
+        </ol>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Prevenção: padrão de prompt blindado</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed">Regras inegociáveis:
+  1. Toda linha precisa ter campo "fonte" ou "pagina_pdf"
+  2. Se você não encontrar a origem exata: valor_brl = null
+     + campo "_nota" explicando por que não foi possível mensurar
+  3. NUNCA aproxime. NUNCA infira. NUNCA chute.
+  4. "Parece razoável" não é critério — citação é.</pre>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">A IA <strong>inventa com confiança</strong>. Toda saída numérica precisa de um <strong>endereço auditável</strong> de volta para a fonte. Sem isso, é fantasia bem escrita.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="prompts-iteracao.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Iteração cirúrgica</a>
+      <a href="armadilhas-pizza.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Pizza com muitas fatias →</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza com muitas fatias - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#fb923c','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Armadilhas</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Armadilhas · 8.2</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Pizza com muitas fatias</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">O default mais clássico — e mais inútil — quando você não especifica o tipo de gráfico.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="grid md:grid-cols-3 gap-4">
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-red-500/30">
+          <p class="text-xs font-mono text-red-400 uppercase tracking-wider mb-2">Sintoma</p>
+          <p class="text-text-primary font-bold text-lg mb-2">12 fatias coloridas</p>
+          <p class="text-text-secondary text-sm">Donut/pizza com 10+ fatias. Cores parecidas. Legenda enorme. Ninguém compara nada.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-yellow-400/30">
+          <p class="text-xs font-mono text-yellow-400 uppercase tracking-wider mb-2">Causa</p>
+          <p class="text-text-primary font-bold text-lg mb-2">Default da IA</p>
+          <p class="text-text-secondary text-sm">A IA escolheu o tipo "que parece bonito" em vez do "que funciona". Cardinalidade alta + pizza = ilegível.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-green-400/30">
+          <p class="text-xs font-mono text-green-400 uppercase tracking-wider mb-2">Solução</p>
+          <p class="text-text-primary font-bold text-lg mb-2">Regra explícita</p>
+          <p class="text-text-secondary text-sm">No prompt: "se categorias &gt; 5, usar barras horizontais". Limite explícito vence o default.</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Por que pizza com muitas fatias engana</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span>O olho humano <strong class="text-text-primary">não compara ângulos próximos com precisão</strong>.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span>Cores em sequência (ex.: verde-azul-roxo) confundem categorias.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span>Quando 3 fatias somam 80%, as outras 9 viram migalhas indistinguíveis.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span>Legenda externa força o leitor a fazer "matching" de cor — cansativo.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Alternativas</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Até 5 fatias</p>
+            <p class="text-sm text-text-secondary">Donut OK. Use para mostrar proporção.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">5+ fatias</p>
+            <p class="text-sm text-text-secondary">Barras horizontais, ordenadas, com valor à direita.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Hierarquia</p>
+            <p class="text-sm text-text-secondary">Treemap (tema → subtema) preserva relação aninhada.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Donut tem caso de uso real, mas é estreito. Na dúvida, <strong>barras vencem pizza</strong> em quase tudo. Barras comparam comprimento — o que o olho humano faz <em>muito bem</em>.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="armadilhas-alucinacao.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Alucinação numérica</a>
+      <a href="armadilhas-outlier.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Outlier que esmaga →</a>
+    </footer>
+  </div>
+</body>
+</html>

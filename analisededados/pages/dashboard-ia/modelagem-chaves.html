@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaves estrangeiras - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#facc15','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Modelagem</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Modelagem · 3.2</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Chaves estrangeiras — a costura entre tabelas</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">É o que permite ligar "esta recomendação" a "aquele achado" e fazer drill-down funcionar.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Exemplo: relação 1:N</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-sm text-text-secondary font-mono leading-relaxed overflow-x-auto">tabela_achados.csv
+  codigo, categoria, tema, ...
+  2.1.1,  corrigida, estoques, ...
+  2.2.1,  pendente,  imoveis,  ...
+  2.4.4,  inconformidade, transferencias, ...
+
+tabela_recomendacoes.csv
+  id,       <span class="text-accent">achado_codigo</span>,  estagio,         prazo
+  1707415,  <span class="text-accent">2.4.4</span>,           em_atendimento,  2025-12-31
+  1707501,  <span class="text-accent">2.2.1</span>,           emitida,         2026-06-30
+
+  └──> "achado_codigo" aponta para "codigo" na tabela_achados</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Regras de ouro</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Nome indica a referência:</strong> use <code class="text-accent bg-black/30 px-2 py-0.5 rounded">achado_codigo</code> (não <code class="text-accent bg-black/30 px-2 py-0.5 rounded">codigo</code>) no lado "filho" da relação.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Mesmo tipo dos dois lados:</strong> se o pai é string, o filho também é. Se um é "2.1.1" e outro 211, o join quebra.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Integridade referencial:</strong> toda chave estrangeira deve existir no pai. Linha "órfã" é bug.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Sem duplicatas no pai:</strong> chave única do lado "1" da relação 1:N.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Validação rápida em JavaScript</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">// Toda recomendação aponta para um achado existente?
+const achadoCodigos = new Set(ACHADOS.map(a => a.codigo));
+const orfas = RECOMENDACOES.filter(r => !achadoCodigos.has(r.achado_codigo));
+
+if (orfas.length > 0) {
+  console.warn("Recomendações órfãs:", orfas);
+}</pre>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Chave estrangeira é um <strong>contrato entre tabelas</strong>. Sem ele, drill-down vira "tudo aparece" ou "nada aparece". Confira a integridade <em>antes</em> de codar a interface.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="modelagem-tabelas.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Tabela principal + auxiliares</a>
+      <a href="modelagem-csv.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Convenções de CSV →</a>
+    </footer>
+  </div>
+</body>
+</html>

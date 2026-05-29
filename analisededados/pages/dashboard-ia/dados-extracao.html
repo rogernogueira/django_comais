@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extração: de texto a dado - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#60a5fa','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Dados</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Dados · 2.1</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Extração: de texto bruto a dado estruturado</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">A primeira etapa: a IA lê o documento longo e devolve dado máquina-legível.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O fluxo</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Entrada</p>
+            <p class="text-sm text-text-secondary">Texto, PDF, planilha — linguagem natural, formato variado, dados misturados a narrativa.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Operação</p>
+            <p class="text-sm text-text-secondary">A IA lê e devolve em formato máquina-legível (JSON, CSV), respeitando um schema definido por você.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Saída</p>
+            <p class="text-sm text-text-secondary">Cada campo nomeado, tipado, com restrições e origem rastreável.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Exemplo: trecho de relatório → JSON</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-xs font-mono text-text-muted uppercase mb-2">Texto original</p>
+            <pre class="bg-black/30 p-4 rounded-lg text-xs text-text-secondary leading-relaxed overflow-x-auto">"Foi identificada distorção na conta
+de Importações em Andamento de Bens
+Móveis, no valor de R$ 235 milhões,
+corrigida ao longo da auditoria.
+(página 12)"</pre>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-text-muted uppercase mb-2">JSON estruturado</p>
+            <pre class="bg-black/30 p-4 rounded-lg text-xs text-accent leading-relaxed overflow-x-auto">{
+  "codigo": "2.1.2",
+  "categoria": "corrigida",
+  "tema": "patrimonio_moveis",
+  "descricao": "Bens Móveis em Importação",
+  "valor_brl": 235114529.82,
+  "pagina_pdf": 12
+}</pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Cuidados antes de pedir extração</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Documento confidencial?</strong> Antes de colar em chat público, confirme a política de dados.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">PDF é texto ou imagem?</strong> PDFs digitalizados (imagem) precisam de OCR antes.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Sei o escopo?</strong> "Extraia tudo" produz lixo; "extraia o capítulo X com schema Y" produz dado.</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Extração sem schema é <strong>achar dados aleatórios</strong>. Extração com schema é <strong>preencher uma planilha</strong>. A diferença é qualidade: a primeira você joga fora; a segunda você usa.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="fundamentos-ia.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Onde a IA entra</a>
+      <a href="dados-schema.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Schema explícito →</a>
+    </footer>
+  </div>
+</body>
+</html>

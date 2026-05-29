@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drill-down do agregado ao detalhe - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#f472b6','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Interatividade</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Interatividade · 5.3</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Drill-down: do agregado ao detalhe</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Três níveis de profundidade na mesma tela. O usuário desce só quando precisa.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">A pirâmide do drill-down</h2>
+        <div class="space-y-3">
+          <div class="bg-accent/10 border-l-4 border-accent rounded-r-xl p-5">
+            <span class="text-xs font-mono text-accent">NÍVEL 1 · agregado</span>
+            <h3 class="text-lg font-bold text-text-primary mt-1">KPI</h3>
+            <p class="text-text-secondary text-sm mt-1">Número agregado. "Total não corrigido: R$ 1,79 bi"</p>
+          </div>
+          <div class="bg-accent/10 border-l-4 border-accent rounded-r-xl p-5 ml-6">
+            <span class="text-xs font-mono text-accent">NÍVEL 2 · distribuído</span>
+            <h3 class="text-lg font-bold text-text-primary mt-1">Gráfico</h3>
+            <p class="text-text-secondary text-sm mt-1">Distribuição por dimensão. "Onde está esse R$ 1,79 bi?"</p>
+          </div>
+          <div class="bg-accent/10 border-l-4 border-accent rounded-r-xl p-5 ml-12">
+            <span class="text-xs font-mono text-accent">NÍVEL 3 · individual</span>
+            <h3 class="text-lg font-bold text-text-primary mt-1">Tabela detalhada</h3>
+            <p class="text-text-secondary text-sm mt-1">Linha por item. "Quais especificamente?"</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Como conectar os três níveis</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Filtros propagam:</strong> selecionar unidade no filtro afeta KPI, gráfico e tabela ao mesmo tempo.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Clique no gráfico filtra:</strong> clicar numa barra do gráfico aplica filtro dessa categoria (opcional, mas elegante).</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Tabela sempre na base:</strong> independente da visualização, a tabela mostra todas as linhas que compõem o que está acima.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Drill-down vs drill-through</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Drill-down</p>
+            <p class="text-sm text-text-secondary">Continua na mesma tela, descendo no nível de detalhe. <strong class="text-text-primary">Recomendado</strong> para dashboards.</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5">
+            <p class="text-accent font-bold mb-2">Drill-through</p>
+            <p class="text-sm text-text-secondary">Abre outra página/tela com mais detalhe. Útil em sistemas grandes, mas quebra o fluxo num dashboard.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">O gestor começa no <strong>nível 1</strong> (KPI). Só desce ao <strong>nível 3</strong> (tabela) quando vê algo estranho. Dashboard bem feito oferece os <strong>três níveis na mesma tela</strong>, sem trocar de contexto.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="interatividade-reatividade.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Reatividade</a>
+      <a href="interatividade-tabela.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Tabela detalhada →</a>
+    </footer>
+  </div>
+</body>
+</html>

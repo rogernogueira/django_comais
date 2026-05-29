@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caso CGU - O dashboard final - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#818cf8','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Caso CGU</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Estudo de caso · 9.3</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">O dashboard final — anatomia</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Cinco KPIs + dez gráficos + cinco filtros + uma tabela. Tudo em um arquivo HTML.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="grid md:grid-cols-4 gap-4">
+        <div class="bg-bg-elevated rounded-2xl p-5 border-2 border-accent/30">
+          <p class="text-xs font-mono text-accent uppercase">Topo</p>
+          <p class="text-3xl font-bold text-text-primary mt-2">5</p>
+          <p class="text-sm text-text-secondary mt-1">KPIs</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-5 border-2 border-accent/30">
+          <p class="text-xs font-mono text-accent uppercase">Centro</p>
+          <p class="text-3xl font-bold text-text-primary mt-2">10</p>
+          <p class="text-sm text-text-secondary mt-1">gráficos</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-5 border-2 border-accent/30">
+          <p class="text-xs font-mono text-accent uppercase">Lateral</p>
+          <p class="text-3xl font-bold text-text-primary mt-2">5</p>
+          <p class="text-sm text-text-secondary mt-1">filtros multi-select</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-5 border-2 border-accent/30">
+          <p class="text-xs font-mono text-accent uppercase">Rodapé</p>
+          <p class="text-3xl font-bold text-text-primary mt-2">1</p>
+          <p class="text-sm text-text-secondary mt-1">tabela detalhada</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Os 5 KPIs</h2>
+        <div class="grid md:grid-cols-5 gap-3">
+          <div class="bg-green-400/10 border border-green-400/30 rounded-xl p-4">
+            <p class="text-xs text-text-muted uppercase">Corrigido</p>
+            <p class="text-xl font-bold text-green-400 mt-1">R$ 22 bi</p>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+            <p class="text-xs text-text-muted uppercase">Não corrigido</p>
+            <p class="text-xl font-bold text-red-400 mt-1">R$ 1,79 bi</p>
+          </div>
+          <div class="bg-accent/10 border border-accent/30 rounded-xl p-4">
+            <p class="text-xs text-text-muted uppercase">Achados</p>
+            <p class="text-xl font-bold text-accent mt-1">20</p>
+          </div>
+          <div class="bg-yellow-400/10 border border-yellow-400/30 rounded-xl p-4">
+            <p class="text-xs text-text-muted uppercase">Pendentes</p>
+            <p class="text-xl font-bold text-yellow-400 mt-1">11</p>
+          </div>
+          <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+            <p class="text-xs text-text-muted uppercase">Sem reaval.</p>
+            <p class="text-xl font-bold text-red-400 mt-1">72,58%</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Os 10 gráficos (lista numerada)</h2>
+        <ol class="space-y-2 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-mono">01.</span>Barras horizontais — Valor por categoria de achado</li>
+          <li class="flex"><span class="text-accent mr-3 font-mono">02.</span>Barras verticais — Imóveis sem reavaliação por órgão</li>
+          <li class="flex"><span class="text-accent mr-3 font-mono">03.</span>Barras horizontais — Achados por unidade</li>
+          <li class="flex"><span class="text-accent mr-3 font-mono">04.</span>Funil — Estágio das recomendações</li>
+          <li class="flex"><span class="text-accent mr-3 font-mono">05.</span>Donut — Distribuição de tipos de achado</li>
+          <li class="flex"><span class="text-accent mr-3 font-mono">06.</span>Treemap — Valor por tema</li>
+          <li class="flex"><span class="text-accent mr-3 font-mono">07.</span>Stacked bar — Situação por unidade</li>
+          <li class="flex"><span class="text-accent mr-3 font-mono">08.</span>Bubble — Impacto × valor × nº de recomendações</li>
+          <li class="flex"><span class="text-accent mr-3 font-mono">09.</span>Heatmap — Tema × unidade</li>
+          <li class="flex"><span class="text-accent mr-3 font-mono">10.</span>Tabela detalhada com drill-down</li>
+        </ol>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Stack técnica</h2>
+        <ul class="space-y-2 text-text-secondary text-sm">
+          <li class="flex"><span class="text-accent mr-3">›</span>HTML5 + Vanilla JS (sem framework)</li>
+          <li class="flex"><span class="text-accent mr-3">›</span>Chart.js 4.4.1 via CDN</li>
+          <li class="flex"><span class="text-accent mr-3">›</span>Plugins: chartjs-chart-treemap, chartjs-chart-matrix</li>
+          <li class="flex"><span class="text-accent mr-3">›</span>CSS embutido com CSS Grid responsivo</li>
+          <li class="flex"><span class="text-accent mr-3">›</span>Dados embutidos no script (20 achados, 15 recomendações)</li>
+          <li class="flex"><span class="text-accent mr-3">›</span>Try/catch em cada render — gráficos isolados</li>
+        </ul>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Resultado</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Um arquivo <code class="text-accent">dashboard.html</code> de ~600 linhas. Abre direto no navegador. Sem instalação. Sem servidor. <strong>Tudo o que o gestor precisa numa tela.</strong></p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="caso-cgu-achados.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Os 20 achados</a>
+      <a href="caso-cgu-licoes.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Lições aprendidas →</a>
+    </footer>
+  </div>
+</body>
+</html>

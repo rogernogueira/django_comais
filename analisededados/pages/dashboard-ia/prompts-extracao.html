@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt 1 — Extração - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#ef4444','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Prompts</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Prompts · 7.1</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Prompt 1 — Extração</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Primeiro prompt da cadeia: texto → JSON estruturado.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O prompt completo</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">Extraia do PDF anexo todos os itens do capítulo X. Devolva em
+JSON com a chave "itens", lista de objetos contendo:
+
+  codigo:     string "x.y.z"
+  categoria:  enum ["corrigida", "nao_corrigida_valor",
+                    "classificacao", "inconformidade"]
+  tema:       enum [...8 valores...]
+  unidade:    string
+  descricao:  string (≤ 25 palavras)
+  valor:      número | null
+  impacto:    "alto" | "medio" | "baixo"
+  pagina_pdf: número
+
+Regras:
+  - Não invente valores. Use null e crie campo "_nota" explicando.
+  - Cite a página de origem de cada item.
+  - Devolva apenas o JSON, sem texto antes ou depois.
+
+Antes do JSON, liste quantos itens você identificou em cada
+categoria. Eu confirmo. Só depois você gera o conteúdo completo.</pre>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Anatomia das partes do prompt</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">1.</span><strong class="text-text-primary mr-2">Tarefa concreta:</strong> "Extraia do PDF anexo" — não "leia o documento e me diga".</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">2.</span><strong class="text-text-primary mr-2">Formato de saída:</strong> JSON com chave nomeada — facilita parsing.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">3.</span><strong class="text-text-primary mr-2">Schema explícito:</strong> cada campo tipado e com restrições.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">4.</span><strong class="text-text-primary mr-2">Regras anti-alucinação:</strong> "não invente", "use null", "cite página".</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">5.</span><strong class="text-text-primary mr-2">Checkpoint final:</strong> contagem antes do conteúdo.</li>
+        </ul>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O que sai (exemplo)</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">{
+  "itens": [
+    {
+      "codigo":     "2.1.1",
+      "categoria":  "corrigida",
+      "tema":       "estoques",
+      "unidade":    "MS/DLOG",
+      "descricao":  "Correção em Importações em Andamento — Estoques",
+      "valor":      21900000000,
+      "impacto":    "alto",
+      "pagina_pdf": 11
+    },
+    /* ... mais 19 itens ... */
+  ]
+}</pre>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">Este é o prompt mais importante da cadeia. Se a extração sai ruim, <strong>tudo a seguir herda o problema</strong>. Vale a pena gastar tempo polindo este.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="construcao-acessibilidade.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Acessibilidade</a>
+      <a href="prompts-modelagem.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: Prompt 2 — Modelagem →</a>
+    </footer>
+  </div>
+</body>
+</html>

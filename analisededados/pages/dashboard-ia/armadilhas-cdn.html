@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dependência quebrada (CDN) - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#fb923c','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Armadilhas</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Armadilhas · 8.4</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Dependência quebrada (CDN errado)</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">URL errada de plugin → erro em cascata → metade do dashboard some sem aviso.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="grid md:grid-cols-3 gap-4">
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-red-500/30">
+          <p class="text-xs font-mono text-red-400 uppercase tracking-wider mb-2">Sintoma</p>
+          <p class="text-text-primary font-bold text-lg mb-2">Gráficos faltando</p>
+          <p class="text-text-secondary text-sm">Parte dos gráficos não renderiza. A tabela detalhada também não aparece. Console com erros vermelhos.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-yellow-400/30">
+          <p class="text-xs font-mono text-yellow-400 uppercase tracking-wider mb-2">Causa</p>
+          <p class="text-text-primary font-bold text-lg mb-2">URL retorna 404</p>
+          <p class="text-text-secondary text-sm">Plugin foi carregado com nome de arquivo errado. Quando o código tenta usar o tipo de gráfico, dá erro — e derruba a cadeia.</p>
+        </div>
+        <div class="bg-bg-elevated rounded-2xl p-6 border-2 border-green-400/30">
+          <p class="text-xs font-mono text-green-400 uppercase tracking-wider mb-2">Solução</p>
+          <p class="text-text-primary font-bold text-lg mb-2">URL correta + try/catch</p>
+          <p class="text-text-secondary text-sm">Verificar URL do CDN no console + envolver cada render em try/catch.</p>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Caso real: chartjs-chart-treemap</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-xs font-mono text-red-400 uppercase mb-2">Errado (404)</p>
+            <pre class="bg-black/40 p-4 rounded-lg text-xs text-text-secondary font-mono leading-relaxed">.../chartjs-chart-treemap.umd.min.js</pre>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-green-400 uppercase mb-2">Certo (200)</p>
+            <pre class="bg-black/40 p-4 rounded-lg text-xs text-text-secondary font-mono leading-relaxed">.../chartjs-chart-treemap.min.js</pre>
+          </div>
+        </div>
+        <p class="text-sm text-text-muted mt-3">Confira sempre no navegador a URL exata clicando no link do CDN. Não confie em "parece certo".</p>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Blindagem com try/catch</h2>
+        <pre class="bg-black/40 p-5 rounded-lg text-xs text-text-secondary font-mono leading-relaxed overflow-x-auto">function safe(label, fn) {
+  try { fn(); }
+  catch (e) { console.error("[" + label + "]", e); }
+}
+
+function refreshAll() {
+  const data = filtered();
+
+  // Tabela e KPIs primeiro — nunca podem ficar vazios
+  safe("table", () =&gt; renderTable(data));
+  safe("kpis",  () =&gt; renderKPIs(data));
+
+  // Cada gráfico isolado
+  safe("treemap",  () =&gt; renderTreemap(data));
+  safe("heatmap",  () =&gt; renderHeatmap(data));
+  safe("bubble",   () =&gt; renderBubble(data));
+  /* ... etc ... */
+}</pre>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed"><strong>Ordem importa.</strong> Renderize a tabela primeiro — ela é a "âncora de verdade". Se algum gráfico falhar, pelo menos os dados continuam visíveis. <code class="text-accent">try/catch</code> por gráfico é defesa contra futuras alterações também.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="armadilhas-outlier.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Outlier que esmaga</a>
+      <a href="armadilhas-csv.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: CSV mal formado →</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schema antes do dado - Dashboards com IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      'bg-base':'#2a2623','bg-elevated':'#1a1614','bg-surface':'#3a3632','bg-muted':'#504946',
+      'text-primary':'#f0e8e0','text-secondary':'#d4c4b8','text-muted':'#b8a89a',
+      'accent':'#facc15','dashai':'#a87a9c'
+    }}}}
+  </script>
+</head>
+<body class="bg-bg-base text-text-primary font-sans min-h-screen p-8">
+  <div class="max-w-5xl mx-auto">
+    <nav class="text-sm mb-8 text-text-muted">
+      <a href="../../index.html" class="hover:text-text-primary transition-colors">Análise de Dados</a> <span class="mx-2">›</span>
+      <a href="../../dashboard-ia.html" class="hover:text-dashai transition-colors">Dashboard-IA</a> <span class="mx-2">›</span>
+      <span class="text-accent">Modelagem</span>
+    </nav>
+
+    <header class="mb-12">
+      <span class="text-accent text-xs font-bold uppercase tracking-widest">Modelagem · 3.4</span>
+      <h1 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Schema antes do dado — o checkpoint barato</h1>
+      <p class="text-text-secondary text-xl mt-4 max-w-3xl">Confirme os nomes das colunas antes da IA preencher 100 linhas. Custa 5 segundos. Economiza 5 minutos.</p>
+    </header>
+
+    <main class="space-y-6">
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O padrão</h2>
+        <blockquote class="bg-black/30 border-l-4 border-accent p-6 rounded-r-xl text-lg italic text-text-primary">
+          "Antes de gerar os CSVs, devolva apenas os <strong class="not-italic">nomes das colunas</strong> de cada tabela em uma lista. Eu confirmo o schema, e só então você preenche os dados."
+        </blockquote>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">Fluxo em 3 turnos</h2>
+        <div class="space-y-4">
+          <div class="bg-bg-muted/30 rounded-xl p-5 border-l-4 border-accent">
+            <p class="text-xs font-mono text-accent uppercase mb-2">Turno 1 · Você</p>
+            <p class="text-text-secondary">"Liste os nomes das colunas que cada uma das 5 tabelas terá. Não gere dados ainda."</p>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5 border-l-4 border-yellow-400">
+            <p class="text-xs font-mono text-yellow-400 uppercase mb-2">Turno 2 · IA</p>
+            <pre class="text-text-secondary text-xs font-mono leading-relaxed">tabela_achados.csv:
+  codigo, categoria, tema, unidade, descricao, valor_brl, impacto, situacao, pagina_pdf
+
+tabela_recomendacoes.csv:
+  id, achado_codigo, estagio, prazo, descricao
+  ...</pre>
+          </div>
+          <div class="bg-bg-muted/30 rounded-xl p-5 border-l-4 border-green-400">
+            <p class="text-xs font-mono text-green-400 uppercase mb-2">Turno 3 · Você</p>
+            <p class="text-text-secondary">"Schema OK. Agora gere os CSVs preenchidos."</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-bg-elevated rounded-2xl p-8 border-2 border-accent/20">
+        <h2 class="text-2xl font-bold text-accent mb-4">O que você ganha no checkpoint</h2>
+        <ul class="space-y-3 text-text-secondary">
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Renomear colunas:</strong> 5 segundos.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Adicionar uma coluna esquecida:</strong> 10 segundos.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Remover uma coluna desnecessária:</strong> 3 segundos.</li>
+          <li class="flex"><span class="text-accent mr-3 font-bold">›</span><strong class="text-text-primary mr-2">Aprovar tudo:</strong> 1 segundo.</li>
+        </ul>
+        <p class="text-text-secondary mt-4">Se você descobre o mesmo problema <em>depois</em> da IA preencher 100 linhas: tudo precisa ser refeito.</p>
+      </section>
+
+      <section class="bg-accent/10 rounded-2xl p-8 border-2 border-accent/30">
+        <h3 class="text-xl font-bold text-accent mb-3">Lição prática</h3>
+        <p class="text-text-primary text-lg leading-relaxed">É a versão <strong>barata</strong> do contrato entre o que você quer e o que vai receber. Toda etapa pesada deveria ter um checkpoint deste tipo antes dela.</p>
+      </section>
+    </main>
+
+    <footer class="mt-12 pt-8 border-t border-bg-muted flex justify-between items-center text-sm">
+      <a href="modelagem-csv.html" class="text-text-muted hover:text-accent transition-colors">← Anterior: Convenções de CSV</a>
+      <a href="graficos-decisao.html" class="text-accent font-semibold hover:text-white transition-colors">Próximo: A pergunta antes do gráfico →</a>
+    </footer>
+  </div>
+</body>
+</html>
