@@ -3,11 +3,13 @@ import { Link, NavLink } from 'react-router-dom'
 import { LogIn, Menu, X } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { SobreModal } from '@/components/modals/SobreModal'
 import { NAV_ITEMS } from '@/lib/navigation'
 import { cn } from '@/lib/utils'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [sobreOpen, setSobreOpen] = useState(false)
 
   return (
     <header className="sticky top-0 z-40 w-full">
@@ -50,23 +52,40 @@ export function Header() {
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
-            {NAV_ITEMS.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  cn(
-                    'relative px-3 py-2 text-sm font-medium transition-colors',
-                    'after:absolute after:bottom-1 after:left-3 after:right-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-brand-blue after:transition-transform',
-                    isActive
-                      ? 'text-brand-blue after:scale-x-100'
-                      : 'text-brand-text hover:text-brand-blue hover:after:scale-x-100',
-                  )
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              if (item.label === 'Sobre') {
+                return (
+                  <button
+                    key={item.to}
+                    onClick={() => setSobreOpen(true)}
+                    className={cn(
+                      'relative px-3 py-2 text-sm font-medium transition-colors',
+                      'after:absolute after:bottom-1 after:left-3 after:right-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-brand-blue after:transition-transform',
+                      'text-brand-text hover:text-brand-blue hover:after:scale-x-100',
+                    )}
+                  >
+                    {item.label}
+                  </button>
+                )
+              }
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    cn(
+                      'relative px-3 py-2 text-sm font-medium transition-colors',
+                      'after:absolute after:bottom-1 after:left-3 after:right-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-brand-blue after:transition-transform',
+                      isActive
+                        ? 'text-brand-blue after:scale-x-100'
+                        : 'text-brand-text hover:text-brand-blue hover:after:scale-x-100',
+                    )
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              )
+            })}
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
@@ -95,23 +114,42 @@ export function Header() {
         {mobileOpen && (
           <div className="border-t border-slate-200 bg-white lg:hidden">
             <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
-              {NAV_ITEMS.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  onClick={() => setMobileOpen(false)}
-                  className={({ isActive }) =>
-                    cn(
-                      'rounded-md px-3 py-2 text-base font-medium transition-colors',
-                      isActive
-                        ? 'bg-brand-blue/10 text-brand-blue'
-                        : 'text-brand-text hover:bg-slate-50 hover:text-brand-blue',
-                    )
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              ))}
+              {NAV_ITEMS.map((item) => {
+                if (item.label === 'Sobre') {
+                  return (
+                    <button
+                      key={item.to}
+                      onClick={() => {
+                        setSobreOpen(true)
+                        setMobileOpen(false)
+                      }}
+                      className={cn(
+                        'rounded-md px-3 py-2 text-base font-medium transition-colors text-left',
+                        'text-brand-text hover:bg-slate-50 hover:text-brand-blue',
+                      )}
+                    >
+                      {item.label}
+                    </button>
+                  )
+                }
+                return (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setMobileOpen(false)}
+                    className={({ isActive }) =>
+                      cn(
+                        'rounded-md px-3 py-2 text-base font-medium transition-colors',
+                        isActive
+                          ? 'bg-brand-blue/10 text-brand-blue'
+                          : 'text-brand-text hover:bg-slate-50 hover:text-brand-blue',
+                      )
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                )
+              })}
               <Button variant="outline" size="sm" className="mt-3 w-full gap-2">
                 <LogIn className="h-4 w-4" />
                 Entrar
@@ -120,6 +158,8 @@ export function Header() {
           </div>
         )}
       </div>
+
+      <SobreModal isOpen={sobreOpen} onClose={() => setSobreOpen(false)} />
     </header>
   )
 }
