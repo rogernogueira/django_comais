@@ -45,6 +45,30 @@ const OBJETIVOS = [
 
 const DOMINIOS = ['Judicial', 'Segurança Pública', 'Ambiental', 'Social'] as const
 
+const NOTICIAS = [
+  {
+    id: 1,
+    titulo: 'COMAIS lança novo projeto de IA para Segurança Pública',
+    excerpt: 'Laboratório apresenta solução inovadora em parceria com Softex e Universidade Federal do Tocantins.',
+    data: '15 de junho de 2026',
+    categoria: 'Pesquisa',
+  },
+  {
+    id: 2,
+    titulo: 'Programa PPGGTD recebe certificação internacional',
+    excerpt: 'Programa de Pós-Graduação em Governança e Transformação Digital obtém reconhecimento em inovação acadêmica.',
+    data: '8 de junho de 2026',
+    categoria: 'Acadêmico',
+  },
+  {
+    id: 3,
+    titulo: 'Hackathon de IA acontece em Palmas',
+    excerpt: 'Evento reúne pesquisadores e desenvolvedores para criar soluções inovadoras em inteligência artificial.',
+    data: '1 de junho de 2026',
+    categoria: 'Evento',
+  },
+] as const
+
 /**
  * Mosaico de pixels do hero — releitura, na paleta PPGGTD, das "tiles" em
  * cascata do hero da fireworks.ai. Triângulo no canto superior direito cuja
@@ -279,6 +303,45 @@ export function HomePage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Notícias */}
+      <section className="border-t border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-6 pb-20">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
+            Novidades
+          </p>
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-text sm:text-4xl">
+            Notícias do laboratório
+          </h2>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {NOTICIAS.map((noticia) => (
+              <article
+                key={noticia.id}
+                className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md"
+              >
+                <span className="inline-flex w-fit rounded-full bg-brand-blue/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-blue">
+                  {noticia.categoria}
+                </span>
+                <h3 className="font-heading mt-4 text-lg font-bold text-brand-text">
+                  {noticia.titulo}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-brand-gray">
+                  {noticia.excerpt}
+                </p>
+                <div className="mt-auto flex items-center justify-between pt-4">
+                  <span className="text-xs text-brand-gray">
+                    {noticia.data}
+                  </span>
+                  <Link to="/noticias" className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue transition-colors hover:text-brand-blue/80">
+                    Ler mais
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
