@@ -4,7 +4,18 @@ import { ArrowRight, Loader2, Network, Sparkles, Users } from 'lucide-react'
 import Marquee from 'react-fast-marquee'
 
 import { Button } from '@/components/ui/button'
-import type { NoticiaListItem, Paginated } from '@/types/api'
+import { Badge } from '@/components/ui/badge'
+import type { NoticiaListItem, ProjetoListItem, Paginated } from '@/types/api'
+
+function stripHtml(value: string | null | undefined) {
+  if (!value) return ''
+  return value
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
 
 const PARCEIROS = [
   { nome: 'Universidade Federal do Tocantins', src: '/brand/partners/uft.png' },
@@ -111,6 +122,8 @@ function HeroMosaic() {
 export function HomePage() {
   const [noticias, setNoticias] = useState<NoticiaListItem[] | null>(null)
   const [noticiasError, setNoticiasError] = useState<string | null>(null)
+  const [projetos, setProjetos] = useState<ProjetoListItem[] | null>(null)
+  const [projetosError, setProjetosError] = useState<string | null>(null)
 
   useEffect(() => {
     const ac = new AbortController()
@@ -123,6 +136,21 @@ export function HomePage() {
       .catch((e: unknown) => {
         if (e instanceof DOMException && e.name === 'AbortError') return
         setNoticiasError(e instanceof Error ? e.message : 'erro desconhecido')
+      })
+    return () => ac.abort()
+  }, [])
+
+  useEffect(() => {
+    const ac = new AbortController()
+    fetch('/api/v1/projetos/?limit=3', { signal: ac.signal })
+      .then(async (r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return (await r.json()) as Paginated<ProjetoListItem>
+      })
+      .then((page) => setProjetos(page.results))
+      .catch((e: unknown) => {
+        if (e instanceof DOMException && e.name === 'AbortError') return
+        setProjetosError(e instanceof Error ? e.message : 'erro desconhecido')
       })
     return () => ac.abort()
   }, [])
@@ -314,6 +342,91 @@ export function HomePage() {
                   </div>
                 </article>
               )}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Projetos */}
+      <section className="border-t border-slate-200 bg-slate-50">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <div className="flex flex-col items-center justify-between gap-8 lg:flex-row lg:items-end">
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
+                Portfólio
+              </p>
+              <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-text sm:text-4xl">
+                Projetos em desenvolvimento
+              </h2>
+            </div>
+            <Button asChild variant="ghost" size="sm" className="gap-2 rounded-none text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue transition-all duration-150 ease-out hover:text-brand-blue/80">
+              <Link to="/projetos">
+                Ver todos
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+
+          {!projetos && !projetosError && (
+            <div className="mt-12 flex items-center gap-2 text-brand-gray">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Carregando projetos…</span>
+            </div>
+          )}
+
+          {projetos && projetos.length > 0 && (
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {projetos.map((p) => (
+                <Link
+                  key={p.id}
+                  to={`/projetos/${p.id}`}
+                  className="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
+                >
+                  <div className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow group-hover:shadow-md">
+                    <div className="relative h-44 w-full overflow-hidden">
+                      {p.image1 ? (
+                        <img
+                          src={p.image1}
+                          alt={p.name}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="h-full w-full bg-gradient-to-br from-brand-blue/10 via-brand-green/10 to-brand-gold/10" />
+                      )}
+                      <span
+                        aria-hidden
+                        className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-brand-text opacity-0 shadow-sm transition-opacity group-hover:opacity-100"
+                      >
+                        <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </div>
+                    <div className="flex flex-1 flex-col gap-4 p-6">
+                      <div>
+                        <h3 className="font-heading text-lg font-bold text-brand-text transition-colors group-hover:text-brand-blue">
+                          {p.name}
+                        </h3>
+                        <p className="mt-1 text-xs text-brand-gray">
+                          {p.title}
+                        </p>
+                      </div>
+                      <p className="line-clamp-3 text-sm leading-relaxed text-brand-gray">
+                        {stripHtml(p.description)}
+                      </p>
+                      <div className="mt-auto flex flex-wrap gap-2">
+                        {p.type.map((t) => (
+                          <span
+                            key={t.id}
+                            className="inline-flex rounded-full bg-brand-blue/10 px-2.5 py-1 text-xs font-semibold text-brand-blue"
+                          >
+                            {t.type}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
             </div>
           )}
         </div>
