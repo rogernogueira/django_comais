@@ -71,13 +71,13 @@ export function Header() {
                       <ChevronDown className="h-3 w-3 transition-transform group-hover:rotate-180" />
                     </button>
 
-                    {/* Submenu */}
+                    {/* Submenu - Fireworks style */}
                     <div
                       className={cn(
-                        'absolute left-0 top-full pt-2 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50',
+                        'absolute left-0 top-full pt-3 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50',
                       )}
                     >
-                      <div className="bg-white border border-slate-200 shadow-lg min-w-max">
+                      <div className="bg-white shadow-xl min-w-max">
                         <a
                           href="#missao"
                           onClick={(e) => {
@@ -86,9 +86,14 @@ export function Header() {
                             el?.scrollIntoView({ behavior: 'smooth' })
                             setSobreHoverOpen(false)
                           }}
-                          className="block px-6 py-4 text-sm font-medium text-brand-text hover:bg-slate-50 border-b border-slate-200 last:border-b-0 transition-colors"
+                          className="block px-8 py-6 border-b border-slate-100 transition-colors hover:bg-slate-50 group/item"
                         >
-                          Missão
+                          <div className="text-sm font-semibold text-brand-blue mb-1">
+                            Missão
+                          </div>
+                          <div className="text-xs text-brand-gray">
+                            Catalisar colaboração entre pesquisadores, empresas e governo
+                          </div>
                         </a>
                         <a
                           href="#visao"
@@ -98,9 +103,14 @@ export function Header() {
                             el?.scrollIntoView({ behavior: 'smooth' })
                             setSobreHoverOpen(false)
                           }}
-                          className="block px-6 py-4 text-sm font-medium text-brand-text hover:bg-slate-50 transition-colors"
+                          className="block px-8 py-6 transition-colors hover:bg-slate-50 group/item"
                         >
-                          Visão
+                          <div className="text-sm font-semibold text-brand-blue mb-1">
+                            Visão
+                          </div>
+                          <div className="text-xs text-brand-gray">
+                            Ser ambiente inovador e inclusivo para soluções em IA
+                          </div>
                         </a>
                       </div>
                     </div>
