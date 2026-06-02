@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, Database, FileText, LifeBuoy, Loader2, Network, Sparkles, Users } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Database, ExternalLink, FileText, LifeBuoy, Loader2, Network, Sparkles, Users } from 'lucide-react'
 import Marquee from 'react-fast-marquee'
 
 import { Button } from '@/components/ui/button'
@@ -676,9 +676,12 @@ export function HomePage() {
                       {membro.funcao}
                     </p>
                     {membro.url_lattes && (
-                      <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-brand-gray group-hover:text-brand-blue transition-colors">
-                        Ver Lattes →
-                      </p>
+                      <div className="mt-6 flex items-center justify-center gap-2">
+                        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-gray group-hover:text-brand-blue transition-colors">
+                          Currículo Lattes
+                        </span>
+                        <ExternalLink className="h-4 w-4 text-brand-gray group-hover:text-brand-blue transition-colors" />
+                      </div>
                     )}
                   </div>
                 </a>
