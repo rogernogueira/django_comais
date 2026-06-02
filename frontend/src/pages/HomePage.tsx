@@ -675,7 +675,7 @@ export function HomePage() {
                     <p className="mt-2 text-base font-semibold text-brand-blue">
                       {membro.funcao}
                     </p>
-                    {membro.url_lattes && (
+                    {membro.url_latters && (
                       <div className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-brand-blue/10 px-4 py-2 transition-all group-hover:bg-brand-blue/20">
                         <span className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-blue">
                           Currículo Lattes
