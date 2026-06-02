@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Loader2, Network, Sparkles, Users } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Database, FileText, LifeBuoy, Loader2, Network, Sparkles, Users } from 'lucide-react'
 import Marquee from 'react-fast-marquee'
 
 import { Button } from '@/components/ui/button'
@@ -57,6 +57,45 @@ const OBJETIVOS = [
 ] as const
 
 const DOMINIOS = ['Judicial', 'Segurança Pública', 'Ambiental', 'Social'] as const
+
+type Servico = {
+  name: string
+  url: string
+  external: boolean
+  description: string
+  icon: typeof Database
+}
+
+const SERVICOS: Servico[] = [
+  {
+    name: 'RedCap',
+    url: 'http://redcap.comais.uft.edu.br/',
+    external: true,
+    description: 'Plataforma web segura para construir e gerenciar bancos de dados e pesquisas online.',
+    icon: Database,
+  },
+  {
+    name: 'Conversor PDF',
+    url: 'http://pdf.comais.uft.edu.br',
+    external: true,
+    description: 'Converte arquivos PDF para padrão PDFa e aplica OCR automaticamente.',
+    icon: FileText,
+  },
+  {
+    name: 'Smart Review',
+    url: 'http://sr.comais.uft.edu.br',
+    external: true,
+    description: 'Ferramenta de apoio ao processo de revisão bibliográfica.',
+    icon: Sparkles,
+  },
+  {
+    name: 'Apoio técnico',
+    url: '/registro-ocorrencias',
+    external: false,
+    description: 'Registro e acompanhamento de solicitações técnicas em pesquisas.',
+    icon: LifeBuoy,
+  },
+]
 
 const FULL_DATE_FMT = new Intl.DateTimeFormat('pt-BR', {
   day: '2-digit',
@@ -501,6 +540,55 @@ export function HomePage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Serviços — inspirado em Model Library Fireworks */}
+      <section className="border-t border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
+              Plataformas
+            </p>
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-text sm:text-4xl">
+              Serviços online
+            </h2>
+            <p className="mt-6 mx-auto max-w-2xl text-base leading-relaxed text-brand-gray">
+              Plataformas e ferramentas desenvolvidas pelo COMAIS para apoiar pesquisadores e parceiros.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {SERVICOS.map(({ name, url, external, description, icon: Icon }) => {
+              const linkProps = external
+                ? { href: url, target: '_blank', rel: 'noopener noreferrer' as const }
+                : { href: url }
+              return (
+                <a
+                  key={name}
+                  {...linkProps}
+                  className="group flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-6 transition-all hover:border-brand-blue/30 hover:shadow-md hover:shadow-brand-blue/10"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-blue/10 text-brand-blue transition-colors group-hover:bg-brand-blue group-hover:text-white">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    {external && (
+                      <ArrowUpRight className="h-4 w-4 text-brand-gray opacity-0 transition-all group-hover:opacity-100" />
+                    )}
+                  </div>
+                  <div className="flex flex-1 flex-col gap-2">
+                    <h3 className="font-heading font-bold text-brand-text transition-colors group-hover:text-brand-blue">
+                      {name}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-brand-gray">
+                      {description}
+                    </p>
+                  </div>
+                </a>
+              )
+            })}
+          </div>
         </div>
       </section>
 
