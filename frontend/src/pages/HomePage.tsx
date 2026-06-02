@@ -279,21 +279,11 @@ export function HomePage() {
                 </article>
               )}
 
-              {/* Segunda notícia — card compacto */}
+              {/* Segunda notícia — card compacto com imagem à direita */}
               {noticias[1] && (
                 <article className="group overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-md">
-                  <div className="flex flex-col gap-0 sm:grid sm:grid-cols-[1fr_2fr]">
-                    {noticias[1].imagem && (
-                      <div className="relative aspect-[16/9] overflow-hidden sm:aspect-auto sm:h-full">
-                        <img
-                          src={noticias[1].imagem}
-                          alt=""
-                          loading="lazy"
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      </div>
-                    )}
-                    <div className="flex flex-col justify-between gap-4 p-6">
+                  <div className="flex flex-col gap-0 sm:grid sm:grid-cols-[2fr_1fr]">
+                    <div className="flex flex-col justify-between gap-4 p-6 sm:order-first">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue">
                           {formatDate(noticias[1].data_publicacao)}
@@ -311,6 +301,16 @@ export function HomePage() {
                         Ler mais →
                       </Link>
                     </div>
+                    {noticias[1].imagem && (
+                      <div className="relative aspect-[16/9] overflow-hidden sm:aspect-auto sm:h-full sm:order-last">
+                        <img
+                          src={noticias[1].imagem}
+                          alt=""
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
                   </div>
                 </article>
               )}
