@@ -692,7 +692,7 @@ export function HomePage() {
       </section>
 
       {/* Sobre / Missão */}
-      <section className="border-t border-slate-200 bg-white">
+      <section id="missao" className="border-t border-slate-200 bg-white scroll-mt-20">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="grid gap-12 lg:grid-cols-[1fr_2fr]">
             <div>
@@ -727,7 +727,7 @@ export function HomePage() {
       </section>
 
       {/* Objetivos / Pilares */}
-      <section className="border-t border-slate-200 bg-white">
+      <section id="visao" className="border-t border-slate-200 bg-white scroll-mt-20">
         <div className="mx-auto max-w-6xl px-6 pb-20">
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
             O COMAIS visa

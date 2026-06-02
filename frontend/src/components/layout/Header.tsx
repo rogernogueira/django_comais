@@ -1,15 +1,14 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { LogIn, Menu, X } from 'lucide-react'
+import { LogIn, Menu, X, ChevronDown } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { SobreModal } from '@/components/modals/SobreModal'
 import { NAV_ITEMS } from '@/lib/navigation'
 import { cn } from '@/lib/utils'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [sobreOpen, setSobreOpen] = useState(false)
+  const [sobreHoverOpen, setSobreHoverOpen] = useState(false)
 
   return (
     <header className="sticky top-0 z-40 w-full">
@@ -55,17 +54,57 @@ export function Header() {
             {NAV_ITEMS.map((item) => {
               if (item.label === 'Sobre') {
                 return (
-                  <button
+                  <div
                     key={item.to}
-                    onClick={() => setSobreOpen(true)}
-                    className={cn(
-                      'relative px-3 py-2 text-sm font-medium transition-colors',
-                      'after:absolute after:bottom-1 after:left-3 after:right-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-brand-blue after:transition-transform',
-                      'text-brand-text hover:text-brand-blue hover:after:scale-x-100',
-                    )}
+                    className="group relative"
+                    onMouseEnter={() => setSobreHoverOpen(true)}
+                    onMouseLeave={() => setSobreHoverOpen(false)}
                   >
-                    {item.label}
-                  </button>
+                    <button
+                      className={cn(
+                        'relative flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors',
+                        'after:absolute after:bottom-1 after:left-3 after:right-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-brand-blue after:transition-transform',
+                        'text-brand-text hover:text-brand-blue hover:after:scale-x-100',
+                      )}
+                    >
+                      {item.label}
+                      <ChevronDown className="h-3 w-3 transition-transform group-hover:rotate-180" />
+                    </button>
+
+                    {/* Submenu */}
+                    <div
+                      className={cn(
+                        'absolute left-0 top-full pt-2 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50',
+                      )}
+                    >
+                      <div className="bg-white border border-slate-200 shadow-lg min-w-max">
+                        <a
+                          href="#missao"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            const el = document.getElementById('missao')
+                            el?.scrollIntoView({ behavior: 'smooth' })
+                            setSobreHoverOpen(false)
+                          }}
+                          className="block px-6 py-4 text-sm font-medium text-brand-text hover:bg-slate-50 border-b border-slate-200 last:border-b-0 transition-colors"
+                        >
+                          Missão
+                        </a>
+                        <a
+                          href="#visao"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            const el = document.getElementById('visao')
+                            el?.scrollIntoView({ behavior: 'smooth' })
+                            setSobreHoverOpen(false)
+                          }}
+                          className="block px-6 py-4 text-sm font-medium text-brand-text hover:bg-slate-50 transition-colors"
+                        >
+                          Visão
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 )
               }
               return (
@@ -117,19 +156,53 @@ export function Header() {
               {NAV_ITEMS.map((item) => {
                 if (item.label === 'Sobre') {
                   return (
-                    <button
-                      key={item.to}
-                      onClick={() => {
-                        setSobreOpen(true)
-                        setMobileOpen(false)
-                      }}
-                      className={cn(
-                        'rounded-md px-3 py-2 text-base font-medium transition-colors text-left',
-                        'text-brand-text hover:bg-slate-50 hover:text-brand-blue',
+                    <div key={item.to}>
+                      <button
+                        onClick={() => setSobreHoverOpen(!sobreHoverOpen)}
+                        className={cn(
+                          'w-full rounded-md px-3 py-2 text-base font-medium transition-colors text-left flex items-center justify-between',
+                          'text-brand-text hover:bg-slate-50 hover:text-brand-blue',
+                        )}
+                      >
+                        {item.label}
+                        <ChevronDown
+                          className={cn(
+                            'h-4 w-4 transition-transform',
+                            sobreHoverOpen && 'rotate-180',
+                          )}
+                        />
+                      </button>
+                      {sobreHoverOpen && (
+                        <div className="bg-slate-50 rounded-md mt-1 overflow-hidden">
+                          <a
+                            href="#missao"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              const el = document.getElementById('missao')
+                              el?.scrollIntoView({ behavior: 'smooth' })
+                              setSobreHoverOpen(false)
+                              setMobileOpen(false)
+                            }}
+                            className="block px-6 py-3 text-sm font-medium text-brand-text hover:bg-slate-100 border-b border-slate-200 transition-colors"
+                          >
+                            Missão
+                          </a>
+                          <a
+                            href="#visao"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              const el = document.getElementById('visao')
+                              el?.scrollIntoView({ behavior: 'smooth' })
+                              setSobreHoverOpen(false)
+                              setMobileOpen(false)
+                            }}
+                            className="block px-6 py-3 text-sm font-medium text-brand-text hover:bg-slate-100 transition-colors"
+                          >
+                            Visão
+                          </a>
+                        </div>
                       )}
-                    >
-                      {item.label}
-                    </button>
+                    </div>
                   )
                 }
                 return (
@@ -158,8 +231,6 @@ export function Header() {
           </div>
         )}
       </div>
-
-      <SobreModal isOpen={sobreOpen} onClose={() => setSobreOpen(false)} />
     </header>
   )
 }
