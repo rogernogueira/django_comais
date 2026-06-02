@@ -619,73 +619,69 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Equipe — Fireworks aesthetic com avatares circulares */}
+      {/* Equipe — Fireworks aesthetic */}
       <section className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <div className="mb-12 text-center">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="mb-16 text-center">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
               Pessoas
             </p>
-            <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-text sm:text-4xl">
+            <h2 className="font-heading text-4xl font-extrabold tracking-tight text-brand-text sm:text-5xl">
               Nossa equipe
             </h2>
-            <p className="mt-6 mx-auto max-w-2xl text-base leading-relaxed text-brand-gray">
-              Pesquisadores, docentes e colaboradores que conduzem a inovação.
+            <p className="mt-6 mx-auto max-w-2xl text-lg leading-relaxed text-brand-gray">
+              Pesquisadores, docentes e colaboradores que conduzem a inovação no COMAIS.
             </p>
           </div>
 
           {!equipe && !equipeError && (
-            <div className="flex items-center justify-center gap-2 text-brand-gray py-12">
+            <div className="flex items-center justify-center gap-2 text-brand-gray py-16">
               <Loader2 className="h-4 w-4 animate-spin" />
               <span>Carregando equipe…</span>
             </div>
           )}
 
           {equipe && equipe.length > 0 && (
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {equipe.map((membro) => (
-                <div
+                <a
                   key={membro.id}
-                  className="group flex flex-col items-center text-center transition-transform hover:scale-105"
+                  href={membro.url_lattes || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block rounded-2xl border border-slate-200 bg-white p-8 transition-all hover:shadow-lg hover:border-brand-blue/30 overflow-hidden"
                 >
-                  {/* Avatar circular */}
-                  <div className="relative mb-4">
+                  {/* Avatar circular — grande e destacado */}
+                  <div className="flex justify-center mb-6">
                     {membro.foto ? (
                       <img
                         src={membro.foto}
                         alt={membro.name}
                         loading="lazy"
-                        className="h-32 w-32 rounded-full object-cover ring-2 ring-brand-blue/20 transition-all group-hover:ring-brand-blue"
+                        className="h-40 w-40 rounded-full object-cover ring-4 ring-brand-blue/10 transition-all group-hover:ring-brand-blue/30"
                       />
                     ) : (
-                      <div
-                        className="flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-brand-blue/20 via-brand-green/20 to-brand-gold/20 font-heading text-3xl font-extrabold text-brand-blue ring-2 ring-brand-blue/20 group-hover:ring-brand-blue"
-                      >
+                      <div className="flex h-40 w-40 items-center justify-center rounded-full bg-gradient-to-br from-brand-blue/20 via-brand-green/20 to-brand-gold/20 font-heading text-5xl font-extrabold text-brand-blue ring-4 ring-brand-blue/10 group-hover:ring-brand-blue/30">
                         {initials(membro.name)}
                       </div>
                     )}
                   </div>
 
-                  {/* Info */}
-                  <h3 className="font-heading text-lg font-bold text-brand-text">
-                    {membro.name}
-                  </h3>
-                  <p className="mt-1 text-sm font-medium text-brand-blue">
-                    {membro.funcao}
-                  </p>
-
-                  {/* Lattes link */}
-                  {membro.url_lattes && (
-                    <a
-                      href={membro.url_lattes}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand-gray hover:text-brand-blue transition-colors"
-                    >
-                      Ver Lattes
-                    </a>
-                  )}
-                </div>
+                  {/* Info — centrado e destacado */}
+                  <div className="text-center">
+                    <h3 className="font-heading text-2xl font-extrabold text-brand-text group-hover:text-brand-blue transition-colors">
+                      {membro.name}
+                    </h3>
+                    <p className="mt-2 text-base font-semibold text-brand-blue">
+                      {membro.funcao}
+                    </p>
+                    {membro.url_lattes && (
+                      <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-brand-gray group-hover:text-brand-blue transition-colors">
+                        Ver Lattes →
+                      </p>
+                    )}
+                  </div>
+                </a>
               ))}
             </div>
           )}
