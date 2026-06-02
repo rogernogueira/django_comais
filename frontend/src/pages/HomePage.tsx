@@ -105,27 +105,27 @@ export function HomePage() {
           className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,theme(colors.brand-blue/10),transparent_60%)]"
         />
         <HeroMosaic />
-        <div className="relative z-10 mx-auto max-w-6xl px-6 pb-4 pt-10 sm:pb-6 sm:pt-12">
-          <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="relative z-10 mx-auto max-w-6xl px-6 pb-8 pt-12 sm:pb-12 sm:pt-16">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <p className="mb-3 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-brand-blue">
+              <p className="mb-4 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-brand-blue">
                 Laboratório de Inteligência Artificial · UFT
               </p>
-              <h1 className="font-heading text-2xl font-extrabold leading-[1.04] tracking-[-0.02em] text-brand-text animation-slideInBottom sm:text-3xl lg:text-[2.75rem]">
+              <h1 className="font-heading text-4xl font-extrabold leading-[1.1] tracking-[-0.02em] text-brand-text animation-slideInBottom sm:text-5xl lg:text-[4rem]">
                 Modelagem Computacional de Soluções de{' '}
                 <span className="text-brand-blue">Inteligência Artificial</span>
               </h1>
-              <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-gray sm:text-sm">
+              <p className="mt-3 font-mono text-xs uppercase tracking-[0.2em] text-brand-gray sm:text-sm">
                 Computational Modeling of AI Solutions
               </p>
-              <p className="mt-4 hidden max-w-xl text-base leading-relaxed text-brand-gray">
+              <p className="mt-6 hidden max-w-xl text-base leading-relaxed text-brand-gray">
                 Laboratório multidisciplinar do{' '}
                 <span className="font-semibold text-brand-text">
                   Programa de Pós-Graduação em Governança e Transformação Digital
                 </span>{' '}
                 da Universidade Federal do Tocantins.
               </p>
-              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
                 <Button asChild size="lg" className="gap-2 rounded-none px-6 transition-all duration-150 ease-out hover:opacity-90">
                   <Link to="/projetos">
                     Conheça os projetos
@@ -153,7 +153,7 @@ export function HomePage() {
                 alt="COMAIS Lab — modelagem computacional de soluções de inteligência artificial"
                 width={1188}
                 height={713}
-                className="h-auto w-full max-w-xs animate-hero-float drop-shadow-sm lg:max-w-sm"
+                className="h-auto w-full max-w-sm animate-hero-float drop-shadow-sm lg:max-w-md"
               />
             </div>
           </div>
@@ -161,8 +161,8 @@ export function HomePage() {
       </section>
 
       {/* Faixa de parceiros — marquee (análogo da logo cloud do fireworks) */}
-      <section className="border-y border-slate-200 bg-white py-3 sm:py-4">
-        <p className="mb-4 text-center font-mono text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-brand-gray">
+      <section className="border-y border-slate-200 bg-white py-2">
+        <p className="mb-3 text-center font-mono text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-brand-gray">
           Parceiros
         </p>
         <div className="[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
@@ -172,7 +172,7 @@ export function HomePage() {
                 <img
                   src={p.src}
                   alt={p.nome}
-                  className="h-10 w-auto object-contain opacity-90 transition duration-300 hover:opacity-100 sm:h-14"
+                  className="h-9 w-auto object-contain opacity-90 transition duration-300 hover:opacity-100 sm:h-12"
                 />
               </div>
             ))}
