@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, Database, ExternalLink, FileText, LifeBuoy, Loader2, Network, Sparkles, Users } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, BookOpen, Brain, Clock, Code, Database, ExternalLink, FileText, LifeBuoy, Loader2, MessageCircle, Network, Sparkles, TrendingUp, Users } from 'lucide-react'
 import Marquee from 'react-fast-marquee'
 
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import type { NoticiaListItem, ProjetoListItem, TipoProjeto, Colaborador, Paginated } from '@/types/api'
+import type { NoticiaListItem, ProjetoListItem, TipoProjeto, Colaborador, CursoListItem, Paginated } from '@/types/api'
 
 function stripHtml(value: string | null | undefined) {
   if (!value) return ''
@@ -25,6 +25,32 @@ function initials(name: string) {
     .slice(0, 2)
     .join('')
     .toUpperCase()
+}
+
+function iconForCurso(titulo: string) {
+  const t = titulo.toLowerCase()
+  if (t.includes('python')) return Code
+  if (t.includes('machine learning') || t.includes('ml')) return Brain
+  if (t.includes('r ') || t.includes(' r')) return BookOpen
+  if (t.includes('pln') || t.includes('linguagem')) return MessageCircle
+  if (t.includes('estatística') || t.includes('analise')) return TrendingUp
+  return Code
+}
+
+function formatDateShort(iso: string) {
+  return new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(new Date(`${iso}T00:00:00`))
+}
+
+function modalityLabel(local: string) {
+  const l = local.toLowerCase()
+  if (l.includes('ead') || l.includes('online') || l.includes('remoto'))
+    return 'EaD'
+  if (l.includes('híbrido') || l.includes('hibrido')) return 'Híbrido'
+  return 'Presencial'
 }
 
 const PARCEIROS = [
@@ -177,6 +203,8 @@ export function HomePage() {
   const [selectedTipoId, setSelectedTipoId] = useState<number | null>(null)
   const [equipe, setEquipe] = useState<Colaborador[] | null>(null)
   const [equipeError, setEquipeError] = useState<string | null>(null)
+  const [cursos, setCursos] = useState<CursoListItem[] | null>(null)
+  const [cursosError, setCursosError] = useState<string | null>(null)
 
   useEffect(() => {
     const ac = new AbortController()
@@ -227,6 +255,21 @@ export function HomePage() {
       .catch((e: unknown) => {
         if (e instanceof DOMException && e.name === 'AbortError') return
         setEquipeError(e instanceof Error ? e.message : 'erro desconhecido')
+      })
+    return () => ac.abort()
+  }, [])
+
+  useEffect(() => {
+    const ac = new AbortController()
+    fetch('/api/v1/cursos/?limit=4', { signal: ac.signal })
+      .then(async (r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return (await r.json()) as Paginated<CursoListItem>
+      })
+      .then((page) => setCursos(page.results))
+      .catch((e: unknown) => {
+        if (e instanceof DOMException && e.name === 'AbortError') return
+        setCursosError(e instanceof Error ? e.message : 'erro desconhecido')
       })
     return () => ac.abort()
   }, [])
@@ -615,6 +658,95 @@ export function HomePage() {
                 </a>
               )
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Cursos — Model Library aesthetic */}
+      <section className="border-t border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="mb-16 text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
+              Capacitação
+            </p>
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-text sm:text-4xl">
+              Cursos e Formações
+            </h2>
+            <p className="mt-6 mx-auto max-w-2xl text-base leading-relaxed text-brand-gray">
+              Programas de capacitação em Inteligência Artificial e Modelagem Computacional.
+            </p>
+          </div>
+
+          {!cursos && !cursosError && (
+            <div className="flex items-center justify-center gap-2 text-brand-gray py-16">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Carregando cursos…</span>
+            </div>
+          )}
+
+          {cursos && cursos.length > 0 && (
+            <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {cursos.map((curso) => {
+                const IconComponent = iconForCurso(curso.titulo)
+                return (
+                  <a
+                    key={curso.id}
+                    href={`/cursos/${curso.id}`}
+                    className="group flex flex-col border border-slate-200 bg-white p-6 transition-all hover:shadow-md hover:border-slate-300"
+                  >
+                    {/* Icon */}
+                    <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-md bg-brand-blue/10">
+                      <IconComponent className="h-5 w-5 text-brand-blue" />
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="mb-2 font-heading text-lg font-bold text-brand-text line-clamp-2">
+                      {curso.titulo}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="mb-4 flex-1 text-sm text-brand-gray line-clamp-2">
+                      {curso.descricao}
+                    </p>
+
+                    {/* Metadata */}
+                    <div className="mb-4 space-y-2 text-xs text-brand-gray">
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-3.5 w-3.5" />
+                        <span>{curso.carga_horaria}h</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-brand-text">
+                          {modalityLabel(curso.local)}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="outline" className="text-xs">
+                        {formatDateShort(curso.data_inicio)}
+                      </Badge>
+                    </div>
+
+                    {/* Arrow indicator */}
+                    <div className="mt-4 flex items-center gap-1 text-sm font-medium text-brand-blue opacity-0 transition-all group-hover:opacity-100">
+                      Ver detalhes
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          )}
+
+          <div className="flex justify-center">
+            <Button asChild>
+              <Link to="/cursos" className="gap-2">
+                Ver todos os cursos
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
