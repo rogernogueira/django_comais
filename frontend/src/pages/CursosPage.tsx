@@ -2,23 +2,17 @@ import { useEffect, useState } from 'react'
 import {
   AlertCircle,
   ArrowRight,
-  CalendarDays,
+  BookOpen,
+  Brain,
   Clock,
+  Code,
   Loader2,
-  MapPin,
-  User,
+  MessageCircle,
+  TrendingUp,
 } from 'lucide-react'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import type { CursoListItem, Paginated } from '@/types/api'
 
 const DATE_FMT = new Intl.DateTimeFormat('pt-BR', {
@@ -37,6 +31,16 @@ function modalityFor(local: string) {
     return 'EaD'
   if (l.includes('híbrido') || l.includes('hibrido')) return 'Híbrido'
   return 'Presencial'
+}
+
+function iconFor(titulo: string) {
+  const t = titulo.toLowerCase()
+  if (t.includes('python')) return Code
+  if (t.includes('machine learning') || t.includes('ml')) return Brain
+  if (t.includes('r ') || t.includes(' r')) return BookOpen
+  if (t.includes('pln') || t.includes('linguagem')) return MessageCircle
+  if (t.includes('estatística') || t.includes('analise')) return TrendingUp
+  return Code
 }
 
 export function CursosPage() {
@@ -101,87 +105,58 @@ export function CursosPage() {
       )}
 
       {data && data.length > 0 && (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {data.map((curso) => (
-            <Card
-              key={curso.id}
-              className="group flex flex-col border-slate-200 transition-shadow hover:shadow-md"
-            >
-              <CardHeader className="gap-2">
-                <div className="flex items-start justify-between gap-3">
-                  <Badge variant="brandBlue" className="font-mono">
-                    <Clock className="mr-1 h-3 w-3" />
-                    {curso.carga_horaria}h
-                  </Badge>
-                  <Badge variant="brandGreen">{modalityFor(curso.local)}</Badge>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {data.map((curso) => {
+            const IconComponent = iconFor(curso.titulo)
+            return (
+              <a
+                key={curso.id}
+                href={`/cursos/${curso.id}`}
+                className="group flex flex-col border border-slate-200 bg-white p-6 transition-all hover:shadow-md hover:border-slate-300"
+              >
+                {/* Icon */}
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-md bg-brand-blue/10">
+                  <IconComponent className="h-5 w-5 text-brand-blue" />
                 </div>
-                <CardTitle className="mt-2 text-xl">{curso.titulo}</CardTitle>
-                <CardDescription className="line-clamp-3">
-                  {curso.descricao}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-1 flex-col">
-                <dl className="grid grid-cols-1 gap-2 text-sm text-brand-gray sm:grid-cols-2">
-                  <div className="flex items-start gap-2">
-                    <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-brand-blue" />
-                    <div>
-                      <dt className="font-mono text-[10px] uppercase tracking-widest text-brand-gray">
-                        Início
-                      </dt>
-                      <dd className="font-medium text-brand-text">
-                        {formatDate(curso.data_inicio)}
-                      </dd>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-brand-blue" />
-                    <div>
-                      <dt className="font-mono text-[10px] uppercase tracking-widest text-brand-gray">
-                        Término
-                      </dt>
-                      <dd className="font-medium text-brand-text">
-                        {formatDate(curso.data_termino)}
-                      </dd>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <User className="mt-0.5 h-4 w-4 shrink-0 text-brand-blue" />
-                    <div>
-                      <dt className="font-mono text-[10px] uppercase tracking-widest text-brand-gray">
-                        Instrutor
-                      </dt>
-                      <dd className="font-medium text-brand-text">
-                        {curso.instrutor}
-                      </dd>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-blue" />
-                    <div>
-                      <dt className="font-mono text-[10px] uppercase tracking-widest text-brand-gray">
-                        Local
-                      </dt>
-                      <dd className="font-medium text-brand-text">
-                        {curso.local}
-                      </dd>
-                    </div>
-                  </div>
-                </dl>
 
-                <Button
-                  asChild
-                  variant="ghost"
-                  size="sm"
-                  className="mt-6 self-start gap-1 px-0 text-brand-blue hover:bg-transparent hover:text-brand-blue/80"
-                >
-                  <a href={`/cursos/${curso.id}`}>
-                    Detalhes
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                {/* Title */}
+                <h3 className="mb-2 font-heading text-lg font-bold text-brand-text line-clamp-2">
+                  {curso.titulo}
+                </h3>
+
+                {/* Description */}
+                <p className="mb-4 flex-1 text-sm text-brand-gray line-clamp-2">
+                  {curso.descricao}
+                </p>
+
+                {/* Metadata */}
+                <div className="mb-4 space-y-2 text-xs text-brand-gray">
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-3.5 w-3.5" />
+                    <span>{curso.carga_horaria}h</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-brand-text">
+                      {modalityFor(curso.local)}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline" className="text-xs">
+                    {formatDate(curso.data_inicio)}
+                  </Badge>
+                </div>
+
+                {/* Arrow indicator */}
+                <div className="mt-4 flex items-center gap-1 text-sm font-medium text-brand-blue opacity-0 transition-all group-hover:opacity-100">
+                  Ver detalhes
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
+              </a>
+            )
+          })}
         </div>
       )}
     </section>

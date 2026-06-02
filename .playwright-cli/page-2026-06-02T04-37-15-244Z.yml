@@ -1,0 +1,2984 @@
+- generic [active] [ref=e1]:
+  - 'link "Serverless 2.0 is live: control reliability & speed without reserved capacity. Get Started. arrow-right" [ref=e26] [cursor=pointer]':
+    - /url: /blog/serverless-2
+    - paragraph [ref=e28]: "Serverless 2.0 is live: control reliability & speed without reserved capacity. Get Started."
+    - img "arrow-right" [ref=e30]
+  - banner [ref=e32]:
+    - generic [ref=e34]:
+      - link "To Fireworks AI Homepage" [ref=e35] [cursor=pointer]:
+        - /url: /
+        - img "Fireworks Logo" [ref=e37]
+      - navigation "Main" [ref=e38]:
+        - list [ref=e40]:
+          - listitem [ref=e41]:
+            - generic [ref=e42] [cursor=pointer]:
+              - text: Platform
+              - img "chevron-down" [ref=e45]
+          - listitem [ref=e47]:
+            - generic [ref=e48] [cursor=pointer]:
+              - text: Models
+              - img "chevron-down" [ref=e51]
+          - listitem [ref=e53]:
+            - generic [ref=e54] [cursor=pointer]:
+              - text: Developers
+              - img "chevron-down" [ref=e57]
+          - listitem [ref=e59]:
+            - link "Pricing" [ref=e60] [cursor=pointer]:
+              - /url: /pricing
+          - listitem [ref=e61]:
+            - link "Training" [ref=e62] [cursor=pointer]:
+              - /url: /training
+          - listitem [ref=e63]:
+            - generic [ref=e64] [cursor=pointer]:
+              - text: Partners
+              - img "chevron-down" [ref=e67]
+          - listitem [ref=e69]:
+            - generic [ref=e70] [cursor=pointer]:
+              - text: Resources
+              - img "chevron-down" [ref=e73]
+          - listitem [ref=e75]:
+            - generic [ref=e76] [cursor=pointer]:
+              - text: Company
+              - img "chevron-down" [ref=e79]
+      - generic [ref=e83]:
+        - link "Log In" [ref=e84] [cursor=pointer]:
+          - /url: /login
+          - text: Log In
+        - link "Get Started" [ref=e85] [cursor=pointer]:
+          - /url: /signup
+          - text: Get Started
+  - generic [ref=e88]:
+    - generic [ref=e89]:
+      - generic [ref=e90]:
+        - heading "Model Library" [level=1] [ref=e91]
+        - paragraph [ref=e93]: Search our library of open source models and deploy in seconds.
+      - generic [ref=e96]:
+        - img "search" [ref=e98]
+        - textbox "Search model library" [ref=e100]
+    - generic [ref=e101]:
+      - generic [ref=e102]:
+        - generic [ref=e103]:
+          - link "flame Featured" [ref=e104] [cursor=pointer]:
+            - /url: /models?featured=true
+            - img "flame" [ref=e106]
+            - text: Featured
+          - link "upload-cloud Serverless" [ref=e108] [cursor=pointer]:
+            - /url: /models?modelTypes=Serverless
+            - img "upload-cloud" [ref=e110]
+            - text: Serverless
+          - link "dataflow-04 Embeddings" [ref=e112] [cursor=pointer]:
+            - /url: /models?modelTypes=Embedding
+            - img "dataflow-04" [ref=e114]
+            - text: Embeddings
+          - link "speedometer-01 Reranks" [ref=e116] [cursor=pointer]:
+            - /url: /models?modelTypes=Reranker
+            - img "speedometer-01" [ref=e118]
+            - text: Reranks
+          - link "message-text-square LLM" [ref=e120] [cursor=pointer]:
+            - /url: /models?modelTypes=LLM
+            - img "message-text-square" [ref=e122]
+            - text: LLM
+          - link "eye Vision (VLM)" [ref=e124] [cursor=pointer]:
+            - /url: /models?modelTypes=Vision
+            - img "eye" [ref=e126]
+            - text: Vision (VLM)
+          - combobox [ref=e128] [cursor=pointer]:
+            - img "grid" [ref=e130]
+            - generic: Providers
+            - img [ref=e133]
+          - combobox [ref=e135]
+        - heading "Models" [level=2] [ref=e138]
+      - generic [ref=e139]:
+        - link "Deepseek Logo Mark DeepSeek-V4-Pro $1.74/M Input • $3.48/M Output • 1048576 Context message-text-square LLM" [ref=e140] [cursor=pointer]:
+          - /url: /models/deepseek-ai/deepseek-v4-pro
+          - generic [ref=e141]:
+            - img "Deepseek Logo Mark" [ref=e144]
+            - heading "DeepSeek-V4-Pro" [level=3] [ref=e145]
+          - generic [ref=e146]:
+            - generic [ref=e147]: $1.74/M Input • $3.48/M Output • 1048576 Context
+            - generic [ref=e149]:
+              - img "message-text-square" [ref=e152]
+              - text: LLM
+        - link "mooshot Kimi K2.6 $0.95/M Input • $4/M Output • 262144 Context eye Vision" [ref=e154] [cursor=pointer]:
+          - /url: /models/fireworks/kimi-k2p6
+          - generic [ref=e155]:
+            - img "mooshot" [ref=e158]
+            - heading "Kimi K2.6" [level=3] [ref=e159]
+          - generic [ref=e160]:
+            - generic [ref=e161]: $0.95/M Input • $4/M Output • 262144 Context
+            - generic [ref=e163]:
+              - img "eye" [ref=e166]
+              - text: Vision
+        - link "minimax MiniMax M2.7 $0.3/M Input • $1.2/M Output • 196608 Context message-text-square LLM" [ref=e168] [cursor=pointer]:
+          - /url: /models/fireworks/minimax-m2p7
+          - generic [ref=e169]:
+            - img "minimax" [ref=e172]
+            - heading "MiniMax M2.7" [level=3] [ref=e173]
+          - generic [ref=e174]:
+            - generic [ref=e175]: $0.3/M Input • $1.2/M Output • 196608 Context
+            - generic [ref=e177]:
+              - img "message-text-square" [ref=e180]
+              - text: LLM
+        - link "z.ai GLM 5.1 $1.4/M Input • $4.4/M Output • 202752 Context message-text-square LLM" [ref=e182] [cursor=pointer]:
+          - /url: /models/fireworks/glm-5p1
+          - generic [ref=e183]:
+            - img "z.ai" [ref=e186]
+            - heading "GLM 5.1" [level=3] [ref=e187]
+          - generic [ref=e188]:
+            - generic [ref=e189]: $1.4/M Input • $4.4/M Output • 202752 Context
+            - generic [ref=e191]:
+              - img "message-text-square" [ref=e194]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3.6 Plus $0.5/M Input • $3/M Output eye Vision" [ref=e196] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3p6-plus
+          - generic [ref=e197]:
+            - img "Quen Logo Mark" [ref=e200]
+            - heading "Qwen3.6 Plus" [level=3] [ref=e201]
+          - generic [ref=e202]:
+            - generic [ref=e203]: $0.5/M Input • $3/M Output
+            - generic [ref=e205]:
+              - img "eye" [ref=e208]
+              - text: Vision
+        - link "mooshot Kimi K2.5 $0.6/M Input • $3/M Output • 262144 Context eye Vision" [ref=e210] [cursor=pointer]:
+          - /url: /models/fireworks/kimi-k2p5
+          - generic [ref=e211]:
+            - img "mooshot" [ref=e214]
+            - heading "Kimi K2.5" [level=3] [ref=e215]
+          - generic [ref=e216]:
+            - generic [ref=e217]: $0.6/M Input • $3/M Output • 262144 Context
+            - generic [ref=e219]:
+              - img "eye" [ref=e222]
+              - text: Vision
+        - link "Google Ai Logo Mark Gemma 4 31B IT 262144 Context eye Vision" [ref=e224] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-4-31b-it
+          - generic [ref=e225]:
+            - img "Google Ai Logo Mark" [ref=e228]
+            - heading "Gemma 4 31B IT" [level=3] [ref=e229]
+          - generic [ref=e230]:
+            - generic [ref=e231]: 262144 Context
+            - generic [ref=e233]:
+              - img "eye" [ref=e236]
+              - text: Vision
+        - link "Google Ai Logo Mark Gemma 4 26B A4B IT 262144 Context eye Vision" [ref=e238] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-4-26b-a4b-it
+          - generic [ref=e239]:
+            - img "Google Ai Logo Mark" [ref=e242]
+            - heading "Gemma 4 26B A4B IT" [level=3] [ref=e243]
+          - generic [ref=e244]:
+            - generic [ref=e245]: 262144 Context
+            - generic [ref=e247]:
+              - img "eye" [ref=e250]
+              - text: Vision
+        - link "Quen Logo Mark Qwen3.5 397B A17B 262144 Context eye Vision" [ref=e252] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3p5-397b-a17b
+          - generic [ref=e253]:
+            - img "Quen Logo Mark" [ref=e256]
+            - heading "Qwen3.5 397B A17B" [level=3] [ref=e257]
+          - generic [ref=e258]:
+            - generic [ref=e259]: 262144 Context
+            - generic [ref=e261]:
+              - img "eye" [ref=e264]
+              - text: Vision
+        - link "Deepseek Logo Mark Deepseek v3.2 163840 Context message-text-square LLM" [ref=e266] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-v3p2
+          - generic [ref=e267]:
+            - img "Deepseek Logo Mark" [ref=e270]
+            - heading "Deepseek v3.2" [level=3] [ref=e271]
+          - generic [ref=e272]:
+            - generic [ref=e273]: 163840 Context
+            - generic [ref=e275]:
+              - img "message-text-square" [ref=e278]
+              - text: LLM
+        - link "OpenAi Logo MArk OpenAI gpt-oss-20b $0.07/M Input • $0.3/M Output • 131072 Context message-text-square LLM" [ref=e280] [cursor=pointer]:
+          - /url: /models/fireworks/gpt-oss-20b
+          - generic [ref=e281]:
+            - img "OpenAi Logo MArk" [ref=e284]
+            - heading "OpenAI gpt-oss-20b" [level=3] [ref=e285]
+          - generic [ref=e286]:
+            - generic [ref=e287]: $0.07/M Input • $0.3/M Output • 131072 Context
+            - generic [ref=e289]:
+              - img "message-text-square" [ref=e292]
+              - text: LLM
+        - link "OpenAi Logo MArk OpenAI gpt-oss-120b $0.15/M Input • $0.6/M Output • 131072 Context message-text-square LLM" [ref=e294] [cursor=pointer]:
+          - /url: /models/fireworks/gpt-oss-120b
+          - generic [ref=e295]:
+            - img "OpenAi Logo MArk" [ref=e298]
+            - heading "OpenAI gpt-oss-120b" [level=3] [ref=e299]
+          - generic [ref=e300]:
+            - generic [ref=e301]: $0.15/M Input • $0.6/M Output • 131072 Context
+            - generic [ref=e303]:
+              - img "message-text-square" [ref=e306]
+              - text: LLM
+        - link "NVIDIA icon Gemma 4 31B IT NVFP4 262144 Context eye Vision" [ref=e308] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-4-31b-it-nvfp4
+          - generic [ref=e309]:
+            - img "NVIDIA icon" [ref=e312]
+            - heading "Gemma 4 31B IT NVFP4" [level=3] [ref=e313]
+          - generic [ref=e314]:
+            - generic [ref=e315]: 262144 Context
+            - generic [ref=e317]:
+              - img "eye" [ref=e320]
+              - text: Vision
+        - link "z.ai GLM-5 202752 Context message-text-square LLM" [ref=e322] [cursor=pointer]:
+          - /url: /models/fireworks/glm-5
+          - generic [ref=e323]:
+            - img "z.ai" [ref=e326]
+            - heading "GLM-5" [level=3] [ref=e327]
+          - generic [ref=e328]:
+            - generic [ref=e329]: 202752 Context
+            - generic [ref=e331]:
+              - img "message-text-square" [ref=e334]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 VL 235B A22B Thinking 262144 Context eye Vision" [ref=e336] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-vl-235b-a22b-thinking
+          - generic [ref=e337]:
+            - img "Quen Logo Mark" [ref=e340]
+            - heading "Qwen3 VL 235B A22B Thinking" [level=3] [ref=e341]
+          - generic [ref=e342]:
+            - generic [ref=e343]: 262144 Context
+            - generic [ref=e345]:
+              - img "eye" [ref=e348]
+              - text: Vision
+        - link "Quen Logo Mark Qwen3 VL 235B A22B Instruct 262144 Context eye Vision" [ref=e350] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-vl-235b-a22b-instruct
+          - generic [ref=e351]:
+            - img "Quen Logo Mark" [ref=e354]
+            - heading "Qwen3 VL 235B A22B Instruct" [level=3] [ref=e355]
+          - generic [ref=e356]:
+            - generic [ref=e357]: 262144 Context
+            - generic [ref=e359]:
+              - img "eye" [ref=e362]
+              - text: Vision
+        - link "mooshot Kimi K2 Instruct 0905 262144 Context message-text-square LLM" [ref=e364] [cursor=pointer]:
+          - /url: /models/fireworks/kimi-k2-instruct-0905
+          - generic [ref=e365]:
+            - img "mooshot" [ref=e368]
+            - heading "Kimi K2 Instruct 0905" [level=3] [ref=e369]
+          - generic [ref=e370]:
+            - generic [ref=e371]: 262144 Context
+            - generic [ref=e373]:
+              - img "message-text-square" [ref=e376]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek V3.1 163840 Context message-text-square LLM" [ref=e378] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-v3p1
+          - generic [ref=e379]:
+            - img "Deepseek Logo Mark" [ref=e382]
+            - heading "DeepSeek V3.1" [level=3] [ref=e383]
+          - generic [ref=e384]:
+            - generic [ref=e385]: 163840 Context
+            - generic [ref=e387]:
+              - img "message-text-square" [ref=e390]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 235B A22B 131072 Context message-text-square LLM" [ref=e392] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-235b-a22b
+          - generic [ref=e393]:
+            - img "Quen Logo Mark" [ref=e396]
+            - heading "Qwen3 235B A22B" [level=3] [ref=e397]
+          - generic [ref=e398]:
+            - generic [ref=e399]: 131072 Context
+            - generic [ref=e401]:
+              - img "message-text-square" [ref=e404]
+              - text: LLM
+        - link "NVIDIA icon NVIDIA Nemotron 3 Super 120B A12B NVFP4 262144 Context message-text-square LLM" [ref=e406] [cursor=pointer]:
+          - /url: /models/fireworks/nvidia-nemotron-3-super-120b-a12b-nvfp4
+          - generic [ref=e407]:
+            - img "NVIDIA icon" [ref=e410]
+            - heading "NVIDIA Nemotron 3 Super 120B A12B NVFP4" [level=3] [ref=e411]
+          - generic [ref=e412]:
+            - generic [ref=e413]: 262144 Context
+            - generic [ref=e415]:
+              - img "message-text-square" [ref=e418]
+              - text: LLM
+        - link "NVIDIA icon NVIDIA Nemotron 3 Super 120B A12B FP8 262144 Context message-text-square LLM" [ref=e420] [cursor=pointer]:
+          - /url: /models/fireworks/nvidia-nemotron-3-super-120b-a12b-fp8
+          - generic [ref=e421]:
+            - img "NVIDIA icon" [ref=e424]
+            - heading "NVIDIA Nemotron 3 Super 120B A12B FP8" [level=3] [ref=e425]
+          - generic [ref=e426]:
+            - generic [ref=e427]: 262144 Context
+            - generic [ref=e429]:
+              - img "message-text-square" [ref=e432]
+              - text: LLM
+        - link "mooshot Kimi K2 Thinking 262144 Context message-text-square LLM" [ref=e434] [cursor=pointer]:
+          - /url: /models/fireworks/kimi-k2-thinking
+          - generic [ref=e435]:
+            - img "mooshot" [ref=e438]
+            - heading "Kimi K2 Thinking" [level=3] [ref=e439]
+          - generic [ref=e440]:
+            - generic [ref=e441]: 262144 Context
+            - generic [ref=e443]:
+              - img "message-text-square" [ref=e446]
+              - text: LLM
+        - link "z.ai GLM-4.6 202752 Context message-text-square LLM" [ref=e448] [cursor=pointer]:
+          - /url: /models/fireworks/glm-4p6
+          - generic [ref=e449]:
+            - img "z.ai" [ref=e452]
+            - heading "GLM-4.6" [level=3] [ref=e453]
+          - generic [ref=e454]:
+            - generic [ref=e455]: 202752 Context
+            - generic [ref=e457]:
+              - img "message-text-square" [ref=e460]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 235B A22B Instruct 2507 262144 Context message-text-square LLM" [ref=e462] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-235b-a22b-instruct-2507
+          - generic [ref=e463]:
+            - img "Quen Logo Mark" [ref=e466]
+            - heading "Qwen3 235B A22B Instruct 2507" [level=3] [ref=e467]
+          - generic [ref=e468]:
+            - generic [ref=e469]: 262144 Context
+            - generic [ref=e471]:
+              - img "message-text-square" [ref=e474]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 Coder 480B A35B Instruct 262144 Context message-text-square LLM" [ref=e476] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-coder-480b-a35b-instruct
+          - generic [ref=e477]:
+            - img "Quen Logo Mark" [ref=e480]
+            - heading "Qwen3 Coder 480B A35B Instruct" [level=3] [ref=e481]
+          - generic [ref=e482]:
+            - generic [ref=e483]: 262144 Context
+            - generic [ref=e485]:
+              - img "message-text-square" [ref=e488]
+              - text: LLM
+        - link "Meta Mark Llama 3.3 70B Instruct 131072 Context message-text-square LLM" [ref=e490] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p3-70b-instruct
+          - generic [ref=e491]:
+            - img "Meta Mark" [ref=e494]
+            - heading "Llama 3.3 70B Instruct" [level=3] [ref=e495]
+          - generic [ref=e496]:
+            - generic [ref=e497]: 131072 Context
+            - generic [ref=e499]:
+              - img "message-text-square" [ref=e502]
+              - text: LLM
+        - link "minimax MiniMax-M2.5 $0.3/M Input • $1.2/M Output • 196608 Context message-text-square LLM" [ref=e504] [cursor=pointer]:
+          - /url: /models/fireworks/minimax-m2p5
+          - generic [ref=e505]:
+            - img "minimax" [ref=e508]
+            - heading "MiniMax-M2.5" [level=3] [ref=e509]
+          - generic [ref=e510]:
+            - generic [ref=e511]: $0.3/M Input • $1.2/M Output • 196608 Context
+            - generic [ref=e513]:
+              - img "message-text-square" [ref=e516]
+              - text: LLM
+        - link "minimax MiniMax-M2.1 196608 Context message-text-square LLM" [ref=e518] [cursor=pointer]:
+          - /url: /models/fireworks/minimax-m2p1
+          - generic [ref=e519]:
+            - img "minimax" [ref=e522]
+            - heading "MiniMax-M2.1" [level=3] [ref=e523]
+          - generic [ref=e524]:
+            - generic [ref=e525]: 196608 Context
+            - generic [ref=e527]:
+              - img "message-text-square" [ref=e530]
+              - text: LLM
+        - link "Deepseek Logo Mark Deepseek R1 05/28 163840 Context message-text-square LLM" [ref=e532] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1-0528
+          - generic [ref=e533]:
+            - img "Deepseek Logo Mark" [ref=e536]
+            - heading "Deepseek R1 05/28" [level=3] [ref=e537]
+          - generic [ref=e538]:
+            - generic [ref=e539]: 163840 Context
+            - generic [ref=e541]:
+              - img "message-text-square" [ref=e544]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 Coder 30B A3B Instruct 262144 Context message-text-square LLM" [ref=e546] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-coder-30b-a3b-instruct
+          - generic [ref=e547]:
+            - img "Quen Logo Mark" [ref=e550]
+            - heading "Qwen3 Coder 30B A3B Instruct" [level=3] [ref=e551]
+          - generic [ref=e552]:
+            - generic [ref=e553]: 262144 Context
+            - generic [ref=e555]:
+              - img "message-text-square" [ref=e558]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek R1 (Fast) 163840 Context message-text-square LLM" [ref=e560] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1
+          - generic [ref=e561]:
+            - img "Deepseek Logo Mark" [ref=e564]
+            - heading "DeepSeek R1 (Fast)" [level=3] [ref=e565]
+          - generic [ref=e566]:
+            - generic [ref=e567]: 163840 Context
+            - generic [ref=e569]:
+              - img "message-text-square" [ref=e572]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek-V4-Flash $0.14/M Input • $0.28/M Output • 1048576 Context message-text-square LLM" [ref=e574] [cursor=pointer]:
+          - /url: /models/deepseek-ai/deepseek-v4-flash
+          - generic [ref=e575]:
+            - img "Deepseek Logo Mark" [ref=e578]
+            - heading "DeepSeek-V4-Flash" [level=3] [ref=e579]
+          - generic [ref=e580]:
+            - generic [ref=e581]: $0.14/M Input • $0.28/M Output • 1048576 Context
+            - generic [ref=e583]:
+              - img "message-text-square" [ref=e586]
+              - text: LLM
+        - link "Fireworks Logo Mark Qwen3 Reranker 8B $0.2/M Tokens • 40960 Context message-text-square LLM" [ref=e588] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-reranker-8b
+          - generic [ref=e589]:
+            - img "Fireworks Logo Mark" [ref=e592]
+            - heading "Qwen3 Reranker 8B" [level=3] [ref=e593]
+          - generic [ref=e594]:
+            - generic [ref=e595]: $0.2/M Tokens • 40960 Context
+            - generic [ref=e597]:
+              - img "message-text-square" [ref=e600]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 Embedding 8B $0/M Tokens • 40960 Context message-text-square LLM" [ref=e602] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-embedding-8b
+          - generic [ref=e603]:
+            - img "Quen Logo Mark" [ref=e606]
+            - heading "Qwen3 Embedding 8B" [level=3] [ref=e607]
+          - generic [ref=e608]:
+            - generic [ref=e609]: $0/M Tokens • 40960 Context
+            - generic [ref=e611]:
+              - img "message-text-square" [ref=e614]
+              - text: LLM
+        - link "StepFun New Step-3.7-Flash-NVFP4 262144 Context eye Vision" [ref=e616] [cursor=pointer]:
+          - /url: /models/fireworks/step-3p7-flash-nvfp4
+          - generic [ref=e617]:
+            - generic [ref=e618]:
+              - img "StepFun" [ref=e620]
+              - generic [ref=e621]: New
+            - heading "Step-3.7-Flash-NVFP4" [level=3] [ref=e622]
+          - generic [ref=e623]:
+            - generic [ref=e624]: 262144 Context
+            - generic [ref=e626]:
+              - img "eye" [ref=e629]
+              - text: Vision
+        - link "NVIDIA icon New NVIDIA Nemotron 3 Super 120B A12B BF16 262144 Context message-text-square LLM" [ref=e631] [cursor=pointer]:
+          - /url: /models/fireworks/nemotron-3-super-120b-a12b-bf16
+          - generic [ref=e632]:
+            - generic [ref=e633]:
+              - img "NVIDIA icon" [ref=e635]
+              - generic [ref=e636]: New
+            - heading "NVIDIA Nemotron 3 Super 120B A12B BF16" [level=3] [ref=e637]
+          - generic [ref=e638]:
+            - generic [ref=e639]: 262144 Context
+            - generic [ref=e641]:
+              - img "message-text-square" [ref=e644]
+              - text: LLM
+        - link "Google Ai Logo Mark New Gemma 4 E4B 131072 Context message-text-square LLM" [ref=e646] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-4-e4b
+          - generic [ref=e647]:
+            - generic [ref=e648]:
+              - img "Google Ai Logo Mark" [ref=e650]
+              - generic [ref=e651]: New
+            - heading "Gemma 4 E4B" [level=3] [ref=e652]
+          - generic [ref=e653]:
+            - generic [ref=e654]: 131072 Context
+            - generic [ref=e656]:
+              - img "message-text-square" [ref=e659]
+              - text: LLM
+        - link "Fireworks Logo Mark New MiroThinker-1.7 262144 Context message-text-square LLM" [ref=e661] [cursor=pointer]:
+          - /url: /models/fireworks/mirothinker-1p7
+          - generic [ref=e662]:
+            - generic [ref=e663]:
+              - img "Fireworks Logo Mark" [ref=e665]
+              - generic [ref=e666]: New
+            - heading "MiroThinker-1.7" [level=3] [ref=e667]
+          - generic [ref=e668]:
+            - generic [ref=e669]: 262144 Context
+            - generic [ref=e671]:
+              - img "message-text-square" [ref=e674]
+              - text: LLM
+        - link "Fireworks Logo Mark New Voyage 4 Nano 40960 Context" [ref=e676] [cursor=pointer]:
+          - /url: /models/fireworks/voyage-4-nano
+          - generic [ref=e677]:
+            - generic [ref=e678]:
+              - img "Fireworks Logo Mark" [ref=e680]
+              - generic [ref=e681]: New
+            - heading "Voyage 4 Nano" [level=3] [ref=e682]
+          - generic [ref=e684]: 40960 Context
+        - link "Quen Logo Mark Qwen3.6 27B 262144 Context eye Vision" [ref=e685] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3p6-27b
+          - generic [ref=e686]:
+            - img "Quen Logo Mark" [ref=e689]
+            - heading "Qwen3.6 27B" [level=3] [ref=e690]
+          - generic [ref=e691]:
+            - generic [ref=e692]: 262144 Context
+            - generic [ref=e694]:
+              - img "eye" [ref=e697]
+              - text: Vision
+        - link "Quen Logo Mark Qwen3.6-35B-A3B 262144 Context message-text-square LLM" [ref=e699] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3p6-35b-a3b
+          - generic [ref=e700]:
+            - img "Quen Logo Mark" [ref=e703]
+            - heading "Qwen3.6-35B-A3B" [level=3] [ref=e704]
+          - generic [ref=e705]:
+            - generic [ref=e706]: 262144 Context
+            - generic [ref=e708]:
+              - img "message-text-square" [ref=e711]
+              - text: LLM
+        - link "NVIDIA icon NVIDIA Nemotron 3 Nano Omni 30B A3B 262144 Context message-text-square LLM" [ref=e713] [cursor=pointer]:
+          - /url: /models/fireworks/nvidia-nemotron-3-nano-omni-30b-a3b
+          - generic [ref=e714]:
+            - img "NVIDIA icon" [ref=e717]
+            - heading "NVIDIA Nemotron 3 Nano Omni 30B A3B" [level=3] [ref=e718]
+          - generic [ref=e719]:
+            - generic [ref=e720]: 262144 Context
+            - generic [ref=e722]:
+              - img "message-text-square" [ref=e725]
+              - text: LLM
+        - link "Quen Logo Mark Qwen 3.5 122B A10B 262144 Context eye Vision" [ref=e727] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3p5-122b-a10b
+          - generic [ref=e728]:
+            - img "Quen Logo Mark" [ref=e731]
+            - heading "Qwen 3.5 122B A10B" [level=3] [ref=e732]
+          - generic [ref=e733]:
+            - generic [ref=e734]: 262144 Context
+            - generic [ref=e736]:
+              - img "eye" [ref=e739]
+              - text: Vision
+        - link "Quen Logo Mark Qwen3.5 9B 262144 Context message-text-square LLM" [ref=e741] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3p5-9b
+          - generic [ref=e742]:
+            - img "Quen Logo Mark" [ref=e745]
+            - heading "Qwen3.5 9B" [level=3] [ref=e746]
+          - generic [ref=e747]:
+            - generic [ref=e748]: 262144 Context
+            - generic [ref=e750]:
+              - img "message-text-square" [ref=e753]
+              - text: LLM
+        - link "Quen Logo Mark Qwen 3.5 35B A3B 262144 Context message-text-square LLM" [ref=e755] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3p5-35b-a3b
+          - generic [ref=e756]:
+            - img "Quen Logo Mark" [ref=e759]
+            - heading "Qwen 3.5 35B A3B" [level=3] [ref=e760]
+          - generic [ref=e761]:
+            - generic [ref=e762]: 262144 Context
+            - generic [ref=e764]:
+              - img "message-text-square" [ref=e767]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3.5 27B 262144 Context eye Vision" [ref=e769] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3p5-27b
+          - generic [ref=e770]:
+            - img "Quen Logo Mark" [ref=e773]
+            - heading "Qwen3.5 27B" [level=3] [ref=e774]
+          - generic [ref=e775]:
+            - generic [ref=e776]: 262144 Context
+            - generic [ref=e778]:
+              - img "eye" [ref=e781]
+              - text: Vision
+        - link "Google Ai Logo Mark Gemma 3 1B Instruct message-text-square LLM" [ref=e783] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-3-1b-it
+          - generic [ref=e784]:
+            - img "Google Ai Logo Mark" [ref=e787]
+            - heading "Gemma 3 1B Instruct" [level=3] [ref=e788]
+          - generic [ref=e791]:
+            - img "message-text-square" [ref=e794]
+            - text: LLM
+        - link "z.ai GLM-4.7 Flash 202752 Context message-text-square LLM" [ref=e796] [cursor=pointer]:
+          - /url: /models/fireworks/glm-4p7-flash
+          - generic [ref=e797]:
+            - img "z.ai" [ref=e800]
+            - heading "GLM-4.7 Flash" [level=3] [ref=e801]
+          - generic [ref=e802]:
+            - generic [ref=e803]: 202752 Context
+            - generic [ref=e805]:
+              - img "message-text-square" [ref=e808]
+              - text: LLM
+        - link "Allen Institute for AI logo Molmo2-8B 36864 Context eye Vision" [ref=e810] [cursor=pointer]:
+          - /url: /models/fireworks/molmo2-8b
+          - generic [ref=e811]:
+            - img "Allen Institute for AI logo" [ref=e814]
+            - heading "Molmo2-8B" [level=3] [ref=e815]
+          - generic [ref=e816]:
+            - generic [ref=e817]: 36864 Context
+            - generic [ref=e819]:
+              - img "eye" [ref=e822]
+              - text: Vision
+        - link "Allen Institute for AI logo Molmo2-4B 36864 Context eye Vision" [ref=e824] [cursor=pointer]:
+          - /url: /models/fireworks/molmo2-4b
+          - generic [ref=e825]:
+            - img "Allen Institute for AI logo" [ref=e828]
+            - heading "Molmo2-4B" [level=3] [ref=e829]
+          - generic [ref=e830]:
+            - generic [ref=e831]: 36864 Context
+            - generic [ref=e833]:
+              - img "eye" [ref=e836]
+              - text: Vision
+        - link "z.ai GLM-4.7 202752 Context message-text-square LLM" [ref=e838] [cursor=pointer]:
+          - /url: /models/fireworks/glm-4p7
+          - generic [ref=e839]:
+            - img "z.ai" [ref=e842]
+            - heading "GLM-4.7" [level=3] [ref=e843]
+          - generic [ref=e844]:
+            - generic [ref=e845]: 202752 Context
+            - generic [ref=e847]:
+              - img "message-text-square" [ref=e850]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 Omni 30B A3B Instruct 65536 Context eye Vision" [ref=e852] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-omni-30b-a3b-instruct
+          - generic [ref=e853]:
+            - img "Quen Logo Mark" [ref=e856]
+            - heading "Qwen3 Omni 30B A3B Instruct" [level=3] [ref=e857]
+          - generic [ref=e858]:
+            - generic [ref=e859]: 65536 Context
+            - generic [ref=e861]:
+              - img "eye" [ref=e864]
+              - text: Vision
+        - link "Google Ai Logo Mark Gemma 3 12B Instruct 131072 Context message-text-square LLM" [ref=e866] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-3-12b-it
+          - generic [ref=e867]:
+            - img "Google Ai Logo Mark" [ref=e870]
+            - heading "Gemma 3 12B Instruct" [level=3] [ref=e871]
+          - generic [ref=e872]:
+            - generic [ref=e873]: 131072 Context
+            - generic [ref=e875]:
+              - img "message-text-square" [ref=e878]
+              - text: LLM
+        - link "Google Ai Logo Mark Gemma 3 4B Instruct 131072 Context message-text-square LLM" [ref=e880] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-3-4b-it
+          - generic [ref=e881]:
+            - img "Google Ai Logo Mark" [ref=e884]
+            - heading "Gemma 3 4B Instruct" [level=3] [ref=e885]
+          - generic [ref=e886]:
+            - generic [ref=e887]: 131072 Context
+            - generic [ref=e889]:
+              - img "message-text-square" [ref=e892]
+              - text: LLM
+        - link "NVIDIA icon NVIDIA Nemotron Nano 3 30B A3B message-text-square LLM" [ref=e894] [cursor=pointer]:
+          - /url: /models/fireworks/nemotron-nano-3-30b-a3b
+          - generic [ref=e895]:
+            - img "NVIDIA icon" [ref=e898]
+            - heading "NVIDIA Nemotron Nano 3 30B A3B" [level=3] [ref=e899]
+          - generic [ref=e902]:
+            - img "message-text-square" [ref=e905]
+            - text: LLM
+        - link "Fireworks Logo Mark Seed OSS 36B Instruct 524288 Context message-text-square LLM" [ref=e907] [cursor=pointer]:
+          - /url: /models/fireworks/seed-oss-36b-instruct
+          - generic [ref=e908]:
+            - img "Fireworks Logo Mark" [ref=e911]
+            - heading "Seed OSS 36B Instruct" [level=3] [ref=e912]
+          - generic [ref=e913]:
+            - generic [ref=e914]: 524288 Context
+            - generic [ref=e916]:
+              - img "message-text-square" [ref=e919]
+              - text: LLM
+        - link "Mistral Logo Icon Devstral Small 2 24B Instruct 2512 eye Vision" [ref=e921] [cursor=pointer]:
+          - /url: /models/fireworks/devstral-small-2-24b-instruct-2512
+          - generic [ref=e922]:
+            - img "Mistral Logo Icon" [ref=e925]
+            - heading "Devstral Small 2 24B Instruct 2512" [level=3] [ref=e926]
+          - generic [ref=e929]:
+            - img "eye" [ref=e932]
+            - text: Vision
+        - link "Quen Logo Mark Qwen3 VL 32B Instruct eye Vision" [ref=e934] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-vl-32b-instruct
+          - generic [ref=e935]:
+            - img "Quen Logo Mark" [ref=e938]
+            - heading "Qwen3 VL 32B Instruct" [level=3] [ref=e939]
+          - generic [ref=e942]:
+            - img "eye" [ref=e945]
+            - text: Vision
+        - link "Quen Logo Mark Qwen3-VL-8B-Instruct 262144 Context eye Vision" [ref=e947] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-vl-8b-instruct
+          - generic [ref=e948]:
+            - img "Quen Logo Mark" [ref=e951]
+            - heading "Qwen3-VL-8B-Instruct" [level=3] [ref=e952]
+          - generic [ref=e953]:
+            - generic [ref=e954]: 262144 Context
+            - generic [ref=e956]:
+              - img "eye" [ref=e959]
+              - text: Vision
+        - link "Mistral Logo Icon Mistral Large 3 675B Instruct 2512 256000 Context eye Vision" [ref=e961] [cursor=pointer]:
+          - /url: /models/fireworks/mistral-large-3-fp8
+          - generic [ref=e962]:
+            - img "Mistral Logo Icon" [ref=e965]
+            - heading "Mistral Large 3 675B Instruct 2512" [level=3] [ref=e966]
+          - generic [ref=e967]:
+            - generic [ref=e968]: 256000 Context
+            - generic [ref=e970]:
+              - img "eye" [ref=e973]
+              - text: Vision
+        - link "Mistral Logo Icon Ministral 3 14B Instruct 2512 256000 Context eye Vision" [ref=e975] [cursor=pointer]:
+          - /url: /models/fireworks/ministral-3-14b-instruct-2512
+          - generic [ref=e976]:
+            - img "Mistral Logo Icon" [ref=e979]
+            - heading "Ministral 3 14B Instruct 2512" [level=3] [ref=e980]
+          - generic [ref=e981]:
+            - generic [ref=e982]: 256000 Context
+            - generic [ref=e984]:
+              - img "eye" [ref=e987]
+              - text: Vision
+        - link "Mistral Logo Icon Ministral 3 8B Instruct 2512 256000 Context eye Vision" [ref=e989] [cursor=pointer]:
+          - /url: /models/fireworks/ministral-3-8b-instruct-2512
+          - generic [ref=e990]:
+            - img "Mistral Logo Icon" [ref=e993]
+            - heading "Ministral 3 8B Instruct 2512" [level=3] [ref=e994]
+          - generic [ref=e995]:
+            - generic [ref=e996]: 256000 Context
+            - generic [ref=e998]:
+              - img "eye" [ref=e1001]
+              - text: Vision
+        - link "Mistral Logo Icon Ministral 3 3B Instruct 2512 256000 Context eye Vision" [ref=e1003] [cursor=pointer]:
+          - /url: /models/fireworks/ministral-3-3b-instruct-2512
+          - generic [ref=e1004]:
+            - img "Mistral Logo Icon" [ref=e1007]
+            - heading "Ministral 3 3B Instruct 2512" [level=3] [ref=e1008]
+          - generic [ref=e1009]:
+            - generic [ref=e1010]: 256000 Context
+            - generic [ref=e1012]:
+              - img "eye" [ref=e1015]
+              - text: Vision
+        - link "Fireworks Logo Mark FARE-20B 131072 Context message-text-square LLM" [ref=e1017] [cursor=pointer]:
+          - /url: /models/fireworks/fare-20b
+          - generic [ref=e1018]:
+            - img "Fireworks Logo Mark" [ref=e1021]
+            - heading "FARE-20B" [level=3] [ref=e1022]
+          - generic [ref=e1023]:
+            - generic [ref=e1024]: 131072 Context
+            - generic [ref=e1026]:
+              - img "message-text-square" [ref=e1029]
+              - text: LLM
+        - link "Fireworks Logo Mark KAT Coder 262144 Context message-text-square LLM" [ref=e1031] [cursor=pointer]:
+          - /url: /models/fireworks/kat-coder
+          - generic [ref=e1032]:
+            - img "Fireworks Logo Mark" [ref=e1035]
+            - heading "KAT Coder" [level=3] [ref=e1036]
+          - generic [ref=e1037]:
+            - generic [ref=e1038]: 262144 Context
+            - generic [ref=e1040]:
+              - img "message-text-square" [ref=e1043]
+              - text: LLM
+        - link "Deep Cognito Model Logo Cogito 671B v2.1 163840 Context message-text-square LLM" [ref=e1045] [cursor=pointer]:
+          - /url: /models/cogito/cogito-671b-v2-p1
+          - generic [ref=e1046]:
+            - img "Deep Cognito Model Logo" [ref=e1049]
+            - heading "Cogito 671B v2.1" [level=3] [ref=e1050]
+          - generic [ref=e1051]:
+            - generic [ref=e1052]: 163840 Context
+            - generic [ref=e1054]:
+              - img "message-text-square" [ref=e1057]
+              - text: LLM
+        - link "Kwaipilot icon KAT Dev 32B 131072 Context message-text-square LLM" [ref=e1059] [cursor=pointer]:
+          - /url: /models/fireworks/kat-dev-32b
+          - generic [ref=e1060]:
+            - img "Kwaipilot icon" [ref=e1063]
+            - heading "KAT Dev 32B" [level=3] [ref=e1064]
+          - generic [ref=e1065]:
+            - generic [ref=e1066]: 131072 Context
+            - generic [ref=e1068]:
+              - img "message-text-square" [ref=e1071]
+              - text: LLM
+        - link "Kwaipilot icon KAT Dev 72B Exp 131072 Context message-text-square LLM" [ref=e1073] [cursor=pointer]:
+          - /url: /models/fireworks/kat-dev-72b-exp
+          - generic [ref=e1074]:
+            - img "Kwaipilot icon" [ref=e1077]
+            - heading "KAT Dev 72B Exp" [level=3] [ref=e1078]
+          - generic [ref=e1079]:
+            - generic [ref=e1080]: 131072 Context
+            - generic [ref=e1082]:
+              - img "message-text-square" [ref=e1085]
+              - text: LLM
+        - link "OpenAi Logo MArk OpenAI gpt-oss-safeguard-120b 131072 Context message-text-square LLM" [ref=e1087] [cursor=pointer]:
+          - /url: /models/fireworks/gpt-oss-safeguard-120b
+          - generic [ref=e1088]:
+            - img "OpenAi Logo MArk" [ref=e1091]
+            - heading "OpenAI gpt-oss-safeguard-120b" [level=3] [ref=e1092]
+          - generic [ref=e1093]:
+            - generic [ref=e1094]: 131072 Context
+            - generic [ref=e1096]:
+              - img "message-text-square" [ref=e1099]
+              - text: LLM
+        - link "OpenAi Logo MArk OpenAI gpt-oss-safeguard-20b 131072 Context message-text-square LLM" [ref=e1101] [cursor=pointer]:
+          - /url: /models/fireworks/gpt-oss-safeguard-20b
+          - generic [ref=e1102]:
+            - img "OpenAi Logo MArk" [ref=e1105]
+            - heading "OpenAI gpt-oss-safeguard-20b" [level=3] [ref=e1106]
+          - generic [ref=e1107]:
+            - generic [ref=e1108]: 131072 Context
+            - generic [ref=e1110]:
+              - img "message-text-square" [ref=e1113]
+              - text: LLM
+        - link "NVIDIA icon NVIDIA Nemotron Nano 2 VL 131072 Context eye Vision" [ref=e1115] [cursor=pointer]:
+          - /url: /models/fireworks/nemotron-nano-v2-12b-vl
+          - generic [ref=e1116]:
+            - img "NVIDIA icon" [ref=e1119]
+            - heading "NVIDIA Nemotron Nano 2 VL" [level=3] [ref=e1120]
+          - generic [ref=e1121]:
+            - generic [ref=e1122]: 131072 Context
+            - generic [ref=e1124]:
+              - img "eye" [ref=e1127]
+              - text: Vision
+        - link "minimax MiniMax-M2 196608 Context message-text-square LLM" [ref=e1129] [cursor=pointer]:
+          - /url: /models/fireworks/minimax-m2
+          - generic [ref=e1130]:
+            - img "minimax" [ref=e1133]
+            - heading "MiniMax-M2" [level=3] [ref=e1134]
+          - generic [ref=e1135]:
+            - generic [ref=e1136]: 196608 Context
+            - generic [ref=e1138]:
+              - img "message-text-square" [ref=e1141]
+              - text: LLM
+        - link "Quen Logo Mark Qwen 3 4B Instruct 2507 262144 Context message-text-square LLM" [ref=e1143] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-4b-instruct-2507
+          - generic [ref=e1144]:
+            - img "Quen Logo Mark" [ref=e1147]
+            - heading "Qwen 3 4B Instruct 2507" [level=3] [ref=e1148]
+          - generic [ref=e1149]:
+            - generic [ref=e1150]: 262144 Context
+            - generic [ref=e1152]:
+              - img "message-text-square" [ref=e1155]
+              - text: LLM
+        - link "NVIDIA icon NVIDIA Nemotron Nano 12B v2 128000 Context message-text-square LLM" [ref=e1157] [cursor=pointer]:
+          - /url: /models/fireworks/nvidia-nemotron-nano-12b-v2
+          - generic [ref=e1158]:
+            - img "NVIDIA icon" [ref=e1161]
+            - heading "NVIDIA Nemotron Nano 12B v2" [level=3] [ref=e1162]
+          - generic [ref=e1163]:
+            - generic [ref=e1164]: 128000 Context
+            - generic [ref=e1166]:
+              - img "message-text-square" [ref=e1169]
+              - text: LLM
+        - link "NVIDIA icon NVIDIA Nemotron Nano 9B v2 128000 Context message-text-square LLM" [ref=e1171] [cursor=pointer]:
+          - /url: /models/fireworks/nvidia-nemotron-nano-9b-v2
+          - generic [ref=e1172]:
+            - img "NVIDIA icon" [ref=e1175]
+            - heading "NVIDIA Nemotron Nano 9B v2" [level=3] [ref=e1176]
+          - generic [ref=e1177]:
+            - generic [ref=e1178]: 128000 Context
+            - generic [ref=e1180]:
+              - img "message-text-square" [ref=e1183]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 VL 30B A3B Thinking 262144 Context eye Vision" [ref=e1185] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-vl-30b-a3b-thinking
+          - generic [ref=e1186]:
+            - img "Quen Logo Mark" [ref=e1189]
+            - heading "Qwen3 VL 30B A3B Thinking" [level=3] [ref=e1190]
+          - generic [ref=e1191]:
+            - generic [ref=e1192]: 262144 Context
+            - generic [ref=e1194]:
+              - img "eye" [ref=e1197]
+              - text: Vision
+        - link "Quen Logo Mark Qwen3 VL 30B A3B Instruct 262144 Context eye Vision" [ref=e1199] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-vl-30b-a3b-instruct
+          - generic [ref=e1200]:
+            - img "Quen Logo Mark" [ref=e1203]
+            - heading "Qwen3 VL 30B A3B Instruct" [level=3] [ref=e1204]
+          - generic [ref=e1205]:
+            - generic [ref=e1206]: 262144 Context
+            - generic [ref=e1208]:
+              - img "eye" [ref=e1211]
+              - text: Vision
+        - link "Fireworks Logo Mark Qwen3 Embedding 0.6B 32768 Context message-text-square LLM" [ref=e1213] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-embedding-0p6b
+          - generic [ref=e1214]:
+            - img "Fireworks Logo Mark" [ref=e1217]
+            - heading "Qwen3 Embedding 0.6B" [level=3] [ref=e1218]
+          - generic [ref=e1219]:
+            - generic [ref=e1220]: 32768 Context
+            - generic [ref=e1222]:
+              - img "message-text-square" [ref=e1225]
+              - text: LLM
+        - link "Fireworks Logo Mark Qwen3 Embedding 4B 40960 Context message-text-square LLM" [ref=e1227] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-embedding-4b
+          - generic [ref=e1228]:
+            - img "Fireworks Logo Mark" [ref=e1231]
+            - heading "Qwen3 Embedding 4B" [level=3] [ref=e1232]
+          - generic [ref=e1233]:
+            - generic [ref=e1234]: 40960 Context
+            - generic [ref=e1236]:
+              - img "message-text-square" [ref=e1239]
+              - text: LLM
+        - link "Fireworks Logo Mark Qwen3 Reranker 4B 40960 Context message-text-square LLM" [ref=e1241] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-reranker-4b
+          - generic [ref=e1242]:
+            - img "Fireworks Logo Mark" [ref=e1245]
+            - heading "Qwen3 Reranker 4B" [level=3] [ref=e1246]
+          - generic [ref=e1247]:
+            - generic [ref=e1248]: 40960 Context
+            - generic [ref=e1250]:
+              - img "message-text-square" [ref=e1253]
+              - text: LLM
+        - link "Fireworks Logo Mark Qwen3 Reranker 0.6B 40960 Context message-text-square LLM" [ref=e1255] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-reranker-0p6b
+          - generic [ref=e1256]:
+            - img "Fireworks Logo Mark" [ref=e1259]
+            - heading "Qwen3 Reranker 0.6B" [level=3] [ref=e1260]
+          - generic [ref=e1261]:
+            - generic [ref=e1262]: 40960 Context
+            - generic [ref=e1264]:
+              - img "message-text-square" [ref=e1267]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 Next 80B A3B Thinking message-text-square LLM" [ref=e1269] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-next-80b-a3b-thinking
+          - generic [ref=e1270]:
+            - img "Quen Logo Mark" [ref=e1273]
+            - heading "Qwen3 Next 80B A3B Thinking" [level=3] [ref=e1274]
+          - generic [ref=e1277]:
+            - img "message-text-square" [ref=e1280]
+            - text: LLM
+        - link "Quen Logo Mark Qwen3 Next 80B A3B Instruct message-text-square LLM" [ref=e1282] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-next-80b-a3b-instruct
+          - generic [ref=e1283]:
+            - img "Quen Logo Mark" [ref=e1286]
+            - heading "Qwen3 Next 80B A3B Instruct" [level=3] [ref=e1287]
+          - generic [ref=e1290]:
+            - img "message-text-square" [ref=e1293]
+            - text: LLM
+        - link "Deepseek Logo Mark DeepSeek V3.1 Terminus 163840 Context message-text-square LLM" [ref=e1295] [cursor=pointer]:
+          - /url: /models/deepseek-ai/deepseek-v3p1-terminus
+          - generic [ref=e1296]:
+            - img "Deepseek Logo Mark" [ref=e1299]
+            - heading "DeepSeek V3.1 Terminus" [level=3] [ref=e1300]
+          - generic [ref=e1301]:
+            - generic [ref=e1302]: 163840 Context
+            - generic [ref=e1304]:
+              - img "message-text-square" [ref=e1307]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 Coder 480B Instruct BF16 262144 Context message-text-square LLM" [ref=e1309] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-coder-480b-instruct-bf16
+          - generic [ref=e1310]:
+            - img "Quen Logo Mark" [ref=e1313]
+            - heading "Qwen3 Coder 480B Instruct BF16" [level=3] [ref=e1314]
+          - generic [ref=e1315]:
+            - generic [ref=e1316]: 262144 Context
+            - generic [ref=e1318]:
+              - img "message-text-square" [ref=e1321]
+              - text: LLM
+        - link "z.ai GLM-4.5V 131072 Context eye Vision" [ref=e1323] [cursor=pointer]:
+          - /url: /models/fireworks/glm-4p5v
+          - generic [ref=e1324]:
+            - img "z.ai" [ref=e1327]
+            - heading "GLM-4.5V" [level=3] [ref=e1328]
+          - generic [ref=e1329]:
+            - generic [ref=e1330]: 131072 Context
+            - generic [ref=e1332]:
+              - img "eye" [ref=e1335]
+              - text: Vision
+        - link "Quen Logo Mark Qwen3 30B A3B Instruct 2507 262144 Context message-text-square LLM" [ref=e1337] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-30b-a3b-instruct-2507
+          - generic [ref=e1338]:
+            - img "Quen Logo Mark" [ref=e1341]
+            - heading "Qwen3 30B A3B Instruct 2507" [level=3] [ref=e1342]
+          - generic [ref=e1343]:
+            - generic [ref=e1344]: 262144 Context
+            - generic [ref=e1346]:
+              - img "message-text-square" [ref=e1349]
+              - text: LLM
+        - link "Baidu icon ERNIE-4.5-21B-A3B-PT 131072 Context message-text-square LLM" [ref=e1351] [cursor=pointer]:
+          - /url: /models/fireworks/ernie-4p5-21b-a3b-pt
+          - generic [ref=e1352]:
+            - img "Baidu icon" [ref=e1355]
+            - heading "ERNIE-4.5-21B-A3B-PT" [level=3] [ref=e1356]
+          - generic [ref=e1357]:
+            - generic [ref=e1358]: 131072 Context
+            - generic [ref=e1360]:
+              - img "message-text-square" [ref=e1363]
+              - text: LLM
+        - link "Baidu icon ERNIE-4.5-300B-A47B-PT message-text-square LLM" [ref=e1365] [cursor=pointer]:
+          - /url: /models/fireworks/ernie-4p5-300b-a47b-pt
+          - generic [ref=e1366]:
+            - img "Baidu icon" [ref=e1369]
+            - heading "ERNIE-4.5-300B-A47B-PT" [level=3] [ref=e1370]
+          - generic [ref=e1373]:
+            - img "message-text-square" [ref=e1376]
+            - text: LLM
+        - link "Fireworks Logo Mark InternVL3 38B 16384 Context eye Vision" [ref=e1378] [cursor=pointer]:
+          - /url: /models/fireworks/internvl3-38b
+          - generic [ref=e1379]:
+            - img "Fireworks Logo Mark" [ref=e1382]
+            - heading "InternVL3 38B" [level=3] [ref=e1383]
+          - generic [ref=e1384]:
+            - generic [ref=e1385]: 16384 Context
+            - generic [ref=e1387]:
+              - img "eye" [ref=e1390]
+              - text: Vision
+        - link "Fireworks Logo Mark InternVL3 78B 16384 Context eye Vision" [ref=e1392] [cursor=pointer]:
+          - /url: /models/fireworks/internvl3-78b
+          - generic [ref=e1393]:
+            - img "Fireworks Logo Mark" [ref=e1396]
+            - heading "InternVL3 78B" [level=3] [ref=e1397]
+          - generic [ref=e1398]:
+            - generic [ref=e1399]: 16384 Context
+            - generic [ref=e1401]:
+              - img "eye" [ref=e1404]
+              - text: Vision
+        - link "minimax MiniMax-M1-80k message-text-square LLM" [ref=e1406] [cursor=pointer]:
+          - /url: /models/fireworks/minimax-m1-80k
+          - generic [ref=e1407]:
+            - img "minimax" [ref=e1410]
+            - heading "MiniMax-M1-80k" [level=3] [ref=e1411]
+          - generic [ref=e1414]:
+            - img "message-text-square" [ref=e1417]
+            - text: LLM
+        - link "Fireworks Logo Mark Qwen3 1.7B fp8 model used for drafting 262144 Context message-text-square LLM" [ref=e1419] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-1p7b-fp8-draft
+          - generic [ref=e1420]:
+            - img "Fireworks Logo Mark" [ref=e1423]
+            - heading "Qwen3 1.7B fp8 model used for drafting" [level=3] [ref=e1424]
+          - generic [ref=e1425]:
+            - generic [ref=e1426]: 262144 Context
+            - generic [ref=e1428]:
+              - img "message-text-square" [ref=e1431]
+              - text: LLM
+        - link "Fireworks Logo Mark Qwen3 1.7B fp8 model used for drafting for 131072 context 131072 Context message-text-square LLM" [ref=e1433] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-1p7b-fp8-draft-131072
+          - generic [ref=e1434]:
+            - img "Fireworks Logo Mark" [ref=e1437]
+            - heading "Qwen3 1.7B fp8 model used for drafting for 131072 context" [level=3] [ref=e1438]
+          - generic [ref=e1439]:
+            - generic [ref=e1440]: 131072 Context
+            - generic [ref=e1442]:
+              - img "message-text-square" [ref=e1445]
+              - text: LLM
+        - link "Fireworks Logo Mark Qwen3 1.7B fp8 model used for drafting for 40960 context length 40960 Context message-text-square LLM" [ref=e1447] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-1p7b-fp8-draft-40960
+          - generic [ref=e1448]:
+            - img "Fireworks Logo Mark" [ref=e1451]
+            - heading "Qwen3 1.7B fp8 model used for drafting for 40960 context length" [level=3] [ref=e1452]
+          - generic [ref=e1453]:
+            - generic [ref=e1454]: 40960 Context
+            - generic [ref=e1456]:
+              - img "message-text-square" [ref=e1459]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 30B A3B Thinking 2507 262144 Context message-text-square LLM" [ref=e1461] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-30b-a3b-thinking-2507
+          - generic [ref=e1462]:
+            - img "Quen Logo Mark" [ref=e1465]
+            - heading "Qwen3 30B A3B Thinking 2507" [level=3] [ref=e1466]
+          - generic [ref=e1467]:
+            - generic [ref=e1468]: 262144 Context
+            - generic [ref=e1470]:
+              - img "message-text-square" [ref=e1473]
+              - text: LLM
+        - link "Fireworks Logo Mark Rolm OCR 128000 Context eye Vision" [ref=e1475] [cursor=pointer]:
+          - /url: /models/fireworks/rolm-ocr
+          - generic [ref=e1476]:
+            - img "Fireworks Logo Mark" [ref=e1479]
+            - heading "Rolm OCR" [level=3] [ref=e1480]
+          - generic [ref=e1481]:
+            - generic [ref=e1482]: 128000 Context
+            - generic [ref=e1484]:
+              - img "eye" [ref=e1487]
+              - text: Vision
+        - link "Deepseek Logo Mark DeepSeek R1 0528 Distill Qwen3 8B 131072 Context message-text-square LLM" [ref=e1489] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1-0528-distill-qwen3-8b
+          - generic [ref=e1490]:
+            - img "Deepseek Logo Mark" [ref=e1493]
+            - heading "DeepSeek R1 0528 Distill Qwen3 8B" [level=3] [ref=e1494]
+          - generic [ref=e1495]:
+            - generic [ref=e1496]: 131072 Context
+            - generic [ref=e1498]:
+              - img "message-text-square" [ref=e1501]
+              - text: LLM
+        - link "Sentient Logo Dobby Mini Unhinged Plus Llama 3.1 8B 131072 Context message-text-square LLM" [ref=e1503] [cursor=pointer]:
+          - /url: /models/sentientfoundation-serverless/dobby-mini-unhinged-plus-llama-3-1-8b
+          - generic [ref=e1504]:
+            - img "Sentient Logo" [ref=e1507]
+            - heading "Dobby Mini Unhinged Plus Llama 3.1 8B" [level=3] [ref=e1508]
+          - generic [ref=e1509]:
+            - generic [ref=e1510]: 131072 Context
+            - generic [ref=e1512]:
+              - img "message-text-square" [ref=e1515]
+              - text: LLM
+        - link "Fireworks Logo Mark InternVL3 8B 16384 Context eye Vision" [ref=e1517] [cursor=pointer]:
+          - /url: /models/fireworks/internvl3-8b
+          - generic [ref=e1518]:
+            - img "Fireworks Logo Mark" [ref=e1521]
+            - heading "InternVL3 8B" [level=3] [ref=e1522]
+          - generic [ref=e1523]:
+            - generic [ref=e1524]: 16384 Context
+            - generic [ref=e1526]:
+              - img "eye" [ref=e1529]
+              - text: Vision
+        - link "Mistral Logo Icon Devstral-Small-2505 131072 Context message-text-square LLM" [ref=e1531] [cursor=pointer]:
+          - /url: /models/fireworks/devstral-small-2505
+          - generic [ref=e1532]:
+            - img "Mistral Logo Icon" [ref=e1535]
+            - heading "Devstral-Small-2505" [level=3] [ref=e1536]
+          - generic [ref=e1537]:
+            - generic [ref=e1538]: 131072 Context
+            - generic [ref=e1540]:
+              - img "message-text-square" [ref=e1543]
+              - text: LLM
+        - link "Flux Logo Mark FLUX.1 [schnell] message-text-square LLM" [ref=e1545] [cursor=pointer]:
+          - /url: /models/fireworks/flux-1-schnell
+          - generic [ref=e1546]:
+            - img "Flux Logo Mark" [ref=e1549]
+            - heading "FLUX.1 [schnell]" [level=3] [ref=e1550]
+          - generic [ref=e1553]:
+            - img "message-text-square" [ref=e1556]
+            - text: LLM
+        - link "z.ai GLM-4.5-Air 131072 Context message-text-square LLM" [ref=e1558] [cursor=pointer]:
+          - /url: /models/fireworks/glm-4p5-air
+          - generic [ref=e1559]:
+            - img "z.ai" [ref=e1562]
+            - heading "GLM-4.5-Air" [level=3] [ref=e1563]
+          - generic [ref=e1564]:
+            - generic [ref=e1565]: 131072 Context
+            - generic [ref=e1567]:
+              - img "message-text-square" [ref=e1570]
+              - text: LLM
+        - link "z.ai GLM-4.5 131072 Context message-text-square LLM" [ref=e1572] [cursor=pointer]:
+          - /url: /models/fireworks/glm-4p5
+          - generic [ref=e1573]:
+            - img "z.ai" [ref=e1576]
+            - heading "GLM-4.5" [level=3] [ref=e1577]
+          - generic [ref=e1578]:
+            - generic [ref=e1579]: 131072 Context
+            - generic [ref=e1581]:
+              - img "message-text-square" [ref=e1584]
+              - text: LLM
+        - link "mooshot Kimi K2 Instruct 131072 Context message-text-square LLM" [ref=e1586] [cursor=pointer]:
+          - /url: /models/fireworks/kimi-k2-instruct
+          - generic [ref=e1587]:
+            - img "mooshot" [ref=e1590]
+            - heading "Kimi K2 Instruct" [level=3] [ref=e1591]
+          - generic [ref=e1592]:
+            - generic [ref=e1593]: 131072 Context
+            - generic [ref=e1595]:
+              - img "message-text-square" [ref=e1598]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek Prover V2 163840 Context message-text-square LLM" [ref=e1600] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-prover-v2
+          - generic [ref=e1601]:
+            - img "Deepseek Logo Mark" [ref=e1604]
+            - heading "DeepSeek Prover V2" [level=3] [ref=e1605]
+          - generic [ref=e1606]:
+            - generic [ref=e1607]: 163840 Context
+            - generic [ref=e1609]:
+              - img "message-text-square" [ref=e1612]
+              - text: LLM
+        - link "Meta Mark Llama Guard 7B 4096 Context message-text-square LLM" [ref=e1614] [cursor=pointer]:
+          - /url: /models/fireworks/llamaguard-7b
+          - generic [ref=e1615]:
+            - img "Meta Mark" [ref=e1618]
+            - heading "Llama Guard 7B" [level=3] [ref=e1619]
+          - generic [ref=e1620]:
+            - generic [ref=e1621]: 4096 Context
+            - generic [ref=e1623]:
+              - img "message-text-square" [ref=e1626]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5 1.5B Instruct 32768 Context message-text-square LLM" [ref=e1628] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-1p5b-instruct
+          - generic [ref=e1629]:
+            - img "Quen Logo Mark" [ref=e1632]
+            - heading "Qwen2.5 1.5B Instruct" [level=3] [ref=e1633]
+          - generic [ref=e1634]:
+            - generic [ref=e1635]: 32768 Context
+            - generic [ref=e1637]:
+              - img "message-text-square" [ref=e1640]
+              - text: LLM
+        - link "Hugging Face Logo Mark Zephyr 7B Beta 32768 Context message-text-square LLM" [ref=e1642] [cursor=pointer]:
+          - /url: /models/fireworks/zephyr-7b-beta
+          - generic [ref=e1643]:
+            - img "Hugging Face Logo Mark" [ref=e1646]
+            - heading "Zephyr 7B Beta" [level=3] [ref=e1647]
+          - generic [ref=e1648]:
+            - generic [ref=e1649]: 32768 Context
+            - generic [ref=e1651]:
+              - img "message-text-square" [ref=e1654]
+              - text: LLM
+        - link "Deep Cognito Model Logo Cogito v1 Preview Llama 70B 131072 Context message-text-square LLM" [ref=e1656] [cursor=pointer]:
+          - /url: /models/fireworks/cogito-v1-preview-llama-70b
+          - generic [ref=e1657]:
+            - img "Deep Cognito Model Logo" [ref=e1660]
+            - heading "Cogito v1 Preview Llama 70B" [level=3] [ref=e1661]
+          - generic [ref=e1662]:
+            - generic [ref=e1663]: 131072 Context
+            - generic [ref=e1665]:
+              - img "message-text-square" [ref=e1668]
+              - text: LLM
+        - link "Deep Cognito Model Logo Cogito v1 Preview Llama 8B 131072 Context message-text-square LLM" [ref=e1670] [cursor=pointer]:
+          - /url: /models/fireworks/cogito-v1-preview-llama-8b
+          - generic [ref=e1671]:
+            - img "Deep Cognito Model Logo" [ref=e1674]
+            - heading "Cogito v1 Preview Llama 8B" [level=3] [ref=e1675]
+          - generic [ref=e1676]:
+            - generic [ref=e1677]: 131072 Context
+            - generic [ref=e1679]:
+              - img "message-text-square" [ref=e1682]
+              - text: LLM
+        - link "Deep Cognito Model Logo Cogito v1 Preview Qwen 14B 131072 Context message-text-square LLM" [ref=e1684] [cursor=pointer]:
+          - /url: /models/fireworks/cogito-v1-preview-qwen-14b
+          - generic [ref=e1685]:
+            - img "Deep Cognito Model Logo" [ref=e1688]
+            - heading "Cogito v1 Preview Qwen 14B" [level=3] [ref=e1689]
+          - generic [ref=e1690]:
+            - generic [ref=e1691]: 131072 Context
+            - generic [ref=e1693]:
+              - img "message-text-square" [ref=e1696]
+              - text: LLM
+        - link "Deep Cognito Model Logo Cogito v1 Preview Qwen 32B 131072 Context message-text-square LLM" [ref=e1698] [cursor=pointer]:
+          - /url: /models/fireworks/cogito-v1-preview-qwen-32b
+          - generic [ref=e1699]:
+            - img "Deep Cognito Model Logo" [ref=e1702]
+            - heading "Cogito v1 Preview Qwen 32B" [level=3] [ref=e1703]
+          - generic [ref=e1704]:
+            - generic [ref=e1705]: 131072 Context
+            - generic [ref=e1707]:
+              - img "message-text-square" [ref=e1710]
+              - text: LLM
+        - link "Google Ai Logo Mark Gemma 3 27B Instruct 131072 Context message-text-square LLM" [ref=e1712] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-3-27b-it
+          - generic [ref=e1713]:
+            - img "Google Ai Logo Mark" [ref=e1716]
+            - heading "Gemma 3 27B Instruct" [level=3] [ref=e1717]
+          - generic [ref=e1718]:
+            - generic [ref=e1719]: 131072 Context
+            - generic [ref=e1721]:
+              - img "message-text-square" [ref=e1724]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-VL 32B Instruct 128000 Context eye Vision" [ref=e1726] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-vl-32b-instruct
+          - generic [ref=e1727]:
+            - img "Quen Logo Mark" [ref=e1730]
+            - heading "Qwen2.5-VL 32B Instruct" [level=3] [ref=e1731]
+          - generic [ref=e1732]:
+            - generic [ref=e1733]: 128000 Context
+            - generic [ref=e1735]:
+              - img "eye" [ref=e1738]
+              - text: Vision
+        - link "Quen Logo Mark Qwen3 0.6B 40960 Context message-text-square LLM" [ref=e1740] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-0p6b
+          - generic [ref=e1741]:
+            - img "Quen Logo Mark" [ref=e1744]
+            - heading "Qwen3 0.6B" [level=3] [ref=e1745]
+          - generic [ref=e1746]:
+            - generic [ref=e1747]: 40960 Context
+            - generic [ref=e1749]:
+              - img "message-text-square" [ref=e1752]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 14B 40960 Context message-text-square LLM" [ref=e1754] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-14b
+          - generic [ref=e1755]:
+            - img "Quen Logo Mark" [ref=e1758]
+            - heading "Qwen3 14B" [level=3] [ref=e1759]
+          - generic [ref=e1760]:
+            - generic [ref=e1761]: 40960 Context
+            - generic [ref=e1763]:
+              - img "message-text-square" [ref=e1766]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 1.7B 131072 Context message-text-square LLM" [ref=e1768] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-1p7b
+          - generic [ref=e1769]:
+            - img "Quen Logo Mark" [ref=e1772]
+            - heading "Qwen3 1.7B" [level=3] [ref=e1773]
+          - generic [ref=e1774]:
+            - generic [ref=e1775]: 131072 Context
+            - generic [ref=e1777]:
+              - img "message-text-square" [ref=e1780]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 32B 131072 Context message-text-square LLM" [ref=e1782] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-32b
+          - generic [ref=e1783]:
+            - img "Quen Logo Mark" [ref=e1786]
+            - heading "Qwen3 32B" [level=3] [ref=e1787]
+          - generic [ref=e1788]:
+            - generic [ref=e1789]: 131072 Context
+            - generic [ref=e1791]:
+              - img "message-text-square" [ref=e1794]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 4B 40960 Context message-text-square LLM" [ref=e1796] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-4b
+          - generic [ref=e1797]:
+            - img "Quen Logo Mark" [ref=e1800]
+            - heading "Qwen3 4B" [level=3] [ref=e1801]
+          - generic [ref=e1802]:
+            - generic [ref=e1803]: 40960 Context
+            - generic [ref=e1805]:
+              - img "message-text-square" [ref=e1808]
+              - text: LLM
+        - link "Quen Logo Mark Qwen3 8B 40960 Context message-text-square LLM" [ref=e1810] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-8b
+          - generic [ref=e1811]:
+            - img "Quen Logo Mark" [ref=e1814]
+            - heading "Qwen3 8B" [level=3] [ref=e1815]
+          - generic [ref=e1816]:
+            - generic [ref=e1817]: 40960 Context
+            - generic [ref=e1819]:
+              - img "message-text-square" [ref=e1822]
+              - text: LLM
+        - link "Deep Cognito Model Logo Cogito v1 Preview Llama 3B 131072 Context message-text-square LLM" [ref=e1824] [cursor=pointer]:
+          - /url: /models/fireworks/cogito-v1-preview-llama-3b
+          - generic [ref=e1825]:
+            - img "Deep Cognito Model Logo" [ref=e1828]
+            - heading "Cogito v1 Preview Llama 3B" [level=3] [ref=e1829]
+          - generic [ref=e1830]:
+            - generic [ref=e1831]: 131072 Context
+            - generic [ref=e1833]:
+              - img "message-text-square" [ref=e1836]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek R1 (Basic) 163840 Context message-text-square LLM" [ref=e1838] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1-basic
+          - generic [ref=e1839]:
+            - img "Deepseek Logo Mark" [ref=e1842]
+            - heading "DeepSeek R1 (Basic)" [level=3] [ref=e1843]
+          - generic [ref=e1844]:
+            - generic [ref=e1845]: 163840 Context
+            - generic [ref=e1847]:
+              - img "message-text-square" [ref=e1850]
+              - text: LLM
+        - link "Sentient Logo Dobby-Unhinged-Llama-3.3-70B 131072 Context message-text-square LLM" [ref=e1852] [cursor=pointer]:
+          - /url: /models/sentientfoundation/dobby-unhinged-llama-3-3-70b-new
+          - generic [ref=e1853]:
+            - img "Sentient Logo" [ref=e1856]
+            - heading "Dobby-Unhinged-Llama-3.3-70B" [level=3] [ref=e1857]
+          - generic [ref=e1858]:
+            - generic [ref=e1859]: 131072 Context
+            - generic [ref=e1861]:
+              - img "message-text-square" [ref=e1864]
+              - text: LLM
+        - link "Fireworks Logo Mark Firesearch OCR V6 8192 Context eye Vision" [ref=e1866] [cursor=pointer]:
+          - /url: /models/fireworks/firesearch-ocr-v6
+          - generic [ref=e1867]:
+            - img "Fireworks Logo Mark" [ref=e1870]
+            - heading "Firesearch OCR V6" [level=3] [ref=e1871]
+          - generic [ref=e1872]:
+            - generic [ref=e1873]: 8192 Context
+            - generic [ref=e1875]:
+              - img "eye" [ref=e1878]
+              - text: Vision
+        - link "Quen Logo Mark Qwen2.5-VL 3B Instruct 128000 Context eye Vision" [ref=e1880] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-vl-3b-instruct
+          - generic [ref=e1881]:
+            - img "Quen Logo Mark" [ref=e1884]
+            - heading "Qwen2.5-VL 3B Instruct" [level=3] [ref=e1885]
+          - generic [ref=e1886]:
+            - generic [ref=e1887]: 128000 Context
+            - generic [ref=e1889]:
+              - img "eye" [ref=e1892]
+              - text: Vision
+        - link "Quen Logo Mark Qwen2.5-VL 72B Instruct 128000 Context eye Vision" [ref=e1894] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-vl-72b-instruct
+          - generic [ref=e1895]:
+            - img "Quen Logo Mark" [ref=e1898]
+            - heading "Qwen2.5-VL 72B Instruct" [level=3] [ref=e1899]
+          - generic [ref=e1900]:
+            - generic [ref=e1901]: 128000 Context
+            - generic [ref=e1903]:
+              - img "eye" [ref=e1906]
+              - text: Vision
+        - link "Quen Logo Mark Qwen2.5-VL 7B Instruct 128000 Context eye Vision" [ref=e1908] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-vl-7b-instruct
+          - generic [ref=e1909]:
+            - img "Quen Logo Mark" [ref=e1912]
+            - heading "Qwen2.5-VL 7B Instruct" [level=3] [ref=e1913]
+          - generic [ref=e1914]:
+            - generic [ref=e1915]: 128000 Context
+            - generic [ref=e1917]:
+              - img "eye" [ref=e1920]
+              - text: Vision
+        - link "Quen Logo Mark QWQ 32B 131072 Context message-text-square LLM" [ref=e1922] [cursor=pointer]:
+          - /url: /models/fireworks/qwq-32b
+          - generic [ref=e1923]:
+            - img "Quen Logo Mark" [ref=e1926]
+            - heading "QWQ 32B" [level=3] [ref=e1927]
+          - generic [ref=e1928]:
+            - generic [ref=e1929]: 131072 Context
+            - generic [ref=e1931]:
+              - img "message-text-square" [ref=e1934]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek R1 Distill Qwen 32B 131072 Context message-text-square LLM" [ref=e1936] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1-distill-qwen-32b
+          - generic [ref=e1937]:
+            - img "Deepseek Logo Mark" [ref=e1940]
+            - heading "DeepSeek R1 Distill Qwen 32B" [level=3] [ref=e1941]
+          - generic [ref=e1942]:
+            - generic [ref=e1943]: 131072 Context
+            - generic [ref=e1945]:
+              - img "message-text-square" [ref=e1948]
+              - text: LLM
+        - link "Meta Mark Llama 3 8B 8192 Context message-text-square LLM" [ref=e1950] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3-8b
+          - generic [ref=e1951]:
+            - img "Meta Mark" [ref=e1954]
+            - heading "Llama 3 8B" [level=3] [ref=e1955]
+          - generic [ref=e1956]:
+            - generic [ref=e1957]: 8192 Context
+            - generic [ref=e1959]:
+              - img "message-text-square" [ref=e1962]
+              - text: LLM
+        - link "Quen Logo Mark Qwen QWQ 32B Preview 32768 Context message-text-square LLM" [ref=e1964] [cursor=pointer]:
+          - /url: /models/fireworks/qwen-qwq-32b-preview
+          - generic [ref=e1965]:
+            - img "Quen Logo Mark" [ref=e1968]
+            - heading "Qwen QWQ 32B Preview" [level=3] [ref=e1969]
+          - generic [ref=e1970]:
+            - generic [ref=e1971]: 32768 Context
+            - generic [ref=e1973]:
+              - img "message-text-square" [ref=e1976]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2-VL 2B Instruct 32768 Context eye Vision" [ref=e1978] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2-vl-2b-instruct
+          - generic [ref=e1979]:
+            - img "Quen Logo Mark" [ref=e1982]
+            - heading "Qwen2-VL 2B Instruct" [level=3] [ref=e1983]
+          - generic [ref=e1984]:
+            - generic [ref=e1985]: 32768 Context
+            - generic [ref=e1987]:
+              - img "eye" [ref=e1990]
+              - text: Vision
+        - link "Quen Logo Mark Qwen2-VL 72B Instruct 32768 Context eye Vision" [ref=e1992] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2-vl-72b-instruct
+          - generic [ref=e1993]:
+            - img "Quen Logo Mark" [ref=e1996]
+            - heading "Qwen2-VL 72B Instruct" [level=3] [ref=e1997]
+          - generic [ref=e1998]:
+            - generic [ref=e1999]: 32768 Context
+            - generic [ref=e2001]:
+              - img "eye" [ref=e2004]
+              - text: Vision
+        - link "Quen Logo Mark Qwen2-VL 7B Instruct 32768 Context eye Vision" [ref=e2006] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2-vl-7b-instruct
+          - generic [ref=e2007]:
+            - img "Quen Logo Mark" [ref=e2010]
+            - heading "Qwen2-VL 7B Instruct" [level=3] [ref=e2011]
+          - generic [ref=e2012]:
+            - generic [ref=e2013]: 32768 Context
+            - generic [ref=e2015]:
+              - img "eye" [ref=e2018]
+              - text: Vision
+        - link "Quen Logo Mark Qwen2.5 0.5B Instruct 32768 Context message-text-square LLM" [ref=e2020] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-0p5b-instruct
+          - generic [ref=e2021]:
+            - img "Quen Logo Mark" [ref=e2024]
+            - heading "Qwen2.5 0.5B Instruct" [level=3] [ref=e2025]
+          - generic [ref=e2026]:
+            - generic [ref=e2027]: 32768 Context
+            - generic [ref=e2029]:
+              - img "message-text-square" [ref=e2032]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 0.5B 32768 Context message-text-square LLM" [ref=e2034] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-0p5b
+          - generic [ref=e2035]:
+            - img "Quen Logo Mark" [ref=e2038]
+            - heading "Qwen2.5-Coder 0.5B" [level=3] [ref=e2039]
+          - generic [ref=e2040]:
+            - generic [ref=e2041]: 32768 Context
+            - generic [ref=e2043]:
+              - img "message-text-square" [ref=e2046]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 32B 32768 Context message-text-square LLM" [ref=e2048] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-32b
+          - generic [ref=e2049]:
+            - img "Quen Logo Mark" [ref=e2052]
+            - heading "Qwen2.5-Coder 32B" [level=3] [ref=e2053]
+          - generic [ref=e2054]:
+            - generic [ref=e2055]: 32768 Context
+            - generic [ref=e2057]:
+              - img "message-text-square" [ref=e2060]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 3B 32768 Context message-text-square LLM" [ref=e2062] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-3b
+          - generic [ref=e2063]:
+            - img "Quen Logo Mark" [ref=e2066]
+            - heading "Qwen2.5-Coder 3B" [level=3] [ref=e2067]
+          - generic [ref=e2068]:
+            - generic [ref=e2069]: 32768 Context
+            - generic [ref=e2071]:
+              - img "message-text-square" [ref=e2074]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek V2 Lite Chat 163840 Context message-text-square LLM" [ref=e2076] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-v2-lite-chat
+          - generic [ref=e2077]:
+            - img "Deepseek Logo Mark" [ref=e2080]
+            - heading "DeepSeek V2 Lite Chat" [level=3] [ref=e2081]
+          - generic [ref=e2082]:
+            - generic [ref=e2083]: 163840 Context
+            - generic [ref=e2085]:
+              - img "message-text-square" [ref=e2088]
+              - text: LLM
+        - link "Flux Logo Mark FLUX.1 [dev] ControlNet message-text-square LLM" [ref=e2090] [cursor=pointer]:
+          - /url: /models/fireworks/flux-1-dev-controlnet-union
+          - generic [ref=e2091]:
+            - img "Flux Logo Mark" [ref=e2094]
+            - heading "FLUX.1 [dev] ControlNet" [level=3] [ref=e2095]
+          - generic [ref=e2098]:
+            - img "message-text-square" [ref=e2101]
+            - text: LLM
+        - link "Meta Mark Llama Guard 3 8B 131072 Context message-text-square LLM" [ref=e2103] [cursor=pointer]:
+          - /url: /models/fireworks/llama-guard-3-8b
+          - generic [ref=e2104]:
+            - img "Meta Mark" [ref=e2107]
+            - heading "Llama Guard 3 8B" [level=3] [ref=e2108]
+          - generic [ref=e2109]:
+            - generic [ref=e2110]: 131072 Context
+            - generic [ref=e2112]:
+              - img "message-text-square" [ref=e2115]
+              - text: LLM
+        - link "Meta Mark Llama 3.1 70B Instruct 1B message-text-square LLM" [ref=e2117] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p1-70b-instruct-1b
+          - generic [ref=e2118]:
+            - img "Meta Mark" [ref=e2121]
+            - heading "Llama 3.1 70B Instruct 1B" [level=3] [ref=e2122]
+          - generic [ref=e2125]:
+            - img "message-text-square" [ref=e2128]
+            - text: LLM
+        - link "NVIDIA icon Llama 3.1 Nemotron 70B 131072 Context message-text-square LLM" [ref=e2130] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p1-nemotron-70b-instruct
+          - generic [ref=e2131]:
+            - img "NVIDIA icon" [ref=e2134]
+            - heading "Llama 3.1 Nemotron 70B" [level=3] [ref=e2135]
+          - generic [ref=e2136]:
+            - generic [ref=e2137]: 131072 Context
+            - generic [ref=e2139]:
+              - img "message-text-square" [ref=e2142]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5 7B Instruct 32768 Context message-text-square LLM" [ref=e2144] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-7b-instruct
+          - generic [ref=e2145]:
+            - img "Quen Logo Mark" [ref=e2148]
+            - heading "Qwen2.5 7B Instruct" [level=3] [ref=e2149]
+          - generic [ref=e2150]:
+            - generic [ref=e2151]: 32768 Context
+            - generic [ref=e2153]:
+              - img "message-text-square" [ref=e2156]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 0.5B Instruct 32768 Context message-text-square LLM" [ref=e2158] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-0p5b-instruct
+          - generic [ref=e2159]:
+            - img "Quen Logo Mark" [ref=e2162]
+            - heading "Qwen2.5-Coder 0.5B Instruct" [level=3] [ref=e2163]
+          - generic [ref=e2164]:
+            - generic [ref=e2165]: 32768 Context
+            - generic [ref=e2167]:
+              - img "message-text-square" [ref=e2170]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 14B 32768 Context message-text-square LLM" [ref=e2172] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-14b
+          - generic [ref=e2173]:
+            - img "Quen Logo Mark" [ref=e2176]
+            - heading "Qwen2.5-Coder 14B" [level=3] [ref=e2177]
+          - generic [ref=e2178]:
+            - generic [ref=e2179]: 32768 Context
+            - generic [ref=e2181]:
+              - img "message-text-square" [ref=e2184]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 14B Instruct 32768 Context message-text-square LLM" [ref=e2186] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-14b-instruct
+          - generic [ref=e2187]:
+            - img "Quen Logo Mark" [ref=e2190]
+            - heading "Qwen2.5-Coder 14B Instruct" [level=3] [ref=e2191]
+          - generic [ref=e2192]:
+            - generic [ref=e2193]: 32768 Context
+            - generic [ref=e2195]:
+              - img "message-text-square" [ref=e2198]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 3B Instruct 32768 Context message-text-square LLM" [ref=e2200] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-3b-instruct
+          - generic [ref=e2201]:
+            - img "Quen Logo Mark" [ref=e2204]
+            - heading "Qwen2.5-Coder 3B Instruct" [level=3] [ref=e2205]
+          - generic [ref=e2206]:
+            - generic [ref=e2207]: 32768 Context
+            - generic [ref=e2209]:
+              - img "message-text-square" [ref=e2212]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Math 72B Instruct 4096 Context message-text-square LLM" [ref=e2214] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-math-72b-instruct
+          - generic [ref=e2215]:
+            - img "Quen Logo Mark" [ref=e2218]
+            - heading "Qwen2.5-Math 72B Instruct" [level=3] [ref=e2219]
+          - generic [ref=e2220]:
+            - generic [ref=e2221]: 4096 Context
+            - generic [ref=e2223]:
+              - img "message-text-square" [ref=e2226]
+              - text: LLM
+        - link "Meta Mark Llama Guard v3 1B 131072 Context message-text-square LLM" [ref=e2228] [cursor=pointer]:
+          - /url: /models/fireworks/llama-guard-3-1b
+          - generic [ref=e2229]:
+            - img "Meta Mark" [ref=e2232]
+            - heading "Llama Guard v3 1B" [level=3] [ref=e2233]
+          - generic [ref=e2234]:
+            - generic [ref=e2235]: 131072 Context
+            - generic [ref=e2237]:
+              - img "message-text-square" [ref=e2240]
+              - text: LLM
+        - link "Meta Mark Llama 3.2 3B 131072 Context message-text-square LLM" [ref=e2242] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p2-3b
+          - generic [ref=e2243]:
+            - img "Meta Mark" [ref=e2246]
+            - heading "Llama 3.2 3B" [level=3] [ref=e2247]
+          - generic [ref=e2248]:
+            - generic [ref=e2249]: 131072 Context
+            - generic [ref=e2251]:
+              - img "message-text-square" [ref=e2254]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5 14B 131072 Context message-text-square LLM" [ref=e2256] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-14b
+          - generic [ref=e2257]:
+            - img "Quen Logo Mark" [ref=e2260]
+            - heading "Qwen2.5 14B" [level=3] [ref=e2261]
+          - generic [ref=e2262]:
+            - generic [ref=e2263]: 131072 Context
+            - generic [ref=e2265]:
+              - img "message-text-square" [ref=e2268]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5 32B 131072 Context message-text-square LLM" [ref=e2270] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-32b
+          - generic [ref=e2271]:
+            - img "Quen Logo Mark" [ref=e2274]
+            - heading "Qwen2.5 32B" [level=3] [ref=e2275]
+          - generic [ref=e2276]:
+            - generic [ref=e2277]: 131072 Context
+            - generic [ref=e2279]:
+              - img "message-text-square" [ref=e2282]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5 32B Instruct 32768 Context message-text-square LLM" [ref=e2284] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-32b-instruct
+          - generic [ref=e2285]:
+            - img "Quen Logo Mark" [ref=e2288]
+            - heading "Qwen2.5 32B Instruct" [level=3] [ref=e2289]
+          - generic [ref=e2290]:
+            - generic [ref=e2291]: 32768 Context
+            - generic [ref=e2293]:
+              - img "message-text-square" [ref=e2296]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5 72B 131072 Context message-text-square LLM" [ref=e2298] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-72b
+          - generic [ref=e2299]:
+            - img "Quen Logo Mark" [ref=e2302]
+            - heading "Qwen2.5 72B" [level=3] [ref=e2303]
+          - generic [ref=e2304]:
+            - generic [ref=e2305]: 131072 Context
+            - generic [ref=e2307]:
+              - img "message-text-square" [ref=e2310]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5 72B Instruct 32768 Context message-text-square LLM" [ref=e2312] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-72b-instruct
+          - generic [ref=e2313]:
+            - img "Quen Logo Mark" [ref=e2316]
+            - heading "Qwen2.5 72B Instruct" [level=3] [ref=e2317]
+          - generic [ref=e2318]:
+            - generic [ref=e2319]: 32768 Context
+            - generic [ref=e2321]:
+              - img "message-text-square" [ref=e2324]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 1.5B 32768 Context message-text-square LLM" [ref=e2326] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-1p5b
+          - generic [ref=e2327]:
+            - img "Quen Logo Mark" [ref=e2330]
+            - heading "Qwen2.5-Coder 1.5B" [level=3] [ref=e2331]
+          - generic [ref=e2332]:
+            - generic [ref=e2333]: 32768 Context
+            - generic [ref=e2335]:
+              - img "message-text-square" [ref=e2338]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 1.5B Instruct 32768 Context message-text-square LLM" [ref=e2340] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-1p5b-instruct
+          - generic [ref=e2341]:
+            - img "Quen Logo Mark" [ref=e2344]
+            - heading "Qwen2.5-Coder 1.5B Instruct" [level=3] [ref=e2345]
+          - generic [ref=e2346]:
+            - generic [ref=e2347]: 32768 Context
+            - generic [ref=e2349]:
+              - img "message-text-square" [ref=e2352]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 7B 32768 Context message-text-square LLM" [ref=e2354] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-7b
+          - generic [ref=e2355]:
+            - img "Quen Logo Mark" [ref=e2358]
+            - heading "Qwen2.5-Coder 7B" [level=3] [ref=e2359]
+          - generic [ref=e2360]:
+            - generic [ref=e2361]: 32768 Context
+            - generic [ref=e2363]:
+              - img "message-text-square" [ref=e2366]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 7B Instruct 32768 Context message-text-square LLM" [ref=e2368] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-7b-instruct
+          - generic [ref=e2369]:
+            - img "Quen Logo Mark" [ref=e2372]
+            - heading "Qwen2.5-Coder 7B Instruct" [level=3] [ref=e2373]
+          - generic [ref=e2374]:
+            - generic [ref=e2375]: 32768 Context
+            - generic [ref=e2377]:
+              - img "message-text-square" [ref=e2380]
+              - text: LLM
+        - link "Fireworks Logo Mark DeepSeek V2.5 32768 Context message-text-square LLM" [ref=e2382] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-v2p5
+          - generic [ref=e2383]:
+            - img "Fireworks Logo Mark" [ref=e2386]
+            - heading "DeepSeek V2.5" [level=3] [ref=e2387]
+          - generic [ref=e2388]:
+            - generic [ref=e2389]: 32768 Context
+            - generic [ref=e2391]:
+              - img "message-text-square" [ref=e2394]
+              - text: LLM
+        - link "Meta Mark Llama 3.1 405B Instruct Long message-text-square LLM" [ref=e2396] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p1-405b-instruct-long
+          - generic [ref=e2397]:
+            - img "Meta Mark" [ref=e2400]
+            - heading "Llama 3.1 405B Instruct Long" [level=3] [ref=e2401]
+          - generic [ref=e2404]:
+            - img "message-text-square" [ref=e2407]
+            - text: LLM
+        - link "Meta Mark Llama 3.2 11B Vision Instruct 131072 Context eye Vision" [ref=e2409] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p2-11b-vision-instruct
+          - generic [ref=e2410]:
+            - img "Meta Mark" [ref=e2413]
+            - heading "Llama 3.2 11B Vision Instruct" [level=3] [ref=e2414]
+          - generic [ref=e2415]:
+            - generic [ref=e2416]: 131072 Context
+            - generic [ref=e2418]:
+              - img "eye" [ref=e2421]
+              - text: Vision
+        - link "Meta Mark Llama 3.2 1B 131072 Context message-text-square LLM" [ref=e2423] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p2-1b
+          - generic [ref=e2424]:
+            - img "Meta Mark" [ref=e2427]
+            - heading "Llama 3.2 1B" [level=3] [ref=e2428]
+          - generic [ref=e2429]:
+            - generic [ref=e2430]: 131072 Context
+            - generic [ref=e2432]:
+              - img "message-text-square" [ref=e2435]
+              - text: LLM
+        - link "Meta Mark Llama 3.2 1B Instruct 131072 Context message-text-square LLM" [ref=e2437] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p2-1b-instruct
+          - generic [ref=e2438]:
+            - img "Meta Mark" [ref=e2441]
+            - heading "Llama 3.2 1B Instruct" [level=3] [ref=e2442]
+          - generic [ref=e2443]:
+            - generic [ref=e2444]: 131072 Context
+            - generic [ref=e2446]:
+              - img "message-text-square" [ref=e2449]
+              - text: LLM
+        - link "Meta Mark Llama 3.2 90B Vision Instruct 131072 Context eye Vision" [ref=e2451] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p2-90b-vision-instruct
+          - generic [ref=e2452]:
+            - img "Meta Mark" [ref=e2455]
+            - heading "Llama 3.2 90B Vision Instruct" [level=3] [ref=e2456]
+          - generic [ref=e2457]:
+            - generic [ref=e2458]: 131072 Context
+            - generic [ref=e2460]:
+              - img "eye" [ref=e2463]
+              - text: Vision
+        - link "Quen Logo Mark Qwen2.5 14B Instruct 32768 Context message-text-square LLM" [ref=e2465] [cursor=pointer]:
+          - /url: /models/fireworks/qwen-v2p5-14b-instruct
+          - generic [ref=e2466]:
+            - img "Quen Logo Mark" [ref=e2469]
+            - heading "Qwen2.5 14B Instruct" [level=3] [ref=e2470]
+          - generic [ref=e2471]:
+            - generic [ref=e2472]: 32768 Context
+            - generic [ref=e2474]:
+              - img "message-text-square" [ref=e2477]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5 7B 131072 Context message-text-square LLM" [ref=e2479] [cursor=pointer]:
+          - /url: /models/fireworks/qwen-v2p5-7b
+          - generic [ref=e2480]:
+            - img "Quen Logo Mark" [ref=e2483]
+            - heading "Qwen2.5 7B" [level=3] [ref=e2484]
+          - generic [ref=e2485]:
+            - generic [ref=e2486]: 131072 Context
+            - generic [ref=e2488]:
+              - img "message-text-square" [ref=e2491]
+              - text: LLM
+        - link "Stability Logo Mark Stable Code 3B message-text-square LLM" [ref=e2493] [cursor=pointer]:
+          - /url: /models/fireworks/stablecode-3b
+          - generic [ref=e2494]:
+            - img "Stability Logo Mark" [ref=e2497]
+            - heading "Stable Code 3B" [level=3] [ref=e2498]
+          - generic [ref=e2501]:
+            - img "message-text-square" [ref=e2504]
+            - text: LLM
+        - link "Google Ai Logo Mark CodeGemma 2B 8192 Context message-text-square LLM" [ref=e2506] [cursor=pointer]:
+          - /url: /models/fireworks/codegemma-2b
+          - generic [ref=e2507]:
+            - img "Google Ai Logo Mark" [ref=e2510]
+            - heading "CodeGemma 2B" [level=3] [ref=e2511]
+          - generic [ref=e2512]:
+            - generic [ref=e2513]: 8192 Context
+            - generic [ref=e2515]:
+              - img "message-text-square" [ref=e2518]
+              - text: LLM
+        - link "Fireworks Logo Mark DeepSeek Coder V2 Instruct 32768 Context message-text-square LLM" [ref=e2520] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-coder-v2-instruct
+          - generic [ref=e2521]:
+            - img "Fireworks Logo Mark" [ref=e2524]
+            - heading "DeepSeek Coder V2 Instruct" [level=3] [ref=e2525]
+          - generic [ref=e2526]:
+            - generic [ref=e2527]: 32768 Context
+            - generic [ref=e2529]:
+              - img "message-text-square" [ref=e2532]
+              - text: LLM
+        - link "Fireworks Logo Mark DeepSeek Coder V2 Lite Base 163840 Context message-text-square LLM" [ref=e2534] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-coder-v2-lite-base
+          - generic [ref=e2535]:
+            - img "Fireworks Logo Mark" [ref=e2538]
+            - heading "DeepSeek Coder V2 Lite Base" [level=3] [ref=e2539]
+          - generic [ref=e2540]:
+            - generic [ref=e2541]: 163840 Context
+            - generic [ref=e2543]:
+              - img "message-text-square" [ref=e2546]
+              - text: LLM
+        - link "Fireworks Logo Mark DeepSeek Coder V2 Lite Instruct 163840 Context message-text-square LLM" [ref=e2548] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-coder-v2-lite-instruct
+          - generic [ref=e2549]:
+            - img "Fireworks Logo Mark" [ref=e2552]
+            - heading "DeepSeek Coder V2 Lite Instruct" [level=3] [ref=e2553]
+          - generic [ref=e2554]:
+            - generic [ref=e2555]: 163840 Context
+            - generic [ref=e2557]:
+              - img "message-text-square" [ref=e2560]
+              - text: LLM
+        - link "Fireworks Logo Mark FireFunction V2 message-text-square LLM" [ref=e2562] [cursor=pointer]:
+          - /url: /models/fireworks/firefunction-v2
+          - generic [ref=e2563]:
+            - img "Fireworks Logo Mark" [ref=e2566]
+            - heading "FireFunction V2" [level=3] [ref=e2567]
+          - generic [ref=e2570]:
+            - img "message-text-square" [ref=e2573]
+            - text: LLM
+        - link "Google Ai Logo Mark Gemma 2 9B Instruct 8192 Context message-text-square LLM" [ref=e2575] [cursor=pointer]:
+          - /url: /models/fireworks/gemma2-9b-it
+          - generic [ref=e2576]:
+            - img "Google Ai Logo Mark" [ref=e2579]
+            - heading "Gemma 2 9B Instruct" [level=3] [ref=e2580]
+          - generic [ref=e2581]:
+            - generic [ref=e2582]: 8192 Context
+            - generic [ref=e2584]:
+              - img "message-text-square" [ref=e2587]
+              - text: LLM
+        - link "Meta Mark Llama 3.1 70B Instruct 131072 Context message-text-square LLM" [ref=e2589] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p1-70b-instruct
+          - generic [ref=e2590]:
+            - img "Meta Mark" [ref=e2593]
+            - heading "Llama 3.1 70B Instruct" [level=3] [ref=e2594]
+          - generic [ref=e2595]:
+            - generic [ref=e2596]: 131072 Context
+            - generic [ref=e2598]:
+              - img "message-text-square" [ref=e2601]
+              - text: LLM
+        - link "Mistral Logo Icon Mistral Nemo Base 2407 128000 Context message-text-square LLM" [ref=e2603] [cursor=pointer]:
+          - /url: /models/fireworks/mistral-nemo-base-2407
+          - generic [ref=e2604]:
+            - img "Mistral Logo Icon" [ref=e2607]
+            - heading "Mistral Nemo Base 2407" [level=3] [ref=e2608]
+          - generic [ref=e2609]:
+            - generic [ref=e2610]: 128000 Context
+            - generic [ref=e2612]:
+              - img "message-text-square" [ref=e2615]
+              - text: LLM
+        - link "Mistral Logo Icon Mistral Nemo Instruct 2407 128000 Context message-text-square LLM" [ref=e2617] [cursor=pointer]:
+          - /url: /models/fireworks/mistral-nemo-instruct-2407
+          - generic [ref=e2618]:
+            - img "Mistral Logo Icon" [ref=e2621]
+            - heading "Mistral Nemo Instruct 2407" [level=3] [ref=e2622]
+          - generic [ref=e2623]:
+            - generic [ref=e2624]: 128000 Context
+            - generic [ref=e2626]:
+              - img "message-text-square" [ref=e2629]
+              - text: LLM
+        - link "Quen Logo Mark CodeQwen 1.5 7B 65536 Context message-text-square LLM" [ref=e2631] [cursor=pointer]:
+          - /url: /models/fireworks/code-qwen-1p5-7b
+          - generic [ref=e2632]:
+            - img "Quen Logo Mark" [ref=e2635]
+            - heading "CodeQwen 1.5 7B" [level=3] [ref=e2636]
+          - generic [ref=e2637]:
+            - generic [ref=e2638]: 65536 Context
+            - generic [ref=e2640]:
+              - img "message-text-square" [ref=e2643]
+              - text: LLM
+        - link "Google Ai Logo Mark CodeGemma 7B 8192 Context message-text-square LLM" [ref=e2645] [cursor=pointer]:
+          - /url: /models/fireworks/codegemma-7b
+          - generic [ref=e2646]:
+            - img "Google Ai Logo Mark" [ref=e2649]
+            - heading "CodeGemma 7B" [level=3] [ref=e2650]
+          - generic [ref=e2651]:
+            - generic [ref=e2652]: 8192 Context
+            - generic [ref=e2654]:
+              - img "message-text-square" [ref=e2657]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek Coder 1.3B Base 16384 Context message-text-square LLM" [ref=e2659] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-coder-1b-base
+          - generic [ref=e2660]:
+            - img "Deepseek Logo Mark" [ref=e2663]
+            - heading "DeepSeek Coder 1.3B Base" [level=3] [ref=e2664]
+          - generic [ref=e2665]:
+            - generic [ref=e2666]: 16384 Context
+            - generic [ref=e2668]:
+              - img "message-text-square" [ref=e2671]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2 72B Instruct 32768 Context message-text-square LLM" [ref=e2673] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2-72b-instruct
+          - generic [ref=e2674]:
+            - img "Quen Logo Mark" [ref=e2677]
+            - heading "Qwen2 72B Instruct" [level=3] [ref=e2678]
+          - generic [ref=e2679]:
+            - generic [ref=e2680]: 32768 Context
+            - generic [ref=e2682]:
+              - img "message-text-square" [ref=e2685]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2 7B Instruct 32768 Context message-text-square LLM" [ref=e2687] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2-7b-instruct
+          - generic [ref=e2688]:
+            - img "Quen Logo Mark" [ref=e2691]
+            - heading "Qwen2 7B Instruct" [level=3] [ref=e2692]
+          - generic [ref=e2693]:
+            - generic [ref=e2694]: 32768 Context
+            - generic [ref=e2696]:
+              - img "message-text-square" [ref=e2699]
+              - text: LLM
+        - link "Yi Logo Mark Yi-Large 32768 Context message-text-square LLM" [ref=e2701] [cursor=pointer]:
+          - /url: /models/yi-01-ai/yi-large
+          - generic [ref=e2702]:
+            - img "Yi Logo Mark" [ref=e2705]
+            - heading "Yi-Large" [level=3] [ref=e2706]
+          - generic [ref=e2707]:
+            - generic [ref=e2708]: 32768 Context
+            - generic [ref=e2710]:
+              - img "message-text-square" [ref=e2713]
+              - text: LLM
+        - link "Cognitive Computations Logo Dolphin 2.9.2 Qwen2 72B 131072 Context message-text-square LLM" [ref=e2715] [cursor=pointer]:
+          - /url: /models/fireworks/dolphin-2-9-2-qwen2-72b
+          - generic [ref=e2716]:
+            - img "Cognitive Computations Logo" [ref=e2719]
+            - heading "Dolphin 2.9.2 Qwen2 72B" [level=3] [ref=e2720]
+          - generic [ref=e2721]:
+            - generic [ref=e2722]: 131072 Context
+            - generic [ref=e2724]:
+              - img "message-text-square" [ref=e2727]
+              - text: LLM
+        - link "Meta Mark Llama 3 8B Instruct (HF version) 8192 Context message-text-square LLM" [ref=e2729] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3-8b-instruct-hf
+          - generic [ref=e2730]:
+            - img "Meta Mark" [ref=e2733]
+            - heading "Llama 3 8B Instruct (HF version)" [level=3] [ref=e2734]
+          - generic [ref=e2735]:
+            - generic [ref=e2736]: 8192 Context
+            - generic [ref=e2738]:
+              - img "message-text-square" [ref=e2741]
+              - text: LLM
+        - link "Mistral Logo Icon Mistral 7B Instruct v0.3 32768 Context message-text-square LLM" [ref=e2743] [cursor=pointer]:
+          - /url: /models/fireworks/mistral-7b-instruct-v3
+          - generic [ref=e2744]:
+            - img "Mistral Logo Icon" [ref=e2747]
+            - heading "Mistral 7B Instruct v0.3" [level=3] [ref=e2748]
+          - generic [ref=e2749]:
+            - generic [ref=e2750]: 32768 Context
+            - generic [ref=e2752]:
+              - img "message-text-square" [ref=e2755]
+              - text: LLM
+        - link "Microsoft Logo Mark Phi-3 Mini 128k Instruct 131072 Context message-text-square LLM" [ref=e2757] [cursor=pointer]:
+          - /url: /models/fireworks/phi-3-mini-128k-instruct
+          - generic [ref=e2758]:
+            - img "Microsoft Logo Mark" [ref=e2761]
+            - heading "Phi-3 Mini 128k Instruct" [level=3] [ref=e2762]
+          - generic [ref=e2763]:
+            - generic [ref=e2764]: 131072 Context
+            - generic [ref=e2766]:
+              - img "message-text-square" [ref=e2769]
+              - text: LLM
+        - link "Microsoft Logo Mark Phi-3.5 Vision Instruct 32064 Context eye Vision" [ref=e2771] [cursor=pointer]:
+          - /url: /models/fireworks/phi-3-vision-128k-instruct
+          - generic [ref=e2772]:
+            - img "Microsoft Logo Mark" [ref=e2775]
+            - heading "Phi-3.5 Vision Instruct" [level=3] [ref=e2776]
+          - generic [ref=e2777]:
+            - generic [ref=e2778]: 32064 Context
+            - generic [ref=e2780]:
+              - img "eye" [ref=e2783]
+              - text: Vision
+        - link "Databricks Logo Mark DBRX Instruct 32768 Context message-text-square LLM" [ref=e2785] [cursor=pointer]:
+          - /url: /models/fireworks/dbrx-instruct
+          - generic [ref=e2786]:
+            - img "Databricks Logo Mark" [ref=e2789]
+            - heading "DBRX Instruct" [level=3] [ref=e2790]
+          - generic [ref=e2791]:
+            - generic [ref=e2792]: 32768 Context
+            - generic [ref=e2794]:
+              - img "message-text-square" [ref=e2797]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek Coder 7B Base 4096 Context message-text-square LLM" [ref=e2799] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-coder-7b-base
+          - generic [ref=e2800]:
+            - img "Deepseek Logo Mark" [ref=e2803]
+            - heading "DeepSeek Coder 7B Base" [level=3] [ref=e2804]
+          - generic [ref=e2805]:
+            - generic [ref=e2806]: 4096 Context
+            - generic [ref=e2808]:
+              - img "message-text-square" [ref=e2811]
+              - text: LLM
+        - link "Google Ai Logo Mark Gemma 2B Instruct 8192 Context message-text-square LLM" [ref=e2813] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-2b-it
+          - generic [ref=e2814]:
+            - img "Google Ai Logo Mark" [ref=e2817]
+            - heading "Gemma 2B Instruct" [level=3] [ref=e2818]
+          - generic [ref=e2819]:
+            - generic [ref=e2820]: 8192 Context
+            - generic [ref=e2822]:
+              - img "message-text-square" [ref=e2825]
+              - text: LLM
+        - link "Meta Mark Llama Guard v2 8B 8192 Context message-text-square LLM" [ref=e2827] [cursor=pointer]:
+          - /url: /models/fireworks/llama-guard-2-8b
+          - generic [ref=e2828]:
+            - img "Meta Mark" [ref=e2831]
+            - heading "Llama Guard v2 8B" [level=3] [ref=e2832]
+          - generic [ref=e2833]:
+            - generic [ref=e2834]: 8192 Context
+            - generic [ref=e2836]:
+              - img "message-text-square" [ref=e2839]
+              - text: LLM
+        - link "Meta Mark Llama 3 70B Instruct 8192 Context message-text-square LLM" [ref=e2841] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3-70b-instruct
+          - generic [ref=e2842]:
+            - img "Meta Mark" [ref=e2845]
+            - heading "Llama 3 70B Instruct" [level=3] [ref=e2846]
+          - generic [ref=e2847]:
+            - generic [ref=e2848]: 8192 Context
+            - generic [ref=e2850]:
+              - img "message-text-square" [ref=e2853]
+              - text: LLM
+        - link "Meta Mark Llama 3 70B Instruct (HF version) 8192 Context message-text-square LLM" [ref=e2855] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3-70b-instruct-hf
+          - generic [ref=e2856]:
+            - img "Meta Mark" [ref=e2859]
+            - heading "Llama 3 70B Instruct (HF version)" [level=3] [ref=e2860]
+          - generic [ref=e2861]:
+            - generic [ref=e2862]: 8192 Context
+            - generic [ref=e2864]:
+              - img "message-text-square" [ref=e2867]
+              - text: LLM
+        - link "Mistral Logo Icon Mixtral Moe 8x22B 65536 Context message-text-square LLM" [ref=e2869] [cursor=pointer]:
+          - /url: /models/fireworks/mixtral-8x22b
+          - generic [ref=e2870]:
+            - img "Mistral Logo Icon" [ref=e2873]
+            - heading "Mixtral Moe 8x22B" [level=3] [ref=e2874]
+          - generic [ref=e2875]:
+            - generic [ref=e2876]: 65536 Context
+            - generic [ref=e2878]:
+              - img "message-text-square" [ref=e2881]
+              - text: LLM
+        - link "Mistral Logo Icon Mixtral MoE 8x22B Instruct 65536 Context message-text-square LLM" [ref=e2883] [cursor=pointer]:
+          - /url: /models/fireworks/mixtral-8x22b-instruct
+          - generic [ref=e2884]:
+            - img "Mistral Logo Icon" [ref=e2887]
+            - heading "Mixtral MoE 8x22B Instruct" [level=3] [ref=e2888]
+          - generic [ref=e2889]:
+            - generic [ref=e2890]: 65536 Context
+            - generic [ref=e2892]:
+              - img "message-text-square" [ref=e2895]
+              - text: LLM
+        - link "Mous Research Logo Mark Hermes 2 Pro Mistral 7B 32768 Context message-text-square LLM" [ref=e2897] [cursor=pointer]:
+          - /url: /models/fireworks/hermes-2-pro-mistral-7b
+          - generic [ref=e2898]:
+            - img "Mous Research Logo Mark" [ref=e2901]
+            - heading "Hermes 2 Pro Mistral 7B" [level=3] [ref=e2902]
+          - generic [ref=e2903]:
+            - generic [ref=e2904]: 32768 Context
+            - generic [ref=e2906]:
+              - img "message-text-square" [ref=e2909]
+              - text: LLM
+        - link "Mistral Logo Icon Mistral 7B v0.2 32768 Context message-text-square LLM" [ref=e2911] [cursor=pointer]:
+          - /url: /models/fireworks/mistral-7b-v0p2
+          - generic [ref=e2912]:
+            - img "Mistral Logo Icon" [ref=e2915]
+            - heading "Mistral 7B v0.2" [level=3] [ref=e2916]
+          - generic [ref=e2917]:
+            - generic [ref=e2918]: 32768 Context
+            - generic [ref=e2920]:
+              - img "message-text-square" [ref=e2923]
+              - text: LLM
+        - link "OpenChar Logo Mark OpenChat 3.5 0106 8192 Context message-text-square LLM" [ref=e2925] [cursor=pointer]:
+          - /url: /models/fireworks/openchat-3p5-0106-7b
+          - generic [ref=e2926]:
+            - img "OpenChar Logo Mark" [ref=e2929]
+            - heading "OpenChat 3.5 0106" [level=3] [ref=e2930]
+          - generic [ref=e2931]:
+            - generic [ref=e2932]: 8192 Context
+            - generic [ref=e2934]:
+              - img "message-text-square" [ref=e2937]
+              - text: LLM
+        - link "Phind Logo Mark Phind CodeLlama 34B Python v1 16384 Context message-text-square LLM" [ref=e2939] [cursor=pointer]:
+          - /url: /models/fireworks/phind-code-llama-34b-python-v1
+          - generic [ref=e2940]:
+            - img "Phind Logo Mark" [ref=e2943]
+            - heading "Phind CodeLlama 34B Python v1" [level=3] [ref=e2944]
+          - generic [ref=e2945]:
+            - generic [ref=e2946]: 16384 Context
+            - generic [ref=e2948]:
+              - img "message-text-square" [ref=e2951]
+              - text: LLM
+        - link "Phind Logo Mark Phind CodeLlama 34B v1 16384 Context message-text-square LLM" [ref=e2953] [cursor=pointer]:
+          - /url: /models/fireworks/phind-code-llama-34b-v1
+          - generic [ref=e2954]:
+            - img "Phind Logo Mark" [ref=e2957]
+            - heading "Phind CodeLlama 34B v1" [level=3] [ref=e2958]
+          - generic [ref=e2959]:
+            - generic [ref=e2960]: 16384 Context
+            - generic [ref=e2962]:
+              - img "message-text-square" [ref=e2965]
+              - text: LLM
+        - link "Phind Logo Mark Phind CodeLlama 34B v2 16384 Context message-text-square LLM" [ref=e2967] [cursor=pointer]:
+          - /url: /models/fireworks/phind-code-llama-34b-v2
+          - generic [ref=e2968]:
+            - img "Phind Logo Mark" [ref=e2971]
+            - heading "Phind CodeLlama 34B v2" [level=3] [ref=e2972]
+          - generic [ref=e2973]:
+            - generic [ref=e2974]: 16384 Context
+            - generic [ref=e2976]:
+              - img "message-text-square" [ref=e2979]
+              - text: LLM
+        - link "Eleuther Logo Mark Pythia 12B 2048 Context message-text-square LLM" [ref=e2981] [cursor=pointer]:
+          - /url: /models/fireworks/pythia-12b
+          - generic [ref=e2982]:
+            - img "Eleuther Logo Mark" [ref=e2985]
+            - heading "Pythia 12B" [level=3] [ref=e2986]
+          - generic [ref=e2987]:
+            - generic [ref=e2988]: 2048 Context
+            - generic [ref=e2990]:
+              - img "message-text-square" [ref=e2993]
+              - text: LLM
+        - link "Snorkel Logo Mark Snorkel Mistral PairRM DPO 32768 Context message-text-square LLM" [ref=e2995] [cursor=pointer]:
+          - /url: /models/fireworks/snorkel-mistral-7b-pairrm-dpo
+          - generic [ref=e2996]:
+            - img "Snorkel Logo Mark" [ref=e2999]
+            - heading "Snorkel Mistral PairRM DPO" [level=3] [ref=e3000]
+          - generic [ref=e3001]:
+            - generic [ref=e3002]: 32768 Context
+            - generic [ref=e3004]:
+              - img "message-text-square" [ref=e3007]
+              - text: LLM
+        - link "BigCode Logo Mark StarCoder2 15B 16384 Context message-text-square LLM" [ref=e3009] [cursor=pointer]:
+          - /url: /models/fireworks/starcoder2-15b
+          - generic [ref=e3010]:
+            - img "BigCode Logo Mark" [ref=e3013]
+            - heading "StarCoder2 15B" [level=3] [ref=e3014]
+          - generic [ref=e3015]:
+            - generic [ref=e3016]: 16384 Context
+            - generic [ref=e3018]:
+              - img "message-text-square" [ref=e3021]
+              - text: LLM
+        - link "BigCode Logo Mark StarCoder2 3B 16384 Context message-text-square LLM" [ref=e3023] [cursor=pointer]:
+          - /url: /models/fireworks/starcoder2-3b
+          - generic [ref=e3024]:
+            - img "BigCode Logo Mark" [ref=e3027]
+            - heading "StarCoder2 3B" [level=3] [ref=e3028]
+          - generic [ref=e3029]:
+            - generic [ref=e3030]: 16384 Context
+            - generic [ref=e3032]:
+              - img "message-text-square" [ref=e3035]
+              - text: LLM
+        - link "BigCode Logo Mark StarCoder2 7B 16384 Context message-text-square LLM" [ref=e3037] [cursor=pointer]:
+          - /url: /models/fireworks/starcoder2-7b
+          - generic [ref=e3038]:
+            - img "BigCode Logo Mark" [ref=e3041]
+            - heading "StarCoder2 7B" [level=3] [ref=e3042]
+          - generic [ref=e3043]:
+            - generic [ref=e3044]: 16384 Context
+            - generic [ref=e3046]:
+              - img "message-text-square" [ref=e3049]
+              - text: LLM
+        - link "Yi Logo Mark Yi 34B 4096 Context message-text-square LLM" [ref=e3051] [cursor=pointer]:
+          - /url: /models/yi-01-ai/yi-34b
+          - generic [ref=e3052]:
+            - img "Yi Logo Mark" [ref=e3055]
+            - heading "Yi 34B" [level=3] [ref=e3056]
+          - generic [ref=e3057]:
+            - generic [ref=e3058]: 4096 Context
+            - generic [ref=e3060]:
+              - img "message-text-square" [ref=e3063]
+              - text: LLM
+        - link "Code Llama 13B Python 16384 Context message-text-square LLM" [ref=e3065] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-13b-python
+          - heading "Code Llama 13B Python" [level=3] [ref=e3069]
+          - generic [ref=e3070]:
+            - generic [ref=e3071]: 16384 Context
+            - generic [ref=e3073]:
+              - img "message-text-square" [ref=e3076]
+              - text: LLM
+        - link "Code Llama 34B 16384 Context message-text-square LLM" [ref=e3078] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-34b
+          - heading "Code Llama 34B" [level=3] [ref=e3082]
+          - generic [ref=e3083]:
+            - generic [ref=e3084]: 16384 Context
+            - generic [ref=e3086]:
+              - img "message-text-square" [ref=e3089]
+              - text: LLM
+        - link "Code Llama 34B Instruct 16384 Context message-text-square LLM" [ref=e3091] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-34b-instruct
+          - heading "Code Llama 34B Instruct" [level=3] [ref=e3095]
+          - generic [ref=e3096]:
+            - generic [ref=e3097]: 16384 Context
+            - generic [ref=e3099]:
+              - img "message-text-square" [ref=e3102]
+              - text: LLM
+        - link "Code Llama 70B 4096 Context message-text-square LLM" [ref=e3104] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-70b
+          - heading "Code Llama 70B" [level=3] [ref=e3108]
+          - generic [ref=e3109]:
+            - generic [ref=e3110]: 4096 Context
+            - generic [ref=e3112]:
+              - img "message-text-square" [ref=e3115]
+              - text: LLM
+        - link "Code Llama 70B Instruct 4096 Context message-text-square LLM" [ref=e3117] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-70b-instruct
+          - heading "Code Llama 70B Instruct" [level=3] [ref=e3121]
+          - generic [ref=e3122]:
+            - generic [ref=e3123]: 4096 Context
+            - generic [ref=e3125]:
+              - img "message-text-square" [ref=e3128]
+              - text: LLM
+        - link "Code Llama 70B Python 4096 Context message-text-square LLM" [ref=e3130] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-70b-python
+          - heading "Code Llama 70B Python" [level=3] [ref=e3134]
+          - generic [ref=e3135]:
+            - generic [ref=e3136]: 4096 Context
+            - generic [ref=e3138]:
+              - img "message-text-square" [ref=e3141]
+              - text: LLM
+        - link "Google Ai Logo Mark Gemma 7B 8192 Context message-text-square LLM" [ref=e3143] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-7b
+          - generic [ref=e3144]:
+            - img "Google Ai Logo Mark" [ref=e3147]
+            - heading "Gemma 7B" [level=3] [ref=e3148]
+          - generic [ref=e3149]:
+            - generic [ref=e3150]: 8192 Context
+            - generic [ref=e3152]:
+              - img "message-text-square" [ref=e3155]
+              - text: LLM
+        - link "Mous Research Logo Mark Nous Capybara 7B V1.9 32768 Context message-text-square LLM" [ref=e3157] [cursor=pointer]:
+          - /url: /models/fireworks/nous-capybara-7b-v1p9
+          - generic [ref=e3158]:
+            - img "Mous Research Logo Mark" [ref=e3161]
+            - heading "Nous Capybara 7B V1.9" [level=3] [ref=e3162]
+          - generic [ref=e3163]:
+            - generic [ref=e3164]: 32768 Context
+            - generic [ref=e3166]:
+              - img "message-text-square" [ref=e3169]
+              - text: LLM
+        - link "Mous Research Logo Mark Nouse Hermes 2 Mixtral 8x7B DPO 32768 Context message-text-square LLM" [ref=e3171] [cursor=pointer]:
+          - /url: /models/fireworks/nous-hermes-2-mixtral-8x7b-dpo
+          - generic [ref=e3172]:
+            - img "Mous Research Logo Mark" [ref=e3175]
+            - heading "Nouse Hermes 2 Mixtral 8x7B DPO" [level=3] [ref=e3176]
+          - generic [ref=e3177]:
+            - generic [ref=e3178]: 32768 Context
+            - generic [ref=e3180]:
+              - img "message-text-square" [ref=e3183]
+              - text: LLM
+        - link "Mous Research Logo Mark Nous Hermes 2 Yi 34B 4096 Context message-text-square LLM" [ref=e3185] [cursor=pointer]:
+          - /url: /models/fireworks/nous-hermes-2-yi-34b
+          - generic [ref=e3186]:
+            - img "Mous Research Logo Mark" [ref=e3189]
+            - heading "Nous Hermes 2 Yi 34B" [level=3] [ref=e3190]
+          - generic [ref=e3191]:
+            - generic [ref=e3192]: 4096 Context
+            - generic [ref=e3194]:
+              - img "message-text-square" [ref=e3197]
+              - text: LLM
+        - link "Mous Research Logo Mark Nous Hermes Llama2 70B 4096 Context message-text-square LLM" [ref=e3199] [cursor=pointer]:
+          - /url: /models/fireworks/nous-hermes-llama2-70b
+          - generic [ref=e3200]:
+            - img "Mous Research Logo Mark" [ref=e3203]
+            - heading "Nous Hermes Llama2 70B" [level=3] [ref=e3204]
+          - generic [ref=e3205]:
+            - generic [ref=e3206]: 4096 Context
+            - generic [ref=e3208]:
+              - img "message-text-square" [ref=e3211]
+              - text: LLM
+        - link "Code Llama 13B 16384 Context message-text-square LLM" [ref=e3213] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-13b
+          - heading "Code Llama 13B" [level=3] [ref=e3217]
+          - generic [ref=e3218]:
+            - generic [ref=e3219]: 16384 Context
+            - generic [ref=e3221]:
+              - img "message-text-square" [ref=e3224]
+              - text: LLM
+        - link "Code Llama 13B Instruct 16384 Context message-text-square LLM" [ref=e3226] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-13b-instruct
+          - heading "Code Llama 13B Instruct" [level=3] [ref=e3230]
+          - generic [ref=e3231]:
+            - generic [ref=e3232]: 16384 Context
+            - generic [ref=e3234]:
+              - img "message-text-square" [ref=e3237]
+              - text: LLM
+        - link "Code Llama 34B Python 16384 Context message-text-square LLM" [ref=e3239] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-34b-python
+          - heading "Code Llama 34B Python" [level=3] [ref=e3243]
+          - generic [ref=e3244]:
+            - generic [ref=e3245]: 16384 Context
+            - generic [ref=e3247]:
+              - img "message-text-square" [ref=e3250]
+              - text: LLM
+        - link "Code Llama 7B 16384 Context message-text-square LLM" [ref=e3252] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-7b
+          - heading "Code Llama 7B" [level=3] [ref=e3256]
+          - generic [ref=e3257]:
+            - generic [ref=e3258]: 16384 Context
+            - generic [ref=e3260]:
+              - img "message-text-square" [ref=e3263]
+              - text: LLM
+        - link "Code Llama 7B Instruct 16384 Context message-text-square LLM" [ref=e3265] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-7b-instruct
+          - heading "Code Llama 7B Instruct" [level=3] [ref=e3269]
+          - generic [ref=e3270]:
+            - generic [ref=e3271]: 16384 Context
+            - generic [ref=e3273]:
+              - img "message-text-square" [ref=e3276]
+              - text: LLM
+        - link "Meta Mark Code Llama 7B Python 16384 Context message-text-square LLM" [ref=e3278] [cursor=pointer]:
+          - /url: /models/fireworks/code-llama-7b-python
+          - generic [ref=e3279]:
+            - img "Meta Mark" [ref=e3282]
+            - heading "Code Llama 7B Python" [level=3] [ref=e3283]
+          - generic [ref=e3284]:
+            - generic [ref=e3285]: 16384 Context
+            - generic [ref=e3287]:
+              - img "message-text-square" [ref=e3290]
+              - text: LLM
+        - link "Teknium Logo OpenHermes 2 Mistral 7B 32768 Context message-text-square LLM" [ref=e3292] [cursor=pointer]:
+          - /url: /models/fireworks/openhermes-2-mistral-7b
+          - generic [ref=e3293]:
+            - img "Teknium Logo" [ref=e3296]
+            - heading "OpenHermes 2 Mistral 7B" [level=3] [ref=e3297]
+          - generic [ref=e3298]:
+            - generic [ref=e3299]: 32768 Context
+            - generic [ref=e3301]:
+              - img "message-text-square" [ref=e3304]
+              - text: LLM
+        - link "Teknium Logo OpenHermes 2.5 Mistral 7B 32768 Context message-text-square LLM" [ref=e3306] [cursor=pointer]:
+          - /url: /models/fireworks/openhermes-2p5-mistral-7b
+          - generic [ref=e3307]:
+            - img "Teknium Logo" [ref=e3310]
+            - heading "OpenHermes 2.5 Mistral 7B" [level=3] [ref=e3311]
+          - generic [ref=e3312]:
+            - generic [ref=e3313]: 32768 Context
+            - generic [ref=e3315]:
+              - img "message-text-square" [ref=e3318]
+              - text: LLM
+        - link "Undi95 Logo Toppy M 7B 32768 Context message-text-square LLM" [ref=e3320] [cursor=pointer]:
+          - /url: /models/fireworks/toppy-m-7b
+          - generic [ref=e3321]:
+            - img "Undi95 Logo" [ref=e3324]
+            - heading "Toppy M 7B" [level=3] [ref=e3325]
+          - generic [ref=e3326]:
+            - generic [ref=e3327]: 32768 Context
+            - generic [ref=e3329]:
+              - img "message-text-square" [ref=e3332]
+              - text: LLM
+        - link "Austism Logo Chronos Hermes 13B v2 4096 Context message-text-square LLM" [ref=e3334] [cursor=pointer]:
+          - /url: /models/fireworks/chronos-hermes-13b-v2
+          - generic [ref=e3335]:
+            - img "Austism Logo" [ref=e3338]
+            - heading "Chronos Hermes 13B v2" [level=3] [ref=e3339]
+          - generic [ref=e3340]:
+            - generic [ref=e3341]: 4096 Context
+            - generic [ref=e3343]:
+              - img "message-text-square" [ref=e3346]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek Coder 7B Base v1.5 4096 Context message-text-square LLM" [ref=e3348] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-coder-7b-base-v1p5
+          - generic [ref=e3349]:
+            - img "Deepseek Logo Mark" [ref=e3352]
+            - heading "DeepSeek Coder 7B Base v1.5" [level=3] [ref=e3353]
+          - generic [ref=e3354]:
+            - generic [ref=e3355]: 4096 Context
+            - generic [ref=e3357]:
+              - img "message-text-square" [ref=e3360]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek Coder 7B Instruct v1.5 4096 Context message-text-square LLM" [ref=e3362] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-coder-7b-instruct-v1p5
+          - generic [ref=e3363]:
+            - img "Deepseek Logo Mark" [ref=e3366]
+            - heading "DeepSeek Coder 7B Instruct v1.5" [level=3] [ref=e3367]
+          - generic [ref=e3368]:
+            - generic [ref=e3369]: 4096 Context
+            - generic [ref=e3371]:
+              - img "message-text-square" [ref=e3374]
+              - text: LLM
+        - link "Cognitive Computations Logo Dolphin 2.6 Mixtral 8x7b 32768 Context message-text-square LLM" [ref=e3376] [cursor=pointer]:
+          - /url: /models/fireworks/dolphin-2p6-mixtral-8x7b
+          - generic [ref=e3377]:
+            - img "Cognitive Computations Logo" [ref=e3380]
+            - heading "Dolphin 2.6 Mixtral 8x7b" [level=3] [ref=e3381]
+          - generic [ref=e3382]:
+            - generic [ref=e3383]: 32768 Context
+            - generic [ref=e3385]:
+              - img "message-text-square" [ref=e3388]
+              - text: LLM
+        - link "LLaVA Logo LLaVA V1.6 Yi 34B 4096 Context eye Vision" [ref=e3390] [cursor=pointer]:
+          - /url: /models/fireworks/llava-yi-34b
+          - generic [ref=e3391]:
+            - img "LLaVA Logo" [ref=e3394]
+            - heading "LLaVA V1.6 Yi 34B" [level=3] [ref=e3395]
+          - generic [ref=e3396]:
+            - generic [ref=e3397]: 4096 Context
+            - generic [ref=e3399]:
+              - img "eye" [ref=e3402]
+              - text: Vision
+        - link "Mistral Logo Icon Mistral 7B Instruct v0.2 32768 Context message-text-square LLM" [ref=e3404] [cursor=pointer]:
+          - /url: /models/fireworks/mistral-7b-instruct-v0p2
+          - generic [ref=e3405]:
+            - img "Mistral Logo Icon" [ref=e3408]
+            - heading "Mistral 7B Instruct v0.2" [level=3] [ref=e3409]
+          - generic [ref=e3410]:
+            - generic [ref=e3411]: 32768 Context
+            - generic [ref=e3413]:
+              - img "message-text-square" [ref=e3416]
+              - text: LLM
+        - link "Mous Research Logo Mark Nous Hermes Llama2 13B 4096 Context message-text-square LLM" [ref=e3418] [cursor=pointer]:
+          - /url: /models/fireworks/nous-hermes-llama2-13b
+          - generic [ref=e3419]:
+            - img "Mous Research Logo Mark" [ref=e3422]
+            - heading "Nous Hermes Llama2 13B" [level=3] [ref=e3423]
+          - generic [ref=e3424]:
+            - generic [ref=e3425]: 4096 Context
+            - generic [ref=e3427]:
+              - img "message-text-square" [ref=e3430]
+              - text: LLM
+        - link "Mous Research Logo Mark Nous Hermes Llama2 7B 4096 Context message-text-square LLM" [ref=e3432] [cursor=pointer]:
+          - /url: /models/fireworks/nous-hermes-llama2-7b
+          - generic [ref=e3433]:
+            - img "Mous Research Logo Mark" [ref=e3436]
+            - heading "Nous Hermes Llama2 7B" [level=3] [ref=e3437]
+          - generic [ref=e3438]:
+            - generic [ref=e3439]: 4096 Context
+            - generic [ref=e3441]:
+              - img "message-text-square" [ref=e3444]
+              - text: LLM
+        - link "OpenOrca Logo Mistral 7B OpenOrca 32768 Context message-text-square LLM" [ref=e3446] [cursor=pointer]:
+          - /url: /models/fireworks/openorca-7b
+          - generic [ref=e3447]:
+            - img "OpenOrca Logo" [ref=e3450]
+            - heading "Mistral 7B OpenOrca" [level=3] [ref=e3451]
+          - generic [ref=e3452]:
+            - generic [ref=e3453]: 32768 Context
+            - generic [ref=e3455]:
+              - img "message-text-square" [ref=e3458]
+              - text: LLM
+        - link "BigCode Logo Mark StarCoder 16B 8192 Context message-text-square LLM" [ref=e3460] [cursor=pointer]:
+          - /url: /models/fireworks/starcoder-16b
+          - generic [ref=e3461]:
+            - img "BigCode Logo Mark" [ref=e3464]
+            - heading "StarCoder 16B" [level=3] [ref=e3465]
+          - generic [ref=e3466]:
+            - generic [ref=e3467]: 8192 Context
+            - generic [ref=e3469]:
+              - img "message-text-square" [ref=e3472]
+              - text: LLM
+        - link "Yi Logo Mark Yi 34B Chat 4096 Context message-text-square LLM" [ref=e3474] [cursor=pointer]:
+          - /url: /models/yi-01-ai/yi-34b-chat
+          - generic [ref=e3475]:
+            - img "Yi Logo Mark" [ref=e3478]
+            - heading "Yi 34B Chat" [level=3] [ref=e3479]
+          - generic [ref=e3480]:
+            - generic [ref=e3481]: 4096 Context
+            - generic [ref=e3483]:
+              - img "message-text-square" [ref=e3486]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek Coder 33B Instruct 16384 Context message-text-square LLM" [ref=e3488] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-coder-33b-instruct
+          - generic [ref=e3489]:
+            - img "Deepseek Logo Mark" [ref=e3492]
+            - heading "DeepSeek Coder 33B Instruct" [level=3] [ref=e3493]
+          - generic [ref=e3494]:
+            - generic [ref=e3495]: 16384 Context
+            - generic [ref=e3497]:
+              - img "message-text-square" [ref=e3500]
+              - text: LLM
+        - link "Fireworks Logo Mark FireFunction V1 32768 Context message-text-square LLM" [ref=e3502] [cursor=pointer]:
+          - /url: /models/fireworks/firefunction-v1
+          - generic [ref=e3503]:
+            - img "Fireworks Logo Mark" [ref=e3506]
+            - heading "FireFunction V1" [level=3] [ref=e3507]
+          - generic [ref=e3508]:
+            - generic [ref=e3509]: 32768 Context
+            - generic [ref=e3511]:
+              - img "message-text-square" [ref=e3514]
+              - text: LLM
+        - link "Fireworks Logo Mark FireLLaVA 13B 4096 Context eye Vision" [ref=e3516] [cursor=pointer]:
+          - /url: /models/fireworks/firellava-13b
+          - generic [ref=e3517]:
+            - img "Fireworks Logo Mark" [ref=e3520]
+            - heading "FireLLaVA 13B" [level=3] [ref=e3521]
+          - generic [ref=e3522]:
+            - generic [ref=e3523]: 4096 Context
+            - generic [ref=e3525]:
+              - img "eye" [ref=e3528]
+              - text: Vision
+        - link "Google Ai Logo Mark Gemma 7B Instruct 8192 Context message-text-square LLM" [ref=e3530] [cursor=pointer]:
+          - /url: /models/fireworks/gemma-7b-it
+          - generic [ref=e3531]:
+            - img "Google Ai Logo Mark" [ref=e3534]
+            - heading "Gemma 7B Instruct" [level=3] [ref=e3535]
+          - generic [ref=e3536]:
+            - generic [ref=e3537]: 8192 Context
+            - generic [ref=e3539]:
+              - img "message-text-square" [ref=e3542]
+              - text: LLM
+        - link "Meta Mark Llama 2 70B 4096 Context message-text-square LLM" [ref=e3544] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v2-70b
+          - generic [ref=e3545]:
+            - img "Meta Mark" [ref=e3548]
+            - heading "Llama 2 70B" [level=3] [ref=e3549]
+          - generic [ref=e3550]:
+            - generic [ref=e3551]: 4096 Context
+            - generic [ref=e3553]:
+              - img "message-text-square" [ref=e3556]
+              - text: LLM
+        - link "Mistral Logo Icon Mixtral MoE 8x7B Instruct (HF version) 32768 Context message-text-square LLM" [ref=e3558] [cursor=pointer]:
+          - /url: /models/fireworks/mixtral-8x7b-instruct-hf
+          - generic [ref=e3559]:
+            - img "Mistral Logo Icon" [ref=e3562]
+            - heading "Mixtral MoE 8x7B Instruct (HF version)" [level=3] [ref=e3563]
+          - generic [ref=e3564]:
+            - generic [ref=e3565]: 32768 Context
+            - generic [ref=e3567]:
+              - img "message-text-square" [ref=e3570]
+              - text: LLM
+        - link "Gryphe Logo Mark MythoMax L2 13B 4096 Context message-text-square LLM" [ref=e3572] [cursor=pointer]:
+          - /url: /models/fireworks/mythomax-l2-13b
+          - generic [ref=e3573]:
+            - img "Gryphe Logo Mark" [ref=e3576]
+            - heading "MythoMax L2 13B" [level=3] [ref=e3577]
+          - generic [ref=e3578]:
+            - generic [ref=e3579]: 4096 Context
+            - generic [ref=e3581]:
+              - img "message-text-square" [ref=e3584]
+              - text: LLM
+        - link "Microsoft Logo Mark Phi-2 3B 2048 Context message-text-square LLM" [ref=e3586] [cursor=pointer]:
+          - /url: /models/fireworks/phi-2-3b
+          - generic [ref=e3587]:
+            - img "Microsoft Logo Mark" [ref=e3590]
+            - heading "Phi-2 3B" [level=3] [ref=e3591]
+          - generic [ref=e3592]:
+            - generic [ref=e3593]: 2048 Context
+            - generic [ref=e3595]:
+              - img "message-text-square" [ref=e3598]
+              - text: LLM
+        - link "Quen Logo Mark Qwen1.5 72B Chat 32768 Context message-text-square LLM" [ref=e3600] [cursor=pointer]:
+          - /url: /models/fireworks/qwen1p5-72b-chat
+          - generic [ref=e3601]:
+            - img "Quen Logo Mark" [ref=e3604]
+            - heading "Qwen1.5 72B Chat" [level=3] [ref=e3605]
+          - generic [ref=e3606]:
+            - generic [ref=e3607]: 32768 Context
+            - generic [ref=e3609]:
+              - img "message-text-square" [ref=e3612]
+              - text: LLM
+        - link "BigCode Logo Mark StarCoder 7B 8192 Context message-text-square LLM" [ref=e3614] [cursor=pointer]:
+          - /url: /models/fireworks/starcoder-7b
+          - generic [ref=e3615]:
+            - img "BigCode Logo Mark" [ref=e3618]
+            - heading "StarCoder 7B" [level=3] [ref=e3619]
+          - generic [ref=e3620]:
+            - generic [ref=e3621]: 8192 Context
+            - generic [ref=e3623]:
+              - img "message-text-square" [ref=e3626]
+              - text: LLM
+        - link "Meta Mark Llama 2 13B 4096 Context message-text-square LLM" [ref=e3628] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v2-13b
+          - generic [ref=e3629]:
+            - img "Meta Mark" [ref=e3632]
+            - heading "Llama 2 13B" [level=3] [ref=e3633]
+          - generic [ref=e3634]:
+            - generic [ref=e3635]: 4096 Context
+            - generic [ref=e3637]:
+              - img "message-text-square" [ref=e3640]
+              - text: LLM
+        - link "Meta Mark Llama 2 13B Chat 4096 Context message-text-square LLM" [ref=e3642] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v2-13b-chat
+          - generic [ref=e3643]:
+            - img "Meta Mark" [ref=e3646]
+            - heading "Llama 2 13B Chat" [level=3] [ref=e3647]
+          - generic [ref=e3648]:
+            - generic [ref=e3649]: 4096 Context
+            - generic [ref=e3651]:
+              - img "message-text-square" [ref=e3654]
+              - text: LLM
+        - link "Meta Mark Llama 2 70B Chat 2048 Context message-text-square LLM" [ref=e3656] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v2-70b-chat
+          - generic [ref=e3657]:
+            - img "Meta Mark" [ref=e3660]
+            - heading "Llama 2 70B Chat" [level=3] [ref=e3661]
+          - generic [ref=e3662]:
+            - generic [ref=e3663]: 2048 Context
+            - generic [ref=e3665]:
+              - img "message-text-square" [ref=e3668]
+              - text: LLM
+        - link "Meta Mark Llama 2 7B 4096 Context message-text-square LLM" [ref=e3670] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v2-7b
+          - generic [ref=e3671]:
+            - img "Meta Mark" [ref=e3674]
+            - heading "Llama 2 7B" [level=3] [ref=e3675]
+          - generic [ref=e3676]:
+            - generic [ref=e3677]: 4096 Context
+            - generic [ref=e3679]:
+              - img "message-text-square" [ref=e3682]
+              - text: LLM
+        - link "Meta Mark Llama 2 7B Chat 4096 Context message-text-square LLM" [ref=e3684] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v2-7b-chat
+          - generic [ref=e3685]:
+            - img "Meta Mark" [ref=e3688]
+            - heading "Llama 2 7B Chat" [level=3] [ref=e3689]
+          - generic [ref=e3690]:
+            - generic [ref=e3691]: 4096 Context
+            - generic [ref=e3693]:
+              - img "message-text-square" [ref=e3696]
+              - text: LLM
+        - link "Mistral Logo Icon Mistral 7B 32768 Context message-text-square LLM" [ref=e3698] [cursor=pointer]:
+          - /url: /models/fireworks/mistral-7b
+          - generic [ref=e3699]:
+            - img "Mistral Logo Icon" [ref=e3702]
+            - heading "Mistral 7B" [level=3] [ref=e3703]
+          - generic [ref=e3704]:
+            - generic [ref=e3705]: 32768 Context
+            - generic [ref=e3707]:
+              - img "message-text-square" [ref=e3710]
+              - text: LLM
+        - link "Mistral Logo Icon Mistal 7B Instruct V0.1 32768 Context message-text-square LLM" [ref=e3712] [cursor=pointer]:
+          - /url: /models/fireworks/mistral-7b-instruct-4k
+          - generic [ref=e3713]:
+            - img "Mistral Logo Icon" [ref=e3716]
+            - heading "Mistal 7B Instruct V0.1" [level=3] [ref=e3717]
+          - generic [ref=e3718]:
+            - generic [ref=e3719]: 32768 Context
+            - generic [ref=e3721]:
+              - img "message-text-square" [ref=e3724]
+              - text: LLM
+        - link "Mistral Logo Icon Mixtral 8x7B v0.1 32768 Context message-text-square LLM" [ref=e3726] [cursor=pointer]:
+          - /url: /models/fireworks/mixtral-8x7b
+          - generic [ref=e3727]:
+            - img "Mistral Logo Icon" [ref=e3730]
+            - heading "Mixtral 8x7B v0.1" [level=3] [ref=e3731]
+          - generic [ref=e3732]:
+            - generic [ref=e3733]: 32768 Context
+            - generic [ref=e3735]:
+              - img "message-text-square" [ref=e3738]
+              - text: LLM
+        - link "Mistral Logo Icon Mixtral MoE 8x7B Instruct 32768 Context message-text-square LLM" [ref=e3740] [cursor=pointer]:
+          - /url: /models/fireworks/mixtral-8x7b-instruct
+          - generic [ref=e3741]:
+            - img "Mistral Logo Icon" [ref=e3744]
+            - heading "Mixtral MoE 8x7B Instruct" [level=3] [ref=e3745]
+          - generic [ref=e3746]:
+            - generic [ref=e3747]: 32768 Context
+            - generic [ref=e3749]:
+              - img "message-text-square" [ref=e3752]
+              - text: LLM
+        - link "Mous Research Logo Mark Nouse Capybara 34B V1.9 200000 Context message-text-square LLM" [ref=e3754] [cursor=pointer]:
+          - /url: /models/fireworks/yi-34b-200k-capybara
+          - generic [ref=e3755]:
+            - img "Mous Research Logo Mark" [ref=e3758]
+            - heading "Nouse Capybara 34B V1.9" [level=3] [ref=e3759]
+          - generic [ref=e3760]:
+            - generic [ref=e3761]: 200000 Context
+            - generic [ref=e3763]:
+              - img "message-text-square" [ref=e3766]
+              - text: LLM
+        - link "Yi Logo Mark Yi 6B 4096 Context message-text-square LLM" [ref=e3768] [cursor=pointer]:
+          - /url: /models/yi-01-ai/yi-6b
+          - generic [ref=e3769]:
+            - img "Yi Logo Mark" [ref=e3772]
+            - heading "Yi 6B" [level=3] [ref=e3773]
+          - generic [ref=e3774]:
+            - generic [ref=e3775]: 4096 Context
+            - generic [ref=e3777]:
+              - img "message-text-square" [ref=e3780]
+              - text: LLM
+        - link "Mistral Logo Icon Mistral Small 24B Instruct 2501 32768 Context message-text-square LLM" [ref=e3782] [cursor=pointer]:
+          - /url: /models/fireworks/mistral-small-24b-instruct-2501
+          - generic [ref=e3783]:
+            - img "Mistral Logo Icon" [ref=e3786]
+            - heading "Mistral Small 24B Instruct 2501" [level=3] [ref=e3787]
+          - generic [ref=e3788]:
+            - generic [ref=e3789]: 32768 Context
+            - generic [ref=e3791]:
+              - img "message-text-square" [ref=e3794]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek R1 Distill Llama 8B 131072 Context message-text-square LLM" [ref=e3796] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1-distill-llama-8b
+          - generic [ref=e3797]:
+            - img "Deepseek Logo Mark" [ref=e3800]
+            - heading "DeepSeek R1 Distill Llama 8B" [level=3] [ref=e3801]
+          - generic [ref=e3802]:
+            - generic [ref=e3803]: 131072 Context
+            - generic [ref=e3805]:
+              - img "message-text-square" [ref=e3808]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek R1 Distill Qwen 14B 131072 Context message-text-square LLM" [ref=e3810] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1-distill-qwen-14b
+          - generic [ref=e3811]:
+            - img "Deepseek Logo Mark" [ref=e3814]
+            - heading "DeepSeek R1 Distill Qwen 14B" [level=3] [ref=e3815]
+          - generic [ref=e3816]:
+            - generic [ref=e3817]: 131072 Context
+            - generic [ref=e3819]:
+              - img "message-text-square" [ref=e3822]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 32B Instruct 32768 Context message-text-square LLM" [ref=e3824] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-32b-instruct
+          - generic [ref=e3825]:
+            - img "Quen Logo Mark" [ref=e3828]
+            - heading "Qwen2.5-Coder 32B Instruct" [level=3] [ref=e3829]
+          - generic [ref=e3830]:
+            - generic [ref=e3831]: 32768 Context
+            - generic [ref=e3833]:
+              - img "message-text-square" [ref=e3836]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 32B Instruct 128K 131072 Context message-text-square LLM" [ref=e3838] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-32b-instruct-128k
+          - generic [ref=e3839]:
+            - img "Quen Logo Mark" [ref=e3842]
+            - heading "Qwen2.5-Coder 32B Instruct 128K" [level=3] [ref=e3843]
+          - generic [ref=e3844]:
+            - generic [ref=e3845]: 131072 Context
+            - generic [ref=e3847]:
+              - img "message-text-square" [ref=e3850]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 32B Instruct 32K RoPE 32768 Context message-text-square LLM" [ref=e3852] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-32b-instruct-32k-rope
+          - generic [ref=e3853]:
+            - img "Quen Logo Mark" [ref=e3856]
+            - heading "Qwen2.5-Coder 32B Instruct 32K RoPE" [level=3] [ref=e3857]
+          - generic [ref=e3858]:
+            - generic [ref=e3859]: 32768 Context
+            - generic [ref=e3861]:
+              - img "message-text-square" [ref=e3864]
+              - text: LLM
+        - link "Quen Logo Mark Qwen2.5-Coder 32B Instruct 64k 65536 Context message-text-square LLM" [ref=e3866] [cursor=pointer]:
+          - /url: /models/fireworks/qwen2p5-coder-32b-instruct-64k
+          - generic [ref=e3867]:
+            - img "Quen Logo Mark" [ref=e3870]
+            - heading "Qwen2.5-Coder 32B Instruct 64k" [level=3] [ref=e3871]
+          - generic [ref=e3872]:
+            - generic [ref=e3873]: 65536 Context
+            - generic [ref=e3875]:
+              - img "message-text-square" [ref=e3878]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek R1 Distill Llama 70B 131072 Context message-text-square LLM" [ref=e3880] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1-distill-llama-70b
+          - generic [ref=e3881]:
+            - img "Deepseek Logo Mark" [ref=e3884]
+            - heading "DeepSeek R1 Distill Llama 70B" [level=3] [ref=e3885]
+          - generic [ref=e3886]:
+            - generic [ref=e3887]: 131072 Context
+            - generic [ref=e3889]:
+              - img "message-text-square" [ref=e3892]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek R1 Distill Qwen 1.5B 131072 Context message-text-square LLM" [ref=e3894] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1-distill-qwen-1p5b
+          - generic [ref=e3895]:
+            - img "Deepseek Logo Mark" [ref=e3898]
+            - heading "DeepSeek R1 Distill Qwen 1.5B" [level=3] [ref=e3899]
+          - generic [ref=e3900]:
+            - generic [ref=e3901]: 131072 Context
+            - generic [ref=e3903]:
+              - img "message-text-square" [ref=e3906]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek R1 Distill Qwen 7B 131072 Context message-text-square LLM" [ref=e3908] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-r1-distill-qwen-7b
+          - generic [ref=e3909]:
+            - img "Deepseek Logo Mark" [ref=e3912]
+            - heading "DeepSeek R1 Distill Qwen 7B" [level=3] [ref=e3913]
+          - generic [ref=e3914]:
+            - generic [ref=e3915]: 131072 Context
+            - generic [ref=e3917]:
+              - img "message-text-square" [ref=e3920]
+              - text: LLM
+        - link "Deepseek Logo Mark DeepSeek V3 131072 Context message-text-square LLM" [ref=e3922] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-v3
+          - generic [ref=e3923]:
+            - img "Deepseek Logo Mark" [ref=e3926]
+            - heading "DeepSeek V3" [level=3] [ref=e3927]
+          - generic [ref=e3928]:
+            - generic [ref=e3929]: 131072 Context
+            - generic [ref=e3931]:
+              - img "message-text-square" [ref=e3934]
+              - text: LLM
+        - link "Deepseek Logo Mark Deepseek V3 03-24 163840 Context message-text-square LLM" [ref=e3936] [cursor=pointer]:
+          - /url: /models/fireworks/deepseek-v3-0324
+          - generic [ref=e3937]:
+            - img "Deepseek Logo Mark" [ref=e3940]
+            - heading "Deepseek V3 03-24" [level=3] [ref=e3941]
+          - generic [ref=e3942]:
+            - generic [ref=e3943]: 163840 Context
+            - generic [ref=e3945]:
+              - img "message-text-square" [ref=e3948]
+              - text: LLM
+        - link "Meta Mark Llama 3.1 405B Instruct 131072 Context message-text-square LLM" [ref=e3950] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p1-405b-instruct
+          - generic [ref=e3951]:
+            - img "Meta Mark" [ref=e3954]
+            - heading "Llama 3.1 405B Instruct" [level=3] [ref=e3955]
+          - generic [ref=e3956]:
+            - generic [ref=e3957]: 131072 Context
+            - generic [ref=e3959]:
+              - img "message-text-square" [ref=e3962]
+              - text: LLM
+        - link "Meta Mark Llama 3.1 8B Instruct 131072 Context message-text-square LLM" [ref=e3964] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p1-8b-instruct
+          - generic [ref=e3965]:
+            - img "Meta Mark" [ref=e3968]
+            - heading "Llama 3.1 8B Instruct" [level=3] [ref=e3969]
+          - generic [ref=e3970]:
+            - generic [ref=e3971]: 131072 Context
+            - generic [ref=e3973]:
+              - img "message-text-square" [ref=e3976]
+              - text: LLM
+        - link "Meta Mark Llama 3.2 3B Instruct 131072 Context message-text-square LLM" [ref=e3978] [cursor=pointer]:
+          - /url: /models/fireworks/llama-v3p2-3b-instruct
+          - generic [ref=e3979]:
+            - img "Meta Mark" [ref=e3982]
+            - heading "Llama 3.2 3B Instruct" [level=3] [ref=e3983]
+          - generic [ref=e3984]:
+            - generic [ref=e3985]: 131072 Context
+            - generic [ref=e3987]:
+              - img "message-text-square" [ref=e3990]
+              - text: LLM
+        - link "Meta Mark Llama 4 Maverick Instruct (Basic) 1048576 Context eye Vision" [ref=e3992] [cursor=pointer]:
+          - /url: /models/fireworks/llama4-maverick-instruct-basic
+          - generic [ref=e3993]:
+            - img "Meta Mark" [ref=e3996]
+            - heading "Llama 4 Maverick Instruct (Basic)" [level=3] [ref=e3997]
+          - generic [ref=e3998]:
+            - generic [ref=e3999]: 1048576 Context
+            - generic [ref=e4001]:
+              - img "eye" [ref=e4004]
+              - text: Vision
+        - link "Meta Mark Llama 4 Scout Instruct (Basic) 1048576 Context eye Vision" [ref=e4006] [cursor=pointer]:
+          - /url: /models/fireworks/llama4-scout-instruct-basic
+          - generic [ref=e4007]:
+            - img "Meta Mark" [ref=e4010]
+            - heading "Llama 4 Scout Instruct (Basic)" [level=3] [ref=e4011]
+          - generic [ref=e4012]:
+            - generic [ref=e4013]: 1048576 Context
+            - generic [ref=e4015]:
+              - img "eye" [ref=e4018]
+              - text: Vision
+        - link "Quen Logo Mark Qwen3 30B-A3B 131072 Context message-text-square LLM" [ref=e4020] [cursor=pointer]:
+          - /url: /models/fireworks/qwen3-30b-a3b
+          - generic [ref=e4021]:
+            - img "Quen Logo Mark" [ref=e4024]
+            - heading "Qwen3 30B-A3B" [level=3] [ref=e4025]
+          - generic [ref=e4026]:
+            - generic [ref=e4027]: 131072 Context
+            - generic [ref=e4029]:
+              - img "message-text-square" [ref=e4032]
+              - text: LLM
+  - generic [ref=e4036]:
+    - heading "Featured Providers" [level=2] [ref=e4037]
+    - generic [ref=e4038]:
+      - link "Deepseek Logo Mark Deepseek" [ref=e4039] [cursor=pointer]:
+        - /url: /signup
+        - img "Deepseek Logo Mark" [ref=e4041]
+        - heading "Deepseek" [level=3] [ref=e4042]
+      - link "Meta Mark Meta" [ref=e4043] [cursor=pointer]:
+        - /url: /signup
+        - img "Meta Mark" [ref=e4045]
+        - heading "Meta" [level=3] [ref=e4046]
+      - link "Microsoft Logo Mark Microsoft" [ref=e4047] [cursor=pointer]:
+        - /url: /signup
+        - img "Microsoft Logo Mark" [ref=e4049]
+        - heading "Microsoft" [level=3] [ref=e4050]
+      - link "Quen Logo Mark Qwen" [ref=e4051] [cursor=pointer]:
+        - /url: /signup
+        - img "Quen Logo Mark" [ref=e4053]
+        - heading "Qwen" [level=3] [ref=e4054]
+      - link "Stability Logo Mark Stability" [ref=e4055] [cursor=pointer]:
+        - /url: /signup
+        - img "Stability Logo Mark" [ref=e4057]
+        - heading "Stability" [level=3] [ref=e4058]
+      - link "Google Ai Logo Mark Google" [ref=e4059] [cursor=pointer]:
+        - /url: /signup
+        - img "Google Ai Logo Mark" [ref=e4061]
+        - heading "Google" [level=3] [ref=e4062]
+      - link "OpenAi Logo MArk OpenAI" [ref=e4063] [cursor=pointer]:
+        - /url: /signup
+        - img "OpenAi Logo MArk" [ref=e4065]
+        - heading "OpenAI" [level=3] [ref=e4066]
+      - link "Mous Research Logo Mark Nous" [ref=e4067] [cursor=pointer]:
+        - /url: /signup
+        - img "Mous Research Logo Mark" [ref=e4069]
+        - heading "Nous" [level=3] [ref=e4070]
+      - link "Yi Logo Mark 01.Ai" [ref=e4071] [cursor=pointer]:
+        - /url: /signup
+        - img "Yi Logo Mark" [ref=e4073]
+        - heading "01.Ai" [level=3] [ref=e4074]
+      - link "Flux Logo Mark Black Forest Labs" [ref=e4075] [cursor=pointer]:
+        - /url: /signup
+        - img "Flux Logo Mark" [ref=e4077]
+        - heading "Black Forest Labs" [level=3] [ref=e4078]
+  - contentinfo [ref=e4079]:
+    - generic [ref=e4080]:
+      - generic [ref=e4081]:
+        - separator [ref=e4083]
+        - generic [ref=e4084]:
+          - img "Fireworks Logo" [ref=e4087]
+          - generic [ref=e4088]:
+            - generic [ref=e4089]:
+              - heading "Platform" [level=3] [ref=e4090]
+              - link "AI Native" [ref=e4091] [cursor=pointer]:
+                - /url: /ai-native
+              - link "Enterprise" [ref=e4092] [cursor=pointer]:
+                - /url: /enterprise
+              - link "Customers" [ref=e4093] [cursor=pointer]:
+                - /url: /customers
+            - generic [ref=e4094]:
+              - heading "Use Cases" [level=3] [ref=e4095]
+              - link "Code Assistance" [ref=e4096] [cursor=pointer]:
+                - /url: /usecases/code-assistance
+              - link "Conversational AI" [ref=e4097] [cursor=pointer]:
+                - /url: /usecases/conversational-ai
+              - link "Agentic Systems" [ref=e4098] [cursor=pointer]:
+                - /url: /usecases/agentic-systems
+              - link "Search" [ref=e4099] [cursor=pointer]:
+                - /url: /usecases/search
+              - link "Multimodal" [ref=e4100] [cursor=pointer]:
+                - /url: /usecases/multimodal
+              - link "Enterprise RAG" [ref=e4101] [cursor=pointer]:
+                - /url: /usecases/enterprise-rag
+            - generic [ref=e4102]:
+              - heading "Developers" [level=3] [ref=e4103]
+              - link "Model Library" [ref=e4104] [cursor=pointer]:
+                - /url: /models
+              - link "Docs" [ref=e4105] [cursor=pointer]:
+                - /url: https://docs.fireworks.ai/getting-started/introduction
+              - link "CLI" [ref=e4106] [cursor=pointer]:
+                - /url: https://docs.fireworks.ai/tools-sdks/firectl/firectl
+              - link "API" [ref=e4107] [cursor=pointer]:
+                - /url: https://docs.fireworks.ai/api-reference/introduction
+              - link "Changelog" [ref=e4108] [cursor=pointer]:
+                - /url: https://docs.fireworks.ai/updates/changelog
+            - generic [ref=e4109]:
+              - heading "Pricing" [level=3] [ref=e4110]
+              - link "Serverless" [ref=e4111] [cursor=pointer]:
+                - /url: /pricing#serverless-pricing
+              - link "On-Demand" [ref=e4112] [cursor=pointer]:
+                - /url: /pricing#on-demand-pricing
+              - link "Fine Tuning" [ref=e4113] [cursor=pointer]:
+                - /url: /pricing#fine-tuning-pricing
+              - link "Enterprise" [ref=e4114] [cursor=pointer]:
+                - /url: /contact-reserved
+            - generic [ref=e4115]:
+              - heading "Partners" [level=3] [ref=e4116]
+              - link "Cloud and Infrastructure" [ref=e4117] [cursor=pointer]:
+                - /url: /partners#cloud-infra
+              - link "Consulting and Services" [ref=e4118] [cursor=pointer]:
+                - /url: /partners#consulting
+              - link "Technology" [ref=e4119] [cursor=pointer]:
+                - /url: /partners#technology
+              - link "Fireworks for Startups" [ref=e4120] [cursor=pointer]:
+                - /url: /startup-program
+            - generic [ref=e4121]:
+              - heading "Resources" [level=3] [ref=e4122]
+              - link "Blog" [ref=e4123] [cursor=pointer]:
+                - /url: /blog
+              - link "Demos" [ref=e4124] [cursor=pointer]:
+                - /url: https://demos.fireworks.ai/
+              - link "Cookbooks" [ref=e4125] [cursor=pointer]:
+                - /url: https://docs.fireworks.ai/examples/introduction
+            - generic [ref=e4126]:
+              - heading "Company" [level=3] [ref=e4127]
+              - link "Leadership" [ref=e4128] [cursor=pointer]:
+                - /url: /team
+              - link "Investors" [ref=e4129] [cursor=pointer]:
+                - /url: /team#investors
+              - link "Careers" [ref=e4130] [cursor=pointer]:
+                - /url: https://job-boards.greenhouse.io/fireworksai
+              - link "Trust Center" [ref=e4131] [cursor=pointer]:
+                - /url: https://trust.fireworks.ai/
+      - generic [ref=e4133]:
+        - generic [ref=e4134]: © 2026 Fireworks AI, Inc. All rights reserved.
+        - generic [ref=e4135]:
+          - link "twitter" [ref=e4136] [cursor=pointer]:
+            - /url: https://x.com/FireworksAI_HQ
+            - img "twitter-x" [ref=e4138]
+          - link "youtube" [ref=e4140] [cursor=pointer]:
+            - /url: https://www.youtube.com/@fireworksai
+            - img "youtube" [ref=e4142]
+          - link "linkedin" [ref=e4144] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/fireworks-ai
+            - img "linkedin" [ref=e4146]
+          - link "discord" [ref=e4148] [cursor=pointer]:
+            - /url: https://discord.com/invite/U6UFFdNZ
+            - img "discord" [ref=e4150]
