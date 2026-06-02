@@ -204,6 +204,55 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* Notícias */}
+      <section className="border-t border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <div className="flex flex-col items-center justify-between gap-8 lg:flex-row lg:items-end">
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
+                Novidades
+              </p>
+              <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-text sm:text-4xl">
+                Notícias do laboratório
+              </h2>
+            </div>
+            <Button asChild variant="ghost" size="sm" className="gap-2 rounded-none text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue transition-all duration-150 ease-out hover:text-brand-blue/80">
+              <Link to="/noticias">
+                Ver todas
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {NOTICIAS.map((noticia) => (
+              <article
+                key={noticia.id}
+                className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md"
+              >
+                <span className="inline-flex w-fit rounded-full bg-brand-blue/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-blue">
+                  {noticia.categoria}
+                </span>
+                <h3 className="font-heading mt-4 text-lg font-bold text-brand-text">
+                  {noticia.titulo}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-brand-gray">
+                  {noticia.excerpt}
+                </p>
+                <div className="mt-auto flex items-center justify-between pt-4">
+                  <span className="text-xs text-brand-gray">
+                    {noticia.data}
+                  </span>
+                  <Link to="/noticias" className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue transition-colors hover:text-brand-blue/80">
+                    Ler mais
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Sobre / Missão */}
       <section className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-6 py-20">
@@ -303,45 +352,6 @@ export function HomePage() {
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Notícias */}
-      <section className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 pb-20">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
-            Novidades
-          </p>
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-text sm:text-4xl">
-            Notícias do laboratório
-          </h2>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {NOTICIAS.map((noticia) => (
-              <article
-                key={noticia.id}
-                className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md"
-              >
-                <span className="inline-flex w-fit rounded-full bg-brand-blue/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-blue">
-                  {noticia.categoria}
-                </span>
-                <h3 className="font-heading mt-4 text-lg font-bold text-brand-text">
-                  {noticia.titulo}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-brand-gray">
-                  {noticia.excerpt}
-                </p>
-                <div className="mt-auto flex items-center justify-between pt-4">
-                  <span className="text-xs text-brand-gray">
-                    {noticia.data}
-                  </span>
-                  <Link to="/noticias" className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue transition-colors hover:text-brand-blue/80">
-                    Ler mais
-                  </Link>
-                </div>
-              </article>
-            ))}
           </div>
         </div>
       </section>
