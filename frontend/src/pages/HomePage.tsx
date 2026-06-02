@@ -5,7 +5,7 @@ import Marquee from 'react-fast-marquee'
 
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import type { NoticiaListItem, ProjetoListItem, Paginated } from '@/types/api'
+import type { NoticiaListItem, ProjetoListItem, TipoProjeto, Paginated } from '@/types/api'
 
 function stripHtml(value: string | null | undefined) {
   if (!value) return ''
@@ -124,6 +124,8 @@ export function HomePage() {
   const [noticiasError, setNoticiasError] = useState<string | null>(null)
   const [projetos, setProjetos] = useState<ProjetoListItem[] | null>(null)
   const [projetosError, setProjetosError] = useState<string | null>(null)
+  const [tipos, setTipos] = useState<TipoProjeto[] | null>(null)
+  const [selectedTipoId, setSelectedTipoId] = useState<number | null>(null)
 
   useEffect(() => {
     const ac = new AbortController()
@@ -142,18 +144,41 @@ export function HomePage() {
 
   useEffect(() => {
     const ac = new AbortController()
-    fetch('/api/v1/projetos/?limit=3', { signal: ac.signal })
-      .then(async (r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+    Promise.all([
+      fetch('/api/v1/projetos/', { signal: ac.signal }).then(async (r) => {
+        if (!r.ok) throw new Error(`projetos HTTP ${r.status}`)
         return (await r.json()) as Paginated<ProjetoListItem>
+      }),
+      fetch('/api/v1/tipos-projeto/', { signal: ac.signal }).then(async (r) => {
+        if (!r.ok) throw new Error(`tipos HTTP ${r.status}`)
+        return (await r.json()) as Paginated<TipoProjeto>
+      }),
+    ])
+      .then(([pPage, tPage]) => {
+        setProjetos(pPage.results)
+        setTipos(tPage.results)
       })
-      .then((page) => setProjetos(page.results))
       .catch((e: unknown) => {
         if (e instanceof DOMException && e.name === 'AbortError') return
         setProjetosError(e instanceof Error ? e.message : 'erro desconhecido')
       })
     return () => ac.abort()
   }, [])
+
+  const counts = new Map<number, number>()
+  if (projetos) {
+    for (const p of projetos) {
+      for (const t of p.type) {
+        counts.set(t.id, (counts.get(t.id) ?? 0) + 1)
+      }
+    }
+  }
+
+  const filteredProjetos = (() => {
+    if (!projetos) return null
+    if (selectedTipoId === null) return projetos.slice(0, 3)
+    return projetos.filter((p) => p.type.some((t) => t.id === selectedTipoId)).slice(0, 3)
+  })()
 
   return (
     <>
@@ -374,9 +399,56 @@ export function HomePage() {
             </div>
           )}
 
-          {projetos && projetos.length > 0 && (
+          {projetos && tipos && tipos.length > 0 && (
+            <nav
+              aria-label="Filtrar por tipo de projeto"
+              className="mb-8 mt-8 flex flex-wrap items-center gap-2 border-b border-slate-200 pb-6"
+            >
+              <button
+                type="button"
+                onClick={() => setSelectedTipoId(null)}
+                className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                  selectedTipoId === null
+                    ? 'bg-brand-blue text-white'
+                    : 'bg-slate-100 text-brand-text hover:bg-brand-blue/10 hover:text-brand-blue'
+                }`}
+              >
+                <span>Todos</span>
+                <span className={`font-mono text-[10px] tabular-nums tracking-wider ${
+                  selectedTipoId === null ? 'text-white/80' : 'text-brand-gray'
+                }`}>
+                  {String(projetos.length).padStart(2, '0')}
+                </span>
+              </button>
+              {tipos.map((t) => {
+                const count = counts.get(t.id) ?? 0
+                if (count === 0) return null
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setSelectedTipoId(t.id)}
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                      selectedTipoId === t.id
+                        ? 'bg-brand-blue text-white'
+                        : 'bg-slate-100 text-brand-text hover:bg-brand-blue/10 hover:text-brand-blue'
+                    }`}
+                  >
+                    <span>{t.type}</span>
+                    <span className={`font-mono text-[10px] tabular-nums tracking-wider ${
+                      selectedTipoId === t.id ? 'text-white/80' : 'text-brand-gray'
+                    }`}>
+                      {String(count).padStart(2, '0')}
+                    </span>
+                  </button>
+                )
+              })}
+            </nav>
+          )}
+
+          {projetos && filteredProjetos && filteredProjetos.length > 0 && (
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {projetos.map((p) => (
+              {filteredProjetos.map((p) => (
                 <Link
                   key={p.id}
                   to={`/projetos/${p.id}`}
