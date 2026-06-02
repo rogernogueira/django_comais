@@ -114,7 +114,7 @@ export function HomePage() {
 
   useEffect(() => {
     const ac = new AbortController()
-    fetch('/api/v1/noticias/?limit=3', { signal: ac.signal })
+    fetch('/api/v1/noticias/?limit=2', { signal: ac.signal })
       .then(async (r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return (await r.json()) as Paginated<NoticiaListItem>
@@ -239,30 +239,81 @@ export function HomePage() {
           )}
 
           {noticias && noticias.length > 0 && (
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {noticias.map((noticia) => (
-                <article
-                  key={noticia.id}
-                  className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md"
-                >
-                  <h3 className="font-heading text-lg font-bold text-brand-text">
-                    {noticia.titulo}
-                  </h3>
-                  {noticia.resumo && (
-                    <p className="mt-3 text-sm leading-relaxed text-brand-gray">
-                      {noticia.resumo}
-                    </p>
-                  )}
-                  <div className="mt-auto flex items-center justify-between pt-4">
-                    <span className="text-xs text-brand-gray">
-                      {formatDate(noticia.data_publicacao)}
-                    </span>
-                    <Link to="/noticias" className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue transition-colors hover:text-brand-blue/80">
-                      Ler mais
-                    </Link>
+            <div className="mt-12 space-y-8">
+              {/* Primeira notícia — destaque em layout lado-a-lado */}
+              {noticias[0] && (
+                <article className="group overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-lg">
+                  <div className="grid gap-0 lg:grid-cols-2">
+                    {noticias[0].imagem && (
+                      <div className="relative aspect-[16/9] overflow-hidden lg:aspect-auto lg:h-full">
+                        <img
+                          src={noticias[0].imagem}
+                          alt=""
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+                    <div className="flex flex-col justify-center gap-6 p-8 lg:p-10">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue">
+                          {formatDate(noticias[0].data_publicacao)}
+                        </p>
+                        <h3 className="font-heading mt-3 text-2xl font-extrabold leading-tight text-brand-text sm:text-3xl">
+                          {noticias[0].titulo}
+                        </h3>
+                      </div>
+                      {noticias[0].resumo && (
+                        <p className="text-base leading-relaxed text-brand-gray">
+                          {noticias[0].resumo}
+                        </p>
+                      )}
+                      <Button asChild size="sm" className="w-fit gap-2 rounded-none px-6 transition-all duration-150 ease-out hover:opacity-90">
+                        <Link to="/noticias">
+                          Ler notícia
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
                 </article>
-              ))}
+              )}
+
+              {/* Segunda notícia — card compacto */}
+              {noticias[1] && (
+                <article className="group overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-md">
+                  <div className="flex flex-col gap-0 sm:grid sm:grid-cols-[1fr_2fr]">
+                    {noticias[1].imagem && (
+                      <div className="relative aspect-[16/9] overflow-hidden sm:aspect-auto sm:h-full">
+                        <img
+                          src={noticias[1].imagem}
+                          alt=""
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+                    <div className="flex flex-col justify-between gap-4 p-6">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue">
+                          {formatDate(noticias[1].data_publicacao)}
+                        </p>
+                        <h3 className="font-heading mt-2 text-lg font-bold text-brand-text">
+                          {noticias[1].titulo}
+                        </h3>
+                      </div>
+                      {noticias[1].resumo && (
+                        <p className="text-sm leading-relaxed text-brand-gray line-clamp-2">
+                          {noticias[1].resumo}
+                        </p>
+                      )}
+                      <Link to="/noticias" className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue transition-colors hover:text-brand-blue/80">
+                        Ler mais →
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              )}
             </div>
           )}
         </div>
