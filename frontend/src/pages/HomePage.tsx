@@ -676,11 +676,11 @@ export function HomePage() {
                       {membro.funcao}
                     </p>
                     {membro.url_lattes && (
-                      <div className="mt-6 flex items-center justify-center gap-2">
-                        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-gray group-hover:text-brand-blue transition-colors">
+                      <div className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-brand-blue/10 px-4 py-2 transition-all group-hover:bg-brand-blue/20">
+                        <span className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-blue">
                           Currículo Lattes
                         </span>
-                        <ExternalLink className="h-4 w-4 text-brand-gray group-hover:text-brand-blue transition-colors" />
+                        <ExternalLink className="h-4 w-4 text-brand-blue transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                       </div>
                     )}
                   </div>
