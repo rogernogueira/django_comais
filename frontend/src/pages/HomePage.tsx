@@ -1,7 +1,22 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Network, Sparkles, Users } from 'lucide-react'
+import Marquee from 'react-fast-marquee'
 
 import { Button } from '@/components/ui/button'
+
+const PARCEIROS = [
+  { nome: 'Universidade Federal do Tocantins', src: '/brand/partners/uft.png' },
+  {
+    nome: 'Programa de Pós-Graduação em Governança e Transformação Digital',
+    src: '/brand/partners/logo_reduzida_400x300_transparente.png',
+  },
+  {
+    nome: 'Fundação de Apoio Científico e Tecnológico do Tocantins',
+    src: '/brand/partners/fapto.png',
+  },
+  { nome: 'Softex', src: '/brand/partners/softex.png' },
+  { nome: 'Huawei', src: '/brand/partners/huawei.svg' },
+] as const
 
 const OBJETIVOS = [
   {
@@ -30,55 +45,100 @@ const OBJETIVOS = [
 
 const DOMINIOS = ['Judicial', 'Segurança Pública', 'Ambiental', 'Social'] as const
 
+/**
+ * Mosaico de pixels do hero — releitura, na paleta PPGGTD, das "tiles" em
+ * cascata do hero da fireworks.ai. Triângulo no canto superior direito cuja
+ * densidade/opacidade aumenta em direção ao canto.
+ */
+const MOSAIC_TILE = 34 // px (inclui 4px de respiro entre quadrados)
+const MOSAIC_COLS = 12
+const MOSAIC_ROWS = 9
+const MOSAIC_ACCENTS: Record<string, string> = {
+  '0-2': 'bg-brand-green',
+  '1-4': 'bg-brand-gold',
+  '2-1': 'bg-brand-gold',
+  '3-5': 'bg-brand-green',
+  '4-2': 'bg-brand-gold',
+  '5-0': 'bg-brand-green',
+}
+
+function HeroMosaic() {
+  const tiles = []
+  for (let r = 0; r < MOSAIC_ROWS; r++) {
+    for (let c = 0; c < MOSAIC_COLS; c++) {
+      // intensidade cai conforme afasta do canto superior direito (c=0, r=0)
+      const intensity = 1 - (c * 0.09 + r * 0.12)
+      if (intensity <= 0.05) continue
+      const color = MOSAIC_ACCENTS[`${r}-${c}`] ?? 'bg-brand-blue'
+      tiles.push(
+        <span
+          key={`${r}-${c}`}
+          className={`absolute ${color}`}
+          style={{
+            width: MOSAIC_TILE - 4,
+            height: MOSAIC_TILE - 4,
+            top: r * MOSAIC_TILE,
+            right: c * MOSAIC_TILE,
+            opacity: Math.min(0.85, intensity),
+          }}
+        />,
+      )
+    }
+  }
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute right-0 top-0 z-0 hidden sm:block"
+    >
+      {tiles}
+    </div>
+  )
+}
+
 export function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
+      {/* Hero — layout inspirado na fireworks.ai, adaptado à marca COMAIS/PPGGTD */}
+      <section className="relative overflow-hidden border-b border-slate-200">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,theme(colors.brand-blue/12),transparent_60%),radial-gradient(ellipse_at_bottom_left,theme(colors.brand-green/10),transparent_55%)]"
+          className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,theme(colors.brand-blue/10),transparent_60%)]"
         />
-        <div className="mx-auto max-w-6xl px-6 pt-20 pb-16 sm:pt-28 sm:pb-24">
-          <div className="grid items-center gap-12 lg:grid-cols-[3fr_2fr]">
+        <HeroMosaic />
+        <div className="relative z-10 mx-auto max-w-6xl px-6 pb-4 pt-10 sm:pb-6 sm:pt-12">
+          <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <p className="mb-6 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
-                COMAIS Labs · UFT
+              <p className="mb-3 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-brand-blue">
+                Laboratório de Inteligência Artificial · UFT
               </p>
-              <h1 className="font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-brand-text sm:text-5xl lg:text-6xl">
-                Modelagem Computacional
-                <br />
-                de Soluções de{' '}
-                <span className="text-brand-blue">Inteligência Artificial</span>.
+              <h1 className="font-heading text-2xl font-extrabold leading-[1.04] tracking-[-0.02em] text-brand-text animation-slideInBottom sm:text-3xl lg:text-[2.75rem]">
+                Modelagem Computacional de Soluções de{' '}
+                <span className="text-brand-blue">Inteligência Artificial</span>
               </h1>
-              <p className="mt-6 max-w-2xl font-mono text-xs uppercase tracking-[0.18em] text-brand-gray sm:text-sm">
-                Computational Modeling of Artificial Intelligence Solutions
+              <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-gray sm:text-sm">
+                Computational Modeling of AI Solutions
               </p>
-              <p className="mt-8 max-w-2xl text-lg leading-relaxed text-brand-gray">
+              <p className="mt-4 hidden max-w-xl text-base leading-relaxed text-brand-gray">
                 Laboratório multidisciplinar do{' '}
-                <span className="text-brand-text">
+                <span className="font-semibold text-brand-text">
                   Programa de Pós-Graduação em Governança e Transformação Digital
                 </span>{' '}
                 da Universidade Federal do Tocantins.
               </p>
-              <div className="mt-10 flex flex-wrap items-center gap-4">
-                <Button asChild size="lg" className="gap-2">
+              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+                <Button asChild size="lg" className="gap-2 rounded-none px-6 transition-all duration-150 ease-out hover:opacity-90">
                   <Link to="/projetos">
-                    Projetos
+                    Conheça os projetos
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg">
-                  <a
-                    href="https://www.youtube.com/watch?v=jsd29YgSaM4"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Assistir vídeo
-                  </a>
-                </Button>
-                <Button asChild variant="ghost" size="lg">
-                  <Link to="/galeria">Fotos</Link>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="lg"
+                  className="gap-2 rounded-none text-xs font-semibold uppercase tracking-[0.18em] text-brand-text transition-all duration-150 ease-out hover:text-brand-blue"
+                >
+                  <Link to="/sobre">Sobre o laboratório</Link>
                 </Button>
               </div>
             </div>
@@ -86,17 +146,37 @@ export function HomePage() {
             <div className="relative order-first flex justify-center lg:order-last">
               <div
                 aria-hidden
-                className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,theme(colors.brand-blue/15),transparent_65%)] blur-2xl"
+                className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,theme(colors.brand-blue/12),transparent_65%)] blur-2xl"
               />
               <img
-                src="/brand/comais-lab.png"
-                alt="COMAIS Labs — engrenagem e cérebro de circuitos representando IA aplicada"
-                width={520}
-                height={555}
-                className="h-auto w-full max-w-sm animate-hero-float drop-shadow-sm lg:max-w-md"
+                src="/brand/logo-comais1188x713.png"
+                alt="COMAIS Lab — modelagem computacional de soluções de inteligência artificial"
+                width={1188}
+                height={713}
+                className="h-auto w-full max-w-xs animate-hero-float drop-shadow-sm lg:max-w-sm"
               />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Faixa de parceiros — marquee (análogo da logo cloud do fireworks) */}
+      <section className="border-y border-slate-200 bg-white py-3 sm:py-4">
+        <p className="mb-4 text-center font-mono text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-brand-gray">
+          Parceiros
+        </p>
+        <div className="[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <Marquee autoFill pauseOnHover speed={40}>
+            {PARCEIROS.map((p) => (
+              <div key={p.nome} className="mx-12 flex items-center" title={p.nome}>
+                <img
+                  src={p.src}
+                  alt={p.nome}
+                  className="h-10 w-auto object-contain opacity-90 transition duration-300 hover:opacity-100 sm:h-14"
+                />
+              </div>
+            ))}
+          </Marquee>
         </div>
       </section>
 

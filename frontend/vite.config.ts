@@ -9,6 +9,11 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    // react-fast-marquee (CJS) pode puxar uma segunda cópia do React → "Invalid hook call"
+    dedupe: ['react', 'react-dom'],
+  },
+  optimizeDeps: {
+    include: ['react-fast-marquee'],
   },
   server: {
     proxy: {
