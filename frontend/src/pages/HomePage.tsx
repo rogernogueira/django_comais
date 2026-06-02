@@ -5,7 +5,7 @@ import Marquee from 'react-fast-marquee'
 
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import type { NoticiaListItem, ProjetoListItem, TipoProjeto, Paginated } from '@/types/api'
+import type { NoticiaListItem, ProjetoListItem, TipoProjeto, Colaborador, Paginated } from '@/types/api'
 
 function stripHtml(value: string | null | undefined) {
   if (!value) return ''
@@ -15,6 +15,16 @@ function stripHtml(value: string | null | undefined) {
     .replace(/&[a-z]+;/gi, ' ')
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((p) => p[0]!)
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
 }
 
 const PARCEIROS = [
@@ -165,6 +175,8 @@ export function HomePage() {
   const [projetosError, setProjetosError] = useState<string | null>(null)
   const [tipos, setTipos] = useState<TipoProjeto[] | null>(null)
   const [selectedTipoId, setSelectedTipoId] = useState<number | null>(null)
+  const [equipe, setEquipe] = useState<Colaborador[] | null>(null)
+  const [equipeError, setEquipeError] = useState<string | null>(null)
 
   useEffect(() => {
     const ac = new AbortController()
@@ -200,6 +212,21 @@ export function HomePage() {
       .catch((e: unknown) => {
         if (e instanceof DOMException && e.name === 'AbortError') return
         setProjetosError(e instanceof Error ? e.message : 'erro desconhecido')
+      })
+    return () => ac.abort()
+  }, [])
+
+  useEffect(() => {
+    const ac = new AbortController()
+    fetch('/api/v1/colaboradores/?limit=4', { signal: ac.signal })
+      .then(async (r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return (await r.json()) as Paginated<Colaborador>
+      })
+      .then((page) => setEquipe(page.results))
+      .catch((e: unknown) => {
+        if (e instanceof DOMException && e.name === 'AbortError') return
+        setEquipeError(e instanceof Error ? e.message : 'erro desconhecido')
       })
     return () => ac.abort()
   }, [])
@@ -589,6 +616,79 @@ export function HomePage() {
               )
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Equipe — Fireworks aesthetic com avatares circulares */}
+      <section className="border-t border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
+              Pessoas
+            </p>
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-text sm:text-4xl">
+              Nossa equipe
+            </h2>
+            <p className="mt-6 mx-auto max-w-2xl text-base leading-relaxed text-brand-gray">
+              Pesquisadores, docentes e colaboradores que conduzem a inovação.
+            </p>
+          </div>
+
+          {!equipe && !equipeError && (
+            <div className="flex items-center justify-center gap-2 text-brand-gray py-12">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Carregando equipe…</span>
+            </div>
+          )}
+
+          {equipe && equipe.length > 0 && (
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {equipe.map((membro) => (
+                <div
+                  key={membro.id}
+                  className="group flex flex-col items-center text-center transition-transform hover:scale-105"
+                >
+                  {/* Avatar circular */}
+                  <div className="relative mb-4">
+                    {membro.foto ? (
+                      <img
+                        src={membro.foto}
+                        alt={membro.name}
+                        loading="lazy"
+                        className="h-32 w-32 rounded-full object-cover ring-2 ring-brand-blue/20 transition-all group-hover:ring-brand-blue"
+                      />
+                    ) : (
+                      <div
+                        className="flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-brand-blue/20 via-brand-green/20 to-brand-gold/20 font-heading text-3xl font-extrabold text-brand-blue ring-2 ring-brand-blue/20 group-hover:ring-brand-blue"
+                      >
+                        {initials(membro.name)}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Info */}
+                  <h3 className="font-heading text-lg font-bold text-brand-text">
+                    {membro.name}
+                  </h3>
+                  <p className="mt-1 text-sm font-medium text-brand-blue">
+                    {membro.funcao}
+                  </p>
+
+                  {/* Lattes link */}
+                  {membro.url_lattes && (
+                    <a
+                      href={membro.url_lattes}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand-gray hover:text-brand-blue transition-colors"
+                    >
+                      Ver Lattes
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
