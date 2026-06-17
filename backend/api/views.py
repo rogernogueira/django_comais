@@ -1,11 +1,12 @@
 from rest_framework import viewsets
 
-from website.models import Colaborador, Curso, Noticia, Projeto, TipoProjeto
+from website.models import Colaborador, Curso, GaleriaFoto, Noticia, Projeto, TipoProjeto
 
 from .serializers import (
     ColaboradorSerializer,
     CursoDetailSerializer,
     CursoListSerializer,
+    GaleriaFotoSerializer,
     NoticiaDetailSerializer,
     NoticiaListSerializer,
     ProjetoDetailSerializer,
@@ -48,6 +49,15 @@ class ColaboradorViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ColaboradorSerializer
     search_fields = ["name", "funcao"]
     ordering_fields = ["name", "post_date"]
+
+
+class GaleriaFotoViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = GaleriaFoto.objects.all()
+    serializer_class = GaleriaFotoSerializer
+    pagination_class = None  # galeria é navegada por completo (grid/lightbox)
+    filterset_fields = ["categoria", "destaque"]
+    search_fields = ["titulo", "descricao", "categoria"]
+    ordering_fields = ["data", "ordem", "titulo"]
 
 
 class CursoViewSet(viewsets.ReadOnlyModelViewSet):

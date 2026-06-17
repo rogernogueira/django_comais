@@ -1,6 +1,14 @@
 from rest_framework import serializers
 
-from website.models import Colaborador, Curso, Noticia, Parceiro, Projeto, TipoProjeto
+from website.models import (
+    Colaborador,
+    Curso,
+    GaleriaFoto,
+    Noticia,
+    Parceiro,
+    Projeto,
+    TipoProjeto,
+)
 
 
 class TipoProjetoSerializer(serializers.ModelSerializer):
@@ -111,6 +119,20 @@ class ColaboradorSerializer(serializers.ModelSerializer):
             "url_instagram",
             "url_linkedin",
             "foto",
+        ]
+
+
+class GaleriaFotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GaleriaFoto
+        fields = [
+            "id",
+            "titulo",
+            "descricao",
+            "imagem",
+            "categoria",
+            "data",
+            "destaque",
         ]
 
 

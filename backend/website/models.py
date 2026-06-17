@@ -214,6 +214,25 @@ class Noticia(models.Model):
         return self.titulo
 
 
+class GaleriaFoto(models.Model):
+    titulo = models.CharField('Título', max_length=200)
+    descricao = models.CharField('Descrição', max_length=500, blank=True, default='')
+    imagem = models.ImageField('Imagem', upload_to='galeria/')
+    categoria = models.CharField('Categoria', max_length=100, blank=True, default='Geral')
+    data = models.DateField('Data', default=django.utils.timezone.now)
+    destaque = models.BooleanField('Destaque', default=False)
+    ordem = models.PositiveIntegerField('Ordem', default=0)
+    data_criacao = models.DateTimeField('Data de criação', auto_now_add=True)
+
+    class Meta:
+        ordering = ['ordem', '-data', '-data_criacao']
+        verbose_name = 'Foto da galeria'
+        verbose_name_plural = 'Galeria de fotos'
+
+    def __str__(self):
+        return self.titulo
+
+
 class Curso(models.Model):
     titulo = models.CharField('Título', max_length=300)
     descricao = models.TextField('Descrição')

@@ -9,6 +9,7 @@ import { ProjetoDetailPage } from '@/pages/ProjetoDetailPage'
 import { ProjetosPage } from '@/pages/ProjetosPage'
 import { ServicosPage } from '@/pages/ServicosPage'
 import { EquipePage } from '@/pages/EquipePage'
+import { GaleriaPage } from '@/pages/GaleriaPage'
 import { ContatoPage } from '@/pages/ContatoPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: 'projetos/:id', element: <ProjetoDetailPage /> },
       { path: 'servicos', element: <ServicosPage /> },
       { path: 'equipe', element: <EquipePage /> },
+      { path: 'galeria', element: <GaleriaPage /> },
       { path: 'contato', element: <ContatoPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],

@@ -13,6 +13,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     ColaboradorViewSet,
     CursoViewSet,
+    GaleriaFotoViewSet,
     NoticiaViewSet,
     ProjetoViewSet,
     TipoProjetoViewSet,
@@ -34,6 +35,7 @@ router.register(r"tipos-projeto", TipoProjetoViewSet, basename="tipo-projeto")
 router.register(r"cursos", CursoViewSet, basename="curso")
 router.register(r"colaboradores", ColaboradorViewSet, basename="colaborador")
 router.register(r"noticias", NoticiaViewSet, basename="noticia")
+router.register(r"galeria", GaleriaFotoViewSet, basename="galeria")
 
 urlpatterns = [
     path("ping/", ping, name="ping"),

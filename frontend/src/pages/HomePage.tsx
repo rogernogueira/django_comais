@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, BookOpen, Brain, Clock, Code, Database, ExternalLink, FileText, LifeBuoy, Loader2, MessageCircle, Network, Sparkles, TrendingUp, Users } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, BarChart3, BookOpen, Brain, Clock, Code, Database, ExternalLink, FileText, LifeBuoy, Loader2, Mail, MapPin, MessageCircle, Network, Sparkles, TrendingUp, Users } from 'lucide-react'
 import Marquee from 'react-fast-marquee'
 
 import { Button } from '@/components/ui/button'
@@ -93,6 +93,9 @@ const OBJETIVOS = [
 ] as const
 
 const DOMINIOS = ['Judicial', 'Segurança Pública', 'Ambiental', 'Social'] as const
+
+const MAP_SRC =
+  'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d26418.003900915173!2d-48.35507667391182!3d-10.175796844112822!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6908f8e88d9f46e1!2sComais%20Labs!5e0!3m2!1spt-BR!2sbr!4v1657227187835!5m2!1spt-BR!2sbr'
 
 type Servico = {
   name: string
@@ -751,6 +754,77 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* Recursos — releitura da seção "Building with Fireworks": faixa escura, dois cards grandes */}
+      <section className="relative overflow-hidden border-t border-slate-200 bg-brand-text">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,theme(colors.brand-blue/25),transparent_55%),radial-gradient(ellipse_at_bottom_right,theme(colors.brand-green/20),transparent_55%)]"
+        />
+        <div className="relative z-10 mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div className="max-w-2xl">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
+              Recursos
+            </p>
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Recursos educacionais
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-slate-300 sm:text-lg">
+              Recursos educacionais desenvolvidos pelo Laboratório COMAIS.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-6 lg:grid-cols-2">
+            {[
+              {
+                to: '/recursos/playground-ml',
+                icon: Brain,
+                title: 'Playground ML',
+                description:
+                  'Explore exemplos práticos e interativos de algoritmos clássicos de Machine Learning em um painel dinâmico.',
+                cta: 'Abrir playground',
+              },
+              {
+                to: '/recursos/painel-dados',
+                icon: BarChart3,
+                title: 'Painel de Análise de Dados',
+                description:
+                  'Conheça técnicas de Análise de Dados com esse guia completo, com fórmulas e interpretações.',
+                cta: 'Abrir painel',
+              },
+            ].map(({ to, icon: Icon, title, description, cta }) => (
+              <Link
+                key={to}
+                to={to}
+                className="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-8 transition-all hover:border-white/25 hover:bg-white/[0.06] sm:p-10"
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-brand-blue/20 blur-3xl transition-opacity group-hover:opacity-80"
+                />
+                <div className="relative flex items-start justify-between">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-white/10 text-brand-gold transition-colors group-hover:bg-brand-gold group-hover:text-brand-text">
+                    <Icon className="h-7 w-7" />
+                  </div>
+                  <ArrowUpRight className="h-5 w-5 text-slate-400 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
+                </div>
+                <div className="relative flex flex-1 flex-col gap-3">
+                  <h3 className="font-heading text-2xl font-bold text-white transition-colors group-hover:text-brand-gold">
+                    {title}
+                  </h3>
+                  <p className="text-base leading-relaxed text-slate-300">
+                    {description}
+                  </p>
+                </div>
+                <span className="relative inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-gold">
+                  {cta}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Equipe — Fireworks aesthetic */}
       <section className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-6 py-20">
@@ -922,6 +996,79 @@ export function HomePage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Contato */}
+      <section id="contato" className="border-t border-slate-200 bg-white scroll-mt-20">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="mb-12 flex flex-col items-center justify-between gap-8 lg:flex-row lg:items-end">
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
+                Fale conosco
+              </p>
+              <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-text sm:text-4xl">
+                Contato
+              </h2>
+            </div>
+            <Button asChild variant="ghost" size="sm" className="gap-2 rounded-none text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue transition-all duration-150 ease-out hover:text-brand-blue/80">
+              <Link to="/contato">
+                Página de contato
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="grid gap-12 lg:grid-cols-5">
+            <div className="space-y-8 lg:col-span-2">
+              <div>
+                <div className="mb-3 flex items-center gap-3">
+                  <MapPin className="h-5 w-5 text-brand-blue" />
+                  <h4 className="font-heading text-sm font-bold uppercase tracking-[0.18em] text-brand-text">
+                    Localização
+                  </h4>
+                </div>
+                <p className="text-sm leading-relaxed text-brand-gray">
+                  Quadra 109 Norte, Avenida NS-15,
+                  <br />
+                  ALCNO-14, Bloco III, Sala 105,
+                  <br />
+                  Plano Diretor Norte
+                  <br />
+                  Palmas/TO · CEP 77001-090
+                  <br />
+                  Brasil
+                </p>
+              </div>
+
+              <div>
+                <div className="mb-3 flex items-center gap-3">
+                  <Mail className="h-5 w-5 text-brand-blue" />
+                  <h4 className="font-heading text-sm font-bold uppercase tracking-[0.18em] text-brand-text">
+                    E-mail
+                  </h4>
+                </div>
+                <a
+                  href="mailto:comais@uft.edu.br"
+                  className="text-sm text-brand-text hover:text-brand-blue"
+                >
+                  comais@uft.edu.br
+                </a>
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-xl border border-slate-200 lg:col-span-3">
+              <iframe
+                title="Localização do COMAIS Labs no mapa"
+                src={MAP_SRC}
+                className="h-[420px] w-full"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

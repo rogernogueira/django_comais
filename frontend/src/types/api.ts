@@ -77,3 +77,13 @@ export interface Colaborador {
   url_linkedin: string | null
   foto: string | null
 }
+
+export interface GaleriaFoto {
+  id: number
+  titulo: string
+  descricao: string
+  imagem: string
+  categoria: string
+  data: string
+  destaque: boolean
+}
